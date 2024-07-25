@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
         }
 
-        public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
+        public virtual Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
+        public virtual Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context = null)
+        public virtual Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
+        public virtual Task<Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -94,7 +94,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetSwapDeploymentsJobStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual Task<Response> GetSwapDeploymentsJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -104,7 +104,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetExportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual Task<Response> GetExportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetImportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual Task<Response> GetImportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -124,7 +124,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
+        public virtual Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -134,7 +134,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
+        public virtual Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -144,7 +144,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context = null)
+        public virtual Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetLoadSnapshotJobStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
+        public virtual Task<Response> GetLoadSnapshotJobStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -164,7 +164,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetTrainingJobStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual Task<Response> GetTrainingJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -174,7 +174,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Response> GetProjectDeletionJobStatusAsync(string jobId, RequestContext context = null)
+        public virtual Task<Response> GetProjectDeletionJobStatusAsync(string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -263,7 +263,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -273,7 +273,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
+        public virtual Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -283,7 +283,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Operation<BinaryData>> ImportProjectAsync(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
+        public virtual Task<Operation<BinaryData>> ImportProjectAsync(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -293,7 +293,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Operation<BinaryData>> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Task<Operation<BinaryData>> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -303,7 +303,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Operation<BinaryData>> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Task<Operation<BinaryData>> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -313,7 +313,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -323,7 +323,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Operation<BinaryData>> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual Task<Operation<BinaryData>> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -334,7 +334,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         }
 
-        public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
+        public virtual Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
@@ -344,7 +344,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
 
-        public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
+        public virtual Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
 
