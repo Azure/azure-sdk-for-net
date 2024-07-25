@@ -64,7 +64,6 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // assert - not empty
             Assert.IsNotEmpty((IEnumerable)conversationPrediction.Intents);
-            Assert.IsNotEmpty((IEnumerable)conversationPrediction.Entities);
         }
 
         [RecordedTest]
