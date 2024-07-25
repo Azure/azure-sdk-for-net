@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     [Obsolete("This client is no longer supported as part of the Conversations SDK. This will be released independently.")]
     public class ConversationAuthoringClient
     {
-        public ConversationAuthoringClient(Uri endpoint, TokenCredential credential) 
+        public ConversationAuthoringClient(Uri endpoint, TokenCredential credential)
         {
             throw new NotSupportedException();
         }
@@ -331,7 +331,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public virtual Operation<BinaryData> DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             throw new NotSupportedException();
-
         }
 
         public virtual Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
@@ -347,7 +346,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public virtual Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
-
         }
 
         public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
