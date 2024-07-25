@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added method overloads `serviceClient.GetClientAccessUri`, `serviceClient.GetClientAccessUri` for MQTT clients.
+- Added method `serviceClient.AddConnectionsToGroups` to add filtered connections to specified multiple groups.
+- Added method `serviceClient.RemoveConnectionsFromGroups` to remove filtered connections from specified multiple groups.
+
 ### Breaking Changes
 
 ### Bugs Fixed

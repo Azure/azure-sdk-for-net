@@ -77,9 +77,8 @@
       AZPROVISION001; <!-- Provisioning -->
     </NoWarn>
 
-    <!-- Temporarily setting this to false while we resolve the security warning related to System.Text.Json -->
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <!-- 
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!--
       .NET 8 now produces security warnings for nuget packages in dotnet restore. Keep these as warnings in T1 to avoid needing to update T1 library dependencies.
       See: https://learn.microsoft.com/en-us/dotnet/core/compatibility/sdk/8.0/dotnet-restore-audit#recommended-action
     -->
