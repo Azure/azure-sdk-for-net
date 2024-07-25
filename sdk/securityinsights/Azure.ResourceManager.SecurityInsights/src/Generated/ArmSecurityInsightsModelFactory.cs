@@ -4492,11 +4492,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="exchangeState"> Exchange data type connection. </param>
-        /// <param name="sharePointState"> SharePoint data type connection. </param>
-        /// <param name="teamsState"> Teams data type connection. </param>
+        /// <param name="dataTypes"> The available data types for the connector. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsOfficeDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsOfficeDataConnector SecurityInsightsOfficeDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? exchangeState = null, SecurityInsightsDataTypeConnectionState? sharePointState = null, SecurityInsightsDataTypeConnectionState? teamsState = null)
+        public static SecurityInsightsOfficeDataConnector SecurityInsightsOfficeDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsOfficeDataConnectorDataTypes dataTypes = null)
         {
             return new SecurityInsightsOfficeDataConnector(
                 id,
@@ -4507,9 +4505,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData: null,
                 tenantId,
-                exchangeState.HasValue ? new OfficeDataConnectorDataTypesExchange(exchangeState.Value, serializedAdditionalRawData: null) : null,
-                sharePointState.HasValue ? new OfficeDataConnectorDataTypesSharePoint(sharePointState.Value, serializedAdditionalRawData: null) : null,
-                teamsState.HasValue ? new OfficeDataConnectorDataTypesTeams(teamsState.Value, serializedAdditionalRawData: null) : null);
+                dataTypes);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsTIDataConnector"/>. </summary>

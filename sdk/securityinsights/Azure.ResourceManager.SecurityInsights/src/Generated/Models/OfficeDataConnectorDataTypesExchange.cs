@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Exchange data type connection. </summary>
-    internal partial class OfficeDataConnectorDataTypesExchange : DataConnectorDataTypeCommon
+    public partial class OfficeDataConnectorDataTypesExchange : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesExchange"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

@@ -290,7 +290,6 @@ directive:
       $.Dynamics365DataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.Office365ProjectDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.OfficePowerBIDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
-      $.OfficeDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.TIDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.TiTaxiiDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.CodelessUiConnectorConfigProperties.properties.dataTypes["x-ms-client-flatten"] = true;

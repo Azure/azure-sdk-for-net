@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Teams data type connection. </summary>
-    internal partial class OfficeDataConnectorDataTypesTeams : DataConnectorDataTypeCommon
+    public partial class OfficeDataConnectorDataTypesTeams : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesTeams"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

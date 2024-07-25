@@ -61,24 +61,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            writer.WritePropertyName("dataTypes"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Exchange))
+            if (Optional.IsDefined(DataTypes))
             {
-                writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue(Exchange, options);
+                writer.WritePropertyName("dataTypes"u8);
+                writer.WriteObjectValue(DataTypes, options);
             }
-            if (Optional.IsDefined(SharePoint))
-            {
-                writer.WritePropertyName("sharePoint"u8);
-                writer.WriteObjectValue(SharePoint, options);
-            }
-            if (Optional.IsDefined(Teams))
-            {
-                writer.WritePropertyName("teams"u8);
-                writer.WriteObjectValue(Teams, options);
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,9 +112,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             SystemData systemData = default;
             Guid? tenantId = default;
-            OfficeDataConnectorDataTypesExchange exchange = default;
-            OfficeDataConnectorDataTypesSharePoint sharePoint = default;
-            OfficeDataConnectorDataTypesTeams teams = default;
+            SecurityInsightsOfficeDataConnectorDataTypes dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,39 +177,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("exchange"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(property1.Value, options);
-                                    continue;
-                                }
-                                if (property1.NameEquals("sharePoint"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(property1.Value, options);
-                                    continue;
-                                }
-                                if (property1.NameEquals("teams"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property1.Value, options);
-                                    continue;
-                                }
-                            }
+                            dataTypes = SecurityInsightsOfficeDataConnectorDataTypes.DeserializeSecurityInsightsOfficeDataConnectorDataTypes(property0.Value, options);
                             continue;
                         }
                     }
@@ -245,9 +200,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData,
                 tenantId,
-                exchange,
-                sharePoint,
-                teams);
+                dataTypes);
         }
 
         BinaryData IPersistableModel<SecurityInsightsOfficeDataConnector>.Write(ModelReaderWriterOptions options)
