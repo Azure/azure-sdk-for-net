@@ -270,8 +270,8 @@
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.4.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.20.1" />
-    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.19.1" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.20.0" />
+    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.19.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
     <PackageReference Update="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.4" />
     <PackageReference Update="Castle.Core" Version="5.1.0" />
@@ -375,8 +375,8 @@
     <PackageReference Update="System.IO.Pipelines" Version="8.0.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="2.1.7" />
     <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
-    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.1" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
+    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.18.0" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.18.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.0" />
