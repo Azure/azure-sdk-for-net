@@ -1,14 +1,10 @@
 # Release History
 
-## 6.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 6.3.4 (2024-07-25)
 
 ### Other Changes
+
+- When the trigger's connection property is set to a valid connection string instead of an informational name, the mistake will be detected and sensitive information will be redacted from the error message to avoid accidental capture in logs and similar mechanisms.
 
 ## 6.3.3 (2024-06-13)
 
