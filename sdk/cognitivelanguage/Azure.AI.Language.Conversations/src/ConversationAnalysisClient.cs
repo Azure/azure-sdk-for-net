@@ -130,13 +130,13 @@ namespace Azure.AI.Language.Conversations
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         public virtual async Task<Operation<BinaryData>> AnalyzeConversationsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversationsAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversations");
             scope.Start();
 
             try
             {
                 using HttpMessage message = CreateAnalyzeConversationSubmitOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.AnalyzeConversationsAsync", OperationFinalStateVia.OperationLocation, context, WaitUntil.Completed).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.AnalyzeConversations", OperationFinalStateVia.OperationLocation, context, WaitUntil.Completed).ConfigureAwait(false);
             }
             catch (Exception e)
             {
