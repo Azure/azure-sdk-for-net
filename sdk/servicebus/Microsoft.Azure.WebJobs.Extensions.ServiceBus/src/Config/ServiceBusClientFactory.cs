@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
                 }
 
                 // Not found
-                throw new InvalidOperationException($"Service Bus connection '{connectionSetting}' does not exist. " +
+                throw new InvalidOperationException($"EventHub account connection string with name '{connectionSetting}' does not exist in the settings. " +
                                                     $"Make sure that it is a defined App Setting.");
             }
 
