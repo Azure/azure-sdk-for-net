@@ -206,7 +206,7 @@ namespace Azure.Storage.Blobs
                 trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
-            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone(); // new change
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(_uri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
