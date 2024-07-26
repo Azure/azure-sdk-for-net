@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ContentSafetyModelFactory
+    public static partial class AIContentSafetyModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeTextOptions"/>. </summary>
         /// <param name="text"> The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>

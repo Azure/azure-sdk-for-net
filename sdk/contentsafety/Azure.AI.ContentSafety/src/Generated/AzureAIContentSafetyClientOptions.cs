@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> Client options for Azure.AI.ContentSafety library clients. </summary>
-    public partial class ContentSafetyClientOptions : ClientOptions
+    public partial class AzureAIContentSafetyClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
 
@@ -24,8 +24,8 @@ namespace Azure.AI.ContentSafety
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of ContentSafetyClientOptions. </summary>
-        public ContentSafetyClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of AzureAIContentSafetyClientOptions. </summary>
+        public AzureAIContentSafetyClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

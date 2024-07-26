@@ -43,7 +43,7 @@ namespace Azure.AI.ContentSafety
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentSafetyClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
+        public ContentSafetyClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIContentSafetyClientOptions())
         {
         }
 
@@ -54,7 +54,7 @@ namespace Azure.AI.ContentSafety
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentSafetyClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
+        public ContentSafetyClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIContentSafetyClientOptions())
         {
         }
 
@@ -66,11 +66,11 @@ namespace Azure.AI.ContentSafety
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentSafetyClient(Uri endpoint, AzureKeyCredential credential, ContentSafetyClientOptions options)
+        public ContentSafetyClient(Uri endpoint, AzureKeyCredential credential, AzureAIContentSafetyClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new ContentSafetyClientOptions();
+            options ??= new AzureAIContentSafetyClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -87,11 +87,11 @@ namespace Azure.AI.ContentSafety
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentSafetyClient(Uri endpoint, TokenCredential credential, ContentSafetyClientOptions options)
+        public ContentSafetyClient(Uri endpoint, TokenCredential credential, AzureAIContentSafetyClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new ContentSafetyClientOptions();
+            options ??= new AzureAIContentSafetyClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
