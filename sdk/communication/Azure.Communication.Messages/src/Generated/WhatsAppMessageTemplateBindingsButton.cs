@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.Messages.Models.Channels
+namespace Azure.Communication.Messages
 {
     /// <summary> The template bindings component button for WhatsApp. </summary>
     public partial class WhatsAppMessageTemplateBindingsButton
@@ -48,10 +48,9 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
         /// <param name="subType"> The WhatsApp button sub type. </param>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subType"/> or <paramref name="refValue"/> is null. </exception>
-        public WhatsAppMessageTemplateBindingsButton(string subType, string refValue)
+        /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
+        public WhatsAppMessageTemplateBindingsButton(WhatsAppMessageButtonSubType subType, string refValue)
         {
-            Argument.AssertNotNull(subType, nameof(subType));
             Argument.AssertNotNull(refValue, nameof(refValue));
 
             SubType = subType;
@@ -62,7 +61,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="subType"> The WhatsApp button sub type. </param>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WhatsAppMessageTemplateBindingsButton(string subType, string refValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WhatsAppMessageTemplateBindingsButton(WhatsAppMessageButtonSubType subType, string refValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubType = subType;
             RefValue = refValue;
@@ -73,6 +72,9 @@ namespace Azure.Communication.Messages.Models.Channels
         internal WhatsAppMessageTemplateBindingsButton()
         {
         }
+
+        /// <summary> The WhatsApp button sub type. </summary>
+        public WhatsAppMessageButtonSubType SubType { get; }
         /// <summary> The name of the referenced item in the template values. </summary>
         public string RefValue { get; }
     }

@@ -37,9 +37,9 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(Address);
             }
             writer.WritePropertyName("latitude"u8);
-            writer.WriteNumberValue(LatitudeInternal);
+            writer.WriteNumberValue(Latitude);
             writer.WritePropertyName("longitude"u8);
-            writer.WriteNumberValue(LongitudeInternal);
+            writer.WriteNumberValue(Longitude);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);

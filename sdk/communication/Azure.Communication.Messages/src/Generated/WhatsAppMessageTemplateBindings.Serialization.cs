@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Messages.Models.Channels
+namespace Azure.Communication.Messages
 {
     public partial class WhatsAppMessageTemplateBindings : IUtf8JsonSerializable, IJsonModel<WhatsAppMessageTemplateBindings>
     {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     /// <summary> Client options for Azure.Communication.Messages library clients. </summary>
-    public partial class CommunicationMessagesClientOptions : ClientOptions
+    public partial class AzureCommunicationMessagesClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_02_01;
 
@@ -24,8 +24,8 @@ namespace Azure.Communication.Messages
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of CommunicationMessagesClientOptions. </summary>
-        public CommunicationMessagesClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of AzureCommunicationMessagesClientOptions. </summary>
+        public AzureCommunicationMessagesClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

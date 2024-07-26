@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -76,7 +75,7 @@ namespace Azure.Communication.Messages
         /// <param name="values">
         /// The template values.
         /// Please note <see cref="Messages.MessageTemplateValue"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Messages.MessageTemplateDocument"/>, <see cref="Messages.MessageTemplateImage"/>, <see cref="MessageTemplateLocation"/>, <see cref="Messages.MessageTemplateQuickAction"/>, <see cref="Messages.MessageTemplateText"/> and <see cref="Messages.MessageTemplateVideo"/>.
+        /// The available derived classes include <see cref="Messages.MessageTemplateDocument"/>, <see cref="Messages.MessageTemplateImage"/>, <see cref="Messages.MessageTemplateLocation"/>, <see cref="Messages.MessageTemplateQuickAction"/>, <see cref="Messages.MessageTemplateText"/> and <see cref="Messages.MessageTemplateVideo"/>.
         /// </param>
         /// <param name="bindings">
         /// The binding object to link values to the template specific locations
@@ -160,6 +159,25 @@ namespace Azure.Communication.Messages
                 fileName);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateLocation"/>. </summary>
+        /// <param name="name"> Template binding reference name. </param>
+        /// <param name="locationName"> The [Optional] name of the location. </param>
+        /// <param name="address"> The [Optional] address of the location. </param>
+        /// <param name="latitude"> The latitude of the location. </param>
+        /// <param name="longitude"> The longitude of the location. </param>
+        /// <returns> A new <see cref="Messages.MessageTemplateLocation"/> instance for mocking. </returns>
+        public static MessageTemplateLocation MessageTemplateLocation(string name = null, string locationName = null, string address = null, double latitude = default, double longitude = default)
+        {
+            return new MessageTemplateLocation(
+                name,
+                MessageTemplateValueKind.Location,
+                serializedAdditionalRawData: null,
+                locationName,
+                address,
+                latitude,
+                longitude);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateQuickAction"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="text"> The [Optional] quick action text. </param>
@@ -200,12 +218,12 @@ namespace Azure.Communication.Messages
             return new UnknownMessageTemplateItem(name, language, status, kind == null ? default : new CommunicationMessagesChannel(kind), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppMessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="content"> WhatsApp platform's template content. This is the payload returned from WhatsApp API. </param>
-        /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Messages.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
         public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, BinaryData content = null)
         {
             return new WhatsAppMessageTemplateItem(

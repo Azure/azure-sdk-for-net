@@ -22,5 +22,9 @@ namespace Azure.Communication.Messages
         public string LocationName { get; set; }
         /// <summary> The [Optional] address of the location. </summary>
         public string Address { get; set; }
+        /// <summary> The latitude of the location. </summary>
+        public double Latitude { get; }
+        /// <summary> The longitude of the location. </summary>
+        public double Longitude { get; }
     }
 }

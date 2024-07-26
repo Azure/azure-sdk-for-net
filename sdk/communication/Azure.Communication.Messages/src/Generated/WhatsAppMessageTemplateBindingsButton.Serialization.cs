@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Messages.Models.Channels
+namespace Azure.Communication.Messages
 {
     public partial class WhatsAppMessageTemplateBindingsButton : IUtf8JsonSerializable, IJsonModel<WhatsAppMessageTemplateBindingsButton>
     {
@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages.Models.Channels
 
             writer.WriteStartObject();
             writer.WritePropertyName("subType"u8);
-            writer.WriteStringValue(SubType);
+            writer.WriteStringValue(SubType.ToString());
             writer.WritePropertyName("refValue"u8);
             writer.WriteStringValue(RefValue);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -68,7 +68,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 return null;
             }
-            string subType = default;
+            WhatsAppMessageButtonSubType subType = default;
             string refValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -76,7 +76,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 if (property.NameEquals("subType"u8))
                 {
-                    subType = property.Value.GetString();
+                    subType = new WhatsAppMessageButtonSubType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("refValue"u8))

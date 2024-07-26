@@ -35,7 +35,7 @@ namespace Azure.Communication.Messages
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MessageTemplateClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        public MessageTemplateClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureCommunicationMessagesClientOptions())
         {
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Communication.Messages
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MessageTemplateClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        public MessageTemplateClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureCommunicationMessagesClientOptions())
         {
         }
 
@@ -52,11 +52,29 @@ namespace Azure.Communication.Messages
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MessageTemplateClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
+        public MessageTemplateClient(Uri endpoint, AzureKeyCredential credential, AzureCommunicationMessagesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new CommunicationMessagesClientOptions();
+            options ??= new AzureCommunicationMessagesClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of MessageTemplateClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public MessageTemplateClient(Uri endpoint, TokenCredential credential, AzureCommunicationMessagesClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureCommunicationMessagesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
