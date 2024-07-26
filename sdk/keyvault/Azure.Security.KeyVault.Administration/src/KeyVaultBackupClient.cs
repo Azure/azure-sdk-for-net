@@ -123,6 +123,56 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        public virtual async Task<KeyVaultBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.PreFullBackupAsync(
+                    VaultUri.AbsoluteUri,
+                    new PreBackupOperationParameters(
+                        blobStorageUri.AbsoluteUri,
+                        sasToken,
+                        useManagedIdentity: sasToken == null
+                        ),
+                    cancellationToken).ConfigureAwait(false);
+
+                // Should this return a KeyVaultBackupOperation?
+                return new KeyVaultBackupOperation(this, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+        
+        public virtual KeyVaultBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
+            scope.Start();
+            try
+            {
+                var response = _restClient.PreFullBackup(
+                    VaultUri.AbsoluteUri,
+                    new PreBackupOperationParameters(
+                        blobStorageUri.AbsoluteUri,
+                        sasToken,
+                        useManagedIdentity: sasToken == null
+                        ),
+                    cancellationToken);
+
+                // Should this return a KeyVaultBackupOperation?
+                return new KeyVaultBackupOperation(this, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary>
         /// Initiates a full key restore of the Key Vault.
         /// </summary>
