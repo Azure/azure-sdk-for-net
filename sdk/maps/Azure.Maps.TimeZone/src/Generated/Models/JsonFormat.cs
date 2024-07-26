@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.TimeZone
+namespace Azure.Maps.TimeZone.Models
 {
     /// <summary> The JsonFormat. </summary>
-    public readonly partial struct JsonFormat : IEquatable<JsonFormat>
+    internal readonly partial struct JsonFormat : IEquatable<JsonFormat>
     {
         private readonly string _value;
 
