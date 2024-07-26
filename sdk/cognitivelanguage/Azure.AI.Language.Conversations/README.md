@@ -1,9 +1,10 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-Conversational Language Understanding - aka CLU for short - is a cloud-based conversational AI service which provides many language understanding capabilities like:
+The Azure.AI.Language.Conversations client library provides a suite of APIs for conversational language understanding capabilities like conversation analysis and orchestration, conversational summarization and conversational personally identifiable information (PII) extraction methods.
+- Conversation Language Understanding (AKA CLU for short) is used to extract intents and entities in conversations, and to select the best candidate to analyze conversations to get the best response from apps like QnA, Luis, and Conversation App.
+- Conversation summarization is a combination of generative Large Language models (LLMs) and task-optimized encoder models to summarize conversation.
+- Conversational PII detection feature can identify, categorize, and redact sensitive information from conversations.
 
-- Conversation App: It's used in extracting intents and entities in conversations
-- Workflow app: Acts like an orchestrator to select the best candidate to analyze conversations to get best response from apps like Qna, Luis, and Conversation App
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs]
 
