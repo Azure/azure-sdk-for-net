@@ -31,12 +31,12 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="6.0.21"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="6.0.21" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="7.0.9"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="7.0.9" />
   </ItemGroup>
 
 </Project>
