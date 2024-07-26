@@ -25,12 +25,12 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
 
     <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>

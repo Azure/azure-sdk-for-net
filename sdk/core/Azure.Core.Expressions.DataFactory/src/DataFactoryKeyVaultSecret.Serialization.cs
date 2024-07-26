@@ -46,8 +46,7 @@ namespace Azure.Core.Expressions.DataFactory
                 }
                 if (property.NameEquals("secretName"u8))
                 {
-                    string jsonText = property.Value.GetRawText();
-                    secretName = JsonSerializer.Deserialize<DataFactoryElement<string>>(jsonText);
+                    secretName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("secretVersion"u8))
@@ -56,7 +55,7 @@ namespace Azure.Core.Expressions.DataFactory
                     {
                         continue;
                     }
-                    secretVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    secretVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText()!);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -24,7 +24,7 @@ namespace Azure.AI.Personalizer
                 {
                      new JsonBinaryDataConverter(),
                 },
-                IgnoreNullValues = true
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
             return JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
         }
