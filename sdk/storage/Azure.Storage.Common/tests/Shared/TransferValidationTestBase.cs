@@ -219,7 +219,7 @@ namespace Azure.Storage.Test.Shared
                         AssertChecksum(request, "Content-MD5");
                         break;
                     case StorageChecksumAlgorithm.StorageCrc64:
-                        AssertChecksum(request, Constants.StructuredMessage.CrcStructuredMessageHeader);
+                        AssertChecksum(request, Constants.StructuredMessage.StructuredMessageHeader);
                         break;
                     default:
                         throw new Exception($"Bad {nameof(StorageChecksumAlgorithm)} provided to {nameof(GetRequestChecksumHeaderAssertion)}.");
@@ -302,7 +302,7 @@ namespace Azure.Storage.Test.Shared
                         AssertChecksum(response.Headers, "Content-MD5");
                         break;
                     case StorageChecksumAlgorithm.StorageCrc64:
-                        AssertChecksum(response.Headers, Constants.StructuredMessage.CrcStructuredMessageHeader);
+                        AssertChecksum(response.Headers, Constants.StructuredMessage.StructuredMessageHeader);
                         break;
                     default:
                         throw new Exception($"Bad {nameof(StorageChecksumAlgorithm)} provided to {nameof(GetRequestChecksumHeaderAssertion)}.");
@@ -1744,7 +1744,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader));
+                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
@@ -1908,7 +1908,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader));
+                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
@@ -1968,7 +1968,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader));
+                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
@@ -2072,7 +2072,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader));
+                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
