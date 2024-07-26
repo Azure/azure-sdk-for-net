@@ -6,6 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using System.Linq;
 
 namespace Azure.Identity
 {
@@ -67,7 +68,7 @@ namespace Azure.Identity
         }
 
         internal ManagedIdentityCredential(ResourceIdentifier resourceId, CredentialPipeline pipeline, TokenCredentialOptions options, bool preserveTransport = false)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions{Pipeline = pipeline, ResourceIdentifier = resourceId, PreserveTransport = preserveTransport, Options = options }))
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ResourceIdentifier = resourceId, PreserveTransport = preserveTransport, Options = options }))
         {
             _clientId = resourceId.ToString();
         }
@@ -122,6 +123,11 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
+                // This exception pattern indicates that the MI endpoint is not available after exhausting all retries.
+                if (e.InnerException is AggregateException ae && ae.InnerExceptions.All(inner => inner is RequestFailedException))
+                {
+                    throw scope.FailWrapAndThrow(new CredentialUnavailableException(ImdsManagedIdentityProbeSource.AggregateError, e), Troubleshooting);
+                }
                 throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
