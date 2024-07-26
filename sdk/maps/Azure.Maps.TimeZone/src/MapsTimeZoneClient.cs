@@ -145,7 +145,7 @@ namespace Azure.Maps.TimeZone
         /// <param name="options"> Contains parameters for get timezone by id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timezoneId"/> is null. </exception>
-        public virtual async Task<Response<TimeZoneResult>> GetTimeZoneByIDAsync(string timezoneId, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TimeZoneInformation>> GetTimeZoneByIDAsync(string timezoneId, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneByID");
             scope.Start();
@@ -167,7 +167,7 @@ namespace Azure.Maps.TimeZone
         /// <param name="options"> Contains parameters for get timezone by id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timezoneId"/> is null. </exception>
-        public virtual Response<TimeZoneResult> GetTimeZoneByID(string timezoneId, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<TimeZoneInformation> GetTimeZoneByID(string timezoneId, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneByID");
             scope.Start();
@@ -189,7 +189,7 @@ namespace Azure.Maps.TimeZone
         /// <param name="options"> Contains parameters for get timezone by id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual async Task<Response<TimeZoneResult>> GetTimeZoneByCoordinatesAsync(GeoPosition coordinates, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TimeZoneInformation>> GetTimeZoneByCoordinatesAsync(GeoPosition coordinates, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneByCoordinates");
             scope.Start();
@@ -216,7 +216,7 @@ namespace Azure.Maps.TimeZone
         /// <param name="options"> Contains parameters for get timezone by id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual Response<TimeZoneResult> GetTimeZoneByCoordinates(GeoPosition coordinates, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<TimeZoneInformation> GetTimeZoneByCoordinates(GeoPosition coordinates, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneByCoordinates");
             scope.Start();

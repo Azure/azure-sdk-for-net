@@ -7,11 +7,11 @@
 
 using System.Text.Json;
 
-namespace Azure.Maps.TimeZone
+namespace Azure.Maps.TimeZone.Models
 {
-    public partial class TimezoneNames
+    public partial class TimeZoneNames
     {
-        internal static TimezoneNames DeserializeTimezoneNames(JsonElement element)
+        internal static TimeZoneNames DeserializeTimeZoneNames(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,15 +44,15 @@ namespace Azure.Maps.TimeZone
                     continue;
                 }
             }
-            return new TimezoneNames(isO6391LanguageCode, generic, standard, daylight);
+            return new TimeZoneNames(isO6391LanguageCode, generic, standard, daylight);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TimezoneNames FromResponse(Response response)
+        internal static TimeZoneNames FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTimezoneNames(document.RootElement);
+            return DeserializeTimeZoneNames(document.RootElement);
         }
     }
 }

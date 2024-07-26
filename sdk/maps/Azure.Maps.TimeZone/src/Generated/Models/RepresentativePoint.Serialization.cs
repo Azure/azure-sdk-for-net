@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 
-namespace Azure.Maps.TimeZone
+namespace Azure.Maps.TimeZone.Models
 {
     public partial class RepresentativePoint
     {
