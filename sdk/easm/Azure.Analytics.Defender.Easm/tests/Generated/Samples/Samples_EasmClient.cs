@@ -1954,6 +1954,15 @@ Name = "<name>",
             Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("labelName").ToString());
             Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("count").ToString());
             Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("link").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("updatedAt").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("metricCategory").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("metric").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("filter").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("labelName").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("count").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("link").ToString());
         }
 
         [Test]
@@ -1994,6 +2003,15 @@ Name = "<name>",
             Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("labelName").ToString());
             Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("count").ToString());
             Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("link").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("updatedAt").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("metricCategory").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("metric").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("filter").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("labelName").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("count").ToString());
+            Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("children")[0].GetProperty("link").ToString());
         }
 
         [Test]
