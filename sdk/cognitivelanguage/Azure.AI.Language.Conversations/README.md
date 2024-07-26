@@ -6,10 +6,9 @@ Conversation Language Understanding - aka CLU for short - is a cloud-based conve
 - Conversation App: It's used in extracting intents and entities in conversations
 - Workflow app: Acts like an orchestrator to select the best candidate to analyze conversations to get best response from apps like Qna, Luis, and Conversation App
 
-Conversation summarization is a combination of generative Large Language models (LLMs) and task-optimized encoder models to summarize conversation.
+Conversation Summarization is one feature offered by Azure AI Language, which is a combination of generative Large Language models and task-optimized encoder models that offer summarization solutions with higher quality, cost efficiency, and lower latency.
 
-Conversational PII detection feature can identify, categorize, and redact sensitive information from conversations.
-
+Conversation PII detection another feature offered by Azure AI Language, which is a collection of machine learning and AI algorithms to identify, categorize, and redact sensitive information in text. The Conversational PII model is a specialized model for handling speech transcriptions and the more informal, conversational tone of meeting and call transcripts. 
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs]
 
