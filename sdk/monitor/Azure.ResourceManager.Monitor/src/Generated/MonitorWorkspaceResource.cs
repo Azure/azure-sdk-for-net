@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The payload. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MonitorWorkspaceResource>> UpdateAsync(MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The payload. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MonitorWorkspaceResource> Update(MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-03</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

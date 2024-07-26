@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Information about metrics for the Azure Monitor workspace. </summary>
+    /// <summary> Properties related to the metrics container in the Azure Monitor Workspace. </summary>
     public partial class MonitorWorkspaceMetrics : MonitorWorkspaceMetricProperties
     {
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceMetrics"/>. </summary>
-        internal MonitorWorkspaceMetrics()
+        public MonitorWorkspaceMetrics()
         {
         }
 
