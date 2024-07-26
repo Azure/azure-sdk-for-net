@@ -13,6 +13,7 @@ using System.Threading;
 using System.Linq;
 using System.ComponentModel;
 using Azure.Core.Pipeline;
+using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation
 {
