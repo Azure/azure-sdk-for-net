@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RangerUsersyncSpec"/>. </summary>
-        /// <param name="enabled"> Denotes whether usersync service should be enabled. </param>
+        /// <param name="isEnabled"> Denotes whether usersync service should be enabled. </param>
         /// <param name="groups"> List of groups that should be synced. These group names should match the object id of the respective AAD groups. </param>
         /// <param name="mode"> User &amp; groups can be synced automatically or via a static list that's refreshed. </param>
         /// <param name="userMappingLocation"> Azure storage location of a mapping file that lists user &amp; group associations. </param>
         /// <param name="users"> List of user names that should be synced. These usernames should match the User principal name of the respective AAD users. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RangerUsersyncSpec(bool? enabled, IList<string> groups, RangerUsersyncMode? mode, string userMappingLocation, IList<string> users, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RangerUsersyncSpec(bool? isEnabled, IList<string> groups, RangerUsersyncMode? mode, string userMappingLocation, IList<string> users, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Groups = groups;
             Mode = mode;
             UserMappingLocation = userMappingLocation;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Denotes whether usersync service should be enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> List of groups that should be synced. These group names should match the object id of the respective AAD groups. </summary>
         public IList<string> Groups { get; }
         /// <summary> User &amp; groups can be synced automatically or via a static list that's refreshed. </summary>

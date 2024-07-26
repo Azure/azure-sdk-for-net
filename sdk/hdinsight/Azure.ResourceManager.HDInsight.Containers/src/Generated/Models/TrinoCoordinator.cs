@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> Initializes a new instance of <see cref="TrinoCoordinator"/>. </summary>
         /// <param name="debug"> Trino debug configuration. </param>
-        /// <param name="highAvailabilityEnabled"> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </param>
+        /// <param name="isHighAvailabilityEnabled"> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrinoCoordinator(TrinoDebugConfig debug, bool? highAvailabilityEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrinoCoordinator(TrinoDebugConfig debug, bool? isHighAvailabilityEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Debug = debug;
-            HighAvailabilityEnabled = highAvailabilityEnabled;
+            IsHighAvailabilityEnabled = isHighAvailabilityEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Trino debug configuration. </summary>
         public TrinoDebugConfig Debug { get; set; }
         /// <summary> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </summary>
-        public bool? HighAvailabilityEnabled { get; set; }
+        public bool? IsHighAvailabilityEnabled { get; set; }
     }
 }

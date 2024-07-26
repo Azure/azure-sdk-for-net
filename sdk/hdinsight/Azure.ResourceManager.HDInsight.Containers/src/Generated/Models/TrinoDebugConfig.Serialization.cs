@@ -26,20 +26,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Suspend))
+            if (Optional.IsDefined(IsSuspendEnabled))
             {
                 writer.WritePropertyName("suspend"u8);
-                writer.WriteBooleanValue(Suspend.Value);
+                writer.WriteBooleanValue(IsSuspendEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

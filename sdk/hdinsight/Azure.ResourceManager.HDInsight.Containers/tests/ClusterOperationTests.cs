@@ -484,8 +484,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             // set kafka profile
             clusterData.Properties.ClusterProfile.KafkaProfile = new KafkaProfile(new DiskStorageProfile(8,DataDiskType.StandardSSDLRS))
             {
-               EnableKRaft = true,
-               EnablePublicEndpoints = true,
+               IsKRaftEnabled = true,
+               IsPublicEndpointsEnabled = true,
                RemoteStorageUriString = "abfs://kafka@hilostorage.dfs.core.windows.net/"
             };
 

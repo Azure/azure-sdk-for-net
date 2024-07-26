@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
                     ClusterPoolVersion = "1.2",
                     NetworkProfile = new ClusterPoolNetworkProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"))
                     {
-                        EnablePrivateApiServer = true,
+                        IsPrivateApiServerEnabled = true,
                     },
                 },
             };

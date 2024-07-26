@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             Core.ResourceIdentifier networkId = new Core.ResourceIdentifier("/subscriptions/10e32bab-26da-4cc4-a441-52b318f824e6/resourceGroups/Yuchen-GA-Test/providers/Microsoft.Network/virtualNetworks/GA-VN-wus2/subnets/default");
             ClusterPoolNetworkProfile clusterPoolNetworkProfile = new ClusterPoolNetworkProfile(networkId)
             {
-                EnablePrivateApiServer = true,
+                IsPrivateApiServerEnabled = true,
                 OutboundType = OutboundType.LoadBalancer
             };
 

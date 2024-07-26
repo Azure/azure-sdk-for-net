@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Cluster Ranger plugin profile. </summary>
         internal ClusterRangerPluginProfile RangerPluginProfile { get; set; }
         /// <summary> Enable Ranger for cluster or not. </summary>
-        public bool? RangerPluginProfileEnabled
+        public bool? IsRangerForClusterEnabled
         {
-            get => RangerPluginProfile is null ? default(bool?) : RangerPluginProfile.Enabled;
+            get => RangerPluginProfile is null ? default(bool?) : RangerPluginProfile.IsRangerForClusterEnabled;
             set
             {
                 RangerPluginProfile = value.HasValue ? new ClusterRangerPluginProfile(value.Value) : null;

@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ClusterRangerPluginProfile"/>. </summary>
-        /// <param name="enabled"> Enable Ranger for cluster or not. </param>
-        public ClusterRangerPluginProfile(bool enabled)
+        /// <param name="isRangerForClusterEnabled"> Enable Ranger for cluster or not. </param>
+        public ClusterRangerPluginProfile(bool isRangerForClusterEnabled)
         {
-            Enabled = enabled;
+            IsRangerForClusterEnabled = isRangerForClusterEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterRangerPluginProfile"/>. </summary>
-        /// <param name="enabled"> Enable Ranger for cluster or not. </param>
+        /// <param name="isRangerForClusterEnabled"> Enable Ranger for cluster or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterRangerPluginProfile(bool enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterRangerPluginProfile(bool isRangerForClusterEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsRangerForClusterEnabled = isRangerForClusterEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Enable Ranger for cluster or not. </summary>
-        public bool Enabled { get; set; }
+        public bool IsRangerForClusterEnabled { get; set; }
     }
 }

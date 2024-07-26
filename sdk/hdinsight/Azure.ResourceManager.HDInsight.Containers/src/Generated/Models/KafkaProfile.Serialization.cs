@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableKRaft))
+            if (Optional.IsDefined(IsKRaftEnabled))
             {
                 writer.WritePropertyName("enableKRaft"u8);
-                writer.WriteBooleanValue(EnableKRaft.Value);
+                writer.WriteBooleanValue(IsKRaftEnabled.Value);
             }
-            if (Optional.IsDefined(EnablePublicEndpoints))
+            if (Optional.IsDefined(IsPublicEndpointsEnabled))
             {
                 writer.WritePropertyName("enablePublicEndpoints"u8);
-                writer.WriteBooleanValue(EnablePublicEndpoints.Value);
+                writer.WriteBooleanValue(IsPublicEndpointsEnabled.Value);
             }
             if (Optional.IsDefined(RemoteStorageUriString))
             {

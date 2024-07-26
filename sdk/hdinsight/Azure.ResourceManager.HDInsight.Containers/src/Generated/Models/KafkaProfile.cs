@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KafkaProfile"/>. </summary>
-        /// <param name="enableKRaft"> Expose Kafka cluster in KRaft mode. </param>
-        /// <param name="enablePublicEndpoints"> Expose worker nodes as public endpoints. </param>
+        /// <param name="isKRaftEnabled"> Expose Kafka cluster in KRaft mode. </param>
+        /// <param name="isPublicEndpointsEnabled"> Expose worker nodes as public endpoints. </param>
         /// <param name="remoteStorageUriString"> Fully qualified path of Azure Storage container used for Tiered Storage. </param>
         /// <param name="diskStorage"> Kafka disk storage profile. </param>
         /// <param name="connectivityEndpoints"> Kafka bootstrap server and brokers related connectivity endpoints. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KafkaProfile(bool? enableKRaft, bool? enablePublicEndpoints, string remoteStorageUriString, DiskStorageProfile diskStorage, KafkaConnectivityEndpoints connectivityEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KafkaProfile(bool? isKRaftEnabled, bool? isPublicEndpointsEnabled, string remoteStorageUriString, DiskStorageProfile diskStorage, KafkaConnectivityEndpoints connectivityEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EnableKRaft = enableKRaft;
-            EnablePublicEndpoints = enablePublicEndpoints;
+            IsKRaftEnabled = isKRaftEnabled;
+            IsPublicEndpointsEnabled = isPublicEndpointsEnabled;
             RemoteStorageUriString = remoteStorageUriString;
             DiskStorage = diskStorage;
             ConnectivityEndpoints = connectivityEndpoints;
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Expose Kafka cluster in KRaft mode. </summary>
-        public bool? EnableKRaft { get; set; }
+        public bool? IsKRaftEnabled { get; set; }
         /// <summary> Expose worker nodes as public endpoints. </summary>
-        public bool? EnablePublicEndpoints { get; set; }
+        public bool? IsPublicEndpointsEnabled { get; set; }
         /// <summary> Fully qualified path of Azure Storage container used for Tiered Storage. </summary>
         public string RemoteStorageUriString { get; set; }
         /// <summary> Kafka disk storage profile. </summary>

@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("debug"u8);
                 writer.WriteObjectValue(Debug, options);
             }
-            if (Optional.IsDefined(HighAvailabilityEnabled))
+            if (Optional.IsDefined(IsHighAvailabilityEnabled))
             {
                 writer.WritePropertyName("highAvailabilityEnabled"u8);
-                writer.WriteBooleanValue(HighAvailabilityEnabled.Value);
+                writer.WriteBooleanValue(IsHighAvailabilityEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

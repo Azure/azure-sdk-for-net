@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType.Value.ToString());
             }
-            if (Optional.IsDefined(EnablePrivateApiServer))
+            if (Optional.IsDefined(IsPrivateApiServerEnabled))
             {
                 writer.WritePropertyName("enablePrivateApiServer"u8);
-                writer.WriteBooleanValue(EnablePrivateApiServer.Value);
+                writer.WriteBooleanValue(IsPrivateApiServerEnabled.Value);
             }
             if (Optional.IsCollectionDefined(ApiServerAuthorizedIPRanges))
             {

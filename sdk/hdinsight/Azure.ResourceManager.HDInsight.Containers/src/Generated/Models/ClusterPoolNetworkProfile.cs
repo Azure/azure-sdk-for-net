@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ClusterPoolNetworkProfile"/>. </summary>
         /// <param name="subnetId"> Cluster pool subnet resource id. </param>
         /// <param name="outboundType"> This can only be set at cluster pool creation time and cannot be changed later. </param>
-        /// <param name="enablePrivateApiServer"> ClusterPool is based on AKS cluster. AKS cluster exposes the API server to public internet by default. If you set this property to true, a private AKS cluster will be created, and it will use private apiserver, which is not exposed to public internet. </param>
+        /// <param name="isPrivateApiServerEnabled"> ClusterPool is based on AKS cluster. AKS cluster exposes the API server to public internet by default. If you set this property to true, a private AKS cluster will be created, and it will use private apiserver, which is not exposed to public internet. </param>
         /// <param name="apiServerAuthorizedIPRanges"> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with private AKS clusters. So you cannot set enablePrivateApiServer to true and apiServerAuthorizedIpRanges at the same time. Currently, this property is not supported and please don't use it. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterPoolNetworkProfile(ResourceIdentifier subnetId, OutboundType? outboundType, bool? enablePrivateApiServer, IList<string> apiServerAuthorizedIPRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterPoolNetworkProfile(ResourceIdentifier subnetId, OutboundType? outboundType, bool? isPrivateApiServerEnabled, IList<string> apiServerAuthorizedIPRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetId = subnetId;
             OutboundType = outboundType;
-            EnablePrivateApiServer = enablePrivateApiServer;
+            IsPrivateApiServerEnabled = isPrivateApiServerEnabled;
             ApiServerAuthorizedIPRanges = apiServerAuthorizedIPRanges;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> This can only be set at cluster pool creation time and cannot be changed later. </summary>
         public OutboundType? OutboundType { get; set; }
         /// <summary> ClusterPool is based on AKS cluster. AKS cluster exposes the API server to public internet by default. If you set this property to true, a private AKS cluster will be created, and it will use private apiserver, which is not exposed to public internet. </summary>
-        public bool? EnablePrivateApiServer { get; set; }
+        public bool? IsPrivateApiServerEnabled { get; set; }
         /// <summary> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with private AKS clusters. So you cannot set enablePrivateApiServer to true and apiServerAuthorizedIpRanges at the same time. Currently, this property is not supported and please don't use it. </summary>
         public IList<string> ApiServerAuthorizedIPRanges { get; }
     }

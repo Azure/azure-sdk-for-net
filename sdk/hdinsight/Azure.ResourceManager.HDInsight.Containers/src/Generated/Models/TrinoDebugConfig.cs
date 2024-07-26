@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TrinoDebugConfig"/>. </summary>
-        /// <param name="enable"> The flag that if enable debug or not. </param>
+        /// <param name="isEnabled"> The flag that if enable debug or not. </param>
         /// <param name="port"> The debug port. </param>
-        /// <param name="suspend"> The flag that if suspend debug or not. </param>
+        /// <param name="isSuspendEnabled"> The flag that if suspend debug or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrinoDebugConfig(bool? enable, int? port, bool? suspend, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrinoDebugConfig(bool? isEnabled, int? port, bool? isSuspendEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enable = enable;
+            IsEnabled = isEnabled;
             Port = port;
-            Suspend = suspend;
+            IsSuspendEnabled = isSuspendEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The flag that if enable debug or not. </summary>
-        public bool? Enable { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The debug port. </summary>
         public int? Port { get; set; }
         /// <summary> The flag that if suspend debug or not. </summary>
-        public bool? Suspend { get; set; }
+        public bool? IsSuspendEnabled { get; set; }
     }
 }

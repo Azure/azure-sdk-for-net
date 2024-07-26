@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile ClusterPoolComputeProfile(string vmSize = null, int? count = default(int?), System.Collections.Generic.IEnumerable<string> availabilityZones = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistory ClusterPoolUpgradeHistory(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolUpgradeHistoryProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion ClusterPoolVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> components = null, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile identityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightManagedIdentitySpec> identityList = null, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile secretsProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> serviceConfigsProfiles = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile connectivityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile clusterAccessProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? isEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile sshProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile autoscaleProfile = null, bool? rangerPluginProfileEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile kafkaProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile trinoProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> llapProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile flinkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SparkProfile sparkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.RangerProfile rangerProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> stubProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> scriptActionProfiles = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentItem> components = null, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile identityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightManagedIdentitySpec> identityList = null, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile secretsProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> serviceConfigsProfiles = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterConnectivityProfile connectivityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAccessProfile clusterAccessProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? isEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.ClusterSshProfile sshProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile autoscaleProfile = null, bool? isRangerForClusterEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile kafkaProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile trinoProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> llapProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile flinkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SparkProfile sparkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.RangerProfile rangerProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> stubProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> scriptActionProfiles = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPyPILibraryProperties ClusterPyPILibraryProperties(string remarks = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), Azure.ResourceManager.HDInsight.Containers.Models.Status? status = default(Azure.ResourceManager.HDInsight.Containers.Models.Status?), string message = null, string name = null, string version = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeContent ClusterResizeContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? clusterResizeTargetWorkerNodeCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigProperties ClusterServiceConfigProperties(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customKeys = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigValueEntity> defaultKeys = null) { throw null; }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult HDInsightNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightServiceStatus HDInsightServiceStatus(string kind = null, string ready = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.KafkaConnectivityEndpoints KafkaConnectivityEndpoints(string bootstrapServerEndpoint = null, System.Collections.Generic.IEnumerable<string> brokerEndpoints = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile KafkaProfile(bool? enableKRaft = default(bool?), bool? enablePublicEndpoints = default(bool?), string remoteStorageUriString = null, Azure.ResourceManager.HDInsight.Containers.Models.DiskStorageProfile diskStorage = null, Azure.ResourceManager.HDInsight.Containers.Models.KafkaConnectivityEndpoints connectivityEndpoints = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile KafkaProfile(bool? isKRaftEnabled = default(bool?), bool? isPublicEndpointsEnabled = default(bool?), string remoteStorageUriString = null, Azure.ResourceManager.HDInsight.Containers.Models.DiskStorageProfile diskStorage = null, Azure.ResourceManager.HDInsight.Containers.Models.KafkaConnectivityEndpoints connectivityEndpoints = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.SshConnectivityEndpoint SshConnectivityEndpoint(string endpoint = null, string privateSshEndpoint = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.WebConnectivityEndpoint WebConnectivityEndpoint(string fqdn = null, string privateFqdn = null) { throw null; }
     }
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     {
         public ClusterPoolNetworkProfile(Azure.Core.ResourceIdentifier subnetId) { }
         public System.Collections.Generic.IList<string> ApiServerAuthorizedIPRanges { get { throw null; } }
-        public bool? EnablePrivateApiServer { get { throw null; } set { } }
+        public bool? IsPrivateApiServerEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.OutboundType? OutboundType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -923,11 +923,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightManagedIdentitySpec> IdentityList { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.HDInsightIdentityProfile IdentityProfile { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsRangerForClusterEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile KafkaProfile { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> LlapProfile { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
         public string OssVersion { get { throw null; } set { } }
-        public bool? RangerPluginProfileEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.RangerProfile RangerProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> ScriptActionProfiles { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile SecretsProfile { get { throw null; } set { } }
@@ -1658,8 +1658,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public KafkaProfile(Azure.ResourceManager.HDInsight.Containers.Models.DiskStorageProfile diskStorage) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.KafkaConnectivityEndpoints ConnectivityEndpoints { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.DiskStorageProfile DiskStorage { get { throw null; } set { } }
-        public bool? EnableKRaft { get { throw null; } set { } }
-        public bool? EnablePublicEndpoints { get { throw null; } set { } }
+        public bool? IsKRaftEnabled { get { throw null; } set { } }
+        public bool? IsPublicEndpointsEnabled { get { throw null; } set { } }
         public string RemoteStorageUriString { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.KafkaProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1811,8 +1811,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class RangerUsersyncSpec : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.RangerUsersyncSpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.RangerUsersyncSpec>
     {
         public RangerUsersyncSpec() { }
-        public bool? Enabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Groups { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.RangerUsersyncMode? Mode { get { throw null; } set { } }
         public string UserMappingLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Users { get { throw null; } }
@@ -1955,7 +1955,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     {
         public TrinoCoordinator() { }
         public Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig Debug { get { throw null; } set { } }
-        public bool? HighAvailabilityEnabled { get { throw null; } set { } }
+        public bool? IsHighAvailabilityEnabled { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoCoordinator>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1965,9 +1965,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class TrinoDebugConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>
     {
         public TrinoDebugConfig() { }
-        public bool? Enable { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsSuspendEnabled { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
-        public bool? Suspend { get { throw null; } set { } }
         Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Containers.Models.TrinoDebugConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2019,8 +2019,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile AuthorizationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile AutoscaleProfile { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsRangerForClusterEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
-        public bool? RangerPluginProfileEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.RangerProfile RangerProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> ScriptActionProfiles { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterSecretsProfile SecretsProfile { get { throw null; } set { } }

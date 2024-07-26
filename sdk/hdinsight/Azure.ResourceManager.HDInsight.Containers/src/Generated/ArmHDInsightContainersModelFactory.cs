@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="isEnabled"> Cluster Prometheus profile. </param>
         /// <param name="sshProfile"> Ssh profile for the cluster. </param>
         /// <param name="autoscaleProfile"> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </param>
-        /// <param name="rangerPluginProfileEnabled"> Cluster Ranger plugin profile. </param>
+        /// <param name="isRangerForClusterEnabled"> Cluster Ranger plugin profile. </param>
         /// <param name="kafkaProfile"> The Kafka cluster profile. </param>
         /// <param name="trinoProfile"> Trino Cluster profile. </param>
         /// <param name="llapProfile"> LLAP cluster profile. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="stubProfile"> Stub cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
         /// <returns> A new <see cref="Models.ClusterProfile"/> instance for mocking. </returns>
-        public static ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, IEnumerable<ClusterComponentItem> components = null, HDInsightIdentityProfile identityProfile = null, IEnumerable<HDInsightManagedIdentitySpec> identityList = null, AuthorizationProfile authorizationProfile = null, ClusterSecretsProfile secretsProfile = null, IEnumerable<ClusterServiceConfigsProfile> serviceConfigsProfiles = null, ClusterConnectivityProfile connectivityProfile = null, ClusterAccessProfile clusterAccessProfile = null, ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? isEnabled = null, ClusterSshProfile sshProfile = null, ClusterAutoscaleProfile autoscaleProfile = null, bool? rangerPluginProfileEnabled = null, KafkaProfile kafkaProfile = null, TrinoProfile trinoProfile = null, IDictionary<string, BinaryData> llapProfile = null, FlinkProfile flinkProfile = null, SparkProfile sparkProfile = null, RangerProfile rangerProfile = null, IDictionary<string, BinaryData> stubProfile = null, IEnumerable<ScriptActionProfile> scriptActionProfiles = null)
+        public static ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, IEnumerable<ClusterComponentItem> components = null, HDInsightIdentityProfile identityProfile = null, IEnumerable<HDInsightManagedIdentitySpec> identityList = null, AuthorizationProfile authorizationProfile = null, ClusterSecretsProfile secretsProfile = null, IEnumerable<ClusterServiceConfigsProfile> serviceConfigsProfiles = null, ClusterConnectivityProfile connectivityProfile = null, ClusterAccessProfile clusterAccessProfile = null, ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? isEnabled = null, ClusterSshProfile sshProfile = null, ClusterAutoscaleProfile autoscaleProfile = null, bool? isRangerForClusterEnabled = null, KafkaProfile kafkaProfile = null, TrinoProfile trinoProfile = null, IDictionary<string, BinaryData> llapProfile = null, FlinkProfile flinkProfile = null, SparkProfile sparkProfile = null, RangerProfile rangerProfile = null, IDictionary<string, BinaryData> stubProfile = null, IEnumerable<ScriptActionProfile> scriptActionProfiles = null)
         {
             components ??= new List<ClusterComponentItem>();
             identityList ??= new List<HDInsightManagedIdentitySpec>();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 isEnabled.HasValue ? new ClusterPrometheusProfile(isEnabled.Value, serializedAdditionalRawData: null) : null,
                 sshProfile,
                 autoscaleProfile,
-                rangerPluginProfileEnabled.HasValue ? new ClusterRangerPluginProfile(rangerPluginProfileEnabled.Value, serializedAdditionalRawData: null) : null,
+                isRangerForClusterEnabled.HasValue ? new ClusterRangerPluginProfile(isRangerForClusterEnabled.Value, serializedAdditionalRawData: null) : null,
                 kafkaProfile,
                 trinoProfile,
                 llapProfile,
@@ -297,17 +297,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KafkaProfile"/>. </summary>
-        /// <param name="enableKRaft"> Expose Kafka cluster in KRaft mode. </param>
-        /// <param name="enablePublicEndpoints"> Expose worker nodes as public endpoints. </param>
+        /// <param name="isKRaftEnabled"> Expose Kafka cluster in KRaft mode. </param>
+        /// <param name="isPublicEndpointsEnabled"> Expose worker nodes as public endpoints. </param>
         /// <param name="remoteStorageUriString"> Fully qualified path of Azure Storage container used for Tiered Storage. </param>
         /// <param name="diskStorage"> Kafka disk storage profile. </param>
         /// <param name="connectivityEndpoints"> Kafka bootstrap server and brokers related connectivity endpoints. </param>
         /// <returns> A new <see cref="Models.KafkaProfile"/> instance for mocking. </returns>
-        public static KafkaProfile KafkaProfile(bool? enableKRaft = null, bool? enablePublicEndpoints = null, string remoteStorageUriString = null, DiskStorageProfile diskStorage = null, KafkaConnectivityEndpoints connectivityEndpoints = null)
+        public static KafkaProfile KafkaProfile(bool? isKRaftEnabled = null, bool? isPublicEndpointsEnabled = null, string remoteStorageUriString = null, DiskStorageProfile diskStorage = null, KafkaConnectivityEndpoints connectivityEndpoints = null)
         {
             return new KafkaProfile(
-                enableKRaft,
-                enablePublicEndpoints,
+                isKRaftEnabled,
+                isPublicEndpointsEnabled,
                 remoteStorageUriString,
                 diskStorage,
                 connectivityEndpoints,

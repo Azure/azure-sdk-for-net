@@ -308,7 +308,7 @@ new HDInsightManagedIdentitySpec(HDInsightManagedIdentityType.Cluster,new Resour
                 Username = "admin",
             }), new RangerUsersyncSpec()
             {
-                Enabled = true,
+                IsEnabled = true,
                 Groups =
             {
 "0a53828f-36c9-44c3-be3d-99a7fce977ad","13be6971-79db-4f33-9d41-b25589ca25ac"

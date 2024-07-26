@@ -87,6 +87,14 @@ rename-mapping:
   MavenLibraryProperties: ClusterMavenLibraryProperties
   PyPiLibraryProperties: ClusterPyPILibraryProperties
   Severity: ClusterUpgradeSeverityType
+  ClusterPoolNetworkProfile.enablePrivateApiServer: IsPrivateApiServerEnabled
+  KafkaProfile.enableKRaft: IsKRaftEnabled
+  KafkaProfile.enablePublicEndpoints: IsPublicEndpointsEnabled
+  RangerUsersyncSpec.enabled: IsEnabled
+  TrinoCoordinator.highAvailabilityEnabled: IsHighAvailabilityEnabled
+  TrinoDebugConfig.enable: IsEnabled
+  TrinoDebugConfig.suspend: IsSuspendEnabled
+  ClusterRangerPluginProfile.enabled: IsRangerForClusterEnabled
   # TODO, remove these when service fix the Uri format before GA
   FlinkHiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   FlinkStorageProfile.storageUri: StorageUriString
