@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0 (2024-07-19)
+## 1.2.0 (2024-07-26)
 
 ### Features Added
 - Security enhancement feature snowflake support storage integration.
