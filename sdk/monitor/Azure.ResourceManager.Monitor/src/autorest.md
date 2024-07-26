@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8cbd903b0d037c427def0e8fbf167b26e87bd1a9/specification/monitor/resource-manager/readme.md
 tag: package-track2-stable
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -290,16 +290,16 @@ rename-mapping:
   StorageTableDestination: DataCollectionRuleStorageTableDestination
   ActionType: MonitorWorkspaceActionType
   Metrics: MonitorWorkspaceMetricProperties
-  AzureMonitorWorkspaceResource: MonitorWorkspaceResource
-  AzureMonitorWorkspaceResourceCollection: MonitorWorkspaceResourceCollection
-  AzureMonitorWorkspaceResourceData: MonitorWorkspaceResourceData
+  AzureMonitorWorkspace: MonitorWorkspaceResource
+  AzureMonitorWorkspaceCollection: MonitorWorkspaceResourceCollection
+  AzureMonitorWorkspaceData: MonitorWorkspaceResourceData
   IngestionSettings: MonitorWorkspaceIngestionSettings
   IngestionSettings.dataCollectionEndpointResourceId: -|arm-id
   IngestionSettings.dataCollectionRuleResourceId: -|arm-id
   AzureMonitorWorkspaceDefaultIngestionSettings: MonitorWorkspaceDefaultIngestionSettings
   AzureMonitorWorkspaceMetrics: MonitorWorkspaceMetrics
-  AzureMonitorWorkspaceResourcePatch: MonitorWorkspaceResourcePatch
-  AzureMonitorWorkspaceResourceListResult: MonitorWorkspaceResourceListResult
+  AzureMonitorWorkspacePatch: MonitorWorkspaceResourcePatch
+  AzureMonitorWorkspaceListResult: MonitorWorkspaceResourceListResult
   MetricDefinition: MonitorMetricDefinition
   AggregationType: MonitorAggregationType
   BaselineMetadata: MonitorBaselineMetadata
@@ -383,6 +383,9 @@ directive:
   - from: v3/types.json
     where: $.definitions.ErrorResponse
     transform: $["x-ms-client-name"] = "CommonErrorResponseV3"
+  - from: v4/types.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "CommonErrorResponseV4"
   - from: v2/types.json
     where: $.definitions.ErrorDetail
     transform: $["x-ms-client-name"] = "CommonErrorDetail"
@@ -444,6 +447,33 @@ directive:
                   "modelAsString": true
                 }
             };
+  - from: azuremonitor.json
+    where: $.definitions.AzureMonitorWorkspace.properties
+    transform: >
+      $.defaultIngestionSettings = {
+          "description": "The Data Collection Rule and Endpoint used for ingestion by default.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/IngestionSettings"
+            }
+          ],
+          "readOnly": true,
+          "x-ms-mutability": [
+            "read"
+          ]
+        };
+      $.metrics = {
+          "description": "Properties related to the metrics container in the Azure Monitor Workspace",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Metrics"
+            }
+          ],
+          "readOnly": true,
+          "x-ms-mutability": [
+            "read"
+          ]
+        };
 ```
 
 ## Tag: package-track2-stable
@@ -477,6 +507,6 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionEndpoints_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRuleAssociations_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/dataCollectionRules_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/monitoringAccounts_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/8cbd903b0d037c427def0e8fbf167b26e87bd1a9/specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/azuremonitor.json
 # - https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae339604f03f59412e016aa/specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/operations_API.json # we do not need to support this
 ```
