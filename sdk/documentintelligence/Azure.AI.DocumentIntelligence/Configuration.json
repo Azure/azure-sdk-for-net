@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.AI.DocumentIntelligence",
+  "library-name": "Azure.AI.DocumentIntelligence",
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/DocumentIntelligence/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/DocumentIntelligence/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ]
+}

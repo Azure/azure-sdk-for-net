@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class EventGridSystemEventsModelFactory
+    public static partial class MessagingEventGridSystemEventsModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiDefinitionAddedEventData"/>. </summary>
         /// <param name="title"> API definition title. </param>
