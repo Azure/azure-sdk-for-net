@@ -8,6 +8,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventGrid.N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventGrid.Namespaces.Tests", "tests\Azure.Messaging.EventGrid.Namespaces.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{5E3752BC-2C04-499F-B2C4-28426B3C344A}"
+	ProjectSection(SolutionItems) = preProject
+		samples\README.md = samples\README.md
+		samples\Sample1_Namespaces.md = samples\Sample1_Namespaces.md
+		samples\Sample2_CNCF.md = samples\Sample2_CNCF.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,17 +1,21 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
-
-- Consumers can now provide their own value for the Operation ID when sending emails.
-  New overloads have been added to `EmailClient` with the `operationId` parameter.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2024-07-10)
+
+### Features Added
+
+- Consumers can now provide their own value for the Operation ID when sending emails.
+  New overloads have been added to `EmailClient` with the `operationId` parameter.
 
 ## 1.0.1 (2023-08-17)
 

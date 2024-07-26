@@ -79,10 +79,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("expiry")]
         public DateTimeOffset ExpireOn { get; set; }
         /// <summary> Thumbprint of the certificate. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; set; }
         /// <summary> Subject of the certificate. </summary>
+        [WirePath("subject")]
         public string Subject { get; set; }
     }
 }

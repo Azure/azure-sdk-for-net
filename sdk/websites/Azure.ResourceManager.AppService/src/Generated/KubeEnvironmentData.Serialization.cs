@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP);
             }
+            if (Optional.IsDefined(EnvironmentType))
+            {
+                writer.WritePropertyName("environmentType"u8);
+                writer.WriteStringValue(EnvironmentType);
+            }
             if (Optional.IsDefined(ArcConfiguration))
             {
                 writer.WritePropertyName("arcConfiguration"u8);
@@ -110,6 +115,11 @@ namespace Azure.ResourceManager.AppService
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration, options);
+            }
+            if (Optional.IsDefined(ContainerAppsConfiguration))
+            {
+                writer.WritePropertyName("containerAppsConfiguration"u8);
+                writer.WriteObjectValue(ContainerAppsConfiguration, options);
             }
             if (Optional.IsDefined(AksResourceId))
             {
@@ -168,8 +178,10 @@ namespace Azure.ResourceManager.AppService
             bool? internalLoadBalancerEnabled = default;
             string defaultDomain = default;
             string staticIP = default;
+            string environmentType = default;
             ArcConfiguration arcConfiguration = default;
             AppLogsConfiguration appLogsConfiguration = default;
+            ContainerAppsConfiguration containerAppsConfiguration = default;
             ResourceIdentifier aksResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -274,6 +286,11 @@ namespace Azure.ResourceManager.AppService
                             staticIP = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("environmentType"u8))
+                        {
+                            environmentType = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("arcConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -290,6 +307,15 @@ namespace Azure.ResourceManager.AppService
                                 continue;
                             }
                             appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("containerAppsConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            containerAppsConfiguration = ContainerAppsConfiguration.DeserializeContainerAppsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("aksResourceID"u8))
@@ -323,8 +349,10 @@ namespace Azure.ResourceManager.AppService
                 internalLoadBalancerEnabled,
                 defaultDomain,
                 staticIP,
+                environmentType,
                 arcConfiguration,
                 appLogsConfiguration,
+                containerAppsConfiguration,
                 aksResourceId,
                 kind,
                 serializedAdditionalRawData);
@@ -583,6 +611,29 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnvironmentType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    environmentType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnvironmentType))
+                {
+                    builder.Append("    environmentType: ");
+                    if (EnvironmentType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EnvironmentType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EnvironmentType}'");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcConfiguration), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -610,6 +661,21 @@ namespace Azure.ResourceManager.AppService
                 {
                     builder.Append("    appLogsConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AppLogsConfiguration, options, 4, false, "    appLogsConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerAppsConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerAppsConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerAppsConfiguration))
+                {
+                    builder.Append("    containerAppsConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContainerAppsConfiguration, options, 4, false, "    containerAppsConfiguration: ");
                 }
             }
 

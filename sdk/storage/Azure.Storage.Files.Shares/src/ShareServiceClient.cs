@@ -819,14 +819,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await ServiceRestClient.SetPropertiesAsync(
-                            storageServiceProperties: properties,
+                            shareServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.SetProperties(
-                            storageServiceProperties: properties,
+                            shareServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 
