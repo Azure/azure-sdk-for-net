@@ -116,7 +116,7 @@ namespace Azure.AI.Language.Conversations
 }
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    [System.ObsoleteAttribute("This class is obsolete and and will be removed in a future release. ConversationAuthoringClient will no longer be supported as part of the Conversations SDK.", true)]
+    [System.ObsoleteAttribute("This class is obsolete and and will be removed in a future release. Find more details here: https://aka.ms/language-conversations-sdk", true)]
     public partial class ConversationAuthoringClient
     {
         protected ConversationAuthoringClient() { }
