@@ -211,19 +211,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
 
-            // TODO: PRINT ACTIVITY NAME
-            if (activities.Count > 1)
-            {
-                var str = "";
-
-                foreach (var a in activities)
-                {
-                    str += a.DisplayName.ToString();
-                }
-
-                throw new Exception(str);
-            }
-
             var telemetryItem = telemetryItems.Where(x => x.Name == "RemoteDependency").Single();
             var activity = activities.Single();
 
