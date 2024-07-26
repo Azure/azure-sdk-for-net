@@ -8,6 +8,8 @@ extends:
         displayName: Set OIDC variables
         env:
           ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+          ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+          ARM_TENANT_ID: $(ARM_TENANT_ID)
         inputs:
           azureSubscription: azure-sdk-tests
           scriptType: pscore
@@ -33,4 +35,6 @@ extends:
         ServiceConnection: azure-sdk-tests
     EnvVars:
       ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+      ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+      ARM_TENANT_ID: $(ARM_TENANT_ID)
     UseFederatedAuth: true
