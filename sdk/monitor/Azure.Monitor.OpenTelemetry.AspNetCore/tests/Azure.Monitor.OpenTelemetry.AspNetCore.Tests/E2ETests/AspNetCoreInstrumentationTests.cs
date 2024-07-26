@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,10 +19,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
@@ -29,10 +32,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         : IClassFixture<WebApplicationFactory<AspNetCoreTestApp.Program>>, IDisposable
     {
         private readonly WebApplicationFactory<AspNetCoreTestApp.Program> _factory;
+        private readonly TelemetryItemOutputHelper _telemetryOutput;
 
-        public AspNetCoreInstrumentationTests(WebApplicationFactory<AspNetCoreTestApp.Program> factory)
+        public AspNetCoreInstrumentationTests(WebApplicationFactory<AspNetCoreTestApp.Program> factory, ITestOutputHelper output)
         {
             _factory = factory;
+            _telemetryOutput = new TelemetryItemOutputHelper(output);
         }
 
         [Theory]
@@ -121,9 +126,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             }
 
             // ASSERT
-            var activity = activities.Single();
+            _telemetryOutput.Write(telemetryItems);
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             var telemetryItem = telemetryItems.Where(x => x.Name == "Request").Single();
+            var activity = activities.Single();
 
             VerifyTelemetryItem(
                 isSuccess: statusCode == 200,
@@ -194,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
         public void Dispose()
         {
-            _factory.Dispose();
+            //_factory.Dispose();
         }
     }
 }
