@@ -48,7 +48,7 @@ To use Microsoft Entra authentication, the environment variables as described in
 We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Microsoft Entra Authentication section.
 
 ```C# Snippet:InstantiateTimeZoneClientViaMicrosoftEntra
-// Create a MapsTimezoneClient that will authenticate through MicrosoftEntra
+// Create a MapsTimeZoneClient that will authenticate through MicrosoftEntra
 DefaultAzureCredential credential = new DefaultAzureCredential();
 string clientId = "<My Map Account Client Id>";
 MapsTimeZoneClient client = new MapsTimeZoneClient(credential, clientId);
