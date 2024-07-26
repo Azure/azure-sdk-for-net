@@ -58,10 +58,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Start a dialog. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="dialogId"> The dialog id. </param>
-        /// <param name="startDialogRequest"> The start dialog request. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
+        /// <param name="dialogId"> The <see cref="string"/> to use. </param>
+        /// <param name="startDialogRequest"> The <see cref="StartDialogRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="startDialogRequest"/> is null. </exception>
         public async Task<Response<DialogStateResponseInternal>> StartDialogAsync(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest, CancellationToken cancellationToken = default)
@@ -95,10 +94,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Start a dialog. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="dialogId"> The dialog id. </param>
-        /// <param name="startDialogRequest"> The start dialog request. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
+        /// <param name="dialogId"> The <see cref="string"/> to use. </param>
+        /// <param name="startDialogRequest"> The <see cref="StartDialogRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="startDialogRequest"/> is null. </exception>
         public Response<DialogStateResponseInternal> StartDialog(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest, CancellationToken cancellationToken = default)

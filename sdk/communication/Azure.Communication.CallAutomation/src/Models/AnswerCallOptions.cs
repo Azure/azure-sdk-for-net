@@ -50,5 +50,10 @@ namespace Azure.Communication.CallAutomation
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }
+
+        /// <summary>
+        /// If passed true, the call will start in an escalated state. (i.e. GroupCall).
+        /// </summary>
+        public bool? StartInConferenceMode { get; set; }
     }
 }

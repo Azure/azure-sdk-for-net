@@ -32,7 +32,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration)
+        /// <param name="startInConferenceMode"> If passed true, the call will start in an escalated state. (i.e. GroupCall). </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, bool? startInConferenceMode)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -40,6 +41,7 @@ namespace Azure.Communication.CallAutomation
             CallIntelligenceOptions = callIntelligenceOptions;
             AnsweredBy = answeredBy;
             TranscriptionConfiguration = transcriptionConfiguration;
+            StartInConferenceMode = startInConferenceMode;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -54,5 +56,7 @@ namespace Azure.Communication.CallAutomation
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
         /// <summary> Live Transcription Configuration. </summary>
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
+        /// <summary> If passed true, the call will start in an escalated state. (i.e. GroupCall). </summary>
+        public bool? StartInConferenceMode { get; set; }
     }
 }

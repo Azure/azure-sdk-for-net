@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
             {
                 switch (discriminator.GetString())
                 {
-                    case "PowerVirtualAgents": return PowerVirtualAgentsDialog.DeserializePowerVirtualAgentsDialog(element);
+                    case "powerVirtualAgents": return PowerVirtualAgentsDialog.DeserializePowerVirtualAgentsDialog(element);
                 }
             }
             return UnknownDialog.DeserializeUnknownDialog(element);

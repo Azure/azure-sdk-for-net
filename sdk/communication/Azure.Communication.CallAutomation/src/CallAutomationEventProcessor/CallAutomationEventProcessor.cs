@@ -62,8 +62,10 @@ namespace Azure.Communication.CallAutomation
                     handlers(this, args);
                 }
 
-                // If this call is disconnect, remove all related items in memory
-                if (receivedEvent is CallDisconnected)
+                // If call is disconnected, CreateCall failed or Answer failed remove all related items in memory
+                if (receivedEvent is CallDisconnected
+                    || receivedEvent is CreateCallFailed
+                    || receivedEvent is AnswerFailed)
                 {
                     // remove from eventsbacklog
                     _eventBacklog.TryRemoveEvent(internalEventId);

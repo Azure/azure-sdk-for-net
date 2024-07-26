@@ -44,5 +44,10 @@ namespace Azure.Communication.CallAutomation
         /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
         /// </summary>
         public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
+
+        /// <summary>
+        /// If passed true, the call will start in an escalated state. (i.e. GroupCall).
+        /// </summary>
+        public bool? StartInConferenceMode { get; set; }
     }
 }

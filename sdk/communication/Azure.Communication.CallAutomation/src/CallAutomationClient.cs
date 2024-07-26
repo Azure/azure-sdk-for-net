@@ -253,6 +253,7 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.StartInConferenceMode = options.StartInConferenceMode;
 
             return request;
         }
@@ -651,6 +652,8 @@ namespace Azure.Communication.CallAutomation
 
             request.OperationContext = options.OperationContext;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            // group call should always start in conference mode
+            request.StartInConferenceMode = true;
 
             return request;
         }

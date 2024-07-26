@@ -39,7 +39,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration)
+        /// <param name="startInConferenceMode"> If passed true, the call will start in an escalated state. (i.e. GroupCall). </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, bool? startInConferenceMode)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -49,6 +50,7 @@ namespace Azure.Communication.CallAutomation
             CallbackUri = callbackUri;
             CallIntelligenceOptions = callIntelligenceOptions;
             TranscriptionConfiguration = transcriptionConfiguration;
+            StartInConferenceMode = startInConferenceMode;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -70,5 +72,7 @@ namespace Azure.Communication.CallAutomation
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> Live Transcription Configuration. </summary>
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
+        /// <summary> If passed true, the call will start in an escalated state. (i.e. GroupCall). </summary>
+        public bool? StartInConferenceMode { get; set; }
     }
 }
