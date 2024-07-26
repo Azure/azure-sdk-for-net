@@ -30,7 +30,7 @@ namespace Azure.Maps.TimeZone.Tests.Samples
         public void TimeZoneClientViaMicrosoftEntra()
         {
             #region Snippet:InstantiateTimeZoneClientViaMicrosoftEntra
-            // Create a MapsTimezoneClient that will authenticate through MicrosoftEntra
+            // Create a MapsTimeZoneClient that will authenticate through MicrosoftEntra
             DefaultAzureCredential credential = new DefaultAzureCredential();
             string clientId = "<My Map Account Client Id>";
             MapsTimeZoneClient client = new MapsTimeZoneClient(credential, clientId);

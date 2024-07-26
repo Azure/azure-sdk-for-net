@@ -13,4 +13,4 @@ description: Samples for the Azure.Maps.TimeZone client library.
 
 For different APIs, please refer the following samples:
 
-[Timezone](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.TimeZone/samples/MapsTimezoneSamples.md)
+[Timezone](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.TimeZone/samples/MapsTimeZoneSamples.md)
