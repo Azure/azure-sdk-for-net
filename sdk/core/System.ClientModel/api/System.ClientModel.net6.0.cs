@@ -191,8 +191,8 @@ namespace System.ClientModel.Primitives
         protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract bool IsCompleted { get; protected set; }
         public abstract System.ClientModel.ContinuationToken? RehydrationToken { get; protected set; }
-        public abstract void WaitForCompletion();
-        public abstract System.Threading.Tasks.Task WaitForCompletionAsync();
+        public abstract void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute

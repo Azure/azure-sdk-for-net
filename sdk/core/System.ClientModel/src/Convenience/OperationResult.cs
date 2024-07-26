@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -32,10 +33,9 @@ public abstract class OperationResult : ClientResult
     /// <summary>
     /// Gets a value that indicates whether the operation has completed.
     /// </summary>
-    /// <value>`true` if the operation has completed (that is, the service is
-    /// done processing the operation and it has terminated due to having
-    /// finished successfully, because of an error condition, or having been
-    /// cancelled by a user); otherwise, `false`.
+    /// <value><c>true</c> if the operation has reached a terminal state
+    /// (that is, is has finished successfully, ended due to an error condition,
+    /// or has been cancelled by a user); otherwise, <c>false</c>.
     /// </value>
     public abstract bool IsCompleted { get; protected set; }
 
@@ -57,10 +57,9 @@ public abstract class OperationResult : ClientResult
     /// that allow the caller to specify the polling interval or delay strategy
     /// used to wait between sending request for updates.
     /// </remarks>
-    /// <exception cref="OperationCanceledException">The cancellation token
-    /// passed to the client method to create the operation instance was
-    /// cancelled.</exception>
-    public abstract Task WaitForCompletionAsync();
+    /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/>
+    /// was cancelled.</exception>
+    public abstract Task WaitForCompletionAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Waits for the operation to complete processing on the service.
@@ -72,8 +71,7 @@ public abstract class OperationResult : ClientResult
     /// that allow the caller to specify the polling interval or delay strategy
     /// used to wait between sending request for updates.
     /// </remarks>
-    /// <exception cref="OperationCanceledException">The cancellation token
-    /// passed to the client method to create the operation instance was
-    /// cancelled.</exception>
-    public abstract void WaitForCompletion();
+    /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/>
+    /// was cancelled.</exception>
+    public abstract void WaitForCompletion(CancellationToken cancellationToken = default);
 }

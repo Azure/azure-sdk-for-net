@@ -16,6 +16,11 @@ public enum ReturnWhen
     /// Indicates the client method should wait to return until the service has
     /// completed processing of the operation.
     /// </summary>
+    /// <remarks>When <see cref="Completed"/> is passed to a client method that
+    /// creates an <see cref="OperationResult"/>, the returned operation type's
+    /// <see cref="OperationResult.IsCompleted"/> property is <c>true</c>.  If
+    /// the operation computed a value and completed successfully, its
+    /// <c>Value</c> property will contain the result.</remarks>
     Completed,
 
     /// <summary>
