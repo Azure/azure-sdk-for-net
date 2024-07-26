@@ -252,10 +252,26 @@ if (! $m) {{
     Write-Output '{AzurePowerShellNoAzAccountModule}'
     exit
 }}
+$tenantId = '{tenantIdArg}'
+$params = @{{ ResourceUrl = '{resource}', 'WarningAction' = 'Ignore' }}
 
-$token = Get-AzAccessToken -ResourceUrl '{resource}'{tenantIdArg}
+if ($tenantId.Length ge 0) {{
+    $params['TenantId'] = '{tenantId}'
+}}
+
+$useSecureString = $m.Version -ge [version]'2.17.0'
+if ($useSecureString) {{
+    $params['AsSecureString'] = $true
+}}
+
+$token = Get-AzAccessToken @params
+
 $customToken = New-Object -TypeName psobject
-$customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+if ($useSecureString) {{
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+}} else {{
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+}}
 $customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.ToUnixTimeSeconds()
 
 $x = $customToken | ConvertTo-Xml
