@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="content"> The library management operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ManageLibrariesClusterLibraryAsync(WaitUntil waitUntil, ClusterLibraryManagementContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ManageLibrariesClusterLibraryAsync(WaitUntil waitUntil, ClusterLibraryManagementOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="content"> The library management operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ManageLibrariesClusterLibrary(WaitUntil waitUntil, ClusterLibraryManagementContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ManageLibrariesClusterLibrary(WaitUntil waitUntil, ClusterLibraryManagementOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

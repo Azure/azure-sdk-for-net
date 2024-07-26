@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Gets or sets the properties. Define cluster pool specific properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterPoolResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HDInsightClusterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightClusterPoolProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.HDInsight.Containers
         }
 
         /// <summary> Gets or sets the properties. Define cluster pool specific properties. </summary>
-        public ClusterPoolResourceProperties Properties { get; set; }
+        public HDInsightClusterPoolProperties Properties { get; set; }
     }
 }

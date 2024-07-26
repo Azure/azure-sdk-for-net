@@ -715,7 +715,7 @@ AutoscaleScheduleDay.Sunday
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            ClusterLibraryManagementContent content = new ClusterLibraryManagementContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Install, new ClusterLibrary[]
+            ClusterLibraryManagementOperationContent content = new ClusterLibraryManagementOperationContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Install, new ClusterLibrary[]
             {
 new ClusterLibrary(new ClusterPyPILibraryProperties("requests")
 {
@@ -755,7 +755,7 @@ Remarks = "Maven packages.",
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            ClusterLibraryManagementContent content = new ClusterLibraryManagementContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Uninstall, new ClusterLibrary[]
+            ClusterLibraryManagementOperationContent content = new ClusterLibraryManagementOperationContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Uninstall, new ClusterLibrary[]
             {
 new ClusterLibrary(new ClusterPyPILibraryProperties("tensorflow")),new ClusterLibrary(new ClusterMavenLibraryProperties("org.apache.flink","flink-connector-hudi"))
             }));

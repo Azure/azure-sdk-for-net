@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="severity"> Severity of this upgrade. </param>
         /// <param name="extendedProperties"> Extended properties of current available upgrade version. </param>
         /// <param name="createdOn"> Created time of current available upgrade version. </param>
-        internal ClusterAvailableInPlaceUpgradeProperties(ClusterAvailableUpgradeType upgradeType, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, string sourceOssVersion, string sourceClusterVersion, string sourceBuildNumber, string targetOssVersion, string targetClusterVersion, string targetBuildNumber, string componentName, Severity? severity, string extendedProperties, DateTimeOffset? createdOn) : base(upgradeType, serializedAdditionalRawData)
+        internal ClusterAvailableInPlaceUpgradeProperties(ClusterAvailableUpgradeType upgradeType, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, string sourceOssVersion, string sourceClusterVersion, string sourceBuildNumber, string targetOssVersion, string targetClusterVersion, string targetBuildNumber, string componentName, ClusterUpgradeSeverityType? severity, string extendedProperties, DateTimeOffset? createdOn) : base(upgradeType, serializedAdditionalRawData)
         {
             Description = description;
             SourceOssVersion = sourceOssVersion;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Name of component to be upgraded. </summary>
         public string ComponentName { get; set; }
         /// <summary> Severity of this upgrade. </summary>
-        public Severity? Severity { get; set; }
+        public ClusterUpgradeSeverityType? Severity { get; set; }
         /// <summary> Extended properties of current available upgrade version. </summary>
         public string ExtendedProperties { get; set; }
         /// <summary> Created time of current available upgrade version. </summary>

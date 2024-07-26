@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 return null;
             }
-            ClusterPoolResourceProperties properties = default;
+            HDInsightClusterPoolProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                     {
                         continue;
                     }
-                    properties = ClusterPoolResourceProperties.DeserializeClusterPoolResourceProperties(property.Value, options);
+                    properties = HDInsightClusterPoolProperties.DeserializeHDInsightClusterPoolProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

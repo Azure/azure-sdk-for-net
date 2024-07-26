@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             string clusterPoolName = "clusterpool1";
             HDInsightClusterPoolData data = new HDInsightClusterPoolData(new AzureLocation("West US 2"))
             {
-                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
+                Properties = new HDInsightClusterPoolProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
                 {
                     AvailabilityZones =
 {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             string clusterPoolName = "clusterpool1";
             HDInsightClusterPoolData data = new HDInsightClusterPoolData(new AzureLocation("West US 2"))
             {
-                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
+                Properties = new HDInsightClusterPoolProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
                 {
                     AvailabilityZones =
 {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             string clusterPoolName = "clusterpool1";
             HDInsightClusterPoolData data = new HDInsightClusterPoolData(new AzureLocation("West US 2"))
             {
-                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
+                Properties = new HDInsightClusterPoolProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
                 {
                     AvailabilityZones =
 {

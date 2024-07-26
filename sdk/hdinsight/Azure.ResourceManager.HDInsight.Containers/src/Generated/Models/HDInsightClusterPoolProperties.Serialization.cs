@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterPoolResourceProperties : IUtf8JsonSerializable, IJsonModel<ClusterPoolResourceProperties>
+    public partial class HDInsightClusterPoolProperties : IUtf8JsonSerializable, IJsonModel<HDInsightClusterPoolProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPoolResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterPoolProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ClusterPoolResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HDInsightClusterPoolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterPoolResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterPoolResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterPoolProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        ClusterPoolResourceProperties IJsonModel<ClusterPoolResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HDInsightClusterPoolProperties IJsonModel<HDInsightClusterPoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterPoolResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterPoolResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterPoolProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterPoolResourceProperties(document.RootElement, options);
+            return DeserializeHDInsightClusterPoolProperties(document.RootElement, options);
         }
 
-        internal static ClusterPoolResourceProperties DeserializeClusterPoolResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HDInsightClusterPoolProperties DeserializeHDInsightClusterPoolProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterPoolResourceProperties(
+            return new HDInsightClusterPoolProperties(
                 provisioningState,
                 deploymentId,
                 managedResourceGroupName,
@@ -215,35 +215,35 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterPoolResourceProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HDInsightClusterPoolProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterPoolResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterPoolResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterPoolProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ClusterPoolResourceProperties IPersistableModel<ClusterPoolResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HDInsightClusterPoolProperties IPersistableModel<HDInsightClusterPoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterPoolResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeClusterPoolResourceProperties(document.RootElement, options);
+                        return DeserializeHDInsightClusterPoolProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterPoolResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterPoolProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterPoolResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HDInsightClusterPoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

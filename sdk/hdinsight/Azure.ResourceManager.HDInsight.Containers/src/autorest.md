@@ -31,6 +31,7 @@ rename-mapping:
   Cluster: HDInsightCluster
   ClusterResourceProperties: HDInsightClusterProperties
   ClusterPool: HDInsightClusterPool
+  ClusterPoolResourceProperties: HDInsightClusterPoolProperties
   ClusterComponentsItem: ClusterComponentItem
   ClusterInstanceViewsResult: ClusterInstanceViewListResult
   ClusterJobList: ClusterJobListResult
@@ -44,7 +45,7 @@ rename-mapping:
   ClusterPoolVersionsListResult: ClusterPoolVersionListResult
   ClusterPrometheusProfile.enabled: IsEnabled
   ClusterResizeData: ClusterResizeContent
-  ClusterLibraryManagementOperation: ClusterLibraryManagementContent
+  ClusterLibraryManagementOperation: ClusterLibraryManagementOperationContent
   ClusterVersion: HDInsightClusterVersion
   ClusterVersionsListResult: HDInsightClusterVersionListResult
   ComparisonOperator: HDInsightComparisonOperator
@@ -85,6 +86,7 @@ rename-mapping:
   ManagedIdentityType: HDInsightManagedIdentityType
   MavenLibraryProperties: ClusterMavenLibraryProperties
   PyPiLibraryProperties: ClusterPyPILibraryProperties
+  Severity: ClusterUpgradeSeverityType
   # TODO, remove these when service fix the Uri format before GA
   FlinkHiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   FlinkStorageProfile.storageUri: StorageUriString

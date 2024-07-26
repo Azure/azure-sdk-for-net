@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
 
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location)
             {
-                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
+                Properties = new HDInsightClusterPoolProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
                 {
                     ClusterPoolVersion = "1.2"
                 }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
 
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location)
             {
-                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
+                Properties = new HDInsightClusterPoolProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
                 {
                     ClusterPoolVersion = "1.1"
                 }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
 
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location)
             {
-                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
+                Properties = new HDInsightClusterPoolProperties(new ClusterPoolComputeProfile("Standard_D4a_v4"))
                 {
                     ClusterPoolVersion = "1.2",
                     NetworkProfile = clusterPoolNetworkProfile

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string targetClusterVersion = default;
             string targetBuildNumber = default;
             string componentName = default;
-            Severity? severity = default;
+            ClusterUpgradeSeverityType? severity = default;
             string extendedProperties = default;
             DateTimeOffset? createdTime = default;
             ClusterAvailableUpgradeType upgradeType = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    severity = new Severity(property.Value.GetString());
+                    severity = new ClusterUpgradeSeverityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extendedProperties"u8))

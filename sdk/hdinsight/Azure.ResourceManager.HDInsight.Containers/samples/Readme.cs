@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // initialize the ClusterPoolData instance
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(location)
             {
-                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile(clusterPoolVmSize))
+                Properties = new HDInsightClusterPoolProperties(new ClusterPoolComputeProfile(clusterPoolVmSize))
                 {
                     ClusterPoolVersion = availableClusterPoolVersion?.Properties.ClusterPoolVersion
                 }
