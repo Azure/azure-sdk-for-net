@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy.Value.ToString());
+            }
             writer.WritePropertyName("extensionParameters"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
@@ -173,6 +178,7 @@ namespace Azure.ResourceManager.Hci
             HciProvisioningState? provisioningState = default;
             ArcExtensionAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails = default;
+            ExtensionManagedBy? managedBy = default;
             string forceUpdateTag = default;
             string publisher = default;
             string type0 = default;
@@ -248,6 +254,15 @@ namespace Azure.ResourceManager.Hci
                                 array.Add(PerNodeExtensionState.DeserializePerNodeExtensionState(item, options));
                             }
                             perNodeExtensionDetails = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("managedBy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managedBy = new ExtensionManagedBy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extensionParameters"u8))
@@ -335,6 +350,7 @@ namespace Azure.ResourceManager.Hci
                 provisioningState,
                 aggregateState,
                 perNodeExtensionDetails ?? new ChangeTrackingList<PerNodeExtensionState>(),
+                managedBy,
                 forceUpdateTag,
                 publisher,
                 type0,

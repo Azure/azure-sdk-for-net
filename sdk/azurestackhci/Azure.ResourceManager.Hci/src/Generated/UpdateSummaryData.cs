@@ -66,9 +66,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. </param>
         /// <param name="oemFamily"> OEM family name. </param>
+        /// <param name="currentOemVersion"> Current OEM Version. </param>
         /// <param name="hardwareModel"> Name of the hardware model. </param>
         /// <param name="packageVersions"> Current version of each updatable component. </param>
         /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
+        /// <param name="currentSbeVersion"> Current Sbe version of the stamp. </param>
         /// <param name="lastUpdated"> Last time an update installation completed successfully. </param>
         /// <param name="lastChecked"> Last time the update service successfully checked for updates. </param>
         /// <param name="healthState"> Overall health state for update-specific health checks. </param>
@@ -76,14 +78,16 @@ namespace Azure.ResourceManager.Hci
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
         /// <param name="state"> Overall update state of the stamp. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, DateTimeOffset? lastUpdated, DateTimeOffset? lastChecked, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, UpdateSummariesPropertiesState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal UpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdated, DateTimeOffset? lastChecked, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, UpdateSummariesPropertiesState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
             OemFamily = oemFamily;
+            CurrentOemVersion = currentOemVersion;
             HardwareModel = hardwareModel;
             PackageVersions = packageVersions;
             CurrentVersion = currentVersion;
+            CurrentSbeVersion = currentSbeVersion;
             LastUpdated = lastUpdated;
             LastChecked = lastChecked;
             HealthState = healthState;
@@ -99,12 +103,16 @@ namespace Azure.ResourceManager.Hci
         public HciProvisioningState? ProvisioningState { get; }
         /// <summary> OEM family name. </summary>
         public string OemFamily { get; set; }
+        /// <summary> Current OEM Version. </summary>
+        public string CurrentOemVersion { get; set; }
         /// <summary> Name of the hardware model. </summary>
         public string HardwareModel { get; set; }
         /// <summary> Current version of each updatable component. </summary>
         public IList<HciPackageVersionInfo> PackageVersions { get; }
         /// <summary> Current Solution Bundle version of the stamp. </summary>
         public string CurrentVersion { get; set; }
+        /// <summary> Current Sbe version of the stamp. </summary>
+        public string CurrentSbeVersion { get; set; }
         /// <summary> Last time an update installation completed successfully. </summary>
         public DateTimeOffset? LastUpdated { get; set; }
         /// <summary> Last time the update service successfully checked for updates. </summary>

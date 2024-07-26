@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityStatus))
+            {
+                writer.WritePropertyName("connectivityStatus"u8);
+                writer.WriteStringValue(ConnectivityStatus.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(CloudId))
             {
                 writer.WritePropertyName("cloudId"u8);
@@ -108,6 +113,16 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
                 writer.WriteObjectValue(SoftwareAssuranceProperties, options);
             }
+            if (Optional.IsDefined(LogCollectionProperties))
+            {
+                writer.WritePropertyName("logCollectionProperties"u8);
+                writer.WriteObjectValue(LogCollectionProperties, options);
+            }
+            if (Optional.IsDefined(RemoteSupportProperties))
+            {
+                writer.WritePropertyName("remoteSupportProperties"u8);
+                writer.WriteObjectValue(RemoteSupportProperties, options);
+            }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
@@ -117,6 +132,11 @@ namespace Azure.ResourceManager.Hci
             {
                 writer.WritePropertyName("reportedProperties"u8);
                 writer.WriteObjectValue(ReportedProperties, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsolatedVmAttestationConfiguration))
+            {
+                writer.WritePropertyName("isolatedVmAttestationConfiguration"u8);
+                writer.WriteObjectValue(IsolatedVmAttestationConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrialDaysRemaining))
             {
@@ -229,6 +249,7 @@ namespace Azure.ResourceManager.Hci
             SystemData systemData = default;
             HciProvisioningState? provisioningState = default;
             HciClusterStatus? status = default;
+            ConnectivityStatus? connectivityStatus = default;
             Guid? cloudId = default;
             string cloudManagementEndpoint = default;
             Guid? aadClientId = default;
@@ -236,8 +257,11 @@ namespace Azure.ResourceManager.Hci
             Guid? aadApplicationObjectId = default;
             Guid? aadServicePrincipalObjectId = default;
             SoftwareAssuranceProperties softwareAssuranceProperties = default;
+            LogCollectionProperties logCollectionProperties = default;
+            RemoteSupportProperties remoteSupportProperties = default;
             HciClusterDesiredProperties desiredProperties = default;
             HciClusterReportedProperties reportedProperties = default;
+            IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default;
             float? trialDaysRemaining = default;
             string billingModel = default;
             DateTimeOffset? registrationTimestamp = default;
@@ -323,6 +347,15 @@ namespace Azure.ResourceManager.Hci
                             status = new HciClusterStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("connectivityStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectivityStatus = new ConnectivityStatus(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("cloudId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -382,6 +415,24 @@ namespace Azure.ResourceManager.Hci
                             softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("logCollectionProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logCollectionProperties = LogCollectionProperties.DeserializeLogCollectionProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("remoteSupportProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            remoteSupportProperties = RemoteSupportProperties.DeserializeRemoteSupportProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("desiredProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -398,6 +449,15 @@ namespace Azure.ResourceManager.Hci
                                 continue;
                             }
                             reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("isolatedVmAttestationConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isolatedVmAttestationConfiguration = IsolatedVmAttestationConfiguration.DeserializeIsolatedVmAttestationConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trialDaysRemaining"u8))
@@ -522,6 +582,7 @@ namespace Azure.ResourceManager.Hci
                 location,
                 provisioningState,
                 status,
+                connectivityStatus,
                 cloudId,
                 cloudManagementEndpoint,
                 aadClientId,
@@ -529,8 +590,11 @@ namespace Azure.ResourceManager.Hci
                 aadApplicationObjectId,
                 aadServicePrincipalObjectId,
                 softwareAssuranceProperties,
+                logCollectionProperties,
+                remoteSupportProperties,
                 desiredProperties,
                 reportedProperties,
+                isolatedVmAttestationConfiguration,
                 trialDaysRemaining,
                 billingModel,
                 registrationTimestamp,

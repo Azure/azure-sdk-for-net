@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
         /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
         /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
+        /// <param name="managedBy"> Indicates if the extension is managed by azure or the user. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -74,11 +75,12 @@ namespace Azure.ResourceManager.Hci
         /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, ExtensionManagedBy? managedBy, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AggregateState = aggregateState;
             PerNodeExtensionDetails = perNodeExtensionDetails;
+            ManagedBy = managedBy;
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             ArcExtensionType = arcExtensionType;
@@ -96,6 +98,8 @@ namespace Azure.ResourceManager.Hci
         public ArcExtensionAggregateState? AggregateState { get; }
         /// <summary> State of Arc Extension in each of the nodes. </summary>
         public IReadOnlyList<PerNodeExtensionState> PerNodeExtensionDetails { get; }
+        /// <summary> Indicates if the extension is managed by azure or the user. </summary>
+        public ExtensionManagedBy? ManagedBy { get; }
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>

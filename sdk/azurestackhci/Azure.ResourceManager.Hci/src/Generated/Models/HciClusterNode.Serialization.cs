@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("lastLicensingTimestamp"u8);
                 writer.WriteStringValue(LastLicensingTimestamp.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(OemActivation))
+            {
+                writer.WritePropertyName("oemActivation"u8);
+                writer.WriteStringValue(OemActivation.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -148,6 +153,7 @@ namespace Azure.ResourceManager.Hci.Models
             float? coreCount = default;
             float? memoryInGiB = default;
             DateTimeOffset? lastLicensingTimestamp = default;
+            OemActivation? oemActivation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,6 +252,15 @@ namespace Azure.ResourceManager.Hci.Models
                     lastLicensingTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("oemActivation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oemActivation = new OemActivation(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -267,6 +282,7 @@ namespace Azure.ResourceManager.Hci.Models
                 coreCount,
                 memoryInGiB,
                 lastLicensingTimestamp,
+                oemActivation,
                 serializedAdditionalRawData);
         }
 

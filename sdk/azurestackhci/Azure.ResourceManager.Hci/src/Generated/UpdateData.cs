@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="provisioningState"> Provisioning state of the Updates proxy resource. </param>
         /// <param name="installedOn"> Date that the update was installed. </param>
         /// <param name="description"> Description of the update. </param>
+        /// <param name="minSbeVersionRequired"> Minimum Sbe Version of the update. </param>
         /// <param name="state"> State of the update as it relates to this stamp. </param>
         /// <param name="prerequisites"> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </param>
         /// <param name="componentVersions"> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </param>
@@ -87,12 +88,13 @@ namespace Azure.ResourceManager.Hci
         /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
         /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, HciUpdateState? state, IList<UpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal UpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, string minSbeVersionRequired, HciUpdateState? state, IList<UpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
             InstalledOn = installedOn;
             Description = description;
+            MinSbeVersionRequired = minSbeVersionRequired;
             State = state;
             Prerequisites = prerequisites;
             ComponentVersions = componentVersions;
@@ -122,6 +124,8 @@ namespace Azure.ResourceManager.Hci
         public DateTimeOffset? InstalledOn { get; set; }
         /// <summary> Description of the update. </summary>
         public string Description { get; set; }
+        /// <summary> Minimum Sbe Version of the update. </summary>
+        public string MinSbeVersionRequired { get; set; }
         /// <summary> State of the update as it relates to this stamp. </summary>
         public HciUpdateState? State { get; set; }
         /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>

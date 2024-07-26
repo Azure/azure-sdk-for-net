@@ -61,8 +61,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
         /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
         /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
+        /// <param name="clusterType"> The node type of all the nodes of the cluster. </param>
+        /// <param name="manufacturer"> The manufacturer of all the nodes of the cluster. </param>
+        /// <param name="oemActivation"> OEM activation status of the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterName = clusterName;
             ClusterId = clusterId;
@@ -72,6 +75,9 @@ namespace Azure.ResourceManager.Hci.Models
             ImdsAttestation = imdsAttestation;
             DiagnosticLevel = diagnosticLevel;
             SupportedCapabilities = supportedCapabilities;
+            ClusterType = clusterType;
+            Manufacturer = manufacturer;
+            OemActivation = oemActivation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,5 +97,11 @@ namespace Azure.ResourceManager.Hci.Models
         public HciClusterDiagnosticLevel? DiagnosticLevel { get; }
         /// <summary> Capabilities supported by the cluster. </summary>
         public IReadOnlyList<string> SupportedCapabilities { get; }
+        /// <summary> The node type of all the nodes of the cluster. </summary>
+        public ClusterNodeType? ClusterType { get; }
+        /// <summary> The manufacturer of all the nodes of the cluster. </summary>
+        public string Manufacturer { get; }
+        /// <summary> OEM activation status of the cluster. </summary>
+        public OemActivation? OemActivation { get; }
     }
 }

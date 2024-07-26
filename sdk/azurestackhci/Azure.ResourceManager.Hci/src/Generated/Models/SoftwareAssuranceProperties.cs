@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Status of the Software Assurance for the cluster. </summary>
-        public SoftwareAssuranceStatus? SoftwareAssuranceStatus { get; set; }
+        public SoftwareAssuranceStatus? SoftwareAssuranceStatus { get; }
         /// <summary> Customer Intent for Software Assurance Benefit. </summary>
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent { get; set; }
         /// <summary> TimeStamp denoting the latest SA benefit applicability is validated. </summary>

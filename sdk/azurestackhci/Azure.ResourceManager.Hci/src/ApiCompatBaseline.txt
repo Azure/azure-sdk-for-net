@@ -1,0 +1,2 @@
+# Baselining these until the next GA as they are not actual compat issues.
+MembersMustExist : Member 'public void Azure.ResourceManager.Hci.Models.SoftwareAssuranceProperties.SoftwareAssuranceStatus.set(System.Nullable<Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus>)' does not exist in the implementation but it does exist in the contract.

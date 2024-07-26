@@ -117,6 +117,11 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
+            if (Optional.IsDefined(ExpectedExecutionTime))
+            {
+                writer.WritePropertyName("expectedExecutionTime"u8);
+                writer.WriteStringValue(ExpectedExecutionTime);
+            }
             if (Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
@@ -184,6 +189,7 @@ namespace Azure.ResourceManager.Hci
             DateTimeOffset? startTimeUtc = default;
             DateTimeOffset? endTimeUtc = default;
             DateTimeOffset? lastUpdatedTimeUtc = default;
+            string expectedExecutionTime = default;
             IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -328,6 +334,11 @@ namespace Azure.ResourceManager.Hci
                                     lastUpdatedTimeUtc = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
+                                if (property1.NameEquals("expectedExecutionTime"u8))
+                                {
+                                    expectedExecutionTime = property1.Value.GetString();
+                                    continue;
+                                }
                                 if (property1.NameEquals("steps"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
@@ -372,6 +383,7 @@ namespace Azure.ResourceManager.Hci
                 startTimeUtc,
                 endTimeUtc,
                 lastUpdatedTimeUtc,
+                expectedExecutionTime,
                 steps ?? new ChangeTrackingList<HciUpdateStep>(),
                 serializedAdditionalRawData);
         }

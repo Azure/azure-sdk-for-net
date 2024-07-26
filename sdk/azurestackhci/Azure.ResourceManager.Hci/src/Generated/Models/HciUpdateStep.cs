@@ -59,9 +59,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciUpdateStep(string name, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, IList<HciUpdateStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciUpdateStep(string name, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, string expectedExecutionTime, IList<HciUpdateStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Hci.Models
             StartTimeUtc = startTimeUtc;
             EndTimeUtc = endTimeUtc;
             LastUpdatedTimeUtc = lastUpdatedTimeUtc;
+            ExpectedExecutionTime = expectedExecutionTime;
             Steps = steps;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -88,6 +90,8 @@ namespace Azure.ResourceManager.Hci.Models
         public DateTimeOffset? EndTimeUtc { get; set; }
         /// <summary> Completion time of this step or the last completed sub-step. </summary>
         public DateTimeOffset? LastUpdatedTimeUtc { get; set; }
+        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
+        public string ExpectedExecutionTime { get; set; }
         /// <summary> Recursive model for child steps of this step. </summary>
         public IList<HciUpdateStep> Steps { get; }
     }

@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(MinSbeVersionRequired))
+            {
+                writer.WritePropertyName("minSbeVersionRequired"u8);
+                writer.WriteStringValue(MinSbeVersionRequired);
+            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.Hci
             HciProvisioningState? provisioningState = default;
             DateTimeOffset? installedDate = default;
             string description = default;
+            string minSbeVersionRequired = default;
             HciUpdateState? state = default;
             IList<UpdatePrerequisite> prerequisites = default;
             IList<HciPackageVersionInfo> componentVersions = default;
@@ -310,6 +316,11 @@ namespace Azure.ResourceManager.Hci
                         if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("minSbeVersionRequired"u8))
+                        {
+                            minSbeVersionRequired = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -487,6 +498,7 @@ namespace Azure.ResourceManager.Hci
                 provisioningState,
                 installedDate,
                 description,
+                minSbeVersionRequired,
                 state,
                 prerequisites ?? new ChangeTrackingList<UpdatePrerequisite>(),
                 componentVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),

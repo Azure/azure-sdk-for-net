@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftwareAssuranceStatus))
+            if (options.Format != "W" && Optional.IsDefined(SoftwareAssuranceStatus))
             {
                 writer.WritePropertyName("softwareAssuranceStatus"u8);
                 writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToString());

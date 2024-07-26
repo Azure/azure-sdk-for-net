@@ -107,6 +107,16 @@ namespace Azure.ResourceManager.Hci
                 }
 #endif
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultExtensions))
+            {
+                writer.WritePropertyName("defaultExtensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in DefaultExtensions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -159,6 +169,7 @@ namespace Azure.ResourceManager.Hci
             ArcSettingAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeArcState> perNodeDetails = default;
             BinaryData connectivityProperties = default;
+            IReadOnlyList<DefaultExtensionDetails> defaultExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,6 +289,20 @@ namespace Azure.ResourceManager.Hci
                             connectivityProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("defaultExtensions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DefaultExtensionDetails> array = new List<DefaultExtensionDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DefaultExtensionDetails.DeserializeDefaultExtensionDetails(item, options));
+                            }
+                            defaultExtensions = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -301,6 +326,7 @@ namespace Azure.ResourceManager.Hci
                 aggregateState,
                 perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>(),
                 connectivityProperties,
+                defaultExtensions ?? new ChangeTrackingList<DefaultExtensionDetails>(),
                 serializedAdditionalRawData);
         }
 

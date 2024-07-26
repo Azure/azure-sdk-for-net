@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("oemFamily"u8);
                 writer.WriteStringValue(OemFamily);
             }
+            if (Optional.IsDefined(CurrentOemVersion))
+            {
+                writer.WritePropertyName("currentOemVersion"u8);
+                writer.WriteStringValue(CurrentOemVersion);
+            }
             if (Optional.IsDefined(HardwareModel))
             {
                 writer.WritePropertyName("hardwareModel"u8);
@@ -84,6 +89,11 @@ namespace Azure.ResourceManager.Hci
             {
                 writer.WritePropertyName("currentVersion"u8);
                 writer.WriteStringValue(CurrentVersion);
+            }
+            if (Optional.IsDefined(CurrentSbeVersion))
+            {
+                writer.WritePropertyName("currentSbeVersion"u8);
+                writer.WriteStringValue(CurrentSbeVersion);
             }
             if (Optional.IsDefined(LastUpdated))
             {
@@ -166,9 +176,11 @@ namespace Azure.ResourceManager.Hci
             SystemData systemData = default;
             HciProvisioningState? provisioningState = default;
             string oemFamily = default;
+            string currentOemVersion = default;
             string hardwareModel = default;
             IList<HciPackageVersionInfo> packageVersions = default;
             string currentVersion = default;
+            string currentSbeVersion = default;
             DateTimeOffset? lastUpdated = default;
             DateTimeOffset? lastChecked = default;
             HciHealthState? healthState = default;
@@ -235,6 +247,11 @@ namespace Azure.ResourceManager.Hci
                             oemFamily = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("currentOemVersion"u8))
+                        {
+                            currentOemVersion = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("hardwareModel"u8))
                         {
                             hardwareModel = property0.Value.GetString();
@@ -257,6 +274,11 @@ namespace Azure.ResourceManager.Hci
                         if (property0.NameEquals("currentVersion"u8))
                         {
                             currentVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentSbeVersion"u8))
+                        {
+                            currentSbeVersion = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("lastUpdated"u8))
@@ -335,9 +357,11 @@ namespace Azure.ResourceManager.Hci
                 location,
                 provisioningState,
                 oemFamily,
+                currentOemVersion,
                 hardwareModel,
                 packageVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),
                 currentVersion,
+                currentSbeVersion,
                 lastUpdated,
                 lastChecked,
                 healthState,

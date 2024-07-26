@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -163,6 +163,75 @@ namespace Azure.ResourceManager.Hci
         public virtual Response<ArcSettingResource> GetArcSetting(string arcSettingName, CancellationToken cancellationToken = default)
         {
             return GetArcSettings().Get(arcSettingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DeploymentSettingResources in the HciCluster. </summary>
+        /// <returns> An object representing collection of DeploymentSettingResources and their operations over a DeploymentSettingResource. </returns>
+        public virtual DeploymentSettingCollection GetDeploymentSettings()
+        {
+            return GetCachedClient(client => new DeploymentSettingCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a DeploymentSetting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeploymentSettingResource>> GetDeploymentSettingAsync(string deploymentSettingsName, CancellationToken cancellationToken = default)
+        {
+            return await GetDeploymentSettings().GetAsync(deploymentSettingsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DeploymentSetting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeploymentSettingResource> GetDeploymentSetting(string deploymentSettingsName, CancellationToken cancellationToken = default)
+        {
+            return GetDeploymentSettings().Get(deploymentSettingsName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PublisherResources in the HciCluster. </summary>
@@ -185,7 +254,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,7 +285,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,6 +301,75 @@ namespace Azure.ResourceManager.Hci
         public virtual Response<PublisherResource> GetPublisher(string publisherName, CancellationToken cancellationToken = default)
         {
             return GetPublishers().Get(publisherName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecuritySettingResources in the HciCluster. </summary>
+        /// <returns> An object representing collection of SecuritySettingResources and their operations over a SecuritySettingResource. </returns>
+        public virtual SecuritySettingCollection GetSecuritySettings()
+        {
+            return GetCachedClient(client => new SecuritySettingCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SecuritySetting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securitySettingsName"> Name of security setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecuritySettingResource>> GetSecuritySettingAsync(string securitySettingsName, CancellationToken cancellationToken = default)
+        {
+            return await GetSecuritySettings().GetAsync(securitySettingsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SecuritySetting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securitySettingsName"> Name of security setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecuritySettingResource> GetSecuritySetting(string securitySettingsName, CancellationToken cancellationToken = default)
+        {
+            return GetSecuritySettings().Get(securitySettingsName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a UpdateSummaryResource along with the instance operations that can be performed on it in the HciCluster. </summary>
@@ -261,7 +399,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,7 +430,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +461,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,7 +501,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -403,7 +541,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,7 +583,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -487,7 +625,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -529,7 +667,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -571,7 +709,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -617,7 +755,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -663,7 +801,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -705,7 +843,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -747,7 +885,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -793,7 +931,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -827,6 +965,190 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
+        /// Trigger Log Collection on a cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/triggerLogCollection</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_TriggerLogCollection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Trigger Log Collection Request Payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<HciClusterResource>> TriggerLogCollectionAsync(WaitUntil waitUntil, LogCollectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.TriggerLogCollection");
+            scope.Start();
+            try
+            {
+                var response = await _hciClusterClustersRestClient.TriggerLogCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateTriggerLogCollectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger Log Collection on a cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/triggerLogCollection</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_TriggerLogCollection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Trigger Log Collection Request Payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<HciClusterResource> TriggerLogCollection(WaitUntil waitUntil, LogCollectionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.TriggerLogCollection");
+            scope.Start();
+            try
+            {
+                var response = _hciClusterClustersRestClient.TriggerLogCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateTriggerLogCollectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Configure RemoteSupport on a cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/configureRemoteSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ConfigureRemoteSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Configure Remote Support Request Payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<HciClusterResource>> ConfigureRemoteSupportAsync(WaitUntil waitUntil, RemoteSupportContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.ConfigureRemoteSupport");
+            scope.Start();
+            try
+            {
+                var response = await _hciClusterClustersRestClient.ConfigureRemoteSupportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateConfigureRemoteSupportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Configure RemoteSupport on a cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/configureRemoteSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ConfigureRemoteSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Configure Remote Support Request Payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<HciClusterResource> ConfigureRemoteSupport(WaitUntil waitUntil, RemoteSupportContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.ConfigureRemoteSupport");
+            scope.Start();
+            try
+            {
+                var response = _hciClusterClustersRestClient.ConfigureRemoteSupport(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateConfigureRemoteSupportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// List Offers available across publishers for the HCI Cluster.
         /// <list type="bullet">
         /// <item>
@@ -839,7 +1161,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -870,7 +1192,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -901,7 +1223,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -963,7 +1285,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1025,7 +1347,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1082,7 +1404,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1139,7 +1461,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1199,7 +1521,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

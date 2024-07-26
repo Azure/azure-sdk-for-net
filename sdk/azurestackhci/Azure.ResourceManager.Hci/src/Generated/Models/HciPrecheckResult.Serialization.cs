@@ -31,10 +31,27 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags, options);
+            }
+            if (Optional.IsDefined(HealthCheckTags))
+            {
+                writer.WritePropertyName("healthCheckTags"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HealthCheckTags);
+#else
+                using (JsonDocument document = JsonDocument.Parse(HealthCheckTags))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Title))
             {
@@ -70,6 +87,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
+            }
+            if (Optional.IsDefined(TargetResourceType))
+            {
+                writer.WritePropertyName("targetResourceType"u8);
+                writer.WriteStringValue(TargetResourceType);
             }
             if (Optional.IsDefined(Timestamp))
             {
@@ -125,7 +147,9 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string name = default;
+            string displayName = default;
             HciPrecheckResultTags tags = default;
+            BinaryData healthCheckTags = default;
             string title = default;
             HciClusterStatus? status = default;
             UpdateSeverity? severity = default;
@@ -133,6 +157,7 @@ namespace Azure.ResourceManager.Hci.Models
             string remediation = default;
             string targetResourceId = default;
             string targetResourceName = default;
+            string targetResourceType = default;
             DateTimeOffset? timestamp = default;
             string additionalData = default;
             string healthCheckSource = default;
@@ -145,6 +170,11 @@ namespace Azure.ResourceManager.Hci.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -152,6 +182,15 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("healthCheckTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthCheckTags = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -197,6 +236,11 @@ namespace Azure.ResourceManager.Hci.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceType"u8))
+                {
+                    targetResourceType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -224,7 +268,9 @@ namespace Azure.ResourceManager.Hci.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new HciPrecheckResult(
                 name,
+                displayName,
                 tags,
+                healthCheckTags,
                 title,
                 status,
                 severity,
@@ -232,6 +278,7 @@ namespace Azure.ResourceManager.Hci.Models
                 remediation,
                 targetResourceId,
                 targetResourceName,
+                targetResourceType,
                 timestamp,
                 additionalData,
                 healthCheckSource,

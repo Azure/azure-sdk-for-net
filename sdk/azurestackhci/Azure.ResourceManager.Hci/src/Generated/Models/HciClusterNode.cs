@@ -65,8 +65,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
         /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
         /// <param name="lastLicensingTimestamp"> Most recent licensing timestamp. </param>
+        /// <param name="oemActivation"> OEM activation status of the node. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp, OemActivation? oemActivation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
             CoreCount = coreCount;
             MemoryInGiB = memoryInGiB;
             LastLicensingTimestamp = lastLicensingTimestamp;
+            OemActivation = oemActivation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -113,5 +115,7 @@ namespace Azure.ResourceManager.Hci.Models
         public float? MemoryInGiB { get; }
         /// <summary> Most recent licensing timestamp. </summary>
         public DateTimeOffset? LastLicensingTimestamp { get; }
+        /// <summary> OEM activation status of the node. </summary>
+        public OemActivation? OemActivation { get; }
     }
 }

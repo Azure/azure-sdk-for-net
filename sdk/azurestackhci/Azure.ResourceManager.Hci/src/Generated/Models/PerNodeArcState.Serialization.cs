@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("arcInstance"u8);
                 writer.WriteStringValue(ArcInstance);
             }
+            if (options.Format != "W" && Optional.IsDefined(ArcNodeServicePrincipalObjectId))
+            {
+                writer.WritePropertyName("arcNodeServicePrincipalObjectId"u8);
+                writer.WriteStringValue(ArcNodeServicePrincipalObjectId.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string name = default;
             string arcInstance = default;
+            Guid? arcNodeServicePrincipalObjectId = default;
             NodeArcState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,6 +100,15 @@ namespace Azure.ResourceManager.Hci.Models
                 if (property.NameEquals("arcInstance"u8))
                 {
                     arcInstance = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("arcNodeServicePrincipalObjectId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcNodeServicePrincipalObjectId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -111,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PerNodeArcState(name, arcInstance, state, serializedAdditionalRawData);
+            return new PerNodeArcState(name, arcInstance, arcNodeServicePrincipalObjectId, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerNodeArcState>.Write(ModelReaderWriterOptions options)

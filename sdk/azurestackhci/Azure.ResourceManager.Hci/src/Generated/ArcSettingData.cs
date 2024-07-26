@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Hci
         public ArcSettingData()
         {
             PerNodeDetails = new ChangeTrackingList<PerNodeArcState>();
+            DefaultExtensions = new ChangeTrackingList<DefaultExtensionDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingData"/>. </summary>
@@ -71,8 +72,9 @@ namespace Azure.ResourceManager.Hci
         /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties, IReadOnlyList<DefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -83,6 +85,7 @@ namespace Azure.ResourceManager.Hci
             AggregateState = aggregateState;
             PerNodeDetails = perNodeDetails;
             ConnectivityProperties = connectivityProperties;
+            DefaultExtensions = defaultExtensions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -133,5 +136,7 @@ namespace Azure.ResourceManager.Hci
         /// </para>
         /// </summary>
         public BinaryData ConnectivityProperties { get; set; }
+        /// <summary> Properties for each of the default extensions category. </summary>
+        public IReadOnlyList<DefaultExtensionDetails> DefaultExtensions { get; }
     }
 }

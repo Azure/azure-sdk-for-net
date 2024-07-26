@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Mocking
@@ -34,120 +37,76 @@ namespace Azure.ResourceManager.Hci.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a VirtualMachineInstanceResource along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary> Gets a collection of EdgeDeviceResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
-        public virtual VirtualMachineInstanceResource GetVirtualMachineInstance(ResourceIdentifier scope)
+        /// <returns> An object representing collection of EdgeDeviceResources and their operations over a EdgeDeviceResource. </returns>
+        public virtual EdgeDeviceCollection GetEdgeDevices(ResourceIdentifier scope)
         {
-            return new VirtualMachineInstanceResource(Client, scope.AppendProviderResource("Microsoft.AzureStackHCI", "virtualMachineInstances", "default"));
+            return new EdgeDeviceCollection(Client, scope);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GalleryImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="GalleryImageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Get a EdgeDevice
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDeviceResource"/></description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GalleryImageResource"/> object. </returns>
-        public virtual GalleryImageResource GetGalleryImageResource(ResourceIdentifier id)
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="edgeDeviceName"> Name of Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeDeviceResource>> GetEdgeDeviceAsync(ResourceIdentifier scope, string edgeDeviceName, CancellationToken cancellationToken = default)
         {
-            GalleryImageResource.ValidateResourceId(id);
-            return new GalleryImageResource(Client, id);
+            return await GetEdgeDevices(scope).GetAsync(edgeDeviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="LogicalNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Get a EdgeDevice
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDeviceResource"/></description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicalNetworkResource"/> object. </returns>
-        public virtual LogicalNetworkResource GetLogicalNetworkResource(ResourceIdentifier id)
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="edgeDeviceName"> Name of Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeDeviceResource> GetEdgeDevice(ResourceIdentifier scope, string edgeDeviceName, CancellationToken cancellationToken = default)
         {
-            LogicalNetworkResource.ValidateResourceId(id);
-            return new LogicalNetworkResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceGalleryImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceGalleryImageResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceGalleryImageResource"/> object. </returns>
-        public virtual MarketplaceGalleryImageResource GetMarketplaceGalleryImageResource(ResourceIdentifier id)
-        {
-            MarketplaceGalleryImageResource.ValidateResourceId(id);
-            return new MarketplaceGalleryImageResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
-        public virtual NetworkInterfaceResource GetNetworkInterfaceResource(ResourceIdentifier id)
-        {
-            NetworkInterfaceResource.ValidateResourceId(id);
-            return new NetworkInterfaceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="StorageContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageContainerResource"/> object. </returns>
-        public virtual StorageContainerResource GetStorageContainerResource(ResourceIdentifier id)
-        {
-            StorageContainerResource.ValidateResourceId(id);
-            return new StorageContainerResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualHardDiskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualHardDiskResource.CreateResourceIdentifier" /> to create a <see cref="VirtualHardDiskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualHardDiskResource"/> object. </returns>
-        public virtual VirtualHardDiskResource GetVirtualHardDiskResource(ResourceIdentifier id)
-        {
-            VirtualHardDiskResource.ValidateResourceId(id);
-            return new VirtualHardDiskResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineInstanceResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
-        public virtual VirtualMachineInstanceResource GetVirtualMachineInstanceResource(ResourceIdentifier id)
-        {
-            VirtualMachineInstanceResource.ValidateResourceId(id);
-            return new VirtualMachineInstanceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridIdentityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
-        public virtual HybridIdentityMetadataResource GetHybridIdentityMetadataResource(ResourceIdentifier id)
-        {
-            HybridIdentityMetadataResource.ValidateResourceId(id);
-            return new HybridIdentityMetadataResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="GuestAgentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="GuestAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestAgentResource"/> object. </returns>
-        public virtual GuestAgentResource GetGuestAgentResource(ResourceIdentifier id)
-        {
-            GuestAgentResource.ValidateResourceId(id);
-            return new GuestAgentResource(Client, id);
+            return GetEdgeDevices(scope).Get(edgeDeviceName, cancellationToken);
         }
 
         /// <summary>
@@ -172,6 +131,30 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
             HciClusterResource.ValidateResourceId(id);
             return new HciClusterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeploymentSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeploymentSettingResource.CreateResourceIdentifier" /> to create a <see cref="DeploymentSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeploymentSettingResource"/> object. </returns>
+        public virtual DeploymentSettingResource GetDeploymentSettingResource(ResourceIdentifier id)
+        {
+            DeploymentSettingResource.ValidateResourceId(id);
+            return new DeploymentSettingResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeDeviceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDeviceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeDeviceResource"/> object. </returns>
+        public virtual EdgeDeviceResource GetEdgeDeviceResource(ResourceIdentifier id)
+        {
+            EdgeDeviceResource.ValidateResourceId(id);
+            return new EdgeDeviceResource(Client, id);
         }
 
         /// <summary>
@@ -208,6 +191,18 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
             PublisherResource.ValidateResourceId(id);
             return new PublisherResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecuritySettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecuritySettingResource.CreateResourceIdentifier" /> to create a <see cref="SecuritySettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecuritySettingResource"/> object. </returns>
+        public virtual SecuritySettingResource GetSecuritySettingResource(ResourceIdentifier id)
+        {
+            SecuritySettingResource.ValidateResourceId(id);
+            return new SecuritySettingResource(Client, id);
         }
 
         /// <summary>

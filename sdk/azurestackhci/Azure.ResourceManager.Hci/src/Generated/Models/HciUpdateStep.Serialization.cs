@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
+            if (Optional.IsDefined(ExpectedExecutionTime))
+            {
+                writer.WritePropertyName("expectedExecutionTime"u8);
+                writer.WriteStringValue(ExpectedExecutionTime);
+            }
             if (Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
@@ -116,6 +121,7 @@ namespace Azure.ResourceManager.Hci.Models
             DateTimeOffset? startTimeUtc = default;
             DateTimeOffset? endTimeUtc = default;
             DateTimeOffset? lastUpdatedTimeUtc = default;
+            string expectedExecutionTime = default;
             IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -168,6 +174,11 @@ namespace Azure.ResourceManager.Hci.Models
                     lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("expectedExecutionTime"u8))
+                {
+                    expectedExecutionTime = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("steps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -196,6 +207,7 @@ namespace Azure.ResourceManager.Hci.Models
                 startTimeUtc,
                 endTimeUtc,
                 lastUpdatedTimeUtc,
+                expectedExecutionTime,
                 steps ?? new ChangeTrackingList<HciUpdateStep>(),
                 serializedAdditionalRawData);
         }
