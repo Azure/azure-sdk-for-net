@@ -1,0 +1,2657 @@
+{
+ "$id": "1",
+ "Name": "DocumentTranslation",
+ "ApiVersions": [
+  "2024-05-01"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Kind": "enum",
+   "Name": "StorageSource",
+   "CrossLanguageDefinitionId": "DocumentTranslation.StorageSource",
+   "ValueType": {
+    "$id": "3",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "4",
+     "Name": "AzureBlob",
+     "Value": "AzureBlob",
+     "Description": "Azure blob storage source"
+    }
+   ],
+   "Description": "Storage Source",
+   "IsExtensible": true,
+   "Usage": "Input,Json"
+  },
+  {
+   "$id": "5",
+   "Kind": "enum",
+   "Name": "StorageInputType",
+   "CrossLanguageDefinitionId": "DocumentTranslation.StorageInputType",
+   "ValueType": {
+    "$id": "6",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "7",
+     "Name": "Folder",
+     "Value": "Folder",
+     "Description": "Folder storage input type"
+    },
+    {
+     "$id": "8",
+     "Name": "File",
+     "Value": "File",
+     "Description": "File storage input type"
+    }
+   ],
+   "Description": "Storage type of the input documents source string",
+   "IsExtensible": true,
+   "Usage": "Input,Json"
+  },
+  {
+   "$id": "9",
+   "Kind": "enum",
+   "Name": "Status",
+   "CrossLanguageDefinitionId": "DocumentTranslation.Status",
+   "ValueType": {
+    "$id": "10",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "11",
+     "Name": "NotStarted",
+     "Value": "NotStarted",
+     "Description": "NotStarted"
+    },
+    {
+     "$id": "12",
+     "Name": "Running",
+     "Value": "Running",
+     "Description": "Running"
+    },
+    {
+     "$id": "13",
+     "Name": "Succeeded",
+     "Value": "Succeeded",
+     "Description": "Succeeded"
+    },
+    {
+     "$id": "14",
+     "Name": "Failed",
+     "Value": "Failed",
+     "Description": "Failed"
+    },
+    {
+     "$id": "15",
+     "Name": "Cancelled",
+     "Value": "Cancelled",
+     "Description": "Cancelled"
+    },
+    {
+     "$id": "16",
+     "Name": "Cancelling",
+     "Value": "Cancelling",
+     "Description": "Cancelling"
+    },
+    {
+     "$id": "17",
+     "Name": "ValidationFailed",
+     "Value": "ValidationFailed",
+     "Description": "ValidationFailed"
+    }
+   ],
+   "Description": "List of possible statuses for job or document",
+   "IsExtensible": true,
+   "Usage": "Output,Json"
+  },
+  {
+   "$id": "18",
+   "Kind": "enum",
+   "Name": "TranslationErrorCode",
+   "CrossLanguageDefinitionId": "DocumentTranslation.TranslationErrorCode",
+   "ValueType": {
+    "$id": "19",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "20",
+     "Name": "InvalidRequest",
+     "Value": "InvalidRequest",
+     "Description": "InvalidRequest"
+    },
+    {
+     "$id": "21",
+     "Name": "InvalidArgument",
+     "Value": "InvalidArgument",
+     "Description": "InvalidArgument"
+    },
+    {
+     "$id": "22",
+     "Name": "InternalServerError",
+     "Value": "InternalServerError",
+     "Description": "InternalServerError"
+    },
+    {
+     "$id": "23",
+     "Name": "ServiceUnavailable",
+     "Value": "ServiceUnavailable",
+     "Description": "ServiceUnavailable"
+    },
+    {
+     "$id": "24",
+     "Name": "ResourceNotFound",
+     "Value": "ResourceNotFound",
+     "Description": "ResourceNotFound"
+    },
+    {
+     "$id": "25",
+     "Name": "Unauthorized",
+     "Value": "Unauthorized",
+     "Description": "Unauthorized"
+    },
+    {
+     "$id": "26",
+     "Name": "RequestRateTooHigh",
+     "Value": "RequestRateTooHigh",
+     "Description": "RequestRateTooHigh"
+    }
+   ],
+   "Description": "Enums containing high level error codes.",
+   "IsExtensible": true,
+   "Usage": "Output,Json"
+  },
+  {
+   "$id": "27",
+   "Kind": "enum",
+   "Name": "FileFormatType",
+   "CrossLanguageDefinitionId": "DocumentTranslation.FileFormatType",
+   "ValueType": {
+    "$id": "28",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "29",
+     "Name": "Document",
+     "Value": "document",
+     "Description": "Document type file format"
+    },
+    {
+     "$id": "30",
+     "Name": "Glossary",
+     "Value": "glossary",
+     "Description": "Glossary type file format"
+    }
+   ],
+   "Description": "Format types",
+   "IsExtensible": true,
+   "Usage": "Input"
+  },
+  {
+   "$id": "31",
+   "Kind": "enum",
+   "Name": "Versions",
+   "CrossLanguageDefinitionId": "DocumentTranslation.Versions",
+   "ValueType": {
+    "$id": "32",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "33",
+     "Name": "v2024_05_01",
+     "Value": "2024-05-01"
+    }
+   ],
+   "Description": "Document Translation supported versions",
+   "IsExtensible": false,
+   "Usage": "ApiVersionEnum"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "34",
+   "Kind": "model",
+   "Name": "StartTranslationDetails",
+   "CrossLanguageDefinitionId": "DocumentTranslation.StartTranslationDetails",
+   "Usage": "Input,Json",
+   "Description": "Translation job submission batch request",
+   "Properties": [
+    {
+     "$id": "35",
+     "Name": "inputs",
+     "SerializedName": "inputs",
+     "Description": "The input list of documents or folders containing documents",
+     "Type": {
+      "$id": "36",
+      "Kind": "array",
+      "Name": "ArrayBatchRequest",
+      "ValueType": {
+       "$id": "37",
+       "Kind": "model",
+       "Name": "BatchRequest",
+       "CrossLanguageDefinitionId": "DocumentTranslation.BatchRequest",
+       "Usage": "Input,Json",
+       "Description": "Definition for the input batch translation request",
+       "Properties": [
+        {
+         "$id": "38",
+         "Name": "source",
+         "SerializedName": "source",
+         "Description": "Source of the input documents",
+         "Type": {
+          "$id": "39",
+          "Kind": "model",
+          "Name": "SourceInput",
+          "CrossLanguageDefinitionId": "DocumentTranslation.SourceInput",
+          "Usage": "Input,Json",
+          "Description": "Source of the input documents",
+          "Properties": [
+           {
+            "$id": "40",
+            "Name": "sourceUrl",
+            "SerializedName": "sourceUrl",
+            "Description": "Location of the folder / container or single file with your documents",
+            "Type": {
+             "$id": "41",
+             "Kind": "string"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "42",
+            "Name": "filter",
+            "SerializedName": "filter",
+            "Description": "Document filter",
+            "Type": {
+             "$id": "43",
+             "Kind": "model",
+             "Name": "DocumentFilter",
+             "CrossLanguageDefinitionId": "DocumentTranslation.DocumentFilter",
+             "Usage": "Input,Json",
+             "Description": "Document filter",
+             "Properties": [
+              {
+               "$id": "44",
+               "Name": "prefix",
+               "SerializedName": "prefix",
+               "Description": "A case-sensitive prefix string to filter documents in the source path for\ntranslation. \nFor example, when using a Azure storage blob Uri, use the prefix\nto restrict sub folders for translation.",
+               "Type": {
+                "$id": "45",
+                "Kind": "string"
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "46",
+               "Name": "suffix",
+               "SerializedName": "suffix",
+               "Description": "A case-sensitive suffix string to filter documents in the source path for\ntranslation. \nThis is most often use for file extensions",
+               "Type": {
+                "$id": "47",
+                "Kind": "string"
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              }
+             ]
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "48",
+            "Name": "language",
+            "SerializedName": "language",
+            "Description": "Language code\nIf none is specified, we will perform auto detect on the document",
+            "Type": {
+             "$id": "49",
+             "Kind": "string"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "50",
+            "Name": "storageSource",
+            "SerializedName": "storageSource",
+            "Description": "Storage Source",
+            "Type": {
+             "$ref": "2"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "51",
+         "Name": "targets",
+         "SerializedName": "targets",
+         "Description": "Location of the destination for the output",
+         "Type": {
+          "$id": "52",
+          "Kind": "array",
+          "Name": "ArrayTargetInput",
+          "ValueType": {
+           "$id": "53",
+           "Kind": "model",
+           "Name": "TargetInput",
+           "CrossLanguageDefinitionId": "DocumentTranslation.TargetInput",
+           "Usage": "Input,Json",
+           "Description": "Destination for the finished translated documents",
+           "Properties": [
+            {
+             "$id": "54",
+             "Name": "targetUrl",
+             "SerializedName": "targetUrl",
+             "Description": "Location of the folder / container with your documents",
+             "Type": {
+              "$id": "55",
+              "Kind": "string"
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "56",
+             "Name": "category",
+             "SerializedName": "category",
+             "Description": "Category / custom system for translation request",
+             "Type": {
+              "$id": "57",
+              "Kind": "string"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "58",
+             "Name": "language",
+             "SerializedName": "language",
+             "Description": "Target Language",
+             "Type": {
+              "$id": "59",
+              "Kind": "string"
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "60",
+             "Name": "glossaries",
+             "SerializedName": "glossaries",
+             "Description": "List of Glossary",
+             "Type": {
+              "$id": "61",
+              "Kind": "array",
+              "Name": "ArrayGlossary",
+              "ValueType": {
+               "$id": "62",
+               "Kind": "model",
+               "Name": "Glossary",
+               "CrossLanguageDefinitionId": "DocumentTranslation.Glossary",
+               "Usage": "Input,Json",
+               "Description": "Glossary / translation memory for the request",
+               "Properties": [
+                {
+                 "$id": "63",
+                 "Name": "glossaryUrl",
+                 "SerializedName": "glossaryUrl",
+                 "Description": "Location of the glossary. \nWe will use the file extension to extract the\nformatting if the format parameter is not supplied.\n\nIf the translation\nlanguage pair is not present in the glossary, it will not be applied",
+                 "Type": {
+                  "$id": "64",
+                  "Kind": "string"
+                 },
+                 "IsRequired": true,
+                 "IsReadOnly": false
+                },
+                {
+                 "$id": "65",
+                 "Name": "format",
+                 "SerializedName": "format",
+                 "Description": "Format",
+                 "Type": {
+                  "$id": "66",
+                  "Kind": "string"
+                 },
+                 "IsRequired": true,
+                 "IsReadOnly": false
+                },
+                {
+                 "$id": "67",
+                 "Name": "version",
+                 "SerializedName": "version",
+                 "Description": "Optional Version.  If not specified, default is used.",
+                 "Type": {
+                  "$id": "68",
+                  "Kind": "string"
+                 },
+                 "IsRequired": false,
+                 "IsReadOnly": false
+                },
+                {
+                 "$id": "69",
+                 "Name": "storageSource",
+                 "SerializedName": "storageSource",
+                 "Description": "Storage Source",
+                 "Type": {
+                  "$ref": "2"
+                 },
+                 "IsRequired": false,
+                 "IsReadOnly": false
+                }
+               ]
+              },
+              "CrossLanguageDefinitionId": "TypeSpec.Array"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "70",
+             "Name": "storageSource",
+             "SerializedName": "storageSource",
+             "Description": "Storage Source",
+             "Type": {
+              "$ref": "2"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "CrossLanguageDefinitionId": "TypeSpec.Array"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "71",
+         "Name": "storageType",
+         "SerializedName": "storageType",
+         "Description": "Storage type of the input documents source string",
+         "Type": {
+          "$ref": "5"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "37"
+  },
+  {
+   "$ref": "39"
+  },
+  {
+   "$ref": "43"
+  },
+  {
+   "$ref": "53"
+  },
+  {
+   "$ref": "62"
+  },
+  {
+   "$id": "72",
+   "Kind": "model",
+   "Name": "TranslationsStatus",
+   "CrossLanguageDefinitionId": "DocumentTranslation.TranslationsStatus",
+   "Usage": "Output,Json",
+   "Description": "Translation job Status Response",
+   "Properties": [
+    {
+     "$id": "73",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The summary status of individual operation",
+     "Type": {
+      "$id": "74",
+      "Kind": "array",
+      "Name": "ArrayTranslationStatus",
+      "ValueType": {
+       "$id": "75",
+       "Kind": "model",
+       "Name": "TranslationStatus",
+       "CrossLanguageDefinitionId": "DocumentTranslation.TranslationStatus",
+       "Usage": "Output,Json",
+       "Description": "Translation job status response",
+       "Properties": [
+        {
+         "$id": "76",
+         "Name": "id",
+         "SerializedName": "id",
+         "Description": "Id of the operation.",
+         "Type": {
+          "$id": "77",
+          "Kind": "string"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "78",
+         "Name": "createdDateTimeUtc",
+         "SerializedName": "createdDateTimeUtc",
+         "Description": "Operation created date time",
+         "Type": {
+          "$id": "79",
+          "Kind": "utcDateTime",
+          "Encode": "rfc3339",
+          "WireType": {
+           "$id": "80",
+           "Kind": "string"
+          }
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "81",
+         "Name": "lastActionDateTimeUtc",
+         "SerializedName": "lastActionDateTimeUtc",
+         "Description": "Date time in which the operation's status has been updated",
+         "Type": {
+          "$id": "82",
+          "Kind": "utcDateTime",
+          "Encode": "rfc3339",
+          "WireType": {
+           "$id": "83",
+           "Kind": "string"
+          }
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "84",
+         "Name": "status",
+         "SerializedName": "status",
+         "Description": "List of possible statuses for job or document",
+         "Type": {
+          "$ref": "9"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "85",
+         "Name": "error",
+         "SerializedName": "error",
+         "Description": "This contains an outer error with error code, message, details, target and an\ninner error with more descriptive details.",
+         "Type": {
+          "$id": "86",
+          "Kind": "model",
+          "Name": "TranslationError",
+          "CrossLanguageDefinitionId": "DocumentTranslation.TranslationError",
+          "Usage": "Output,Json",
+          "Description": "This contains an outer error with error code, message, details, target and an\ninner error with more descriptive details.",
+          "Properties": [
+           {
+            "$id": "87",
+            "Name": "code",
+            "SerializedName": "code",
+            "Description": "Enums containing high level error codes.",
+            "Type": {
+             "$ref": "18"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "88",
+            "Name": "message",
+            "SerializedName": "message",
+            "Description": "Gets high level error message.",
+            "Type": {
+             "$id": "89",
+             "Kind": "string"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "90",
+            "Name": "target",
+            "SerializedName": "target",
+            "Description": "Gets the source of the error. \nFor example it would be \"documents\" or\n\"document id\" in case of invalid document.",
+            "Type": {
+             "$id": "91",
+             "Kind": "string"
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "92",
+            "Name": "innerError",
+            "SerializedName": "innerError",
+            "Description": "New Inner Error format which conforms to Cognitive Services API Guidelines\nwhich is available at\nhttps://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.\nThis\ncontains required properties ErrorCode, message and optional properties target,\ndetails(key value pair), inner error(this can be nested).",
+            "Type": {
+             "$id": "93",
+             "Kind": "model",
+             "Name": "InnerTranslationError",
+             "CrossLanguageDefinitionId": "DocumentTranslation.InnerTranslationError",
+             "Usage": "Output,Json",
+             "Description": "New Inner Error format which conforms to Cognitive Services API Guidelines\nwhich is available at\nhttps://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.\nThis\ncontains required properties ErrorCode, message and optional properties target,\ndetails(key value pair), inner error(this can be nested).",
+             "Properties": [
+              {
+               "$id": "94",
+               "Name": "code",
+               "SerializedName": "code",
+               "Description": "Gets code error string.",
+               "Type": {
+                "$id": "95",
+                "Kind": "string"
+               },
+               "IsRequired": true,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "96",
+               "Name": "message",
+               "SerializedName": "message",
+               "Description": "Gets high level error message.",
+               "Type": {
+                "$id": "97",
+                "Kind": "string"
+               },
+               "IsRequired": true,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "98",
+               "Name": "target",
+               "SerializedName": "target",
+               "Description": "Gets the source of the error. \nFor example it would be \"documents\" or\n\"document id\" in case of invalid document.",
+               "Type": {
+                "$id": "99",
+                "Kind": "string"
+               },
+               "IsRequired": false,
+               "IsReadOnly": true
+              },
+              {
+               "$id": "100",
+               "Name": "innerError",
+               "SerializedName": "innerError",
+               "Description": "New Inner Error format which conforms to Cognitive Services API Guidelines\nwhich is available at\nhttps://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.\nThis\ncontains required properties ErrorCode, message and optional properties target,\ndetails(key value pair), inner error(this can be nested).",
+               "Type": {
+                "$ref": "93"
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              }
+             ]
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "101",
+         "Name": "summary",
+         "SerializedName": "summary",
+         "Description": "Status Summary",
+         "Type": {
+          "$id": "102",
+          "Kind": "model",
+          "Name": "StatusSummary",
+          "CrossLanguageDefinitionId": "DocumentTranslation.StatusSummary",
+          "Usage": "Output,Json",
+          "Description": "Status Summary",
+          "Properties": [
+           {
+            "$id": "103",
+            "Name": "total",
+            "SerializedName": "total",
+            "Description": "Total count",
+            "Type": {
+             "$id": "104",
+             "Kind": "int32"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "105",
+            "Name": "failed",
+            "SerializedName": "failed",
+            "Description": "Failed count",
+            "Type": {
+             "$id": "106",
+             "Kind": "int32"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "107",
+            "Name": "success",
+            "SerializedName": "success",
+            "Description": "Number of Success",
+            "Type": {
+             "$id": "108",
+             "Kind": "int32"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "109",
+            "Name": "inProgress",
+            "SerializedName": "inProgress",
+            "Description": "Number of in progress",
+            "Type": {
+             "$id": "110",
+             "Kind": "int32"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "111",
+            "Name": "notYetStarted",
+            "SerializedName": "notYetStarted",
+            "Description": "Count of not yet started",
+            "Type": {
+             "$id": "112",
+             "Kind": "int32"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "113",
+            "Name": "cancelled",
+            "SerializedName": "cancelled",
+            "Description": "Number of cancelled",
+            "Type": {
+             "$id": "114",
+             "Kind": "int32"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "115",
+            "Name": "totalCharacterCharged",
+            "SerializedName": "totalCharacterCharged",
+            "Description": "Total characters charged by the API",
+            "Type": {
+             "$id": "116",
+             "Kind": "int64"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "117",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "Url for the next page.  Null if no more pages available",
+     "Type": {
+      "$id": "118",
+      "Kind": "string"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "75"
+  },
+  {
+   "$ref": "86"
+  },
+  {
+   "$ref": "93"
+  },
+  {
+   "$ref": "102"
+  },
+  {
+   "$id": "119",
+   "Kind": "model",
+   "Name": "DocumentStatus",
+   "CrossLanguageDefinitionId": "DocumentTranslation.DocumentStatus",
+   "Usage": "Output,Json",
+   "Description": "Document Status Response",
+   "Properties": [
+    {
+     "$id": "120",
+     "Name": "path",
+     "SerializedName": "path",
+     "Description": "Location of the document or folder",
+     "Type": {
+      "$id": "121",
+      "Kind": "string"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "122",
+     "Name": "sourcePath",
+     "SerializedName": "sourcePath",
+     "Description": "Location of the source document",
+     "Type": {
+      "$id": "123",
+      "Kind": "string"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "124",
+     "Name": "createdDateTimeUtc",
+     "SerializedName": "createdDateTimeUtc",
+     "Description": "Operation created date time",
+     "Type": {
+      "$id": "125",
+      "Kind": "utcDateTime",
+      "Encode": "rfc3339",
+      "WireType": {
+       "$id": "126",
+       "Kind": "string"
+      }
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "127",
+     "Name": "lastActionDateTimeUtc",
+     "SerializedName": "lastActionDateTimeUtc",
+     "Description": "Date time in which the operation's status has been updated",
+     "Type": {
+      "$id": "128",
+      "Kind": "utcDateTime",
+      "Encode": "rfc3339",
+      "WireType": {
+       "$id": "129",
+       "Kind": "string"
+      }
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "130",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "List of possible statuses for job or document",
+     "Type": {
+      "$ref": "9"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "131",
+     "Name": "to",
+     "SerializedName": "to",
+     "Description": "To language",
+     "Type": {
+      "$id": "132",
+      "Kind": "string"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "133",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "This contains an outer error with error code, message, details, target and an\ninner error with more descriptive details.",
+     "Type": {
+      "$ref": "86"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "134",
+     "Name": "progress",
+     "SerializedName": "progress",
+     "Description": "Progress of the translation if available",
+     "Type": {
+      "$id": "135",
+      "Kind": "float32"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "136",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "Document Id",
+     "Type": {
+      "$id": "137",
+      "Kind": "uuid",
+      "Encode": "string"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "138",
+     "Name": "characterCharged",
+     "SerializedName": "characterCharged",
+     "Description": "Character charged by the API",
+     "Type": {
+      "$id": "139",
+      "Kind": "int32"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "140",
+   "Kind": "model",
+   "Name": "DocumentsStatus",
+   "CrossLanguageDefinitionId": "DocumentTranslation.DocumentsStatus",
+   "Usage": "Output,Json",
+   "Description": "Documents Status Response",
+   "Properties": [
+    {
+     "$id": "141",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The detail status of individual documents",
+     "Type": {
+      "$id": "142",
+      "Kind": "array",
+      "Name": "ArrayDocumentStatus",
+      "ValueType": {
+       "$ref": "119"
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "143",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "Url for the next page.  Null if no more pages available",
+     "Type": {
+      "$id": "144",
+      "Kind": "string"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "145",
+   "Kind": "model",
+   "Name": "SupportedFileFormats",
+   "CrossLanguageDefinitionId": "DocumentTranslation.SupportedFileFormats",
+   "Usage": "Output,Json",
+   "Description": "List of supported file formats",
+   "Properties": [
+    {
+     "$id": "146",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "list of objects",
+     "Type": {
+      "$id": "147",
+      "Kind": "array",
+      "Name": "ArrayFileFormat",
+      "ValueType": {
+       "$id": "148",
+       "Kind": "model",
+       "Name": "FileFormat",
+       "CrossLanguageDefinitionId": "DocumentTranslation.FileFormat",
+       "Usage": "Output,Json",
+       "Description": "File Format",
+       "Properties": [
+        {
+         "$id": "149",
+         "Name": "format",
+         "SerializedName": "format",
+         "Description": "Name of the format",
+         "Type": {
+          "$id": "150",
+          "Kind": "string"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "151",
+         "Name": "fileExtensions",
+         "SerializedName": "fileExtensions",
+         "Description": "Supported file extension for this format",
+         "Type": {
+          "$id": "152",
+          "Kind": "array",
+          "Name": "Array",
+          "ValueType": {
+           "$id": "153",
+           "Kind": "string"
+          },
+          "CrossLanguageDefinitionId": "TypeSpec.Array"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "154",
+         "Name": "contentTypes",
+         "SerializedName": "contentTypes",
+         "Description": "Supported Content-Types for this format",
+         "Type": {
+          "$id": "155",
+          "Kind": "array",
+          "Name": "Array",
+          "ValueType": {
+           "$id": "156",
+           "Kind": "string"
+          },
+          "CrossLanguageDefinitionId": "TypeSpec.Array"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "157",
+         "Name": "defaultVersion",
+         "SerializedName": "defaultVersion",
+         "Description": "Default version if none is specified",
+         "Type": {
+          "$id": "158",
+          "Kind": "string"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "159",
+         "Name": "versions",
+         "SerializedName": "versions",
+         "Description": "Supported Version",
+         "Type": {
+          "$id": "160",
+          "Kind": "array",
+          "Name": "Array",
+          "ValueType": {
+           "$id": "161",
+           "Kind": "string"
+          },
+          "CrossLanguageDefinitionId": "TypeSpec.Array"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "162",
+         "Name": "type",
+         "SerializedName": "type",
+         "Description": "Supported Type for this format",
+         "Type": {
+          "$id": "163",
+          "Kind": "string"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "148"
+  },
+  {
+   "$id": "164",
+   "Kind": "model",
+   "Name": "DocumentTranslateContent",
+   "CrossLanguageDefinitionId": "DocumentTranslation.DocumentTranslateContent",
+   "Usage": "Input,MultipartFormData",
+   "Description": "Document Translate Request Content",
+   "Properties": [
+    {
+     "$id": "165",
+     "Name": "document",
+     "SerializedName": "document",
+     "Description": "Document to be translated in the form",
+     "Type": {
+      "$id": "166",
+      "Kind": "bytes",
+      "Encode": "base64"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "167",
+     "Name": "glossary",
+     "SerializedName": "glossary",
+     "Description": "Glossary-translation memory will be used during translation in the form. ",
+     "Type": {
+      "$id": "168",
+      "Kind": "array",
+      "Name": "Array",
+      "ValueType": {
+       "$id": "169",
+       "Kind": "bytes",
+       "Encode": "base64"
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "170",
+   "Name": "DocumentTranslationClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "171",
+     "Name": "startTranslation",
+     "ResourceName": "DocumentTranslationClient",
+     "Summary": "Submit a document translation request to the Document Translation service",
+     "Description": "Use this API to submit a bulk (batch) translation request to the Document\nTranslation service.\nEach request can contain multiple documents and must\ncontain a source and destination container for each document.\n            \nThe\nprefix and suffix filter (if supplied) are used to filter folders. The prefix\nis applied to the subpath after the container name.\n            \nGlossaries /\nTranslation memory can be included in the request and are applied by the\nservice when the document is translated.\n            \nIf the glossary is\ninvalid or unreachable during translation, an error is indicated in the\ndocument status.\nIf a file with the same name already exists at the\ndestination, it will be overwritten. The targetUrl for each target language\nmust be unique.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "172",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Description": "Supported document Translation endpoint, protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator.",
+       "Type": {
+        "$id": "173",
+        "Kind": "url"
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "174",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "175",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$id": "176",
+        "Type": {
+         "$id": "177",
+         "Kind": "string"
+        },
+        "Value": "2024-05-01"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "178",
+       "Name": "startTranslationDetails",
+       "NameInRequest": "body",
+       "Description": "Translation job submission batch request",
+       "Type": {
+        "$ref": "34"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "179",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "180",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "181",
+        "Type": {
+         "$ref": "180"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "182",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "183",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "184",
+        "Type": {
+         "$ref": "183"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "185",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "186",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "Link to the translation operation status",
+         "Type": {
+          "$id": "187",
+          "Kind": "string"
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}/translator",
+     "Path": "/document/batches",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "188",
+      "FinalStateVia": 3,
+      "FinalResponse": {
+       "$id": "189",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "190",
+     "Name": "getTranslationsStatus",
+     "ResourceName": "DocumentTranslationClient",
+     "Summary": "Returns a list of batch requests submitted and the status for each request",
+     "Description": "Returns a list of batch requests submitted and the status for each\nrequest.\nThis list only contains batch requests submitted by the user (based on\nthe resource).\n            \nIf the number of requests exceeds our paging limit,\nserver-side paging is used. Paginated responses indicate a partial result and\ninclude a continuation token in the response.\nThe absence of a continuation\ntoken means that no additional pages are available.\n            \ntop, skip\nand maxpagesize query parameters can be used to specify a number of results to\nreturn and an offset for the collection.\n            \ntop indicates the total\nnumber of records the user wants to be returned across all pages.\nskip\nindicates the number of records to skip from the list of batches based on the\nsorting method specified.  By default, we sort by descending start\ntime.\nmaxpagesize is the maximum items returned in a page.  If more items are\nrequested via top (or top is not specified and there are more items to be\nreturned), @nextLink will contain the link to the next page.\n           \n\norderby query parameter can be used to sort the returned list (ex\n\"orderby=createdDateTimeUtc asc\" or \"orderby=createdDateTimeUtc\ndesc\").\nThe default sorting is descending by createdDateTimeUtc.\nSome query\nparameters can be used to filter the returned list (ex:\n\"status=Succeeded,Cancelled\") will only return succeeded and cancelled\noperations.\ncreatedDateTimeUtcStart and createdDateTimeUtcEnd can be used\ncombined or separately to specify a range of datetime to filter the returned\nlist by.\nThe supported filtering query parameters are (status, ids,\ncreatedDateTimeUtcStart, createdDateTimeUtcEnd).\n            \nThe server honors\nthe values specified by the client. However, clients must be prepared to handle\nresponses that contain a different page size or contain a continuation token.\n \n          \nWhen both top and skip are included, the server should first apply\nskip and then top on the collection.\nNote: If the server can't honor top\nand/or skip, the server must return an error to the client informing about it\ninstead of just ignoring the query options.\nThis reduces the risk of the client\nmaking assumptions about the data returned.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "172"
+      },
+      {
+       "$id": "191",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "192",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "176"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "193",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "top indicates the total number of records the user wants to be returned across\nall pages.\n            \nClients MAY use top and skip query parameters to\nspecify a number of results to return and an offset into the collection.\nWhen\nboth top and skip are given by a client, the server SHOULD first apply skip\nand then top on the collection.\n            \nNote: If the server can't honor\ntop and/or skip, the server MUST return an error to the client informing\nabout it instead of just ignoring the query options.",
+       "Type": {
+        "$id": "194",
+        "Kind": "int32"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "195",
+       "Name": "skip",
+       "NameInRequest": "skip",
+       "Description": "skip indicates the number of records to skip from the list of records held by\nthe server based on the sorting method specified.  By default, we sort by\ndescending start time.\n            \nClients MAY use top and skip query\nparameters to specify a number of results to return and an offset into the\ncollection.\nWhen both top and skip are given by a client, the server SHOULD\nfirst apply skip and then top on the collection.\n            \nNote: If the\nserver can't honor top and/or skip, the server MUST return an error to the\nclient informing about it instead of just ignoring the query options.",
+       "Type": {
+        "$id": "196",
+        "Kind": "int32"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "197",
+       "Name": "maxpagesize",
+       "NameInRequest": "maxpagesize",
+       "Description": "maxpagesize is the maximum items returned in a page.  If more items are\nrequested via top (or top is not specified and there are more items to be\nreturned), @nextLink will contain the link to the next page.\n           \n\nClients MAY request server-driven paging with a specific page size by\nspecifying a maxpagesize preference. The server SHOULD honor this preference\nif the specified page size is smaller than the server's default page size.",
+       "Type": {
+        "$id": "198",
+        "Kind": "int32"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "199",
+       "Name": "ids",
+       "NameInRequest": "ids",
+       "Description": "Ids to use in filtering",
+       "Type": {
+        "$id": "200",
+        "Kind": "array",
+        "Name": "Array",
+        "ValueType": {
+         "$id": "201",
+         "Kind": "uuid",
+         "Encode": "string"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "202",
+       "Name": "statuses",
+       "NameInRequest": "statuses",
+       "Description": "Statuses to use in filtering",
+       "Type": {
+        "$id": "203",
+        "Kind": "array",
+        "Name": "Array",
+        "ValueType": {
+         "$id": "204",
+         "Kind": "string"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "205",
+       "Name": "createdDateTimeUtcStart",
+       "NameInRequest": "createdDateTimeUtcStart",
+       "Description": "the start datetime to get items after",
+       "Type": {
+        "$id": "206",
+        "Kind": "utcDateTime",
+        "Encode": "rfc3339",
+        "WireType": {
+         "$id": "207",
+         "Kind": "string"
+        }
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "208",
+       "Name": "createdDateTimeUtcEnd",
+       "NameInRequest": "createdDateTimeUtcEnd",
+       "Description": "the end datetime to get items before",
+       "Type": {
+        "$id": "209",
+        "Kind": "utcDateTime",
+        "Encode": "rfc3339",
+        "WireType": {
+         "$id": "210",
+         "Kind": "string"
+        }
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "211",
+       "Name": "orderby",
+       "NameInRequest": "orderby",
+       "Description": "the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc')",
+       "Type": {
+        "$id": "212",
+        "Kind": "array",
+        "Name": "Array",
+        "ValueType": {
+         "$id": "213",
+         "Kind": "string"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "214",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "215",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "216",
+        "Type": {
+         "$ref": "215"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "217",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "72"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}/translator",
+     "Path": "/document/batches",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "218",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "219",
+     "Name": "getDocumentStatus",
+     "ResourceName": "DocumentTranslationClient",
+     "Summary": "Returns the status for a specific document",
+     "Description": "Returns the translation status for a specific document based on the request Id\nand document Id.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "172"
+      },
+      {
+       "$id": "220",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "221",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "176"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "222",
+       "Name": "id",
+       "NameInRequest": "id",
+       "Description": "Format - uuid.  The batch id",
+       "Type": {
+        "$id": "223",
+        "Kind": "uuid",
+        "Encode": "string"
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "224",
+       "Name": "documentId",
+       "NameInRequest": "documentId",
+       "Description": "Format - uuid.  The document id",
+       "Type": {
+        "$id": "225",
+        "Kind": "uuid",
+        "Encode": "string"
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "226",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "227",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "228",
+        "Type": {
+         "$ref": "227"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "229",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "119"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}/translator",
+     "Path": "/document/batches/{id}/documents/{documentId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "230",
+     "Name": "getTranslationStatus",
+     "ResourceName": "DocumentTranslationClient",
+     "Summary": "Returns the status for a document translation request",
+     "Description": "Returns the status for a document translation request.\nThe status includes the\noverall request status, as well as the status for documents that are being\ntranslated as part of that request.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "172"
+      },
+      {
+       "$id": "231",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "232",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "176"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "233",
+       "Name": "id",
+       "NameInRequest": "id",
+       "Description": "Format - uuid.  The operation id",
+       "Type": {
+        "$id": "234",
+        "Kind": "uuid",
+        "Encode": "string"
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "235",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "236",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "237",
+        "Type": {
+         "$ref": "236"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "238",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "75"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}/translator",
+     "Path": "/document/batches/{id}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "239",
+     "Name": "cancelTranslation",
+     "ResourceName": "DocumentTranslationClient",
+     "Summary": "Cancel a currently processing or queued translation",
+     "Description": "Cancel a currently processing or queued translation.\nA translation will not be\ncancelled if it is already completed or failed or cancelling. A bad request\nwill be returned.\nAll documents that have completed translation will not be\ncancelled and will be charged.\nAll pending documents will be cancelled if\npossible.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "172"
+      },
+      {
+       "$id": "240",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "241",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "176"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "242",
+       "Name": "id",
+       "NameInRequest": "id",
+       "Description": "Format - uuid.  The operation-id",
+       "Type": {
+        "$id": "243",
+        "Kind": "uuid",
+        "Encode": "string"
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "244",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "245",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "246",
+        "Type": {
+         "$ref": "245"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "247",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "75"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}/translator",
+     "Path": "/document/batches/{id}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "248",
+     "Name": "getDocumentsStatus",
+     "ResourceName": "DocumentTranslationClient",
+     "Summary": "Returns the status for all documents in a batch document translation request",
+     "Description": "Returns the status for all documents in a batch document translation request.\n \n          \nIf the number of documents in the response exceeds our paging limit,\nserver-side paging is used.\nPaginated responses indicate a partial result and\ninclude a continuation token in the response. The absence of a continuation\ntoken means that no additional pages are available.\n            \ntop, skip\nand maxpagesize query parameters can be used to specify a number of results to\nreturn and an offset for the collection.\n            \ntop indicates the total\nnumber of records the user wants to be returned across all pages.\nskip\nindicates the number of records to skip from the list of document status held\nby the server based on the sorting method specified.  By default, we sort by\ndescending start time.\nmaxpagesize is the maximum items returned in a page. \nIf more items are requested via top (or top is not specified and there are\nmore items to be returned), @nextLink will contain the link to the next page.\n \n          \norderby query parameter can be used to sort the returned list (ex\n\"orderby=createdDateTimeUtc asc\" or \"orderby=createdDateTimeUtc\ndesc\").\nThe default sorting is descending by createdDateTimeUtc.\nSome query\nparameters can be used to filter the returned list (ex:\n\"status=Succeeded,Cancelled\") will only return succeeded and cancelled\ndocuments.\ncreatedDateTimeUtcStart and createdDateTimeUtcEnd can be used\ncombined or separately to specify a range of datetime to filter the returned\nlist by.\nThe supported filtering query parameters are (status, ids,\ncreatedDateTimeUtcStart, createdDateTimeUtcEnd).\n            \nWhen both top\nand skip are included, the server should first apply skip and then top on\nthe collection.\nNote: If the server can't honor top and/or skip, the server\nmust return an error to the client informing about it instead of just ignoring\nthe query options.\nThis reduces the risk of the client making assumptions about\nthe data returned.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "172"
+      },
+      {
+       "$id": "249",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "250",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "176"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "251",
+       "Name": "id",
+       "NameInRequest": "id",
+       "Description": "Format - uuid.  The operation id",
+       "Type": {
+        "$id": "252",
+        "Kind": "uuid",
+        "Encode": "string"
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "253",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "top indicates the total number of records the user wants to be returned across\nall pages.\n            \nClients MAY use top and skip query parameters to\nspecify a number of results to return and an offset into the collection.\nWhen\nboth top and skip are given by a client, the server SHOULD first apply skip\nand then top on the collection.\n            \nNote: If the server can't honor\ntop and/or skip, the server MUST return an error to the client informing\nabout it instead of just ignoring the query options.",
+       "Type": {
+        "$id": "254",
+        "Kind": "int32"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "255",
+       "Name": "skip",
+       "NameInRequest": "skip",
+       "Description": "skip indicates the number of records to skip from the list of records held by\nthe server based on the sorting method specified.  By default, we sort by\ndescending start time.\n            \nClients MAY use top and skip query\nparameters to specify a number of results to return and an offset into the\ncollection.\nWhen both top and skip are given by a client, the server SHOULD\nfirst apply skip and then top on the collection.\n            \nNote: If the\nserver can't honor top and/or skip, the server MUST return an error to the\nclient informing about it instead of just ignoring the query options.",
+       "Type": {
+        "$id": "256",
+        "Kind": "int32"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "257",
+       "Name": "maxpagesize",
+       "NameInRequest": "maxpagesize",
+       "Description": "maxpagesize is the maximum items returned in a page.  If more items are\nrequested via top (or top is not specified and there are more items to be\nreturned), @nextLink will contain the link to the next page.\n           \n\nClients MAY request server-driven paging with a specific page size by\nspecifying a maxpagesize preference. The server SHOULD honor this preference\nif the specified page size is smaller than the server's default page size.",
+       "Type": {
+        "$id": "258",
+        "Kind": "int32"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "259",
+       "Name": "ids",
+       "NameInRequest": "ids",
+       "Description": "Ids to use in filtering",
+       "Type": {
+        "$id": "260",
+        "Kind": "array",
+        "Name": "Array",
+        "ValueType": {
+         "$id": "261",
+         "Kind": "uuid",
+         "Encode": "string"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "262",
+       "Name": "statuses",
+       "NameInRequest": "statuses",
+       "Description": "Statuses to use in filtering",
+       "Type": {
+        "$id": "263",
+        "Kind": "array",
+        "Name": "Array",
+        "ValueType": {
+         "$id": "264",
+         "Kind": "string"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "265",
+       "Name": "createdDateTimeUtcStart",
+       "NameInRequest": "createdDateTimeUtcStart",
+       "Description": "the start datetime to get items after",
+       "Type": {
+        "$id": "266",
+        "Kind": "utcDateTime",
+        "Encode": "rfc3339",
+        "WireType": {
+         "$id": "267",
+         "Kind": "string"
+        }
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "268",
+       "Name": "createdDateTimeUtcEnd",
+       "NameInRequest": "createdDateTimeUtcEnd",
+       "Description": "the end datetime to get items before",
+       "Type": {
+        "$id": "269",
+        "Kind": "utcDateTime",
+        "Encode": "rfc3339",
+        "WireType": {
+         "$id": "270",
+         "Kind": "string"
+        }
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "271",
+       "Name": "orderby",
+       "NameInRequest": "orderby",
+       "Description": "the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc')",
+       "Type": {
+        "$id": "272",
+        "Kind": "array",
+        "Name": "Array",
+        "ValueType": {
+         "$id": "273",
+         "Kind": "string"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.Array"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "274",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "275",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "276",
+        "Type": {
+         "$ref": "275"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "277",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "140"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}/translator",
+     "Path": "/document/batches/{id}/documents",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "278",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "279",
+     "Name": "getSupportedFormats",
+     "ResourceName": "DocumentTranslationClient",
+     "Summary": "Returns a list of supported document formats",
+     "Description": "The list of supported formats supported by the Document Translation\nservice.\nThe list includes the common file extension, as well as the\ncontent-type if using the upload API.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "172"
+      },
+      {
+       "$id": "280",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "281",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "176"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "282",
+       "Name": "type",
+       "NameInRequest": "type",
+       "Description": "the type of format like document or glossary ",
+       "Type": {
+        "$ref": "27"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "283",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "284",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "285",
+        "Type": {
+         "$ref": "284"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "286",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "145"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}/translator",
+     "Path": "/document/formats",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "287"
+   },
+   "Parameters": [
+    {
+     "$ref": "172"
+    }
+   ]
+  },
+  {
+   "$id": "288",
+   "Name": "SingleDocumentTranslationClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "289",
+     "Name": "documentTranslate",
+     "ResourceName": "SingleDocumentTranslationClient",
+     "Summary": "Submit a single document translation request to the Document Translation service",
+     "Description": "Use this API to submit a single translation request to the Document Translation Service.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "172"
+      },
+      {
+       "$id": "290",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "291",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "176"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "292",
+       "Name": "sourceLanguage",
+       "NameInRequest": "sourceLanguage",
+       "Description": "Specifies source language of the input document.\nIf this parameter isn't specified, automatic language detection is applied to determine the source language.\nFor example if the source document is written in English, then use sourceLanguage=en",
+       "Type": {
+        "$id": "293",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "294",
+       "Name": "targetLanguage",
+       "NameInRequest": "targetLanguage",
+       "Description": "Specifies the language of the output document.\nThe target language must be one of the supported languages included in the translation scope.\nFor example if you want to translate the document in German language, then use targetLanguage=de ",
+       "Type": {
+        "$id": "295",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "296",
+       "Name": "category",
+       "NameInRequest": "category",
+       "Description": "A string specifying the category (domain) of the translation. This parameter is used to get translations \nfrom a customized system built with Custom Translator. Add the Category ID from your Custom Translator \nproject details to this parameter to use your deployed customized system. Default value is: general.",
+       "Type": {
+        "$id": "297",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "298",
+       "Name": "allowFallback",
+       "NameInRequest": "allowFallback",
+       "Description": "Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. \nPossible values are: true (default) or false.",
+       "Type": {
+        "$id": "299",
+        "Kind": "boolean"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "300",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Content Type as multipart/form-data",
+       "Type": {
+        "$id": "301",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "302",
+         "Kind": "string"
+        },
+        "Value": "multipart/form-data"
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "303",
+        "Type": {
+         "$ref": "301"
+        },
+        "Value": "multipart/form-data"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "304",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "305",
+        "Kind": "uuid",
+        "Encode": "string"
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "306",
+       "Name": "documentTranslateContent",
+       "NameInRequest": "body",
+       "Description": "Document Translate Request Content",
+       "Type": {
+        "$ref": "164"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "307",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "308",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "309",
+        "Type": {
+         "$ref": "308"
+        },
+        "Value": "application/octet-stream"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "310",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "311",
+        "Kind": "bytes",
+        "Encode": "base64"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "312",
+         "Name": "x-ms-client-request-id",
+         "NameInResponse": "clientRequestId",
+         "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "313",
+          "Kind": "uuid",
+          "Encode": "string"
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/octet-stream"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}/translator",
+     "Path": "/document:translate",
+     "RequestMediaTypes": [
+      "multipart/form-data"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "314"
+   },
+   "Parameters": [
+    {
+     "$ref": "172"
+    }
+   ]
+  }
+ ],
+ "Auth": {
+  "$id": "315",
+  "ApiKey": {
+   "$id": "316",
+   "Name": "Ocp-Apim-Subscription-Key"
+  },
+  "OAuth2": {
+   "$id": "317",
+   "Scopes": [
+    "https://cognitiveservices.azure.com/.default"
+   ]
+  }
+ }
+}

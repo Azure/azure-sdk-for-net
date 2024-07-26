@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.AI.Translation.Text",
+  "library-name": "Azure.AI.Translation.Text",
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/Azure.AI.TextTranslation/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/Azure.AI.TextTranslation/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ]
+}
