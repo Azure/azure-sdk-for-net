@@ -7,9 +7,8 @@ Conversational Language Understanding - aka CLU for short - is a cloud-based con
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs]
 
-
 > [!NOTE]
-> Conversational Authoring is not supported in version 2.0.0-beta.1. If you use Conversational Authoring, please continue to use version 1.1.0. You can find the authoring [samples][conversationalauthoring_samples] here.
+> Conversational Authoring is not supported in version 2.0.0-beta.1. If you use Conversational Authoring, please continue to use version 1.1.0. You can find the [samples][conversationalauthoring_samples] here.
 
 ## Getting started
 
