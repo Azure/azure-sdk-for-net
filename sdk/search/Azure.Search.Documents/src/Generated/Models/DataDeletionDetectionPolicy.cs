@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary>
     /// Base type for data deletion detection policies.
     /// Please note <see cref="DataDeletionDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/> and <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
+    /// The available derived classes include <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
     /// </summary>
     public partial class DataDeletionDetectionPolicy
     {

@@ -100,7 +100,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             => InstrumentClient(
                 new DataLakeServiceClient(
                     (new Uri(config.BlobServiceEndpoint)).ToHttps(),
-                    Tenants.GetOAuthCredential(config),
+                    TestEnvironment.Credential,
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_OAuth()
@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 TestConfigHierarchicalNamespace.AccountKey);
 
         public TokenCredential GetOAuthHnsCredential()
-            => Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
+            => TestEnvironment.Credential;
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
         {

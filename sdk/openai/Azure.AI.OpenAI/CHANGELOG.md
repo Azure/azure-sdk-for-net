@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Removed an inappropriate null check in `FileClient.GetFiles()` (azure-sdk-for-net 44912)
+
 ### Other Changes
 
 ## 2.0.0-beta.2 (2024-06-14)

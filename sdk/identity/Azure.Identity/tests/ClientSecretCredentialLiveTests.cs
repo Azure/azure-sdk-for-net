@@ -25,6 +25,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
         public async Task GetToken()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
