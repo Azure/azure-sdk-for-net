@@ -26,25 +26,15 @@ namespace Azure.Analytics.Purview.DataMap
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FailedImportInfoList))
+            if (Optional.IsDefined(FailedImportInfoList))
             {
                 writer.WritePropertyName("failedImportInfoList"u8);
-                writer.WriteStartArray();
-                foreach (var item in FailedImportInfoList)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(FailedImportInfoList, options);
             }
-            if (Optional.IsCollectionDefined(SuccessImportInfoList))
+            if (Optional.IsDefined(SuccessImportInfoList))
             {
                 writer.WritePropertyName("successImportInfoList"u8);
-                writer.WriteStartArray();
-                foreach (var item in SuccessImportInfoList)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(SuccessImportInfoList, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,8 +74,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            IReadOnlyList<ImportInfo> failedImportInfoList = default;
-            IReadOnlyList<ImportInfo> successImportInfoList = default;
+            ImportInfo failedImportInfoList = default;
+            ImportInfo successImportInfoList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,12 +86,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    List<ImportInfo> array = new List<ImportInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ImportInfo.DeserializeImportInfo(item, options));
-                    }
-                    failedImportInfoList = array;
+                    failedImportInfoList = ImportInfo.DeserializeImportInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("successImportInfoList"u8))
@@ -110,12 +95,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    List<ImportInfo> array = new List<ImportInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ImportInfo.DeserializeImportInfo(item, options));
-                    }
-                    successImportInfoList = array;
+                    successImportInfoList = ImportInfo.DeserializeImportInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,7 +104,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BulkImportResult(failedImportInfoList ?? new ChangeTrackingList<ImportInfo>(), successImportInfoList ?? new ChangeTrackingList<ImportInfo>(), serializedAdditionalRawData);
+            return new BulkImportResult(failedImportInfoList, successImportInfoList, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BulkImportResult>.Write(ModelReaderWriterOptions options)

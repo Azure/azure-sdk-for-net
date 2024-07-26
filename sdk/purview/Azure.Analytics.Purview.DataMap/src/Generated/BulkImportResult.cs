@@ -48,15 +48,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Initializes a new instance of <see cref="BulkImportResult"/>. </summary>
         internal BulkImportResult()
         {
-            FailedImportInfoList = new ChangeTrackingList<ImportInfo>();
-            SuccessImportInfoList = new ChangeTrackingList<ImportInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkImportResult"/>. </summary>
         /// <param name="failedImportInfoList"> failed importInfoList. </param>
         /// <param name="successImportInfoList"> successful importInfoList. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BulkImportResult(IReadOnlyList<ImportInfo> failedImportInfoList, IReadOnlyList<ImportInfo> successImportInfoList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BulkImportResult(ImportInfo failedImportInfoList, ImportInfo successImportInfoList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailedImportInfoList = failedImportInfoList;
             SuccessImportInfoList = successImportInfoList;
@@ -64,8 +62,8 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> failed importInfoList. </summary>
-        public IReadOnlyList<ImportInfo> FailedImportInfoList { get; }
+        public ImportInfo FailedImportInfoList { get; }
         /// <summary> successful importInfoList. </summary>
-        public IReadOnlyList<ImportInfo> SuccessImportInfoList { get; }
+        public ImportInfo SuccessImportInfoList { get; }
     }
 }

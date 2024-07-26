@@ -118,12 +118,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="failedImportInfoList"> failed importInfoList. </param>
         /// <param name="successImportInfoList"> successful importInfoList. </param>
         /// <returns> A new <see cref="DataMap.BulkImportResult"/> instance for mocking. </returns>
-        public static BulkImportResult BulkImportResult(IEnumerable<ImportInfo> failedImportInfoList = null, IEnumerable<ImportInfo> successImportInfoList = null)
+        public static BulkImportResult BulkImportResult(ImportInfo failedImportInfoList = null, ImportInfo successImportInfoList = null)
         {
-            failedImportInfoList ??= new List<ImportInfo>();
-            successImportInfoList ??= new List<ImportInfo>();
-
-            return new BulkImportResult(failedImportInfoList?.ToList(), successImportInfoList?.ToList(), serializedAdditionalRawData: null);
+            return new BulkImportResult(failedImportInfoList, successImportInfoList, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.ImportInfo"/>. </summary>

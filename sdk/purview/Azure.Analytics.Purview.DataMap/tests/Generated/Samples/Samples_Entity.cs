@@ -6105,14 +6105,14 @@ Status = EntityStatus.Active,
             Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("importStatus").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("parentObjectName").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("remarks").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("childObjectName").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("importStatus").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("parentObjectName").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
+            Console.WriteLine(result.GetProperty("failedImportInfoList").GetProperty("childObjectName").ToString());
+            Console.WriteLine(result.GetProperty("failedImportInfoList").GetProperty("importStatus").ToString());
+            Console.WriteLine(result.GetProperty("failedImportInfoList").GetProperty("parentObjectName").ToString());
+            Console.WriteLine(result.GetProperty("failedImportInfoList").GetProperty("remarks").ToString());
+            Console.WriteLine(result.GetProperty("successImportInfoList").GetProperty("childObjectName").ToString());
+            Console.WriteLine(result.GetProperty("successImportInfoList").GetProperty("importStatus").ToString());
+            Console.WriteLine(result.GetProperty("successImportInfoList").GetProperty("parentObjectName").ToString());
+            Console.WriteLine(result.GetProperty("successImportInfoList").GetProperty("remarks").ToString());
         }
 
         [Test]
@@ -6130,14 +6130,14 @@ Status = EntityStatus.Active,
             Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("importStatus").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("parentObjectName").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("remarks").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("childObjectName").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("importStatus").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("parentObjectName").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
+            Console.WriteLine(result.GetProperty("failedImportInfoList").GetProperty("childObjectName").ToString());
+            Console.WriteLine(result.GetProperty("failedImportInfoList").GetProperty("importStatus").ToString());
+            Console.WriteLine(result.GetProperty("failedImportInfoList").GetProperty("parentObjectName").ToString());
+            Console.WriteLine(result.GetProperty("failedImportInfoList").GetProperty("remarks").ToString());
+            Console.WriteLine(result.GetProperty("successImportInfoList").GetProperty("childObjectName").ToString());
+            Console.WriteLine(result.GetProperty("successImportInfoList").GetProperty("importStatus").ToString());
+            Console.WriteLine(result.GetProperty("successImportInfoList").GetProperty("parentObjectName").ToString());
+            Console.WriteLine(result.GetProperty("successImportInfoList").GetProperty("remarks").ToString());
         }
 
         [Test]
