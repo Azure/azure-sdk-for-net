@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="capacityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
+        [Core.ForwardsClientCallsAttribute]
         public static async Task<Response<FabricCapacityResource>> GetFabricCapacityAsync(this ResourceGroupResource resourceGroupResource, string capacityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="capacityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
+        [Core.ForwardsClientCallsAttribute]
         public static Response<FabricCapacityResource> GetFabricCapacity(this ResourceGroupResource resourceGroupResource, string capacityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));

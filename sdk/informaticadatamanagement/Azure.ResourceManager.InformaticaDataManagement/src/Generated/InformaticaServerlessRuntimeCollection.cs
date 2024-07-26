@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             try
             {
                 var response = await _informaticaServerlessRuntimeServerlessRuntimesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(new InformaticaServerlessRuntimeOperationSource(Client), _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics, Pipeline, _informaticaServerlessRuntimeServerlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(new InformaticaServerlessRuntimeOperationSource(Client), _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics, Pipeline, _informaticaServerlessRuntimeServerlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             try
             {
                 var response = _informaticaServerlessRuntimeServerlessRuntimesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, data, cancellationToken);
-                var operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(new InformaticaServerlessRuntimeOperationSource(Client), _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics, Pipeline, _informaticaServerlessRuntimeServerlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(new InformaticaServerlessRuntimeOperationSource(Client), _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics, Pipeline, _informaticaServerlessRuntimeServerlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

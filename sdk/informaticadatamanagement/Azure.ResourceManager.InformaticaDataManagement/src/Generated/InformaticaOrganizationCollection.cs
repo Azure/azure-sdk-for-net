@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             try
             {
                 var response = await _informaticaOrganizationOrganizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new InformaticaDataManagementArmOperation<InformaticaOrganizationResource>(new InformaticaOrganizationOperationSource(Client), _informaticaOrganizationOrganizationsClientDiagnostics, Pipeline, _informaticaOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new InformaticaDataManagementArmOperation<InformaticaOrganizationResource>(new InformaticaOrganizationOperationSource(Client), _informaticaOrganizationOrganizationsClientDiagnostics, Pipeline, _informaticaOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             try
             {
                 var response = _informaticaOrganizationOrganizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
-                var operation = new InformaticaDataManagementArmOperation<InformaticaOrganizationResource>(new InformaticaOrganizationOperationSource(Client), _informaticaOrganizationOrganizationsClientDiagnostics, Pipeline, _informaticaOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new InformaticaDataManagementArmOperation<InformaticaOrganizationResource>(new InformaticaOrganizationOperationSource(Client), _informaticaOrganizationOrganizationsClientDiagnostics, Pipeline, _informaticaOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

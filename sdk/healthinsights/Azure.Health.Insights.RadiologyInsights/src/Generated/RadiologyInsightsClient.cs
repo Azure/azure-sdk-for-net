@@ -126,7 +126,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             try
             {
                 using HttpMessage message = CreateInferRadiologyInsightsRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights", Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             try
             {
                 using HttpMessage message = CreateInferRadiologyInsightsRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights", Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

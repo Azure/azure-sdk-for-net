@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
+        [Core.ForwardsClientCallsAttribute]
         public static async Task<Response<InformaticaOrganizationResource>> GetInformaticaOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
+        [Core.ForwardsClientCallsAttribute]
         public static Response<InformaticaOrganizationResource> GetInformaticaOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));

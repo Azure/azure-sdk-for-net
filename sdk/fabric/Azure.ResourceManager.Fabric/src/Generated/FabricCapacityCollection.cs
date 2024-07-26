@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Fabric
             try
             {
                 var response = await _fabricCapacityRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, capacityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FabricArmOperation<FabricCapacityResource>(new FabricCapacityOperationSource(Client), _fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FabricArmOperation<FabricCapacityResource>(new FabricCapacityOperationSource(Client), _fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Fabric
             try
             {
                 var response = _fabricCapacityRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, capacityName, data, cancellationToken);
-                var operation = new FabricArmOperation<FabricCapacityResource>(new FabricCapacityOperationSource(Client), _fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FabricArmOperation<FabricCapacityResource>(new FabricCapacityOperationSource(Client), _fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

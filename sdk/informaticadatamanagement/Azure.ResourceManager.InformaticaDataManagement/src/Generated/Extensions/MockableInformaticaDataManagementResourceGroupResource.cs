@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
+        [Core.ForwardsClientCallsAttribute]
         public virtual async Task<Response<InformaticaOrganizationResource>> GetInformaticaOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             return await GetInformaticaOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
+        [Core.ForwardsClientCallsAttribute]
         public virtual Response<InformaticaOrganizationResource> GetInformaticaOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
             return GetInformaticaOrganizations().Get(organizationName, cancellationToken);

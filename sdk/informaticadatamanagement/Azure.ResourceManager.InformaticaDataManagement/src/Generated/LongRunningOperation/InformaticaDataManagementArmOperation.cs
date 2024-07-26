@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             _operationId = GetOperationId(rehydrationToken);
         }
 
-        internal InformaticaDataManagementArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal InformaticaDataManagementArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Core.OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)

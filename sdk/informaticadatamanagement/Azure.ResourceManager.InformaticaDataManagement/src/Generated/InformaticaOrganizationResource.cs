@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverlessRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serverlessRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
+        [Core.ForwardsClientCallsAttribute]
         public virtual async Task<Response<InformaticaServerlessRuntimeResource>> GetInformaticaServerlessRuntimeAsync(string serverlessRuntimeName, CancellationToken cancellationToken = default)
         {
             return await GetInformaticaServerlessRuntimes().GetAsync(serverlessRuntimeName, cancellationToken).ConfigureAwait(false);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverlessRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serverlessRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
+        [Core.ForwardsClientCallsAttribute]
         public virtual Response<InformaticaServerlessRuntimeResource> GetInformaticaServerlessRuntime(string serverlessRuntimeName, CancellationToken cancellationToken = default)
         {
             return GetInformaticaServerlessRuntimes().Get(serverlessRuntimeName, cancellationToken);
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             try
             {
                 var response = await _informaticaOrganizationOrganizationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new InformaticaDataManagementArmOperation(_informaticaOrganizationOrganizationsClientDiagnostics, Pipeline, _informaticaOrganizationOrganizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new InformaticaDataManagementArmOperation(_informaticaOrganizationOrganizationsClientDiagnostics, Pipeline, _informaticaOrganizationOrganizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             try
             {
                 var response = _informaticaOrganizationOrganizationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new InformaticaDataManagementArmOperation(_informaticaOrganizationOrganizationsClientDiagnostics, Pipeline, _informaticaOrganizationOrganizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new InformaticaDataManagementArmOperation(_informaticaOrganizationOrganizationsClientDiagnostics, Pipeline, _informaticaOrganizationOrganizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
