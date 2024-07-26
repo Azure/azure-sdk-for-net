@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- `AzurePowerShellCredential` now utilizes the AsSecureString parameter to Get-AzAccessToken for version 2.17.0 and greater of the Az.Accounts module.
 
 ## 1.13.0-beta.1 (2024-07-24)
 
