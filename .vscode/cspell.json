@@ -789,7 +789,7 @@
       ]
     },
     {
-      "filename": "**/sdk/maps/Azure.Maps.Timezone/**/*.cs",
+      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
       "words": [
         "Posix",
         "posix",
