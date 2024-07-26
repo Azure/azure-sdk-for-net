@@ -38,21 +38,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("resourceKind"u8);
                 writer.WriteStringValue(ResourceKind);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (Optional.IsDefined(ResourceOrigin))
             {
-                writer.WritePropertyName("resourceName"u8);
-                writer.WriteStringValue(ResourceName);
+                writer.WritePropertyName("resourceOrigin"u8);
+                writer.WriteStringValue(ResourceOrigin.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Optional.IsDefined(AccountId))
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("accountId"u8);
+                writer.WriteStringValue(AccountId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,8 +89,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             string resourceId = default;
             string resourceType = default;
             string resourceKind = default;
-            string resourceName = default;
-            IDictionary<string, string> tags = default;
+            ResourceOrigin? resourceOrigin = default;
+            string accountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,23 +110,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     resourceKind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"u8))
-                {
-                    resourceName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
+                if (property.NameEquals("resourceOrigin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
+                    resourceOrigin = new ResourceOrigin(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("accountId"u8))
+                {
+                    accountId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,8 +134,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 resourceId,
                 resourceType,
                 resourceKind,
-                resourceName,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                resourceOrigin,
+                accountId,
                 serializedAdditionalRawData);
         }
 

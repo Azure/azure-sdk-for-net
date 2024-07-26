@@ -48,47 +48,43 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of <see cref="Control"/>. </summary>
         internal Control()
         {
-            Assessments = new ChangeTrackingList<Assessment>();
+            Responsibilities = new ChangeTrackingList<Responsibility>();
         }
 
         /// <summary> Initializes a new instance of <see cref="Control"/>. </summary>
-        /// <param name="controlId"> The Id of the control. e.g. "Operational Security#10". </param>
-        /// <param name="controlShortName"> The short name of the control. e.g. "Unsupported OS and Software.". </param>
+        /// <param name="controlId"> The Id of the control. e.g. "Operational_Security_10". </param>
+        /// <param name="controlName"> The name of the control. e.g. "Unsupported OS and Software.". </param>
         /// <param name="controlFullName"> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </param>
-        /// <param name="controlType"> The control type. </param>
         /// <param name="controlDescription"> The control's description. </param>
         /// <param name="controlDescriptionHyperLink"> The hyper link to the control's description'. </param>
         /// <param name="controlStatus"> Control status. </param>
-        /// <param name="assessments"> List of assessments. </param>
+        /// <param name="responsibilities"> List of customer responsibility. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Control(string controlId, string controlShortName, string controlFullName, ControlType? controlType, string controlDescription, string controlDescriptionHyperLink, ControlStatus? controlStatus, IReadOnlyList<Assessment> assessments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Control(string controlId, string controlName, string controlFullName, string controlDescription, string controlDescriptionHyperLink, ControlStatus? controlStatus, IReadOnlyList<Responsibility> responsibilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ControlId = controlId;
-            ControlShortName = controlShortName;
+            ControlName = controlName;
             ControlFullName = controlFullName;
-            ControlType = controlType;
             ControlDescription = controlDescription;
             ControlDescriptionHyperLink = controlDescriptionHyperLink;
             ControlStatus = controlStatus;
-            Assessments = assessments;
+            Responsibilities = responsibilities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Id of the control. e.g. "Operational Security#10". </summary>
+        /// <summary> The Id of the control. e.g. "Operational_Security_10". </summary>
         public string ControlId { get; }
-        /// <summary> The short name of the control. e.g. "Unsupported OS and Software.". </summary>
-        public string ControlShortName { get; }
+        /// <summary> The name of the control. e.g. "Unsupported OS and Software.". </summary>
+        public string ControlName { get; }
         /// <summary> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </summary>
         public string ControlFullName { get; }
-        /// <summary> The control type. </summary>
-        public ControlType? ControlType { get; }
         /// <summary> The control's description. </summary>
         public string ControlDescription { get; }
         /// <summary> The hyper link to the control's description'. </summary>
         public string ControlDescriptionHyperLink { get; }
         /// <summary> Control status. </summary>
         public ControlStatus? ControlStatus { get; }
-        /// <summary> List of assessments. </summary>
-        public IReadOnlyList<Assessment> Assessments { get; }
+        /// <summary> List of customer responsibility. </summary>
+        public IReadOnlyList<Responsibility> Responsibilities { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> compliance pdf report. </summary>
+    /// <summary> Compliance pdf report. </summary>
     internal partial class DownloadResponseCompliancePdfReport
     {
         /// <summary>
@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DownloadResponseCompliancePdfReport"/>. </summary>
-        /// <param name="sasUri"> uri of compliance pdf report. </param>
+        /// <param name="sasUri"> The uri of compliance pdf report. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DownloadResponseCompliancePdfReport(Uri sasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DownloadResponseCompliancePdfReport(string sasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SasUri = sasUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> uri of compliance pdf report. </summary>
-        public Uri SasUri { get; }
+        /// <summary> The uri of compliance pdf report. </summary>
+        public string SasUri { get; }
     }
 }

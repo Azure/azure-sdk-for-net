@@ -52,26 +52,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ControlFamily"/>. </summary>
-        /// <param name="familyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
-        /// <param name="familyType"> The control family type. </param>
-        /// <param name="familyStatus"> Control family status. </param>
+        /// <param name="controlFamilyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
+        /// <param name="controlFamilyStatus"> The control family status. </param>
         /// <param name="controls"> List of controls. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlFamily(string familyName, ControlFamilyType? familyType, ControlFamilyStatus? familyStatus, IReadOnlyList<Control> controls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ControlFamily(string controlFamilyName, ControlFamilyStatus? controlFamilyStatus, IReadOnlyList<Control> controls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FamilyName = familyName;
-            FamilyType = familyType;
-            FamilyStatus = familyStatus;
+            ControlFamilyName = controlFamilyName;
+            ControlFamilyStatus = controlFamilyStatus;
             Controls = controls;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the control family. e.g. "Malware Protection - Anti-Virus". </summary>
-        public string FamilyName { get; }
-        /// <summary> The control family type. </summary>
-        public ControlFamilyType? FamilyType { get; }
-        /// <summary> Control family status. </summary>
-        public ControlFamilyStatus? FamilyStatus { get; }
+        public string ControlFamilyName { get; }
+        /// <summary> The control family status. </summary>
+        public ControlFamilyStatus? ControlFamilyStatus { get; }
         /// <summary> List of controls. </summary>
         public IReadOnlyList<Control> Controls { get; }
     }

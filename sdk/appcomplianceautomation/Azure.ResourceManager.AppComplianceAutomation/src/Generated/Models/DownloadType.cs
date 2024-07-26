@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         private const string ComplianceDetailedPdfReportValue = "ComplianceDetailedPdfReport";
         private const string ResourceListValue = "ResourceList";
 
-        /// <summary> ComplianceReport. </summary>
+        /// <summary> Download the compliance report. </summary>
         public static DownloadType ComplianceReport { get; } = new DownloadType(ComplianceReportValue);
-        /// <summary> CompliancePdfReport. </summary>
+        /// <summary> Download the compliance pdf report. </summary>
         public static DownloadType CompliancePdfReport { get; } = new DownloadType(CompliancePdfReportValue);
-        /// <summary> ComplianceDetailedPdfReport. </summary>
+        /// <summary> Download the detailed compliance pdf report. </summary>
         public static DownloadType ComplianceDetailedPdfReport { get; } = new DownloadType(ComplianceDetailedPdfReportValue);
-        /// <summary> ResourceList. </summary>
+        /// <summary> Download the resource list of the report. </summary>
         public static DownloadType ResourceList { get; } = new DownloadType(ResourceListValue);
         /// <summary> Determines if two <see cref="DownloadType"/> values are the same. </summary>
         public static bool operator ==(DownloadType left, DownloadType right) => left.Equals(right);

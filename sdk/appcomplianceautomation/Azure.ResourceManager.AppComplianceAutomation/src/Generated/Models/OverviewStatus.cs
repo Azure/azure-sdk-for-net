@@ -51,23 +51,31 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OverviewStatus"/>. </summary>
-        /// <param name="passedCount"> The count of all passed full automation control. </param>
-        /// <param name="failedCount"> The count of all failed full automation control. </param>
+        /// <param name="passedCount"> The count of all passed control. </param>
+        /// <param name="failedCount"> The count of all failed control. </param>
         /// <param name="manualCount"> The count of all manual control. </param>
+        /// <param name="notApplicableCount"> The count of all not applicable control. </param>
+        /// <param name="pendingCount"> The count of all pending for approval control. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OverviewStatus(int? passedCount, int? failedCount, int? manualCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OverviewStatus(int? passedCount, int? failedCount, int? manualCount, int? notApplicableCount, int? pendingCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PassedCount = passedCount;
             FailedCount = failedCount;
             ManualCount = manualCount;
+            NotApplicableCount = notApplicableCount;
+            PendingCount = pendingCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The count of all passed full automation control. </summary>
+        /// <summary> The count of all passed control. </summary>
         public int? PassedCount { get; }
-        /// <summary> The count of all failed full automation control. </summary>
+        /// <summary> The count of all failed control. </summary>
         public int? FailedCount { get; }
         /// <summary> The count of all manual control. </summary>
         public int? ManualCount { get; }
+        /// <summary> The count of all not applicable control. </summary>
+        public int? NotApplicableCount { get; }
+        /// <summary> The count of all pending for approval control. </summary>
+        public int? PendingCount { get; }
     }
 }

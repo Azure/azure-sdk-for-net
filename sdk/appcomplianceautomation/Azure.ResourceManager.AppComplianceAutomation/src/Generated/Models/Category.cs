@@ -53,14 +53,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of <see cref="Category"/>. </summary>
         /// <param name="categoryName"> The name of the compliance category. e.g. "Operational Security". </param>
-        /// <param name="categoryType"> The category type. </param>
         /// <param name="categoryStatus"> Category status. </param>
         /// <param name="controlFamilies"> List of control families. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Category(string categoryName, CategoryType? categoryType, CategoryStatus? categoryStatus, IReadOnlyList<ControlFamily> controlFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Category(string categoryName, CategoryStatus? categoryStatus, IReadOnlyList<ControlFamily> controlFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CategoryName = categoryName;
-            CategoryType = categoryType;
             CategoryStatus = categoryStatus;
             ControlFamilies = controlFamilies;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -68,8 +66,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> The name of the compliance category. e.g. "Operational Security". </summary>
         public string CategoryName { get; }
-        /// <summary> The category type. </summary>
-        public CategoryType? CategoryType { get; }
         /// <summary> Category status. </summary>
         public CategoryStatus? CategoryStatus { get; }
         /// <summary> List of control families. </summary>

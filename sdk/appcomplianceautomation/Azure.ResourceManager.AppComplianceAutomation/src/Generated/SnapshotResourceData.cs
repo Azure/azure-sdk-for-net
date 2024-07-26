@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotResourceData"/>. </summary>
-        public SnapshotResourceData()
+        internal SnapshotResourceData()
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Snapshot's property'. </param>
+        /// <param name="properties"> Snapshot's property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Snapshot's property'. </summary>
+        /// <summary> Snapshot's property. </summary>
         public SnapshotProperties Properties { get; }
     }
 }

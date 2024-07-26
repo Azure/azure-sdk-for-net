@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
-        /// <param name="id"> Snapshot id in the database. </param>
         /// <param name="snapshotName"> Snapshot name. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
@@ -61,9 +60,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="reportSystemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="complianceResults"> List of compliance results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotProperties(string id, string snapshotName, DateTimeOffset? createdOn, ProvisioningState? provisioningState, ReportProperties reportProperties, SystemData reportSystemData, IReadOnlyList<ComplianceResult> complianceResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SnapshotProperties(string snapshotName, DateTimeOffset? createdOn, ProvisioningState? provisioningState, ReportProperties reportProperties, SystemData reportSystemData, IReadOnlyList<ComplianceResult> complianceResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
             SnapshotName = snapshotName;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -73,8 +71,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Snapshot id in the database. </summary>
-        public string Id { get; }
         /// <summary> Snapshot name. </summary>
         public string SnapshotName { get; }
         /// <summary> The timestamp of resource creation (UTC). </summary>

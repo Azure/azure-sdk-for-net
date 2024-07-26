@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
-                writer.WriteStringValue(SasUri.AbsoluteUri);
+                writer.WriteStringValue(SasUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,18 +69,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Uri sasUri = default;
+            string sasUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sasUri = new Uri(property.Value.GetString());
+                    sasUri = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

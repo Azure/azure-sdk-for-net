@@ -26,20 +26,30 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PassedCount))
+            if (options.Format != "W" && Optional.IsDefined(PassedCount))
             {
                 writer.WritePropertyName("passedCount"u8);
                 writer.WriteNumberValue(PassedCount.Value);
             }
-            if (Optional.IsDefined(FailedCount))
+            if (options.Format != "W" && Optional.IsDefined(FailedCount))
             {
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (Optional.IsDefined(ManualCount))
+            if (options.Format != "W" && Optional.IsDefined(ManualCount))
             {
                 writer.WritePropertyName("manualCount"u8);
                 writer.WriteNumberValue(ManualCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotApplicableCount))
+            {
+                writer.WritePropertyName("notApplicableCount"u8);
+                writer.WriteNumberValue(NotApplicableCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PendingCount))
+            {
+                writer.WritePropertyName("pendingCount"u8);
+                writer.WriteNumberValue(PendingCount.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,6 +92,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             int? passedCount = default;
             int? failedCount = default;
             int? manualCount = default;
+            int? notApplicableCount = default;
+            int? pendingCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,13 +125,37 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     manualCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("notApplicableCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    notApplicableCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("pendingCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pendingCount = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OverviewStatus(passedCount, failedCount, manualCount, serializedAdditionalRawData);
+            return new OverviewStatus(
+                passedCount,
+                failedCount,
+                manualCount,
+                notApplicableCount,
+                pendingCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OverviewStatus>.Write(ModelReaderWriterOptions options)

@@ -27,11 +27,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
             if (options.Format != "W" && Optional.IsDefined(SnapshotName))
             {
                 writer.WritePropertyName("snapshotName"u8);
@@ -105,7 +100,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            string id = default;
             string snapshotName = default;
             DateTimeOffset? createdAt = default;
             ProvisioningState? provisioningState = default;
@@ -116,11 +110,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("snapshotName"u8))
                 {
                     snapshotName = property.Value.GetString();
@@ -183,7 +172,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new SnapshotProperties(
-                id,
                 snapshotName,
                 createdAt,
                 provisioningState,

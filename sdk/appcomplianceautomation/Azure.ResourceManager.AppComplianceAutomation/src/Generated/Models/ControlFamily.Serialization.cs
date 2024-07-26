@@ -26,20 +26,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FamilyName))
+            if (options.Format != "W" && Optional.IsDefined(ControlFamilyName))
             {
-                writer.WritePropertyName("familyName"u8);
-                writer.WriteStringValue(FamilyName);
+                writer.WritePropertyName("controlFamilyName"u8);
+                writer.WriteStringValue(ControlFamilyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FamilyType))
+            if (options.Format != "W" && Optional.IsDefined(ControlFamilyStatus))
             {
-                writer.WritePropertyName("familyType"u8);
-                writer.WriteStringValue(FamilyType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(FamilyStatus))
-            {
-                writer.WritePropertyName("familyStatus"u8);
-                writer.WriteStringValue(FamilyStatus.Value.ToString());
+                writer.WritePropertyName("controlFamilyStatus"u8);
+                writer.WriteStringValue(ControlFamilyStatus.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Controls))
             {
@@ -89,35 +84,25 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            string familyName = default;
-            ControlFamilyType? familyType = default;
-            ControlFamilyStatus? familyStatus = default;
+            string controlFamilyName = default;
+            ControlFamilyStatus? controlFamilyStatus = default;
             IReadOnlyList<Control> controls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("familyName"u8))
+                if (property.NameEquals("controlFamilyName"u8))
                 {
-                    familyName = property.Value.GetString();
+                    controlFamilyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("familyType"u8))
+                if (property.NameEquals("controlFamilyStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    familyType = new ControlFamilyType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("familyStatus"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    familyStatus = new ControlFamilyStatus(property.Value.GetString());
+                    controlFamilyStatus = new ControlFamilyStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("controls"u8))
@@ -140,7 +125,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ControlFamily(familyName, familyType, familyStatus, controls ?? new ChangeTrackingList<Control>(), serializedAdditionalRawData);
+            return new ControlFamily(controlFamilyName, controlFamilyStatus, controls ?? new ChangeTrackingList<Control>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlFamily>.Write(ModelReaderWriterOptions options)
