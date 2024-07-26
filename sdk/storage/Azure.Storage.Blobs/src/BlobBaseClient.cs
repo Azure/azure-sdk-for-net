@@ -1563,7 +1563,7 @@ namespace Azure.Storage.Blobs.Specialized
                         return StructuredMessageDecodingStream.WrapStream(result.Value.Content, result.Value.Details.ContentLength);
                     }
                     Stream stream;
-                    if (response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader))
+                    if (response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
                     {
                         (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = StructuredMessageDecodingStream.WrapStream(
                             response.Value.Content, response.Value.Details.ContentLength);
@@ -1600,7 +1600,7 @@ namespace Azure.Storage.Blobs.Specialized
                         validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None &&
                         validationOptions.AutoValidateChecksum &&
                         // structured message decoding does the validation for us
-                        !response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader))
+                        !response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
