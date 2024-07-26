@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="category"> The system query option to filter libraries returned in the response. Allowed value is 'custom' or 'predefined'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterLibrary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterLibrary> GetClusterLibrariesAsync(Category category, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ClusterLibrary> GetClusterLibrariesAsync(ClusterLibraryCategory category, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterLibrariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, category);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterLibrariesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, category);
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="category"> The system query option to filter libraries returned in the response. Allowed value is 'custom' or 'predefined'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterLibrary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterLibrary> GetClusterLibraries(Category category, CancellationToken cancellationToken = default)
+        public virtual Pageable<ClusterLibrary> GetClusterLibraries(ClusterLibraryCategory category, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterLibrariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, category);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterLibrariesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, category);

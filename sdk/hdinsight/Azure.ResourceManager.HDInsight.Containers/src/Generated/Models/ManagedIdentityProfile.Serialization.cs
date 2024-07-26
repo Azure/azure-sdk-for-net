@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            IList<ManagedIdentitySpec> identityList = default;
+            IList<HDInsightManagedIdentitySpec> identityList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identityList"u8))
                 {
-                    List<ManagedIdentitySpec> array = new List<ManagedIdentitySpec>();
+                    List<HDInsightManagedIdentitySpec> array = new List<HDInsightManagedIdentitySpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedIdentitySpec.DeserializeManagedIdentitySpec(item, options));
+                        array.Add(HDInsightManagedIdentitySpec.DeserializeHDInsightManagedIdentitySpec(item, options));
                     }
                     identityList = array;
                     continue;

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            ServiceConfigResultProperties properties = default;
+            ClusterServiceConfigProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    properties = ServiceConfigResultProperties.DeserializeServiceConfigResultProperties(property.Value, options);
+                    properties = ClusterServiceConfigProperties.DeserializeClusterServiceConfigProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

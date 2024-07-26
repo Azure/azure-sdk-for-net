@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="name"> Name of the instance view. </param>
         /// <param name="properties"> Properties of the instance view. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal ClusterInstanceViewResult(string name, ClusterInstanceViewResultProperties properties)
+        internal ClusterInstanceViewResult(string name, ClusterInstanceViewProperties properties)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="name"> Name of the instance view. </param>
         /// <param name="properties"> Properties of the instance view. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterInstanceViewResult(string name, ClusterInstanceViewResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterInstanceViewResult(string name, ClusterInstanceViewProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Properties = properties;
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Name of the instance view. </summary>
         public string Name { get; }
         /// <summary> Properties of the instance view. </summary>
-        public ClusterInstanceViewResultProperties Properties { get; }
+        public ClusterInstanceViewProperties Properties { get; }
     }
 }

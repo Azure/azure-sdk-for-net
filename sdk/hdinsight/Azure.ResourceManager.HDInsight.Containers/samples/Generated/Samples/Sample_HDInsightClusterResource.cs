@@ -651,7 +651,7 @@ AutoscaleScheduleDay.Sunday
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation and iterate over the result
-            Category category = Category.Predefined;
+            ClusterLibraryCategory category = ClusterLibraryCategory.Predefined;
             await foreach (ClusterLibrary item in hdInsightCluster.GetClusterLibrariesAsync(category))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -683,7 +683,7 @@ AutoscaleScheduleDay.Sunday
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation and iterate over the result
-            Category category = Category.Custom;
+            ClusterLibraryCategory category = ClusterLibraryCategory.Custom;
             await foreach (ClusterLibrary item in hdInsightCluster.GetClusterLibrariesAsync(category))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -717,11 +717,11 @@ AutoscaleScheduleDay.Sunday
             // invoke the operation
             ClusterLibraryManagementContent content = new ClusterLibraryManagementContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Install, new ClusterLibrary[]
             {
-new ClusterLibrary(new PyPiLibraryProperties("requests")
+new ClusterLibrary(new ClusterPyPILibraryProperties("requests")
 {
 Version = "2.31.0",
 Remarks = "PyPi packages.",
-}),new ClusterLibrary(new MavenLibraryProperties("org.apache.flink","flink-connector-kafka")
+}),new ClusterLibrary(new ClusterMavenLibraryProperties("org.apache.flink","flink-connector-kafka")
 {
 Version = "3.0.2-1.18",
 Remarks = "Maven packages.",
@@ -757,7 +757,7 @@ Remarks = "Maven packages.",
             // invoke the operation
             ClusterLibraryManagementContent content = new ClusterLibraryManagementContent(new ClusterLibraryManagementOperationProperties(LibraryManagementAction.Uninstall, new ClusterLibrary[]
             {
-new ClusterLibrary(new PyPiLibraryProperties("tensorflow")),new ClusterLibrary(new MavenLibraryProperties("org.apache.flink","flink-connector-hudi"))
+new ClusterLibrary(new ClusterPyPILibraryProperties("tensorflow")),new ClusterLibrary(new ClusterMavenLibraryProperties("org.apache.flink","flink-connector-hudi"))
             }));
             await hdInsightCluster.ManageLibrariesClusterLibraryAsync(WaitUntil.Completed, content);
 

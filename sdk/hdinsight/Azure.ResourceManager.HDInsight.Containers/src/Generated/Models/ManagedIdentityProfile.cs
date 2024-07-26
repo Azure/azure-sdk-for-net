@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityProfile"/>. </summary>
         /// <param name="identityList"> The list of managed identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identityList"/> is null. </exception>
-        public ManagedIdentityProfile(IEnumerable<ManagedIdentitySpec> identityList)
+        public ManagedIdentityProfile(IEnumerable<HDInsightManagedIdentitySpec> identityList)
         {
             Argument.AssertNotNull(identityList, nameof(identityList));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityProfile"/>. </summary>
         /// <param name="identityList"> The list of managed identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedIdentityProfile(IList<ManagedIdentitySpec> identityList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedIdentityProfile(IList<HDInsightManagedIdentitySpec> identityList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityList = identityList;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The list of managed identity. </summary>
-        public IList<ManagedIdentitySpec> IdentityList { get; }
+        public IList<HDInsightManagedIdentitySpec> IdentityList { get; }
     }
 }

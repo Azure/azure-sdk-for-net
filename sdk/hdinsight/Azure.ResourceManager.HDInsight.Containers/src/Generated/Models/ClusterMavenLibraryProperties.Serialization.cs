@@ -13,19 +13,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class PyPiLibraryProperties : IUtf8JsonSerializable, IJsonModel<PyPiLibraryProperties>
+    public partial class ClusterMavenLibraryProperties : IUtf8JsonSerializable, IJsonModel<ClusterMavenLibraryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PyPiLibraryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterMavenLibraryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PyPiLibraryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterMavenLibraryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PyPiLibraryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterMavenLibraryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PyPiLibraryProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterMavenLibraryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("groupId"u8);
+            writer.WriteStringValue(GroupId);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Version))
@@ -73,19 +75,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        PyPiLibraryProperties IJsonModel<PyPiLibraryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterMavenLibraryProperties IJsonModel<ClusterMavenLibraryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PyPiLibraryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterMavenLibraryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PyPiLibraryProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterMavenLibraryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePyPiLibraryProperties(document.RootElement, options);
+            return DeserializeClusterMavenLibraryProperties(document.RootElement, options);
         }
 
-        internal static PyPiLibraryProperties DeserializePyPiLibraryProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClusterMavenLibraryProperties DeserializeClusterMavenLibraryProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,6 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
+            string groupId = default;
             string name = default;
             string version = default;
             Type type = default;
@@ -104,6 +107,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("groupId"u8))
+                {
+                    groupId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -153,46 +161,47 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PyPiLibraryProperties(
+            return new ClusterMavenLibraryProperties(
                 type,
                 remarks,
                 timestamp,
                 status,
                 message,
                 serializedAdditionalRawData,
+                groupId,
                 name,
                 version);
         }
 
-        BinaryData IPersistableModel<PyPiLibraryProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClusterMavenLibraryProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PyPiLibraryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterMavenLibraryProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PyPiLibraryProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterMavenLibraryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PyPiLibraryProperties IPersistableModel<PyPiLibraryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClusterMavenLibraryProperties IPersistableModel<ClusterMavenLibraryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PyPiLibraryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterMavenLibraryProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePyPiLibraryProperties(document.RootElement, options);
+                        return DeserializeClusterMavenLibraryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PyPiLibraryProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterMavenLibraryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PyPiLibraryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterMavenLibraryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ManagedIdentitySpec : IUtf8JsonSerializable, IJsonModel<ManagedIdentitySpec>
+    public partial class HDInsightManagedIdentitySpec : IUtf8JsonSerializable, IJsonModel<HDInsightManagedIdentitySpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIdentitySpec>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightManagedIdentitySpec>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ManagedIdentitySpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HDInsightManagedIdentitySpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentitySpec>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightManagedIdentitySpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIdentitySpec)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightManagedIdentitySpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        ManagedIdentitySpec IJsonModel<ManagedIdentitySpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HDInsightManagedIdentitySpec IJsonModel<HDInsightManagedIdentitySpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentitySpec>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightManagedIdentitySpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIdentitySpec)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightManagedIdentitySpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedIdentitySpec(document.RootElement, options);
+            return DeserializeHDInsightManagedIdentitySpec(document.RootElement, options);
         }
 
-        internal static ManagedIdentitySpec DeserializeManagedIdentitySpec(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HDInsightManagedIdentitySpec DeserializeHDInsightManagedIdentitySpec(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            ManagedIdentityType type = default;
+            HDInsightManagedIdentityType type = default;
             ResourceIdentifier resourceId = default;
             string clientId = default;
             string objectId = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ManagedIdentityType(property.Value.GetString());
+                    type = new HDInsightManagedIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedIdentitySpec(type, resourceId, clientId, objectId, serializedAdditionalRawData);
+            return new HDInsightManagedIdentitySpec(type, resourceId, clientId, objectId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ManagedIdentitySpec>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HDInsightManagedIdentitySpec>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentitySpec>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightManagedIdentitySpec>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIdentitySpec)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightManagedIdentitySpec)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ManagedIdentitySpec IPersistableModel<ManagedIdentitySpec>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HDInsightManagedIdentitySpec IPersistableModel<HDInsightManagedIdentitySpec>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentitySpec>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightManagedIdentitySpec>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeManagedIdentitySpec(document.RootElement, options);
+                        return DeserializeHDInsightManagedIdentitySpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIdentitySpec)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightManagedIdentitySpec)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ManagedIdentitySpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HDInsightManagedIdentitySpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

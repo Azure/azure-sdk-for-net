@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The compute profile. </summary>
-    public partial class ComputeProfile
+    public partial class ClusterComputeProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterComputeProfile"/>. </summary>
         /// <param name="nodes"> The nodes definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodes"/> is null. </exception>
-        public ComputeProfile(IEnumerable<ClusterComputeNodeProfile> nodes)
+        public ClusterComputeProfile(IEnumerable<ClusterComputeNodeProfile> nodes)
         {
             Argument.AssertNotNull(nodes, nameof(nodes));
 
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             AvailabilityZones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterComputeProfile"/>. </summary>
         /// <param name="nodes"> The nodes definitions. </param>
         /// <param name="availabilityZones"> The list of Availability zones to use for AKS VMSS nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeProfile(IList<ClusterComputeNodeProfile> nodes, IList<string> availabilityZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterComputeProfile(IList<ClusterComputeNodeProfile> nodes, IList<string> availabilityZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Nodes = nodes;
             AvailabilityZones = availabilityZones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/> for deserialization. </summary>
-        internal ComputeProfile()
+        /// <summary> Initializes a new instance of <see cref="ClusterComputeProfile"/> for deserialization. </summary>
+        internal ClusterComputeProfile()
         {
         }
 

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The details of a managed identity. </summary>
-    public partial class ManagedIdentitySpec
+    public partial class HDInsightManagedIdentitySpec
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentitySpec"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightManagedIdentitySpec"/>. </summary>
         /// <param name="identityType"> The type of managed identity. </param>
         /// <param name="resourceId"> ResourceId of the managed identity. </param>
         /// <param name="clientId"> ClientId of the managed identity. </param>
         /// <param name="objectId"> ObjectId of the managed identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="clientId"/> or <paramref name="objectId"/> is null. </exception>
-        public ManagedIdentitySpec(ManagedIdentityType identityType, ResourceIdentifier resourceId, string clientId, string objectId)
+        public HDInsightManagedIdentitySpec(HDInsightManagedIdentityType identityType, ResourceIdentifier resourceId, string clientId, string objectId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(clientId, nameof(clientId));
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ObjectId = objectId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentitySpec"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightManagedIdentitySpec"/>. </summary>
         /// <param name="identityType"> The type of managed identity. </param>
         /// <param name="resourceId"> ResourceId of the managed identity. </param>
         /// <param name="clientId"> ClientId of the managed identity. </param>
         /// <param name="objectId"> ObjectId of the managed identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedIdentitySpec(ManagedIdentityType identityType, ResourceIdentifier resourceId, string clientId, string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HDInsightManagedIdentitySpec(HDInsightManagedIdentityType identityType, ResourceIdentifier resourceId, string clientId, string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             ResourceId = resourceId;
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentitySpec"/> for deserialization. </summary>
-        internal ManagedIdentitySpec()
+        /// <summary> Initializes a new instance of <see cref="HDInsightManagedIdentitySpec"/> for deserialization. </summary>
+        internal HDInsightManagedIdentitySpec()
         {
         }
 
         /// <summary> The type of managed identity. </summary>
-        public ManagedIdentityType IdentityType { get; set; }
+        public HDInsightManagedIdentityType IdentityType { get; set; }
         /// <summary> ResourceId of the managed identity. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> ClientId of the managed identity. </summary>

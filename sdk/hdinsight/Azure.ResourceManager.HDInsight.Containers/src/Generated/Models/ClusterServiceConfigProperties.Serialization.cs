@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ServiceConfigListResultProperties : IUtf8JsonSerializable, IJsonModel<ServiceConfigListResultProperties>
+    public partial class ClusterServiceConfigProperties : IUtf8JsonSerializable, IJsonModel<ClusterServiceConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceConfigListResultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServiceConfigProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ServiceConfigListResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterServiceConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceConfigListResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterServiceConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceConfigListResultProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterServiceConfigProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,19 +87,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        ServiceConfigListResultProperties IJsonModel<ServiceConfigListResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterServiceConfigProperties IJsonModel<ClusterServiceConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceConfigListResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterServiceConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceConfigListResultProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterServiceConfigProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceConfigListResultProperties(document.RootElement, options);
+            return DeserializeClusterServiceConfigProperties(document.RootElement, options);
         }
 
-        internal static ServiceConfigListResultProperties DeserializeServiceConfigListResultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClusterServiceConfigProperties DeserializeClusterServiceConfigProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceConfigListResultProperties(
+            return new ClusterServiceConfigProperties(
                 serviceName,
                 fileName,
                 content,
@@ -195,35 +195,35 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ServiceConfigListResultProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClusterServiceConfigProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceConfigListResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterServiceConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceConfigListResultProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterServiceConfigProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ServiceConfigListResultProperties IPersistableModel<ServiceConfigListResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClusterServiceConfigProperties IPersistableModel<ClusterServiceConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceConfigListResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterServiceConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServiceConfigListResultProperties(document.RootElement, options);
+                        return DeserializeClusterServiceConfigProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceConfigListResultProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterServiceConfigProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServiceConfigListResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterServiceConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

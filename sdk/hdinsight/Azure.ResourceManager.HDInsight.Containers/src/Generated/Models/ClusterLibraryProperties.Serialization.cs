@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "maven": return MavenLibraryProperties.DeserializeMavenLibraryProperties(element, options);
-                    case "pypi": return PyPiLibraryProperties.DeserializePyPiLibraryProperties(element, options);
+                    case "maven": return ClusterMavenLibraryProperties.DeserializeClusterMavenLibraryProperties(element, options);
+                    case "pypi": return ClusterPyPILibraryProperties.DeserializeClusterPyPILibraryProperties(element, options);
                 }
             }
             return UnknownClusterLibraryProperties.DeserializeUnknownClusterLibraryProperties(element, options);

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             string clusterName = "cluster1";
             HDInsightClusterData data = new HDInsightClusterData(new AzureLocation("West US 2"))
             {
-                Properties = new ClusterResourceProperties("Trino", new ComputeProfile(new ClusterComputeNodeProfile[]
+                Properties = new HDInsightClusterProperties("Trino", new ClusterComputeProfile(new ClusterComputeNodeProfile[]
             {
 new ClusterComputeNodeProfile("Head","Standard_E8as_v5",2),new ClusterComputeNodeProfile("Worker","Standard_E8as_v5",3)
             })
@@ -208,7 +208,7 @@ new ClusterComputeNodeProfile("Head","Standard_E8as_v5",2),new ClusterComputeNod
                 {
                     IdentityList =
 {
-new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
+new HDInsightManagedIdentitySpec(HDInsightManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
 },
                     SshProfile = new ClusterSshProfile(2)
                     {
@@ -278,7 +278,7 @@ new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new HDInsightComparisonRule(HDIn
             string clusterName = "cluster1";
             HDInsightClusterData data = new HDInsightClusterData(new AzureLocation("West US 2"))
             {
-                Properties = new ClusterResourceProperties("ranger", new ComputeProfile(new ClusterComputeNodeProfile[]
+                Properties = new HDInsightClusterProperties("ranger", new ClusterComputeProfile(new ClusterComputeNodeProfile[]
             {
 new ClusterComputeNodeProfile("head","Standard_D3_v2",2)
             })
@@ -297,7 +297,7 @@ new ClusterComputeNodeProfile("head","Standard_D3_v2",2)
                 {
                     IdentityList =
 {
-new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
+new HDInsightManagedIdentitySpec(HDInsightManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
 },
                     RangerProfile = new RangerProfile(new RangerAdminSpec(new string[]
             {
@@ -362,7 +362,7 @@ new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/sub
             string clusterName = "cluster1";
             HDInsightClusterData data = new HDInsightClusterData(new AzureLocation("West US 2"))
             {
-                Properties = new ClusterResourceProperties("spark", new ComputeProfile(new ClusterComputeNodeProfile[]
+                Properties = new HDInsightClusterProperties("spark", new ClusterComputeProfile(new ClusterComputeNodeProfile[]
             {
 new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
             })
@@ -381,7 +381,7 @@ new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
                 {
                     IdentityList =
 {
-new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
+new HDInsightManagedIdentitySpec(HDInsightManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
 },
                     ServiceConfigsProfiles =
 {
@@ -466,7 +466,7 @@ Values =
             string clusterName = "cluster1";
             HDInsightClusterData data = new HDInsightClusterData(new AzureLocation("West US 2"))
             {
-                Properties = new ClusterResourceProperties("spark", new ComputeProfile(new ClusterComputeNodeProfile[]
+                Properties = new HDInsightClusterProperties("spark", new ClusterComputeProfile(new ClusterComputeNodeProfile[]
             {
 new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
             })
@@ -485,7 +485,7 @@ new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
                 {
                     IdentityList =
 {
-new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
+new HDInsightManagedIdentitySpec(HDInsightManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
 },
                     ServiceConfigsProfiles =
 {

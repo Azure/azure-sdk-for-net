@@ -29,6 +29,7 @@ rename-mapping:
   AutoscaleProfile.enabled: IsEnabled
   AutoscaleType: ClusterAutoscaleType
   Cluster: HDInsightCluster
+  ClusterResourceProperties: HDInsightClusterProperties
   ClusterPool: HDInsightClusterPool
   ClusterComponentsItem: ClusterComponentItem
   ClusterInstanceViewsResult: ClusterInstanceViewListResult
@@ -71,12 +72,19 @@ rename-mapping:
   ServiceConfigListResult: ClusterServiceConfigListResult
   ServiceConfigListResultValueEntity: ClusterServiceConfigValueEntity
   ServiceConfigResult: ClusterServiceConfigResult
+  ServiceConfigListResultProperties: ClusterServiceConfigProperties
   ServiceStatus: HDInsightServiceStatus
   SparkUserPlugins: SparkUserPluginListResult
   SshProfile: ClusterSshProfile
   TrinoUserPlugin.enabled: IsEnabled
   TrinoUserPlugins: TrinoUserPluginListResult
   ClusterLibraryProperties.type: LibraryType
+  Category: ClusterLibraryCategory
+  ComputeProfile: ClusterComputeProfile
+  ManagedIdentitySpec: HDInsightManagedIdentitySpec
+  ManagedIdentityType: HDInsightManagedIdentityType
+  MavenLibraryProperties: ClusterMavenLibraryProperties
+  PyPiLibraryProperties: ClusterPyPILibraryProperties
   # TODO, remove these when service fix the Uri format before GA
   FlinkHiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   FlinkStorageProfile.storageUri: StorageUriString
@@ -140,4 +148,8 @@ directive:
       $.ConnectivityProfile.properties.web['$ref'] = '#/definitions/WebConnectivityEndpoint';
       delete $.ClusterInstanceViewProperties.properties.status.allOf;
       $.ClusterInstanceViewProperties.properties.status['$ref'] = '#/definitions/ClusterInstanceViewStatus';
+      delete $.ServiceConfigResult.properties.properties.allOf;
+      $.ServiceConfigResult.properties.properties['$ref'] = '#/definitions/ServiceConfigListResultProperties';
+      delete $.ClusterInstanceViewResult.properties.properties.allOf;
+      $.ClusterInstanceViewResult.properties.properties['$ref'] = '#/definitions/ClusterInstanceViewProperties';
 ```

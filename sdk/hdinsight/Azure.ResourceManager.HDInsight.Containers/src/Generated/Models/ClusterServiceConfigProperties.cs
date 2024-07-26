@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Service config response. </summary>
-    public partial class ServiceConfigListResultProperties
+    public partial class ClusterServiceConfigProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceConfigListResultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigProperties"/>. </summary>
         /// <param name="serviceName"> Service Config Name. </param>
         /// <param name="fileName"> File Name. </param>
         /// <param name="componentName"> Component Name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="fileName"/> or <paramref name="componentName"/> is null. </exception>
-        internal ServiceConfigListResultProperties(string serviceName, string fileName, string componentName)
+        internal ClusterServiceConfigProperties(string serviceName, string fileName, string componentName)
         {
             Argument.AssertNotNull(serviceName, nameof(serviceName));
             Argument.AssertNotNull(fileName, nameof(fileName));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             DefaultKeys = new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceConfigListResultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigProperties"/>. </summary>
         /// <param name="serviceName"> Service Config Name. </param>
         /// <param name="fileName"> File Name. </param>
         /// <param name="content"> Content in the service config file. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="customKeys"> The custom keys. </param>
         /// <param name="defaultKeys"> The default keys. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceConfigListResultProperties(string serviceName, string fileName, string content, string componentName, string serviceConfigListResultPropertiesType, string path, IReadOnlyDictionary<string, string> customKeys, IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterServiceConfigProperties(string serviceName, string fileName, string content, string componentName, string serviceConfigListResultPropertiesType, string path, IReadOnlyDictionary<string, string> customKeys, IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceName = serviceName;
             FileName = fileName;
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceConfigListResultProperties"/> for deserialization. </summary>
-        internal ServiceConfigListResultProperties()
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigProperties"/> for deserialization. </summary>
+        internal ClusterServiceConfigProperties()
         {
         }
 

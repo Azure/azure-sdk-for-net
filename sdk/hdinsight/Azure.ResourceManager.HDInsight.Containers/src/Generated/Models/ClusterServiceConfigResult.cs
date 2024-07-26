@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigResult"/>. </summary>
         /// <param name="properties"> Cluster instance service config properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterServiceConfigResult(ServiceConfigResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterServiceConfigResult(ClusterServiceConfigProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Cluster instance service config properties. </summary>
-        public ServiceConfigResultProperties Properties { get; }
+        public ClusterServiceConfigProperties Properties { get; }
     }
 }

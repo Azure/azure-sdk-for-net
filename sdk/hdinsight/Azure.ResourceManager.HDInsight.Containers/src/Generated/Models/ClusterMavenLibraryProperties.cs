@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Properties of a Maven library in the cluster. </summary>
-    public partial class MavenLibraryProperties : ClusterLibraryProperties
+    public partial class ClusterMavenLibraryProperties : ClusterLibraryProperties
     {
-        /// <summary> Initializes a new instance of <see cref="MavenLibraryProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterMavenLibraryProperties"/>. </summary>
         /// <param name="groupId"> GroupId of the Maven package. </param>
         /// <param name="name"> ArtifactId of the Maven package. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="name"/> is null. </exception>
-        public MavenLibraryProperties(string groupId, string name)
+        public ClusterMavenLibraryProperties(string groupId, string name)
         {
             Argument.AssertNotNull(groupId, nameof(groupId));
             Argument.AssertNotNull(name, nameof(name));
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             LibraryType = Type.Maven;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MavenLibraryProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterMavenLibraryProperties"/>. </summary>
         /// <param name="libraryType"> Type of the library. </param>
         /// <param name="remarks"> Remark of the latest library management operation. </param>
         /// <param name="timestamp"> Timestamp of the latest library management operation. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="groupId"> GroupId of the Maven package. </param>
         /// <param name="name"> ArtifactId of the Maven package. </param>
         /// <param name="version"> Version of the Maven package. </param>
-        internal MavenLibraryProperties(Type libraryType, string remarks, DateTimeOffset? timestamp, Status? status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData, string groupId, string name, string version) : base(libraryType, remarks, timestamp, status, message, serializedAdditionalRawData)
+        internal ClusterMavenLibraryProperties(Type libraryType, string remarks, DateTimeOffset? timestamp, Status? status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData, string groupId, string name, string version) : base(libraryType, remarks, timestamp, status, message, serializedAdditionalRawData)
         {
             GroupId = groupId;
             Name = name;
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             LibraryType = libraryType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MavenLibraryProperties"/> for deserialization. </summary>
-        internal MavenLibraryProperties()
+        /// <summary> Initializes a new instance of <see cref="ClusterMavenLibraryProperties"/> for deserialization. </summary>
+        internal ClusterMavenLibraryProperties()
         {
         }
 

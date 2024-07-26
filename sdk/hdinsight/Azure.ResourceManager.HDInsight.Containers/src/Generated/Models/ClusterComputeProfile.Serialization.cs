@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ComputeProfile : IUtf8JsonSerializable, IJsonModel<ComputeProfile>
+    public partial class ClusterComputeProfile : IUtf8JsonSerializable, IJsonModel<ClusterComputeProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterComputeProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ComputeProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterComputeProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterComputeProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        ComputeProfile IJsonModel<ComputeProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterComputeProfile IJsonModel<ClusterComputeProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterComputeProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeProfile(document.RootElement, options);
+            return DeserializeClusterComputeProfile(document.RootElement, options);
         }
 
-        internal static ComputeProfile DeserializeComputeProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClusterComputeProfile DeserializeClusterComputeProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -117,38 +117,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeProfile(nodes, availabilityZones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ClusterComputeProfile(nodes, availabilityZones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ComputeProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClusterComputeProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterComputeProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ComputeProfile IPersistableModel<ComputeProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClusterComputeProfile IPersistableModel<ClusterComputeProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeComputeProfile(document.RootElement, options);
+                        return DeserializeClusterComputeProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterComputeProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ComputeProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterComputeProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

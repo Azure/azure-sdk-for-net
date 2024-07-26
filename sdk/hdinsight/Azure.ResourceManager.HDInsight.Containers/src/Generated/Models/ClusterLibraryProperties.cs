@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary>
     /// Properties of a library in the cluster.
     /// Please note <see cref="ClusterLibraryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MavenLibraryProperties"/> and <see cref="PyPiLibraryProperties"/>.
+    /// The available derived classes include <see cref="ClusterMavenLibraryProperties"/> and <see cref="ClusterPyPILibraryProperties"/>.
     /// </summary>
     public abstract partial class ClusterLibraryProperties
     {

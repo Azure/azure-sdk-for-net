@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> This property is required by Trino, Spark and Flink cluster but is optional for Kafka cluster. </summary>
         internal ManagedIdentityProfile ManagedIdentityProfile { get; set; }
         /// <summary> The list of managed identity. </summary>
-        public IList<ManagedIdentitySpec> IdentityList
+        public IList<HDInsightManagedIdentitySpec> IdentityList
         {
             get => ManagedIdentityProfile is null ? default : ManagedIdentityProfile.IdentityList;
             set => ManagedIdentityProfile = new ManagedIdentityProfile(value);

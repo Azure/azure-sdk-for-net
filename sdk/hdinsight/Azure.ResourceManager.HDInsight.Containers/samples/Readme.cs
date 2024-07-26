@@ -103,15 +103,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // set the cluster node profile
             string vmSize = "Standard_D8s_v3"; // your vms ize
             int workerCount = 5;
-            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterComputeProfile nodeProfile = new ClusterComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
             ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersion.Properties.ClusterVersion, availableClusterVersion.Properties.OssVersion, authorizationProfile)
             {
-                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
+                IdentityList = new List<HDInsightManagedIdentitySpec> { new HDInsightManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
             };
 
             var clusterData = new HDInsightClusterData(location)
             {
-                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+                Properties = new HDInsightClusterProperties(clusterType, nodeProfile, clusterProfile)
             };
 
             var clusterCollection = clusterPoolCollection.Get(clusterPoolName).Value.GetHDInsightClusters();
@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // set the cluster node profile
             string vmSize = "Standard_D8s_v3"; // your vms ize
             int workerCount = 5;
-            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterComputeProfile nodeProfile = new ClusterComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
             ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersion.Properties.ClusterVersion, availableClusterVersion.Properties.OssVersion, authorizationProfile)
             {
-                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
+                IdentityList = new List<HDInsightManagedIdentitySpec> { new HDInsightManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
             };
 
             var clusterData = new HDInsightClusterData(location)
             {
-                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+                Properties = new HDInsightClusterProperties(clusterType, nodeProfile, clusterProfile)
             };
 
             // set saprk profile
@@ -221,15 +221,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // set the cluster node profile
             string vmSize = "Standard_D8s_v3"; // your vm size
             int workerCount = 5;
-            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterComputeProfile nodeProfile = new ClusterComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
             ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersion.Properties.ClusterVersion, availableClusterVersion.Properties.OssVersion, authorizationProfile)
             {
-                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
+                IdentityList = new List<HDInsightManagedIdentitySpec> { new HDInsightManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
             };
 
             var clusterData = new HDInsightClusterData(location)
             {
-                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+                Properties = new HDInsightClusterProperties(clusterType, nodeProfile, clusterProfile)
             };
 
             // set flink profile
@@ -286,15 +286,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // set the cluster node profile
             string vmSize = "Standard_D8s_v3"; // your vms ize
             int workerCount = 5;
-            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterComputeProfile nodeProfile = new ClusterComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
             ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersion.Properties.ClusterVersion, availableClusterVersion.Properties.OssVersion, authorizationProfile)
             {
-                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
+                IdentityList = new List<HDInsightManagedIdentitySpec> { new HDInsightManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
             };
 
             var clusterData = new HDInsightClusterData(location)
             {
-                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+                Properties = new HDInsightClusterProperties(clusterType, nodeProfile, clusterProfile)
             };
 
             // set secret profile
@@ -380,15 +380,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // set the cluster node profile
             string vmSize = "Standard_D8s_v3"; // your vms ize
             int workerCount = 5;
-            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterComputeProfile nodeProfile = new ClusterComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
             ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersion.Properties.ClusterVersion, availableClusterVersion.Properties.OssVersion, authorizationProfile)
             {
-                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
+                IdentityList = new List<HDInsightManagedIdentitySpec> { new HDInsightManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
             };
 
             var clusterData = new HDInsightClusterData(location)
             {
-                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+                Properties = new HDInsightClusterProperties(clusterType, nodeProfile, clusterProfile)
             };
 
             // set secret profile
@@ -463,15 +463,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // set the cluster node profile
             string vmSize = "Standard_D8s_v3"; // your vm size
             int workerCount = 5;
-            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterComputeProfile nodeProfile = new ClusterComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
             ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersion.Properties.ClusterVersion, availableClusterVersion.Properties.OssVersion, authorizationProfile)
             {
-                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
+                IdentityList = new List<HDInsightManagedIdentitySpec> { new HDInsightManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
             };
 
             var clusterData = new HDInsightClusterData(location)
             {
-                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+                Properties = new HDInsightClusterProperties(clusterType, nodeProfile, clusterProfile)
             };
 
             // set secret profile
@@ -547,19 +547,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests.Samples
             // set the cluster node profile
             string vmSize = "Standard_D8s_v3"; // your vms ize
             int workerCount = 5;
-            ComputeProfile nodeProfile = new ComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
+            ClusterComputeProfile nodeProfile = new ClusterComputeProfile(new List<ClusterComputeNodeProfile> { new ClusterComputeNodeProfile(nodeProfileType: "worker", vmSize: vmSize, count: workerCount) });
             // set availability zones
             nodeProfile.AvailabilityZones.Add("1");
             nodeProfile.AvailabilityZones.Add("2");
 
             ClusterProfile clusterProfile = new ClusterProfile(availableClusterVersion.Properties.ClusterVersion, availableClusterVersion.Properties.OssVersion, authorizationProfile)
             {
-                IdentityList = new List<ManagedIdentitySpec> { new ManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
+                IdentityList = new List<HDInsightManagedIdentitySpec> { new HDInsightManagedIdentitySpec("cluster",new ResourceIdentifier(msiResourceId), msiClientId, msiObjectId) }
             };
 
             var clusterData = new HDInsightClusterData(location)
             {
-                Properties = new ClusterResourceProperties(clusterType, nodeProfile, clusterProfile)
+                Properties = new HDInsightClusterProperties(clusterType, nodeProfile, clusterProfile)
             };
 
             var clusterCollection = clusterPoolCollection.Get(clusterPoolName).Value.GetHDInsightClusters();

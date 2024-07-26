@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Properties of a PyPi library in the cluster. </summary>
-    public partial class PyPiLibraryProperties : ClusterLibraryProperties
+    public partial class ClusterPyPILibraryProperties : ClusterLibraryProperties
     {
-        /// <summary> Initializes a new instance of <see cref="PyPiLibraryProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPyPILibraryProperties"/>. </summary>
         /// <param name="name"> Name of the PyPi package. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PyPiLibraryProperties(string name)
+        public ClusterPyPILibraryProperties(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             LibraryType = Type.Pypi;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PyPiLibraryProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPyPILibraryProperties"/>. </summary>
         /// <param name="libraryType"> Type of the library. </param>
         /// <param name="remarks"> Remark of the latest library management operation. </param>
         /// <param name="timestamp"> Timestamp of the latest library management operation. </param>
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the PyPi package. </param>
         /// <param name="version"> Version of the PyPi package. </param>
-        internal PyPiLibraryProperties(Type libraryType, string remarks, DateTimeOffset? timestamp, Status? status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string version) : base(libraryType, remarks, timestamp, status, message, serializedAdditionalRawData)
+        internal ClusterPyPILibraryProperties(Type libraryType, string remarks, DateTimeOffset? timestamp, Status? status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string version) : base(libraryType, remarks, timestamp, status, message, serializedAdditionalRawData)
         {
             Name = name;
             Version = version;
             LibraryType = libraryType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PyPiLibraryProperties"/> for deserialization. </summary>
-        internal PyPiLibraryProperties()
+        /// <summary> Initializes a new instance of <see cref="ClusterPyPILibraryProperties"/> for deserialization. </summary>
+        internal ClusterPyPILibraryProperties()
         {
         }
 

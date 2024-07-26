@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string name = default;
-            ClusterInstanceViewResultProperties properties = default;
+            ClusterInstanceViewProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ClusterInstanceViewResultProperties.DeserializeClusterInstanceViewResultProperties(property.Value, options);
+                    properties = ClusterInstanceViewProperties.DeserializeClusterInstanceViewProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

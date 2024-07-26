@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewProperties"/>. </summary>
         /// <param name="status"> Status of the instance view. </param>
