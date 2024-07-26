@@ -66,7 +66,7 @@ namespace Azure.Maps.TimeZone.Tests.Samples
             MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
             Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
-            // Create a TimezoneClient that will authenticate via SAS token
+            // Create a TimeZoneClient that will authenticate via SAS token
             AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
             MapsTimeZoneClient client = new MapsTimeZoneClient(sasCredential);
             #endregion
