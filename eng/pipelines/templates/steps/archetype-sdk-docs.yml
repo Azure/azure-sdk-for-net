@@ -18,7 +18,6 @@ steps:
           -ArtifactName '${{artifact.name}}'
           -ServiceDirectory '${{parameters.ServiceDirectory}}'
           -ArtifactsDirectoryName '${{artifact.directoryName}}'
-          -LibType '${{parameters.LibType}}'
           -RepoRoot $(Build.SourcesDirectory)
           -BinDirectory $(Build.BinariesDirectory)
           -DocGenDir ${{parameters.DocGenerationDir}}

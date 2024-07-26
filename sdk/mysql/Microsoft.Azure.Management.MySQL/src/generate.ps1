@@ -1,2 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "mysql/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\mysql\Generated" -ConfigFileTag "package-2020-01-01" -Namespace "Microsoft.Azure.Management.MySQL"
-Start-AutoRestCodeGeneration -ResourceProvider "mysql/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\mysqlflexibleservers\Generated" -ConfigFileTag "package-flexibleserver-2021-05-01" -Namespace "Microsoft.Azure.Management.MySQL.FlexibleServers" -ClearMetadataLog $false

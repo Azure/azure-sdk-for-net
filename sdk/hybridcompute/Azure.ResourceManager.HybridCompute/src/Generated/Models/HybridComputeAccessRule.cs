@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Name of the access rule. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Direction of the access rule. </summary>
+        [WirePath("properties.direction")]
         public HybridComputeAccessRuleDirection? Direction { get; }
         /// <summary> Address prefixes that are allowed access. </summary>
+        [WirePath("properties.addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
     }
 }

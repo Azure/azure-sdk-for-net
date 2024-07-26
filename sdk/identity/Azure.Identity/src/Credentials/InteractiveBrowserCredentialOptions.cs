@@ -38,7 +38,8 @@ namespace Azure.Identity
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
         /// <summary>
-        /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.
+        /// The client ID of the application used to authenticate the user. It is recommended that developers register their applications and assign appropriate roles. For more information, visit <see href="https://aka.ms/azsdk/identity/AppRegistrationAndRoleAssignment"/>.
+        /// If not specified, users will authenticate to an Azure development application, which is not recommended for production scenarios.
         /// </summary>
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 

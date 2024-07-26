@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User Email subscribed to notification. </summary>
+        [WirePath("properties.email")]
         public string Email { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace Azure.Identity.Tests
 
         [TestCase(true)]
         [TestCase(false)]
+        [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
         public async Task AuthnenticateWithAssertionCallback(bool useAsyncCallback)
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;

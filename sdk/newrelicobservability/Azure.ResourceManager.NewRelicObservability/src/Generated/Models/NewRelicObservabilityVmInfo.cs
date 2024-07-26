@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure VM resource ID. </summary>
+        [WirePath("vmId")]
         public ResourceIdentifier VmId { get; }
         /// <summary> Version of the NewRelic agent installed on the VM. </summary>
+        [WirePath("agentVersion")]
         public string AgentVersion { get; }
         /// <summary> Status of the NewRelic agent installed on the VM. </summary>
+        [WirePath("agentStatus")]
         public string AgentStatus { get; }
     }
 }
