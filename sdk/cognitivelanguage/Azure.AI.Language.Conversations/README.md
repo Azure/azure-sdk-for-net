@@ -1,6 +1,6 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-The Azure.AI.Language.Conversations client library provides a suite of APIs for conversational language understanding capabilities like conversation analysis and orchestration, conversational summarization and conversational personally identifiable information (PII) extraction methods.
+The Azure.AI.Language.Conversations client library provides a suite of APIs for conversational language analysis capabilities like conversation language understanding and orchestration, conversational summarization and conversational personally identifiable information (PII) detection.
 
 Conversation Language Understanding (aka CLU for short) provides many language understanding capabilities like:
 - Conversation App: It's used in extracting intents and entities in conversations
