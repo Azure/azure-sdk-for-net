@@ -14,23 +14,6 @@ namespace Azure.Maps.TimeZone
         public string Id { get { throw null; } }
         public bool? IsAlias { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JsonFormat : System.IEquatable<Azure.Maps.TimeZone.JsonFormat>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JsonFormat(string value) { throw null; }
-        public static Azure.Maps.TimeZone.JsonFormat Json { get { throw null; } }
-        public bool Equals(Azure.Maps.TimeZone.JsonFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.TimeZone.JsonFormat left, Azure.Maps.TimeZone.JsonFormat right) { throw null; }
-        public static implicit operator Azure.Maps.TimeZone.JsonFormat (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.TimeZone.JsonFormat left, Azure.Maps.TimeZone.JsonFormat right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MapsTimeZoneClient
     {
         protected MapsTimeZoneClient() { }
