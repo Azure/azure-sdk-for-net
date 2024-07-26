@@ -7,7 +7,7 @@ namespace Azure.Maps.TimeZone.Models
 {
     /// <summary> TimeZoneResult for TimeZone Client. </summary>
     [CodeGenModel("TimezoneResult")]
-    public partial class TimeZoneResult
+    public partial class TimeZoneInformation
     {
     }
 }

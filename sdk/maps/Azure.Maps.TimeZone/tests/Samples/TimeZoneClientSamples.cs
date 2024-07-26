@@ -84,7 +84,7 @@ namespace Azure.Maps.TimeZone.Tests.Samples
             #region Snippet:GetTimeZoneById
             TimeZoneBaseOptions options = new TimeZoneBaseOptions();
             options.Options = TimeZoneOptions.All;
-            Response<TimeZoneResult> response = client.GetTimeZoneByID("Asia/Bahrain", options);
+            Response<TimeZoneInformation> response = client.GetTimeZoneByID("Asia/Bahrain", options);
             Console.WriteLine("Version: " + response.Value.Version);
             Console.WriteLine("Countires: " + response.Value.TimeZones[0].Countries);
             #endregion
@@ -103,7 +103,7 @@ namespace Azure.Maps.TimeZone.Tests.Samples
             TimeZoneBaseOptions options = new TimeZoneBaseOptions();
             options.Options = TimeZoneOptions.All;
             GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
-            Response<TimeZoneResult> response =  client.GetTimeZoneByCoordinates(coordinates, options);
+            Response<TimeZoneInformation> response =  client.GetTimeZoneByCoordinates(coordinates, options);
             Console.WriteLine("Names: " + response.Value.TimeZones[0].Names);
             #endregion
         }

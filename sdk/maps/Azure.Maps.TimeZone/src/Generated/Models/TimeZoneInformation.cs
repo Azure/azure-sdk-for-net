@@ -12,19 +12,19 @@ using Azure.Maps.Common;
 namespace Azure.Maps.TimeZone.Models
 {
     /// <summary> This object is returned from a successful Timezone By ID call or By Coordinates call. </summary>
-    public partial class TimeZoneResult
+    public partial class TimeZoneInformation
     {
-        /// <summary> Initializes a new instance of <see cref="TimeZoneResult"/>. </summary>
-        internal TimeZoneResult()
+        /// <summary> Initializes a new instance of <see cref="TimeZoneInformation"/>. </summary>
+        internal TimeZoneInformation()
         {
             TimeZones = new ChangeTrackingList<TimezoneId>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimeZoneResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZoneInformation"/>. </summary>
         /// <param name="version"> Version property. </param>
         /// <param name="referenceUtcTimestamp"> Reference Utc Timestamp property. </param>
         /// <param name="timeZones"> TimeZoneId array. </param>
-        internal TimeZoneResult(string version, DateTimeOffset? referenceUtcTimestamp, IReadOnlyList<TimezoneId> timeZones)
+        internal TimeZoneInformation(string version, DateTimeOffset? referenceUtcTimestamp, IReadOnlyList<TimezoneId> timeZones)
         {
             Version = version;
             ReferenceUtcTimestamp = referenceUtcTimestamp;

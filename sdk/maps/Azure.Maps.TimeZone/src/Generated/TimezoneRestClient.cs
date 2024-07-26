@@ -97,7 +97,7 @@ namespace Azure.Maps.TimeZone
         ///
         /// The `Get Timezone By ID` API is an HTTP `GET` request that returns current, historical, and future time zone information for the specified IANA time zone ID.
         /// </remarks>
-        public async Task<Response<TimeZoneResult>> GetTimezoneByIDAsync(JsonFormat format, string timezoneId, string acceptLanguage = null, TimeZoneOptions? options = null, DateTimeOffset? timeStamp = null, DateTimeOffset? daylightSavingsTimeFrom = null, int? daylightSavingsTimeLastingYears = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TimeZoneInformation>> GetTimezoneByIDAsync(JsonFormat format, string timezoneId, string acceptLanguage = null, TimeZoneOptions? options = null, DateTimeOffset? timeStamp = null, DateTimeOffset? daylightSavingsTimeFrom = null, int? daylightSavingsTimeLastingYears = null, CancellationToken cancellationToken = default)
         {
             if (timezoneId == null)
             {
@@ -110,9 +110,9 @@ namespace Azure.Maps.TimeZone
             {
                 case 200:
                     {
-                        TimeZoneResult value = default;
+                        TimeZoneInformation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TimeZoneResult.DeserializeTimeZoneResult(document.RootElement);
+                        value = TimeZoneInformation.DeserializeTimeZoneInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -134,7 +134,7 @@ namespace Azure.Maps.TimeZone
         ///
         /// The `Get Timezone By ID` API is an HTTP `GET` request that returns current, historical, and future time zone information for the specified IANA time zone ID.
         /// </remarks>
-        public Response<TimeZoneResult> GetTimezoneByID(JsonFormat format, string timezoneId, string acceptLanguage = null, TimeZoneOptions? options = null, DateTimeOffset? timeStamp = null, DateTimeOffset? daylightSavingsTimeFrom = null, int? daylightSavingsTimeLastingYears = null, CancellationToken cancellationToken = default)
+        public Response<TimeZoneInformation> GetTimezoneByID(JsonFormat format, string timezoneId, string acceptLanguage = null, TimeZoneOptions? options = null, DateTimeOffset? timeStamp = null, DateTimeOffset? daylightSavingsTimeFrom = null, int? daylightSavingsTimeLastingYears = null, CancellationToken cancellationToken = default)
         {
             if (timezoneId == null)
             {
@@ -147,9 +147,9 @@ namespace Azure.Maps.TimeZone
             {
                 case 200:
                     {
-                        TimeZoneResult value = default;
+                        TimeZoneInformation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TimeZoneResult.DeserializeTimeZoneResult(document.RootElement);
+                        value = TimeZoneInformation.DeserializeTimeZoneInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -214,7 +214,7 @@ namespace Azure.Maps.TimeZone
         ///
         /// The `Get Timezone By Coordinates` API is an HTTP `GET` request that returns current, historical, and future time zone information for a specified latitude-longitude pair. In addition, the API provides sunset and sunrise times for a given location.
         /// </remarks>
-        public async Task<Response<TimeZoneResult>> GetTimezoneByCoordinatesAsync(JsonFormat format, IEnumerable<double> coordinates, string acceptLanguage = null, TimeZoneOptions? options = null, DateTimeOffset? timeStamp = null, DateTimeOffset? daylightSavingsTimeFrom = null, int? daylightSavingsTimeLastingYears = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TimeZoneInformation>> GetTimezoneByCoordinatesAsync(JsonFormat format, IEnumerable<double> coordinates, string acceptLanguage = null, TimeZoneOptions? options = null, DateTimeOffset? timeStamp = null, DateTimeOffset? daylightSavingsTimeFrom = null, int? daylightSavingsTimeLastingYears = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
             {
@@ -227,9 +227,9 @@ namespace Azure.Maps.TimeZone
             {
                 case 200:
                     {
-                        TimeZoneResult value = default;
+                        TimeZoneInformation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TimeZoneResult.DeserializeTimeZoneResult(document.RootElement);
+                        value = TimeZoneInformation.DeserializeTimeZoneInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -251,7 +251,7 @@ namespace Azure.Maps.TimeZone
         ///
         /// The `Get Timezone By Coordinates` API is an HTTP `GET` request that returns current, historical, and future time zone information for a specified latitude-longitude pair. In addition, the API provides sunset and sunrise times for a given location.
         /// </remarks>
-        public Response<TimeZoneResult> GetTimezoneByCoordinates(JsonFormat format, IEnumerable<double> coordinates, string acceptLanguage = null, TimeZoneOptions? options = null, DateTimeOffset? timeStamp = null, DateTimeOffset? daylightSavingsTimeFrom = null, int? daylightSavingsTimeLastingYears = null, CancellationToken cancellationToken = default)
+        public Response<TimeZoneInformation> GetTimezoneByCoordinates(JsonFormat format, IEnumerable<double> coordinates, string acceptLanguage = null, TimeZoneOptions? options = null, DateTimeOffset? timeStamp = null, DateTimeOffset? daylightSavingsTimeFrom = null, int? daylightSavingsTimeLastingYears = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
             {
@@ -264,9 +264,9 @@ namespace Azure.Maps.TimeZone
             {
                 case 200:
                     {
-                        TimeZoneResult value = default;
+                        TimeZoneInformation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TimeZoneResult.DeserializeTimeZoneResult(document.RootElement);
+                        value = TimeZoneInformation.DeserializeTimeZoneInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

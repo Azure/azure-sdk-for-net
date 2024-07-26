@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.TimeZone
+namespace Azure.Maps.TimeZone.Models
 {
     /// <summary> Representative point property. </summary>
     public partial class RepresentativePoint
@@ -23,10 +23,5 @@ namespace Azure.Maps.TimeZone
             Latitude = latitude;
             Longitude = longitude;
         }
-
-        /// <summary> Latitude property. </summary>
-        public float? Latitude { get; }
-        /// <summary> Longitude property. </summary>
-        public float? Longitude { get; }
     }
 }

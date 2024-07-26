@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Maps.Common;
+using Azure.Maps.TimeZone.Models;
 
 namespace Azure.Maps.TimeZone
 {
@@ -33,7 +34,7 @@ namespace Azure.Maps.TimeZone
         /// <param name="referenceTime"> Details in effect at the local time. </param>
         /// <param name="representativePoint"> Representative point property. </param>
         /// <param name="timeTransitions"> Time zone DST transitions from [transitionsFrom] until timestamp + 1 year. </param>
-        internal TimezoneId(string id, IReadOnlyList<string> aliases, IReadOnlyList<CountryRecord> countries, TimezoneNames names, ReferenceTime referenceTime, RepresentativePoint representativePoint, IReadOnlyList<TimeTransition> timeTransitions)
+        internal TimezoneId(string id, IReadOnlyList<string> aliases, IReadOnlyList<CountryRecord> countries, TimeZoneNames names, ReferenceTime referenceTime, RepresentativePoint representativePoint, IReadOnlyList<TimeTransition> timeTransitions)
         {
             Id = id;
             Aliases = aliases;
@@ -55,7 +56,7 @@ namespace Azure.Maps.TimeZone
         /// <summary> An array of country/region records. Only returned when [options]=*zoneinfo* or *all*. </summary>
         public IReadOnlyList<CountryRecord> Countries { get; }
         /// <summary> Timezone names object. </summary>
-        public TimezoneNames Names { get; }
+        public TimeZoneNames Names { get; }
         /// <summary> Details in effect at the local time. </summary>
         public ReferenceTime ReferenceTime { get; }
         /// <summary> Representative point property. </summary>

@@ -5,31 +5,28 @@
 
 #nullable disable
 
-namespace Azure.Maps.TimeZone
+namespace Azure.Maps.TimeZone.Models
 {
     /// <summary> Timezone names object. </summary>
-    public partial class TimezoneNames
+    public partial class TimeZoneNames
     {
-        /// <summary> Initializes a new instance of <see cref="TimezoneNames"/>. </summary>
-        internal TimezoneNames()
+        /// <summary> Initializes a new instance of <see cref="TimeZoneNames"/>. </summary>
+        internal TimeZoneNames()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimezoneNames"/>. </summary>
-        /// <param name="isO6391LanguageCode"> The ISO 639-1 language code of the Names. </param>
+        /// <summary> Initializes a new instance of <see cref="TimeZoneNames"/>. </summary>
+        /// <param name="iso6391LanguageCode"> The ISO 639-1 language code of the Names. </param>
         /// <param name="generic"> Generic Name. </param>
         /// <param name="standard"> Standard Name. </param>
         /// <param name="daylight"> Daylight Name. </param>
-        internal TimezoneNames(string isO6391LanguageCode, string generic, string standard, string daylight)
+        internal TimeZoneNames(string iso6391LanguageCode, string generic, string standard, string daylight)
         {
-            ISO6391LanguageCode = isO6391LanguageCode;
+            Iso6391LanguageCode = iso6391LanguageCode;
             Generic = generic;
             Standard = standard;
             Daylight = daylight;
         }
-
-        /// <summary> The ISO 639-1 language code of the Names. </summary>
-        public string ISO6391LanguageCode { get; }
         /// <summary> Generic Name. </summary>
         public string Generic { get; }
         /// <summary> Standard Name. </summary>

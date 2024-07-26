@@ -15,16 +15,16 @@ namespace Azure.Maps.TimeZone
     /// <summary> Model factory for models. </summary>
     public static partial class MapsTimeZoneModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.TimeZoneResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TimeZoneInformation"/>. </summary>
         /// <param name="version"> Version property. </param>
         /// <param name="referenceUtcTimestamp"> Reference Utc Timestamp property. </param>
         /// <param name="timeZones"> TimeZoneId array. </param>
-        /// <returns> A new <see cref="Models.TimeZoneResult"/> instance for mocking. </returns>
-        public static TimeZoneResult TimeZoneResult(string version = null, DateTimeOffset? referenceUtcTimestamp = null, IEnumerable<TimezoneId> timeZones = null)
+        /// <returns> A new <see cref="Models.TimeZoneInformation"/> instance for mocking. </returns>
+        public static TimeZoneInformation TimeZoneInformation(string version = null, DateTimeOffset? referenceUtcTimestamp = null, IEnumerable<TimezoneId> timeZones = null)
         {
             timeZones ??= new List<TimezoneId>();
 
-            return new TimeZoneResult(version, referenceUtcTimestamp, timeZones?.ToList());
+            return new TimeZoneInformation(version, referenceUtcTimestamp, timeZones?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeZone.TimezoneId"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.Maps.TimeZone
         /// <param name="representativePoint"> Representative point property. </param>
         /// <param name="timeTransitions"> Time zone DST transitions from [transitionsFrom] until timestamp + 1 year. </param>
         /// <returns> A new <see cref="TimeZone.TimezoneId"/> instance for mocking. </returns>
-        public static TimezoneId TimezoneId(string id = null, IEnumerable<string> aliases = null, IEnumerable<CountryRecord> countries = null, TimezoneNames names = null, ReferenceTime referenceTime = null, RepresentativePoint representativePoint = null, IEnumerable<TimeTransition> timeTransitions = null)
+        public static TimezoneId TimezoneId(string id = null, IEnumerable<string> aliases = null, IEnumerable<CountryRecord> countries = null, TimeZoneNames names = null, ReferenceTime referenceTime = null, RepresentativePoint representativePoint = null, IEnumerable<TimeTransition> timeTransitions = null)
         {
             aliases ??= new List<string>();
             countries ??= new List<CountryRecord>();
@@ -65,15 +65,15 @@ namespace Azure.Maps.TimeZone
             return new CountryRecord(name, code);
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimeZone.TimezoneNames"/>. </summary>
-        /// <param name="isO6391LanguageCode"> The ISO 639-1 language code of the Names. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.TimeZoneNames"/>. </summary>
+        /// <param name="iso6391LanguageCode"> The ISO 639-1 language code of the Names. </param>
         /// <param name="generic"> Generic Name. </param>
         /// <param name="standard"> Standard Name. </param>
         /// <param name="daylight"> Daylight Name. </param>
-        /// <returns> A new <see cref="TimeZone.TimezoneNames"/> instance for mocking. </returns>
-        public static TimezoneNames TimezoneNames(string isO6391LanguageCode = null, string generic = null, string standard = null, string daylight = null)
+        /// <returns> A new <see cref="Models.TimeZoneNames"/> instance for mocking. </returns>
+        public static TimeZoneNames TimeZoneNames(string iso6391LanguageCode = null, string generic = null, string standard = null, string daylight = null)
         {
-            return new TimezoneNames(isO6391LanguageCode, generic, standard, daylight);
+            return new TimeZoneNames(iso6391LanguageCode, generic, standard, daylight);
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeZone.ReferenceTime"/>. </summary>
@@ -97,15 +97,6 @@ namespace Azure.Maps.TimeZone
                 posixTz,
                 sunrise,
                 sunset);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TimeZone.RepresentativePoint"/>. </summary>
-        /// <param name="latitude"> Latitude property. </param>
-        /// <param name="longitude"> Longitude property. </param>
-        /// <returns> A new <see cref="TimeZone.RepresentativePoint"/> instance for mocking. </returns>
-        public static RepresentativePoint RepresentativePoint(float? latitude = null, float? longitude = null)
-        {
-            return new RepresentativePoint(latitude, longitude);
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeZone.TimeTransition"/>. </summary>

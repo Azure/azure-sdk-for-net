@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Maps.Common;
+using Azure.Maps.TimeZone.Models;
 
 namespace Azure.Maps.TimeZone
 {
@@ -22,7 +23,7 @@ namespace Azure.Maps.TimeZone
             string id = default;
             IReadOnlyList<string> aliases = default;
             IReadOnlyList<CountryRecord> countries = default;
-            TimezoneNames names = default;
+            TimeZoneNames names = default;
             ReferenceTime referenceTime = default;
             RepresentativePoint representativePoint = default;
             IReadOnlyList<TimeTransition> timeTransitions = default;
@@ -67,7 +68,7 @@ namespace Azure.Maps.TimeZone
                     {
                         continue;
                     }
-                    names = TimezoneNames.DeserializeTimezoneNames(property.Value);
+                    names = TimeZoneNames.DeserializeTimeZoneNames(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ReferenceTime"u8))
