@@ -30,9 +30,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             string subscriptionId = DefaultSubscription.Data.SubscriptionId;
             ResourceGroupCollection rgCollection = DefaultSubscription.GetResourceGroups();
             var identifier = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            var credentials = new DefaultAzureCredential();
-            var armClient = new ArmClient(credentials);
-            var webSiteResource = armClient.GetWebSiteResource(identifier);
+            var webSiteResource = (await Client.GetWebSiteResource(identifier).GetAsync()).Value;
             SiteInstanceCollection siteInsCollection = webSiteResource.GetSiteInstances();
             int threadsInfoRecord = 0;
             try
@@ -46,8 +44,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                         processId = siteInsProcess.Data.Id.Name;
                     }
                     SiteInstanceProcessResource siteInsResource = await siteInstanceCollection.GetAsync(processId);
-                    var threadsCollection = siteInsResource.GetSiteInstanceProcessThreads();
-                    foreach (WebAppProcessThreadInfo threadInfo in threadsCollection)
+                    var threadsCollection = siteInsResource.GetSiteInstanceProcessThreadsAsync();
+                    await foreach (WebAppProcessThreadInfo threadInfo in threadsCollection)
                     {
                         var id = threadInfo.Properties.Id;
                         var href = threadInfo.Properties.Href;
@@ -65,31 +63,26 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [TestCase]
         [RecordedTest]
         //The app service resource needed should be created by using template file under TeseCase/AppServicetemplates by Azure CLI or other way.
-        public void GetSiteProcessThreads_Test()
+        public async Task GetSiteProcessThreads_Test()
         {
             string resourceGroupName = "testRG";
             string serviceName = "testapplwm";
             string subscriptionId = DefaultSubscription.Data.SubscriptionId;
-            // Authenticate and create the client
-            var credentials = new DefaultAzureCredential();
-            var armClient = new ArmClient(credentials);
-            var subid = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource sub = armClient.GetSubscriptionResource(subid).Get();
             var identifier = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            var webSiteResource = armClient.GetWebSiteResource(identifier);
+            var webSiteResource = (await Client.GetWebSiteResource(identifier).GetAsync()).Value;
 
-            var processList = webSiteResource.GetSiteProcesses();
+            var processList = webSiteResource.GetSiteProcesses().GetAllAsync();
             int threadsInfoRecord = 0;
             try
             {
-                foreach (SiteProcessResource item in processList)
+                await foreach (SiteProcessResource item in processList)
                 {
-                    var processThreadInfo_Collection = item.GetSiteProcessThreads(); //1
-                    foreach (WebAppProcessThreadInfo item33 in processThreadInfo_Collection)
+                    var processThreadInfo_Collection = item.GetSiteProcessThreadsAsync(); //1
+                    await foreach (WebAppProcessThreadInfo threadInfo in processThreadInfo_Collection)
                     {
-                        var id = item33.Properties.Id;
-                        var href = item33.Properties.Href;
-                        var state = item33.Properties.State;
+                        var id = threadInfo.Properties.Id;
+                        var href = threadInfo.Properties.Href;
+                        var state = threadInfo.Properties.State;
                         threadsInfoRecord++;
                     }
                 }
@@ -103,33 +96,27 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [TestCase]
         [RecordedTest]
         //The app service resource needed should be created by using template file under TeseCase/AppServicetemplates by Azure CLI or other way.
-        public void GetSiteSlotProcessThreads_Test()
+        public async Task GetSiteSlotProcessThreads_Test()
         {
             string resourceGroupName = "testRG";
             string serviceName = "testapplwm";
             string subscriptionId = DefaultSubscription.Data.SubscriptionId;
-            // Authenticate and create the client
-            var credentials = new DefaultAzureCredential();
-            var armClient = new ArmClient(credentials);
-            var subid = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource sub = armClient.GetSubscriptionResource(subid).Get();
             var identifier = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            var webSiteResource = armClient.GetWebSiteResource(identifier);
-            var processList = webSiteResource.GetSiteProcesses();
+            var webSiteResource = (await Client.GetWebSiteResource(identifier).GetAsync()).Value;
             int threadsInfoRecord = 0;
             var identifierSlot = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, "slot1");
-            var webSiteSlotResource = armClient.GetWebSiteSlotResource(identifierSlot);
-            var processList_slot = webSiteSlotResource.GetSiteSlotProcesses();
+            var webSiteSlotResource = (await Client.GetWebSiteSlotResource(identifierSlot).GetAsync()).Value;
+            var processList_slot = webSiteSlotResource.GetSiteSlotProcesses().GetAllAsync();
             try
             {
-                foreach (SiteSlotProcessResource item in processList_slot)
+                await foreach (SiteSlotProcessResource item in processList_slot)
                 {
-                    var processThreadInfo_Collection = item.GetSiteSlotProcessThreads(); //2
-                    foreach (WebAppProcessThreadInfo item33 in processThreadInfo_Collection)
+                    var processThreadInfo_Collection = item.GetSiteSlotProcessThreadsAsync(); //2
+                    await foreach (WebAppProcessThreadInfo threadInfo in processThreadInfo_Collection)
                     {
-                        var id = item33.Properties.Id;
-                        var href = item33.Properties.Href;
-                        var state = item33.Properties.State;
+                        var id = threadInfo.Properties.Id;
+                        var href = threadInfo.Properties.Href;
+                        var state = threadInfo.Properties.State;
                         threadsInfoRecord++;
                     }
                 }
@@ -144,37 +131,32 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [TestCase]
         [RecordedTest]
         //The app service resource needed should be created by using template file under TeseCase/AppServicetemplates by Azure CLI or other way.
-        public void GetSiteSlotInstanceProcessThreads_Test()
+        public async Task GetSiteSlotInstanceProcessThreads_Test()
         {
             string resourceGroupName = "testRG";
             string serviceName = "testapplwm";
             string subscriptionId = DefaultSubscription.Data.SubscriptionId;
-            // Authenticate and create the client
-            var credentials = new DefaultAzureCredential();
-            var armClient = new ArmClient(credentials);
-            var subid = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource sub = armClient.GetSubscriptionResource(subid).Get();
             int threadsInfoRecord = 0;
             var identifierSlot = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, "slot1");
-            var webSiteSlotResource = armClient.GetWebSiteSlotResource(identifierSlot);
-            SiteSlotInstanceCollection ops_slot = webSiteSlotResource.GetSiteSlotInstances();
+            var webSiteSlotResource = (await Client.GetWebSiteSlotResource(identifierSlot).GetAsync()).Value;
+            var ops_slot = webSiteSlotResource.GetSiteSlotInstances().GetAllAsync();
             try
             {
-                foreach (SiteSlotInstanceResource item44 in ops_slot)
+                await foreach (SiteSlotInstanceResource item in ops_slot)
                 {
-                    SiteSlotInstanceProcessCollection siteInstanceCollection = item44.GetSiteSlotInstanceProcesses();
+                    var siteInstanceCollection = item.GetSiteSlotInstanceProcesses().GetAllAsync();
                     string processId = "";
-                    foreach (SiteSlotInstanceProcessResource item22 in siteInstanceCollection)
+                    await foreach (SiteSlotInstanceProcessResource ssipr in siteInstanceCollection)
                     {
-                        processId = item22.Data.Id.Name;
+                        processId = ssipr.Data.Id.Name;
                     }
-                    SiteSlotInstanceProcessResource siteSlotInsResource = siteInstanceCollection.Get(processId);
-                    var threadsCollection = siteSlotInsResource.GetSiteSlotInstanceProcessThreads();//3
-                    foreach (WebAppProcessThreadInfo item33 in threadsCollection)
+                    SiteSlotInstanceProcessResource siteSlotInsResource = await item.GetSiteSlotInstanceProcesses().GetAsync(processId);
+                    var threadsCollection = siteSlotInsResource.GetSiteSlotInstanceProcessThreadsAsync();
+                    await foreach (WebAppProcessThreadInfo threadInfo in threadsCollection)
                     {
-                        var id = item33.Properties.Id;
-                        var href = item33.Properties.Href;
-                        var state = item33.Properties.State;
+                        var id = threadInfo.Properties.Id;
+                        var href = threadInfo.Properties.Href;
+                        var state = threadInfo.Properties.State;
                         threadsInfoRecord++;
                     }
                 }
