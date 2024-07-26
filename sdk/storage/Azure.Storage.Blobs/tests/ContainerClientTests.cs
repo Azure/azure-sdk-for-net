@@ -429,6 +429,19 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public void ctor_BlobContainerClient_clientSideEncryptionOptions()
+        {
+            var client = new BlobContainerClient(
+                connectionString: "UseDevelopmentStorage=true",
+                blobContainerName: "enc-test",
+                options: new SpecializedBlobClientOptions()
+                {
+                    ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
+                });
+            Assert.NotNull(client.ClientSideEncryption);
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
