@@ -141,9 +141,15 @@ A `KeyVaultAccessControlClient` provides both synchronous and asynchronous opera
 
 A `KeyVaultBackupClient` provides both synchronous and asynchronous operations for performing full key backups, full key restores, and selective key restores.
 
+### PreBackupOperation
+A `PreBackupOperation` represents a long-running operation that checks if it is possible to perform a full key backup.
+
 ### BackupOperation
 
 A `BackupOperation` represents a long running operation for a full key backup.
+
+### PreRestoreOperation
+A `PreRestoreOperation` represents a long-running operation that checks if it is possible to perform a full key restore from a backup.
 
 ### RestoreOperation
 
@@ -179,7 +185,9 @@ The following section provides several code snippets using the `client` created 
   * [Getting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#getting-a-role-assignment)
   * [Deleting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#deleting-a-role-assignment)
 * Backup and restore
+  * [Pre-backup check for a Key Vault](# PENDING)
   * [Performing a full key backup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldSync.md#performing-a-full-key-backup)
+  * [Pre-restore check for a Key Vault](# PENDING)
   * [Performing a full key restore](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldSync.md#performing-a-full-key-restore)
 
 ### Async examples
@@ -191,7 +199,9 @@ The following section provides several code snippets using the `client` created 
   * [Getting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#getting-a-role-assignment)
   * [Deleting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#deleting-a-role-assignment)
 * Backup and restore
+  * [Pre-backup check for a Key Vault](# PENDING)
   * [Performing a full key backup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldAsync.md#performing-a-full-key-backup)
+  * [Pre-restore check for a Key Vault](# PENDING)
   * [Performing a full key restore](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldAsync.md#performing-a-full-key-restore)
 
 ## Troubleshooting
