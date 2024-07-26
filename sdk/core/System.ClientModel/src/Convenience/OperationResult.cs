@@ -1,83 +1,79 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-#pragma warning disable CS1591 // public XML comments
+/// <summary>
+/// Represents an operation that runs asynchronously on a cloud service.  Cloud
+/// services use long-running operations to allow users to start an operation
+/// with one request and then monitor progress of the operation until it has
+/// completed.  <see cref="OperationResult"/> enables waiting for completion of
+/// long-running operations.  Client libraries provide derived types that add
+/// properties such as <code>Value</code> or <code>Status</code> as applicable
+/// for a given service operation.
+/// </summary>
 public abstract class OperationResult : ClientResult
 {
-    // TODO: Should it take pipeline response or delay the first call?
-    // Note: for streaming operations, we want to defer retrieving the response
-    // stream until the operation is started, so that the streaming convenience
-    // return types don't have to implement IDiposable. Given this, provide
-    // both constructors.
-
-    protected OperationResult() : base()
-    {
-    }
-
+    /// <summary>
+    /// Create a new instance of <see cref="OperationResult"/>.
+    /// </summary>
+    /// <param name="response">The <see cref="PipelineResponse"/> received from
+    /// the service in response to the request that started the operation.</param>
+    /// <remarks>Derived types will call
+    /// <see cref="ClientResult.SetRawResponse(PipelineResponse)"/> when a new
+    /// response is received that updates the status of the operation.</remarks>
     protected OperationResult(PipelineResponse response)
         : base(response)
     {
     }
 
-    // Note: this is nullable because streaming LROs must read the stream to
-    // obtain the values (ids) needed to create the token.  This can't be done
-    // e.g. in the case of a protocol method return type, and must be done after
-    // a user begins reading the stream in convenience LRO types.
-    // Note: if we make it abstract, then an implementation that doesn't support
-    // rehydration doesn't need a backing field for it.
-    public abstract ContinuationToken? RehydrationToken { get; protected set; }
-
-    // Note: Don't provide this on the base type per not being able to support
-    // it from SSE, since the client isn't able to stop the stream, I don't think.
-    // Note: adding this back since current plan is for OAI streaming types to
-    // inherit from polling LRO types - we will prevent rehydration of the
-    // streaming LRO types by not providing a method on the client that takes
-    // a rehydration token.
-    // Open question: can we make this work for protocol methods?
-    // Note: in OAI, we don't get the run ID until we read the first message off
-    // the SSE stream.  So, let's not add it here - clients can generate it.
-    //public ContinuationToken RehydrationToken { get; protected set; }
-
-    // Note: OAI LROs can stop before completing, and user needs to resume them somehow.
+    /// <summary>
+    /// Gets a value that indicates whether the operation has completed.
+    /// </summary>
+    /// <value>`true` if the operation has completed (that is, the service is
+    /// done processing the operation and it has terminated due to having
+    /// finished successfully, because of an error condition, or having been
+    /// cancelled by a user); otherwise, `false`.
+    /// </value>
     public abstract bool IsCompleted { get; protected set; }
 
-    // Idea to make this abstract so that streaming implementations can decide
-    // whether to query data in the reponse or keep a boolean backing field.
-    // Issue: the stream being empty doesn't always indicate the operation has
-    // completed.
-    //public abstract bool IsCompleted { get; protected set; }
+    /// <summary>
+    /// Gets a token that can be used to rehydrate the operation.
+    /// </summary>
+    /// <value>A token that can be used to rehydrate the operation, for example
+    /// to monitor its progress or to obtain its final result, from a process
+    /// different thatn the one that started the operation.</value>
+    public abstract ContinuationToken? RehydrationToken { get; protected set; }
 
-    // Idea to provide these on the base type is to support having a collection
-    // of heterogenous operations and wait for all of them to complete in a
-    // Task.WaitAll type API, without having to manually check HasCompleted on
-    // each.  It would require subtype constructors to take any relevant
-    // information about polling intervals, cancellation tokens, etc, or just
-    // say if you want to configure that you need to call the subtype directly.
+    /// <summary>
+    /// Waits for the operation to complete processing on the service.
+    /// </summary>
+    /// <remarks>Derived types may implement <see cref="WaitForCompletionAsync"/>
+    /// using different mechanisms to obtain updates from the service regarding
+    /// the progress of the operation.  If the derived type polls for status
+    /// updates, it provides overloads of <see cref="WaitForCompletionAsync"/>
+    /// that allow the caller to specify the polling interval or delay strategy
+    /// used to wait between sending request for updates.
+    /// </remarks>
+    /// <exception cref="OperationCanceledException">The cancellation token
+    /// passed to the client method to create the operation instance was
+    /// cancelled.</exception>
+    public abstract Task WaitForCompletionAsync();
 
-    // TODO: use Core methods/Template pattern instead?
-    public abstract Task<WaitReturnReason> WaitAsync(CancellationToken cancellationToken = default);
-    public abstract WaitReturnReason Wait(CancellationToken cancellationToken = default);
-
-    // Returns false if operation has completed, or if continuing to poll for updates
-    // would cause an infinite loop.  "CanContinue"/"Has more updates" -> can MoveNext
-    // in the conceptual update stream.
-
-    //// TODO: Can we make this less desireable to call?
-    //// One idea is to actually expose an API to get the update enumerator.
-    //public abstract Task<bool> UpdateAsync(CancellationToken cancellationToken = default);
-    //public abstract bool Update(CancellationToken cancellationToken = default);
-
-    // TODO: Consider providing an abstract UpdateStatus and UpdateStatusAsync
-    // operation.  This would formalize the idea of having a stream of updates
-    // as a universal OperationResult concept, and that they can be applied to
-    // create public properties of the subtype such as Value and Status.
-
-    //public abstract Task StartAsync();
-    //public abstract void Start();
+    /// <summary>
+    /// Waits for the operation to complete processing on the service.
+    /// </summary>
+    /// <remarks>Derived types may implement <see cref="WaitForCompletion"/>
+    /// using different mechanisms to obtain updates from the service regarding
+    /// the progress of the operation.  If the derived type polls for status
+    /// updates, it provides overloads of <see cref="WaitForCompletion"/>
+    /// that allow the caller to specify the polling interval or delay strategy
+    /// used to wait between sending request for updates.
+    /// </remarks>
+    /// <exception cref="OperationCanceledException">The cancellation token
+    /// passed to the client method to create the operation instance was
+    /// cancelled.</exception>
+    public abstract void WaitForCompletion();
 }
-#pragma warning restore CS1591 // public XML comments

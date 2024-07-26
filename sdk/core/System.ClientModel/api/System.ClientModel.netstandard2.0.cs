@@ -91,13 +91,8 @@ namespace System.ClientModel
     }
     public enum ReturnWhen
     {
-        Started = 0,
-        Completed = 1,
-    }
-    public enum WaitReturnReason
-    {
         Completed = 0,
-        Suspended = 1,
+        Started = 1,
     }
 }
 namespace System.ClientModel.Primitives
@@ -193,12 +188,11 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class OperationResult : System.ClientModel.ClientResult
     {
-        protected OperationResult() { }
         protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract bool IsCompleted { get; protected set; }
         public abstract System.ClientModel.ContinuationToken? RehydrationToken { get; protected set; }
-        public abstract System.ClientModel.WaitReturnReason Wait(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task<System.ClientModel.WaitReturnReason> WaitAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract void WaitForCompletion();
+        public abstract System.Threading.Tasks.Task WaitForCompletionAsync();
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute

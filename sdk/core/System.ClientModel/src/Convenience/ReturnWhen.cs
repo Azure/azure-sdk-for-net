@@ -1,22 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
 
-#pragma warning disable CS1591 // public XML comments
+/// <summary>
+/// Indicates whether a client method that starts a long-running operation
+/// should return after the operation has started or after the service has
+/// completed processing of the operation.
+/// </summary>
 public enum ReturnWhen
 {
-    Started,
+    /// <summary>
+    /// Indicates the client method should wait to return until the service has
+    /// completed processing of the operation.
+    /// </summary>
+    Completed,
 
-    //// TODO: validate that this works for streaming.
-    //StateChanged,
-
-    // This means that Update/MoveNext on the update enumerator returned false
-    // to indicate that updates aren't currently available.
-    Completed
+    /// <summary>
+    /// Indicates the client method should return after the service has responded
+    /// to the request to start the operation.
+    /// </summary>
+    /// <remarks>When <see cref="Started"/> is passed to a client method that
+    /// creates an <see cref="OperationResult"/>, the caller must use
+    /// <see cref="OperationResult.WaitForCompletion"/> or other method to wait
+    /// for the operation to complete before being able to obtain the result of
+    /// the service operation.</remarks>
+    Started
 }
-#pragma warning restore CS1591 // public XML comments
