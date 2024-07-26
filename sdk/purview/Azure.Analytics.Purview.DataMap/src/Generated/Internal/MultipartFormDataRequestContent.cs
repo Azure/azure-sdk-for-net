@@ -181,7 +181,7 @@ namespace Azure.Analytics.Purview.DataMap
 				_multipartContent.CopyTo(stream, default, cancellationToken);
 #else
 #pragma warning disable AZC0107
-            _multipartContent.CopyToAsync(stream).EnsureCompleted();
+            Core.Pipeline.TaskExtensions.EnsureCompleted(_multipartContent.CopyToAsync(stream));
 #pragma warning restore AZC0107
 #endif
         }

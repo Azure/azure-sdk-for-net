@@ -7,11 +7,12 @@
 
 using System;
 using Azure.Core.Extensions;
+using Azure.Data.SchemaRegistry;
 
-namespace Azure.Data.SchemaRegistry
+namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="SchemaRegistryClient"/> to client builder. </summary>
-    internal static partial class DataSchemaRegistryClientBuilderExtensions
+    public static partial class DataSchemaRegistryClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="SchemaRegistryClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
