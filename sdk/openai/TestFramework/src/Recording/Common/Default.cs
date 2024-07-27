@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OpenAI.TestFramework.Utils;
@@ -13,6 +14,7 @@ namespace OpenAI.TestFramework.Recording.Common;
 public static class Default
 {
     private static JsonSerializerOptions? _recordingJsonOptions = null;
+    private static JsonSerializerOptions? _innerRecordingJsonOptions = null;
     private static JsonSerializerOptions? _testProxyJsonOptions = null;
     private static TimeSpan? _testProxyWaitTime = null;
 
@@ -22,9 +24,9 @@ public static class Default
     public const string SanitizedValue = "Sanitized";
 
     /// <summary>
-    /// Gets the JSON serialization options to use for recording sanitizers, matchers, and transforms.
+    /// Gets the JSON serialization options to use for recording sanitizers, matchers, and transforms child instances.
     /// </summary>
-    public static JsonSerializerOptions RecordingJsonOptions => _recordingJsonOptions ??= new()
+    public static JsonSerializerOptions InnerRecordingJsonOptions => _innerRecordingJsonOptions ??= new()
     {
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -34,11 +36,33 @@ public static class Default
 #else
         IgnoreNullValues = true,
 #endif
-        Converters =
-        {
-            new Utf8JsonSerializableConverter()
-        }
     };
+
+    /// <summary>
+    /// Gets the JSON serialization options to use for recording sanitizers, matchers, and transforms.
+    /// </summary>
+    public static JsonSerializerOptions RecordingJsonOptions
+    {
+        get
+        {
+            if (_recordingJsonOptions == null)
+            {
+                _recordingJsonOptions = InnerRecordingJsonOptions.Clone();
+                _recordingJsonOptions.Converters.Add(
+
+#if NET6_0
+                    // .Net 6.0 seems to have a weird bug here. This is not needed for .Net framework, nor .Net 7+
+                    new Utf8JsonSerializableConverterFactory()
+#else
+                    new Utf8JsonSerializableConverter()
+#endif
+                );
+            }
+
+            return _recordingJsonOptions;
+        }
+    }
+
 
     /// <summary>
     /// Gets the JSON serialization options to use for the test proxy
@@ -53,12 +77,6 @@ public static class Default
         IgnoreNullValues = true,
 #endif
     };
-
-    /// <summary>
-    /// The name of the assets JSON file that contains the information needed for the test proxy to save
-    /// and restore recordings.
-    /// </summary>
-    public static string AssetsJson => "assets.json";
 
     /// <summary>
     /// The default maximum amount of time to wait to for the test proxy operations to finish (e.g. start up

@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace OpenAI.TestFramework;
+namespace OpenAI.TestFramework.Utils;
 
 /// <summary>
 /// Interface applied to types that can be serialized to JSON

@@ -26,6 +26,15 @@ public class ProxyClient
     private ClientPipeline _pipeline;
 
     /// <summary>
+    /// For testing only.
+    /// </summary>
+    internal ProxyClient()
+    {
+        _options = new(new Uri("http://localhost:0"));
+        _pipeline = ClientPipeline.Create();
+    }
+
+    /// <summary>
     /// Creates a new instance.
     /// </summary>
     /// <param name="options">The options to use.</param>
@@ -41,7 +50,7 @@ public class ProxyClient
     /// <param name="startInfo">The configuration to use for starting playback.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The result that includes any recorded variables.</returns>
-    public ProxyClientResult<IDictionary<string, string>> StartPlayback(StartInformation startInfo, CancellationToken token = default)
+    public virtual ProxyClientResult<IDictionary<string, string>> StartPlayback(StartInformation startInfo, CancellationToken token = default)
     {
         if (startInfo == null)
         {
@@ -58,7 +67,7 @@ public class ProxyClient
     /// <param name="startInfo">The configuration to use for starting playback.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The result that includes any recorded variables.</returns>
-    public async Task<ProxyClientResult<IDictionary<string, string>>> StartPlaybackAsync(StartInformation startInfo, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult<IDictionary<string, string>>> StartPlaybackAsync(StartInformation startInfo, CancellationToken token = default)
     {
         if (startInfo == null)
         {
@@ -66,7 +75,7 @@ public class ProxyClient
         }
 
         PipelineMessage message = CreateJsonRequest(HttpMethod.Post, "playback/start", startInfo, token);
-        return await SendSyncOrAsync<IDictionary<string, string>>(false, message, token).ConfigureAwait(false);
+        return await SendSyncOrAsync<IDictionary<string, string>>(true, message, token).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -75,7 +84,7 @@ public class ProxyClient
     /// <param name="recordingId">The ID for the playback session to stop.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult StopPlayback(string recordingId, CancellationToken token = default)
+    public virtual ProxyClientResult StopPlayback(string recordingId, CancellationToken token = default)
     {
         if (string.IsNullOrWhiteSpace(recordingId))
         {
@@ -95,7 +104,7 @@ public class ProxyClient
     /// <param name="recordingId">The ID for the playback session to stop.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> StopPlaybackAsync(string recordingId, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> StopPlaybackAsync(string recordingId, CancellationToken token = default)
     {
         if (string.IsNullOrWhiteSpace(recordingId))
         {
@@ -106,7 +115,7 @@ public class ProxyClient
         {
             [X_RECORDING_ID_HEADER] = recordingId,
         });
-        return await SendSyncOrAsync(false, message, token).ConfigureAwait(false);
+        return await SendSyncOrAsync(true, message, token).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -115,7 +124,7 @@ public class ProxyClient
     /// <param name="startInfo">The configuration to use for the recording session.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult StartRecording(StartInformation startInfo, CancellationToken token = default)
+    public virtual ProxyClientResult StartRecording(StartInformation startInfo, CancellationToken token = default)
     {
         if (startInfo == null)
         {
@@ -132,7 +141,7 @@ public class ProxyClient
     /// <param name="startInfo">The configuration to use for the recording session.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> StartRecordingAsync(StartInformation startInfo, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> StartRecordingAsync(StartInformation startInfo, CancellationToken token = default)
     {
         if (startInfo == null)
         {
@@ -140,7 +149,7 @@ public class ProxyClient
         }
 
         PipelineMessage message = CreateJsonRequest(HttpMethod.Post, "record/start", startInfo, token);
-        return await SendSyncOrAsync(false, message, token).ConfigureAwait(false);
+        return await SendSyncOrAsync(true, message, token).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -151,7 +160,7 @@ public class ProxyClient
     /// <param name="skipRecording">(Optional) Set this to true to turn off recording.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult StopRecording(string recordingId, IDictionary<string, string>? variables = null, bool skipRecording = false, CancellationToken token = default)
+    public virtual ProxyClientResult StopRecording(string recordingId, IDictionary<string, string>? variables = null, bool skipRecording = false, CancellationToken token = default)
     {
         if (string.IsNullOrWhiteSpace(recordingId))
         {
@@ -181,7 +190,7 @@ public class ProxyClient
     /// <param name="skipRecording">(Optional) Set this to true to turn off recording.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> StopRecordingAsync(string recordingId, IDictionary<string, string>? variables = null, bool skipRecording = false, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> StopRecordingAsync(string recordingId, IDictionary<string, string>? variables = null, bool skipRecording = false, CancellationToken token = default)
     {
         if (string.IsNullOrWhiteSpace(recordingId))
         {
@@ -200,7 +209,7 @@ public class ProxyClient
 
         variables ??= new Dictionary<string, string>();
         PipelineMessage message = CreateJsonRequest(HttpMethod.Post, "record/stop", variables, token, additionalHeaders);
-        return await SendSyncOrAsync(false, message, token).ConfigureAwait(false);
+        return await SendSyncOrAsync(true, message, token).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -210,7 +219,7 @@ public class ProxyClient
     /// <param name="options">The options to set.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult SetRecordingTransportOptions(string recordingId, ProxyServiceOptions options, CancellationToken token = default)
+    public virtual ProxyClientResult SetRecordingTransportOptions(string recordingId, ProxyServiceOptions options, CancellationToken token = default)
     {
         if (string.IsNullOrWhiteSpace(recordingId))
         {
@@ -235,7 +244,7 @@ public class ProxyClient
     /// <param name="options">The options to set.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> SetRecordingTransportOptionsAsync(string recordingId, ProxyServiceOptions options, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> SetRecordingTransportOptionsAsync(string recordingId, ProxyServiceOptions options, CancellationToken token = default)
     {
         if (string.IsNullOrWhiteSpace(recordingId))
         {
@@ -250,7 +259,7 @@ public class ProxyClient
         {
             [X_RECORDING_ID_HEADER] = recordingId,
         });
-        return await SendSyncOrAsync(false, message, token).ConfigureAwait(false);
+        return await SendSyncOrAsync(true, message, token).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -261,7 +270,7 @@ public class ProxyClient
     /// If null, the sanitizers will be removed globally on the test proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult RemoveSanitizers(ISet<string> sanitizerIds, string? recordingId = null, CancellationToken token = default)
+    public virtual ProxyClientResult RemoveSanitizers(ISet<string> sanitizerIds, string? recordingId = null, CancellationToken token = default)
     {
         if (sanitizerIds == null)
         {
@@ -277,7 +286,7 @@ public class ProxyClient
         PipelineMessage message = CreateJsonRequest(
             HttpMethod.Post,
             "admin/removesanitizers",
-            new SanitizerIdList() { Sanitizers = sanitizerIds },
+            new SanitizerIdList() { Sanitizers = sanitizerIds.ToArray() },
             token,
             headers);
         return SendSyncOrAsync(false, message, token).GetAwaiter().GetResult();
@@ -291,7 +300,7 @@ public class ProxyClient
     /// If null, the sanitizers will be removed globally on the test proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> RemoveSanitizersAsync(ISet<string> sanitizerIds, string? recordingId = null, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> RemoveSanitizersAsync(ISet<string> sanitizerIds, string? recordingId = null, CancellationToken token = default)
     {
         if (sanitizerIds == null)
         {
@@ -307,10 +316,10 @@ public class ProxyClient
         PipelineMessage message = CreateJsonRequest(
             HttpMethod.Post,
             "admin/removesanitizers",
-            new SanitizerIdList() { Sanitizers = sanitizerIds },
+            new SanitizerIdList() { Sanitizers = sanitizerIds.ToArray() },
             token,
             headers);
-        return await SendSyncOrAsync(false, message, token).ConfigureAwait(false);
+        return await SendSyncOrAsync(true, message, token).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -321,7 +330,7 @@ public class ProxyClient
     /// If null, the sanitizers will be added globally on the test proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result with the set of sanitizer IDs added.</returns>
-    public ProxyClientResult<ISet<string>> AddSanitizers(IEnumerable<BaseSanitizer> sanitizers, string? recordingId = null, CancellationToken token = default)
+    public virtual ProxyClientResult<IReadOnlyList<string>> AddSanitizers(IEnumerable<BaseSanitizer> sanitizers, string? recordingId = null, CancellationToken token = default)
     {
         if (sanitizers == null)
         {
@@ -336,8 +345,8 @@ public class ProxyClient
 
         PipelineMessage message = CreateJsonRequest(HttpMethod.Post, "Admin/AddSanitizers", sanitizers, token, headers);
         ProxyClientResult<SanitizerIdList> result = SendSyncOrAsync<SanitizerIdList>(false, message, token).GetAwaiter().GetResult();
-        return new ProxyClientResult<ISet<string>>(
-            new HashSet<string>(result.Value.Sanitizers ?? Array.Empty<string>()),
+        return new ProxyClientResult<IReadOnlyList<string>>(
+            result.Value.Sanitizers ?? Array.Empty<string>(),
             result.GetRawResponse());
     }
 
@@ -349,7 +358,7 @@ public class ProxyClient
     /// If null, the sanitizers will be added globally on the test proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result with the set of sanitizer IDs added.</returns>
-    public async Task<ProxyClientResult<ISet<string>>> AddSanitizersAsync(IEnumerable<BaseSanitizer> sanitizers, string? recordingId = null, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult<IReadOnlyList<string>>> AddSanitizersAsync(IEnumerable<BaseSanitizer> sanitizers, string? recordingId = null, CancellationToken token = default)
     {
         if (sanitizers == null)
         {
@@ -364,8 +373,8 @@ public class ProxyClient
 
         PipelineMessage message = CreateJsonRequest(HttpMethod.Post, "Admin/AddSanitizers", sanitizers, token, headers);
         ProxyClientResult<SanitizerIdList> result = await SendSyncOrAsync<SanitizerIdList>(true, message, token).ConfigureAwait(false);
-        return new ProxyClientResult<ISet<string>>(
-            new HashSet<string>(result.Value.Sanitizers ?? Array.Empty<string>()),
+        return new ProxyClientResult<IReadOnlyList<string>>(
+            result.Value.Sanitizers ?? Array.Empty<string>(),
             result.GetRawResponse());
     }
 
@@ -377,7 +386,7 @@ public class ProxyClient
     /// If null, the matcher will be set globally on the test proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult SetMatcher(BaseMatcher matcher, string? recordingId = null, CancellationToken token = default)
+    public virtual ProxyClientResult SetMatcher(BaseMatcher matcher, string? recordingId = null, CancellationToken token = default)
     {
         if (matcher == null)
         {
@@ -406,7 +415,7 @@ public class ProxyClient
     /// If null, the matcher will be set globally on the test proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> SetMatcherAsync(BaseMatcher matcher, string? recordingId = null, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> SetMatcherAsync(BaseMatcher matcher, string? recordingId = null, CancellationToken token = default)
     {
         if (matcher == null)
         {
@@ -435,7 +444,7 @@ public class ProxyClient
     /// If null, the transform will be added globally on the test proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult AddTransform(BaseTransform transform, string? recordingId = null, CancellationToken token = default)
+    public virtual ProxyClientResult AddTransform(BaseTransform transform, string? recordingId = null, CancellationToken token = default)
     {
         if (transform == null)
         {
@@ -464,7 +473,7 @@ public class ProxyClient
     /// If null, the transform will be added globally on the test proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> AddTransformAsync(BaseTransform transform, string? recordingId = null, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> AddTransformAsync(BaseTransform transform, string? recordingId = null, CancellationToken token = default)
     {
         if (transform == null)
         {
@@ -492,7 +501,7 @@ public class ProxyClient
     /// If null, the reset will apply globally.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult Reset(string? recordingId = null, CancellationToken token = default)
+    public virtual ProxyClientResult Reset(string? recordingId = null, CancellationToken token = default)
     {
         Dictionary<string, string> headers = new();
         if (recordingId != null)
@@ -511,7 +520,7 @@ public class ProxyClient
     /// If null, the reset will apply globally.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> ResetAsync(string? recordingId = null, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> ResetAsync(string? recordingId = null, CancellationToken token = default)
     {
         Dictionary<string, string> headers = new();
         if (recordingId != null)
@@ -523,7 +532,31 @@ public class ProxyClient
         return await SendSyncOrAsync(true, message, token).ConfigureAwait(false);
     }
 
-    private PipelineMessage CreateJsonRequest<TBody>(HttpMethod method, string path, TBody? body, CancellationToken token, Dictionary<string, string>? headers = null)
+    /// <summary>
+    /// Lists the available sanitizers, matchers, and transforms.
+    /// </summary>
+    /// <param name="token">The cancellation token.</param>
+    /// <returns>The client result with the HTML returned from the service.</returns>
+    public virtual ProxyClientResult<string> ListAvailable(CancellationToken token = default)
+    {
+        PipelineMessage message = CreateJsonRequest<object>(HttpMethod.Get, "Info/Available", null, token);
+        ProxyClientResult result = SendSyncOrAsync(false, message, token).GetAwaiter().GetResult();
+        return new ProxyClientResult<string>(result.GetRawResponse().Content.ToString(), result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// Lists the available sanitizers, matchers, and transforms asynchronously.
+    /// </summary>
+    /// <param name="token">The cancellation token.</param>
+    /// <returns>The client result with the HTML returned from the service.</returns>
+    public virtual async Task<ProxyClientResult<string>> ListAvailableAsync(CancellationToken token = default)
+    {
+        PipelineMessage message = CreateJsonRequest<object>(HttpMethod.Get, "Info/Available", null, token);
+        ProxyClientResult result = await SendSyncOrAsync(true, message, token).ConfigureAwait(false);
+        return new ProxyClientResult<string>(result.GetRawResponse().Content.ToString(), result.GetRawResponse());
+    }
+
+    protected virtual PipelineMessage CreateJsonRequest<TBody>(HttpMethod method, string path, TBody? body, CancellationToken token, Dictionary<string, string>? headers = null)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         message.Apply(new RequestOptions { CancellationToken = token });
@@ -555,7 +588,7 @@ public class ProxyClient
         return message;
     }
 
-    private async ValueTask<ProxyClientResult> SendSyncOrAsync(bool isAsync, PipelineMessage message, CancellationToken token)
+    protected virtual async ValueTask<ProxyClientResult> SendSyncOrAsync(bool isAsync, PipelineMessage message, CancellationToken token)
     {
         if (isAsync)
         {
@@ -575,7 +608,7 @@ public class ProxyClient
         return new ProxyClientResult(response);
     }
 
-    private async ValueTask<ProxyClientResult<TResponse>> SendSyncOrAsync<TResponse>(bool isAsync, PipelineMessage message, CancellationToken token)
+    protected virtual async ValueTask<ProxyClientResult<TResponse>> SendSyncOrAsync<TResponse>(bool isAsync, PipelineMessage message, CancellationToken token)
     {
         if (isAsync)
         {

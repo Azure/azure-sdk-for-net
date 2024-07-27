@@ -4,6 +4,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OpenAI.TestFramework.Recording.Common;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Recording.Transforms;
 
@@ -31,6 +32,7 @@ public abstract class BaseTransform : IUtf8JsonSerializable
     /// <inheritdoc />
     public virtual void Write(Utf8JsonWriter writer)
     {
-        JsonSerializer.Serialize(writer, this, Default.RecordingJsonOptions);
+        // By default use reflection based serialization
+        JsonSerializer.Serialize(writer, this, GetType(), Default.InnerRecordingJsonOptions);
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using Castle.DynamicProxy;
 
 namespace OpenAI.TestFramework.Mocks.Client;
@@ -11,6 +12,7 @@ namespace OpenAI.TestFramework.Mocks.Client;
 public class ThisLeakInterceptor : IInterceptor
 {
     /// <inheritdoc />
+    [DebuggerStepperBoundary]
     public void Intercept(IInvocation invocation)
     {
         invocation.Proceed();

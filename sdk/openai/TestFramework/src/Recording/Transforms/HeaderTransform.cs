@@ -9,7 +9,7 @@ namespace OpenAI.TestFramework.Recording.Transforms;
 /// <summary>
 /// Transform applied to headers before the response is generated during recording playback.
 /// </summary>
-public class HeaderTransform : BaseSanitizer
+public class HeaderTransform : BaseTransform
 {
     /// <summary>
     /// Creates a new instance.

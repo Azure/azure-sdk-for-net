@@ -145,6 +145,15 @@ public class ProxyService : IDisposable
     }
 
     /// <summary>
+    /// For testing purposes only
+    /// </summary>
+    /// <param name="client">The client to set.</param>
+    internal void SetClient(ProxyClient client)
+    {
+        _client = client;
+    }
+
+    /// <summary>
     /// Starts the recording test proxy instance, and waits until we can read the ports it is listening on for
     /// HTTP and HTTPS.
     /// </summary>

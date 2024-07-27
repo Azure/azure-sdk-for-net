@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using Castle.DynamicProxy;
 using OpenAI.TestFramework.Adapters;
+using Ext = OpenAI.TestFramework.Utils.TypeExtensions;
 
 namespace OpenAI.TestFramework.Mocks.Client;
 
@@ -127,55 +128,6 @@ public class AsyncToSyncInterceptor : IInterceptor
     public bool UseAsync { get; }
 
     /// <summary>
-    /// Determines whether the specified type either implements the open generic type specified,
-    /// or inherits from the open generic type specified.
-    /// </summary>
-    /// <param name="type">The type to inspect.</param>
-    /// <param name="openGeneric">The open generic type.</param>
-    /// <param name="closedTypeArguments">The arguments of the closed generic type.</param>
-    /// <returns>True if the type implements, or inherits, or is a closed version of the open type.</returns>
-    protected static bool IsClosedGenericOf(Type type, Type openGeneric, out Type[] closedTypeArguments)
-    {
-        Type? closedType;
-
-        if (openGeneric.IsInterface)
-        {
-            closedType = type.GetInterfaces()
-                .FirstOrDefault(iType => IsAssignableFromOpen(iType, openGeneric));
-        }
-        else
-        {
-            closedType = null;
-            for (Type? current = type; current != null && closedType == null; current = current.BaseType)
-            {
-                if (IsAssignableFromOpen(current, openGeneric))
-                {
-                    closedType = current;
-                }
-            }
-        }
-
-        closedTypeArguments = closedType?.GetGenericArguments() ?? Array.Empty<Type>();
-        return closedType != null;
-    }
-
-    /// <summary>
-    /// Determines if the type is or inherits from the open generic type.
-    /// </summary>
-    /// <param name="type">The type.</param>
-    /// <param name="openGeneric">The open generic type.</param>
-    /// <returns>True if the open generic type could be assigned from the type.</returns>
-    protected static bool IsAssignableFromOpen(Type type, Type openGeneric)
-    {
-        if (!type.IsGenericType || !type.IsConstructedGenericType)
-        {
-            return false;
-        }
-
-        return openGeneric.IsAssignableFrom(type.GetGenericTypeDefinition());
-    }
-
-    /// <summary>
     /// Determines whether or not the specified method is part of a pair of synchronous and asynchronous methods. This will
     /// check based on 3 factors:
     /// <list type="bullet">
@@ -209,19 +161,19 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return typeof(void);
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(Task<>), out Type[] genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(Task<>), out Type[] genericTypes))
         {
             return genericTypes[0];
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(ValueTask<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(ValueTask<>), out genericTypes))
         {
             return genericTypes[0];
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
         {
             return typeof(PageableCollection<>).MakeGenericType(genericTypes);
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
         {
             return typeof(ResultCollection<>).MakeGenericType(genericTypes);
         }
@@ -244,7 +196,7 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return Task.CompletedTask;
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(Task<>), out Type[] genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(Task<>), out Type[] genericTypes))
         {
             return s_taskFromResult
                 .MakeGenericMethod(genericTypes)
@@ -254,20 +206,20 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return new ValueTask();
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(ValueTask<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(ValueTask<>), out genericTypes))
         {
             return Activator.CreateInstance(
                 typeof(ValueTask<>).MakeGenericType(genericTypes),
                 result);
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncPageableCollection<>).MakeGenericType(genericTypes),
                 result,
                 default(CancellationToken));
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncResultCollection<>).MakeGenericType(genericTypes),
@@ -292,7 +244,7 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return Task.FromException(ex);
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(Task<>), out Type[] genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(Task<>), out Type[] genericTypes))
         {
             return s_taskFromException
                 .MakeGenericMethod(genericTypes)
@@ -302,7 +254,7 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return new ValueTask(Task.FromException(ex));
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(ValueTask<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(ValueTask<>), out genericTypes))
         {
             var failedTask = s_taskFromException
                 .MakeGenericMethod(genericTypes)
@@ -311,13 +263,13 @@ public class AsyncToSyncInterceptor : IInterceptor
                 typeof(ValueTask<>).MakeGenericType(genericTypes),
                 failedTask);
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncPageableCollection<>).MakeGenericType(genericTypes),
                 ex);
         }
-        else if (IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncResultCollection<>).MakeGenericType(genericTypes),

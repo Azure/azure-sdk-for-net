@@ -9,10 +9,10 @@ using OpenAI.TestFramework.Mocks.Client;
 namespace OpenAI.TestFramework;
 
 /// <summary>
-/// Base class for test cases. This provides support for writing only a test that uses the Async version of methods,
-/// and automatically creating a test that uses the equivalent Sync version of a method. Please note that this will
-/// only work for public virtual methods. In order for this to work, you should write a test that uses the async
-/// version of a method.
+/// Base class for client test cases. This provides support for writing only a test that uses the Async version of
+/// methods, and automatically creating a test that uses the equivalent Sync version of a method. Please note that
+/// this will only work for public virtual methods. In order for this to work, you should write a test that uses the
+/// async version of a method.
 /// </summary>
 [TestFixture(true)]
 [TestFixture(false)]
@@ -37,6 +37,9 @@ public abstract class SyncAsyncTestBase
     /// </summary>
     public virtual bool IsAsync { get; }
 
+    /// <summary>
+    /// Gets the start time of the test.
+    /// </summary>
     public virtual DateTimeOffset TestStartTime => TestExecutionContext.CurrentContext.StartTime.ToUniversalTime();
 
     /// <summary>
@@ -61,60 +64,61 @@ public abstract class SyncAsyncTestBase
     protected static AsyncToSyncInterceptor UseAsyncMethodInterceptor => s_asyncInterceptor ??= new AsyncToSyncInterceptor(true);
 
     /// <summary>
-    /// Instruments a client instance for testing. This will return a proxied version of the client that will allow you to
-    /// automatically use the sync versions of a method
+    /// Wraps an instance for automatic sync/async testing. This will return a proxied version of the client that will allow you to
+    /// automatically use the sync versions of a method.
     /// </summary>
-    /// <typeparam name="TClient">The type of the client instance.</typeparam>
-    /// <param name="client">The client instance to instrument for testing.</param>
+    /// <typeparam name="T">The type of the client instance.</typeparam>
+    /// <param name="instance">The client instance to instrument for testing.</param>
     /// <param name="context">(Optional) Any additional context to associate with the instrumented client.</param>
     /// <param name="interceptors">(Optional) Any additional interceptors to use.</param>
     /// <returns>The proxied version of the client.</returns>
-    public TClient InstrumentClient<TClient>(TClient client, object? context = null, params IInterceptor[] interceptors) where TClient : class
-        => (TClient)InstrumentClient(typeof(TClient), client, context, interceptors);
+    public T WrapForSyncAsync<T>(T instance, object? context = null, params IInterceptor[] interceptors) where T : class
+        => (T)WrapForSyncAsync(typeof(T), instance, context, interceptors);
 
     /// <summary>
-    /// Gets the original un-proxied instance from an instrumented client.
+    /// Gets the original un-instrumented instance from an instrumented client.
     /// </summary>
-    /// <typeparam name="TClient">The type of the client.</typeparam>
-    /// <param name="client">The instrumented client instance.</param>
+    /// <typeparam name="T">The type of the client.</typeparam>
+    /// <param name="wrapped">The instrumented client instance.</param>
     /// <returns>The original instance.</returns>
-    /// <exception cref="NotSupportedException">The the instance passed was not instrumented.</exception>
-    public virtual TClient GetOriginalClient<TClient>(TClient client) where TClient : class
+    /// <exception cref="NotSupportedException">The the instance passed was not wrapped.</exception>
+    public virtual T UnWrap<T>(T wrapped) where T : class
     {
-        if (client is IInstrumented instrumented)
+        if (wrapped is IInstrumented instrumented)
         {
-            return (TClient)instrumented.Original;
+            return (T)instrumented.Original;
         }
 
-        throw new NotSupportedException("That client instance was not instrumented");
+        throw new NotSupportedException($"That instance was not wrapped using {nameof(WrapForSyncAsync)}");
     }
 
     /// <summary>
-    /// Gets the context associated with the instrumented client instance.
+    /// Gets the context associated with the wrapped instance.
     /// </summary>
-    /// <typeparam name="TClient">The type of the client.</typeparam>
-    /// <param name="client">The instrumented client instance.</param>
-    /// <returns>The associated context for the client instance. Will be null if none was set.</returns>
-    /// <exception cref="NotSupportedException">The the instance passed was not instrumented.</exception>
-    public virtual object? GetClientContext<TClient>(TClient client) where TClient : class
+    /// <typeparam name="T">The type of the client.</typeparam>
+    /// <param name="wrapped">The wrapped instance.</param>
+    /// <returns>The associated context for the wrapped instance. Will be null if none was set.</returns>
+    /// <exception cref="NotSupportedException">The the instance passed was not wrapped.</exception>
+    public virtual object? GetWrappedContext<T>(T wrapped) where T : class
     {
-        if (client is IInstrumented instrumented)
+        if (wrapped is IInstrumented instrumented)
         {
             return instrumented.Context;
         }
 
-        throw new NotSupportedException("That client instance was not instrumented");
+        throw new NotSupportedException($"That instance was not wrapped using {nameof(WrapForSyncAsync)}");
     }
 
     /// <summary>
-    /// Instruments a client for testing.
+    /// Wraps an instance with sync/async equivalent methods for testing. This enables the automatic testing of the sync version
+    /// of methods if you write an async test case.
     /// </summary>
-    /// <param name="clientType">The type of the client.</param>
-    /// <param name="client">The client instance.</param>
+    /// <param name="instanceType">The type of the client.</param>
+    /// <param name="instance">The instance.</param>
     /// <param name="context">(Optional) Any additional context to associate with the instrumented client.</param>
     /// <param name="interceptors">(Optional) Any additional interceptors to include.</param>
-    /// <returns>The instrumented version of the client.</returns>
-    protected internal virtual object InstrumentClient(Type clientType, object client, object? context, IEnumerable<IInterceptor>? interceptors)
+    /// <returns>The wrapped version of the instance.</returns>
+    protected internal virtual object WrapForSyncAsync(Type instanceType, object instance, object? context, IEnumerable<IInterceptor>? interceptors)
     {
         List<IInterceptor> allInterceptors = new();
 
@@ -127,12 +131,12 @@ public abstract class SyncAsyncTestBase
         allInterceptors.Add(IsAsync ? UseAsyncMethodInterceptor : UseSyncMethodInterceptor);
 
         ProxyGenerationOptions options = new();
-        options.AddMixinInstance(new InstrumentedMixIn(client, context));
+        options.AddMixinInstance(new InstrumentedMixIn(instance, context));
 
         object proxy = ProxyGenerator.CreateClassProxyWithTarget(
-            clientType,
+            instanceType,
             [],
-            client,
+            instance,
             options,
             allInterceptors.ToArray());
 

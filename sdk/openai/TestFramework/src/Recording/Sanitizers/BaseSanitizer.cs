@@ -4,6 +4,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OpenAI.TestFramework.Recording.Common;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Recording.Sanitizers;
 
@@ -31,10 +32,11 @@ public abstract class BaseSanitizer : IUtf8JsonSerializable
     /// <inheritdoc />
     public void Write(Utf8JsonWriter writer)
     {
-        writer.WriteString("Name"u8, Type);
-        writer.WritePropertyName("Body"u8);
         writer.WriteStartObject();
         {
+            writer.WriteString("Name"u8, Type);
+            writer.WritePropertyName("Body"u8);
+
             SerializeInner(writer);
         }
         writer.WriteEndObject();
@@ -47,6 +49,6 @@ public abstract class BaseSanitizer : IUtf8JsonSerializable
     protected virtual void SerializeInner(Utf8JsonWriter writer)
     {
         // By default use reflection based serialization
-        JsonSerializer.Serialize(writer, this, Default.RecordingJsonOptions);
+        JsonSerializer.Serialize(writer, this, GetType(), Default.InnerRecordingJsonOptions);
     }
 }

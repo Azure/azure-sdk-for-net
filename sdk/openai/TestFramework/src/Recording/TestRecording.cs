@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Security.Cryptography;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.RecordingProxy;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Recording;
 
@@ -77,13 +77,13 @@ public class TestRecording : IAsyncDisposable
 
     protected internal ProxyService Proxy { get; }
 
-    public IDictionary<string, string> Variables => _variables;
+    protected IDictionary<string, string> Variables => _variables;
 
     public TestRecordingMismatchException? MismatchException { get; protected internal set; }
 
-    public ValueTask DisposeAsync() => FinishAsync(true);
+    public virtual ValueTask DisposeAsync() => FinishAsync(true);
 
-    public async ValueTask FinishAsync(bool save, CancellationToken token = default)
+    public async virtual ValueTask FinishAsync(bool save, CancellationToken token = default)
     {
         switch (Mode)
         {
@@ -103,24 +103,27 @@ public class TestRecording : IAsyncDisposable
         Proxy.ThrowOnErrors();
     }
 
-    public string? GetVariable(string name, string? defaultValue)
+    public virtual string? GetVariable(string name)
     {
-        switch (Mode)
+        ValidateWeHaveVariables();
+        return Variables.GetValueOrDefault(name);
+    }
+
+    public virtual void SetVariable(string name, string value)
+    {
+        Variables[name] = value;
+    }
+
+    public virtual string GetOrAddVariable(string name, Func<string> valueFactory)
+    {
+        string? value;
+        if (!Variables.TryGetValue(name, out value) || value == null)
         {
-            case RecordedTestMode.Live:
-                return defaultValue;
-            case RecordedTestMode.Playback:
-                ValidateWeHaveVariables();
-                return Variables.TryGetValue(name, out string? value) ? value : defaultValue;
-            case RecordedTestMode.Record:
-                if (defaultValue != null)
-                {
-                    Variables[name] = defaultValue;
-                }
-                return defaultValue;
-            default:
-                throw new NotSupportedException("The following mode is not supported: " + Mode);
+            value = valueFactory();
+            SetVariable(name, value);
         }
+
+        return value;
     }
 
     public virtual ProxyTransportOptions GetProxyTransportOptions()
@@ -137,16 +140,11 @@ public class TestRecording : IAsyncDisposable
 
     protected virtual void ValidateWeHaveVariables()
     {
-        if (Variables.Count == 0)
+        if (Mode == RecordedTestMode.Playback && Variables.Count == 0)
         {
-            throw new TestRecordingMismatchException(
-                "The record session does not exist or is missing the Variables section. If the test is " +
-                "attributed with 'RecordedTest', it will be recorded automatically. Otherwise, set the " +
-                "RecordedTestMode to 'Record' and attempt to record the test.");
+            throw new TestRecordingMismatchException("The record session does not exist or is missing the Variables section.");
         }
     }
-
-
 
     private static int GetRandomSeed()
     {
