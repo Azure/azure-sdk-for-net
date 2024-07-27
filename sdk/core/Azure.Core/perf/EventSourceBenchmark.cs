@@ -33,7 +33,7 @@ namespace Azure.Core.Perf
         [GlobalSetup]
         public void SetUp()
         {
-            _sourceListener = new AzureEventSourceListener((_, _) => { }, EventLevel.LogAlways);
+            _sourceListener = new AzureEventSourceListener(_ => { }, EventLevel.LogAlways);
             _eventSource = new EventSource();
             _sourceListener.EnableEvents(_eventSource, EventLevel.LogAlways);
 
@@ -84,6 +84,7 @@ namespace Azure.Core.Perf
                 string newValue = Sanitizer.SanitizeHeader(header.Name, header.Value);
                 stringBuilder.AppendLine(newValue);
             }
+
             return Encoding.UTF8.GetBytes(stringBuilder.ToString());
         }
 

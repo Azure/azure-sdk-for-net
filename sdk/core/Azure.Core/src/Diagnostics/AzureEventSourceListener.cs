@@ -25,15 +25,15 @@ namespace Azure.Core.Diagnostics
         public const string TraitValue = "true";
         private readonly List<EventSource> _eventSources = new List<EventSource>();
 
-        private readonly Action<EventWrittenEventArgs, string> _log;
+        private readonly Action<EventWrittenEventArgs> _log;
         private readonly EventLevel _level;
 
         /// <summary>
         /// Creates an instance of <see cref="AzureEventSourceListener"/> that executes a <paramref name="log"/> callback every time event is written.
         /// </summary>
-        /// <param name="log">The <see cref="System.Action{EventWrittenEventArgs, String}"/> to call when event is written. The second parameter is formatted message.</param>
+        /// <param name="log">The <see cref="System.Action{EventWrittenEventArgs}"/> to call when event is written.</param>
         /// <param name="level">The level of events to enable.</param>
-        public AzureEventSourceListener(Action<EventWrittenEventArgs, string> log, EventLevel level)
+        public AzureEventSourceListener(Action<EventWrittenEventArgs> log, EventLevel level)
         {
             _log = log ?? throw new ArgumentNullException(nameof(log));
 
@@ -45,6 +45,15 @@ namespace Azure.Core.Diagnostics
             }
 
             _eventSources.Clear();
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="AzureEventSourceListener"/> that executes a <paramref name="log"/> callback every time event is written.
+        /// </summary>
+        /// <param name="log">The <see cref="System.Action{EventWrittenEventArgs, String}"/> to call when event is written. The second parameter is the formatted message.</param>
+        /// <param name="level">The level of events to enable.</param>
+        public AzureEventSourceListener(Action<EventWrittenEventArgs, string> log, EventLevel level) : this(e => log(e, EventSourceEventFormatting.Format(e)), level)
+        {
         }
 
         /// <inheritdoc />
@@ -74,7 +83,7 @@ namespace Azure.Core.Diagnostics
 
             // There is a very tight race during the AzureEventSourceListener creation where EnableEvents was called
             // and the thread producing events not observing the `_log` field assignment
-            _log?.Invoke(eventData, EventSourceEventFormatting.Format(eventData));
+            _log?.Invoke(eventData);
         }
 
         /// <summary>
