@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
                         serviceCollection.Configure<SqlClientTraceInstrumentationOptions>(options =>
                         {
-                            options.Filter = (cmd) => false; // This Sql listener is not disposed. This listener is catching the SqlClient calls from the other unit test, and generating extra activities.
+                            //options.Filter = (cmd) => false; // This Sql listener is not disposed. This listener is catching the SqlClient calls from the other unit test, and generating extra activities.
                         });
                     });
 
@@ -206,9 +206,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
         public void Dispose()
         {
-            var test = _factory.Factories.Count; // OpenTelemetry is registered on a nested Factory which is not disposed between test runs!
+            var count = _factory.Factories.Count; // OpenTelemetry is registered on a nested Factory which is not disposed between test runs!
+            var f = _factory.Factories[count - 1];
+            f.Dispose();
 
-            _factory.Dispose(); // without the filter added above, this must be commented out. i do not know why.
+            //_factory.Dispose();
         }
     }
 }
