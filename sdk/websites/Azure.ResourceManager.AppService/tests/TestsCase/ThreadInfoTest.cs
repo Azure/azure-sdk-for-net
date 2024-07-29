@@ -1,15 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.AppService.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -20,6 +15,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         public ThreadInfoTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
+
         [TestCase]
         [RecordedTest]
         //The app service resource needed should be created by using template file under TeseCase/AppServicetemplates by Azure CLI or other way.
@@ -60,6 +56,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             }
             Assert.NotZero(threadsInfoRecord);
         }
+
         [TestCase]
         [RecordedTest]
         //The app service resource needed should be created by using template file under TeseCase/AppServicetemplates by Azure CLI or other way.
@@ -93,6 +90,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             }
             Assert.NotZero(threadsInfoRecord);
         }
+
         [TestCase]
         [RecordedTest]
         //The app service resource needed should be created by using template file under TeseCase/AppServicetemplates by Azure CLI or other way.
