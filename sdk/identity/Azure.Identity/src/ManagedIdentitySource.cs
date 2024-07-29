@@ -182,7 +182,7 @@ namespace Azure.Identity
         }
 
         // Compute refresh_in as 1/2 expiresOn, but only if expiresOn > 2h.
-        private static DateTimeOffset? InferManagedIdentityRefreshInValue(DateTimeOffset expiresOn)
+        internal static DateTimeOffset? InferManagedIdentityRefreshInValue(DateTimeOffset expiresOn)
         {
             if (expiresOn > DateTimeOffset.UtcNow.AddHours(2) && expiresOn < DateTimeOffset.MaxValue)
             {
@@ -190,20 +190,6 @@ namespace Azure.Identity
                 return expiresOn.AddTicks(-(expiresOn.Ticks - DateTimeOffset.UtcNow.Ticks) / 2);
             }
             return null;
-        }
-
-        private class ManagedIdentityResponseClassifier : ResponseClassifier
-        {
-            public override bool IsRetriableResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    404 => true,
-                    410 => true,
-                    502 => false,
-                    _ => base.IsRetriableResponse(message)
-                };
-            }
         }
     }
 }

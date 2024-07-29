@@ -125,10 +125,10 @@
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
-    <PackageReference Update="Azure.Storage.Common" Version="12.20.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.21.0" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.19.0" />
-    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.0" />
+    <PackageReference Update="Azure.Storage.Common" Version="12.20.1" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.21.1" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
+    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.1" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager" Version="1.12.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
@@ -154,13 +154,13 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.61.3" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.61.3" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.62.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.62.0" />
     <!--
       TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
       Currently, it is referencd by Azure.Identity.Broker which is still in beta
     -->
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.61.3" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.62.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
@@ -228,7 +228,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240722.4" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240726.4" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240429.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
