@@ -96,6 +96,12 @@ rename-mapping:
   TrinoDebugConfig.enable: IsEnabled
   TrinoDebugConfig.suspend: IsSuspendEnabled
   ClusterRangerPluginProfile.enabled: IsRangerForClusterEnabled
+  DataDiskType.Standard_HDD_LRS: StandardHddLrs
+  DataDiskType.Standard_SSD_LRS: StandardSsdLrs
+  DataDiskType.Standard_SSD_ZRS: StandardSsdZrs
+  DataDiskType.Premium_SSD_LRS: PremiumSsdLrs
+  DataDiskType.Premium_SSD_ZRS: PremiumSsdZrs
+  DataDiskType.Premium_SSD_v2_LRS: PremiumSsdV2Lrs
   # TODO, remove these when service fix the Uri format before GA
   FlinkHiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   FlinkStorageProfile.storageUri: StorageUriString

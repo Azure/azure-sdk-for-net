@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
                 Properties = new HDInsightClusterProperties(clusterType, nodeProfile, clusterProfile)
             };
             // set kafka profile
-            clusterData.Properties.ClusterProfile.KafkaProfile = new KafkaProfile(new DiskStorageProfile(8,DataDiskType.StandardSSDLRS))
+            clusterData.Properties.ClusterProfile.KafkaProfile = new KafkaProfile(new DiskStorageProfile(8,DataDiskType.StandardSsdLrs))
             {
                IsKRaftEnabled = true,
                IsPublicEndpointsEnabled = true,

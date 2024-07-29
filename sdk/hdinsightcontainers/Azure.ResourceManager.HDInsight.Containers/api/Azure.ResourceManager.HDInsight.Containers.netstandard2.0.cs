@@ -1245,12 +1245,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataDiskType(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType PremiumSSDLRS { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType PremiumSSDV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType PremiumSSDZRS { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType StandardHDDLRS { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType StandardSSDLRS { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType StandardSSDZRS { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType PremiumSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType PremiumSsdV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType PremiumSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType StandardHddLrs { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType StandardSsdZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.DataDiskType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

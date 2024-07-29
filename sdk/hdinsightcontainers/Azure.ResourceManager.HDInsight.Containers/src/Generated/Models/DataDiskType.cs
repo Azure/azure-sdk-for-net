@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardHDDLRSValue = "Standard_HDD_LRS";
-        private const string StandardSSDLRSValue = "Standard_SSD_LRS";
-        private const string StandardSSDZRSValue = "Standard_SSD_ZRS";
-        private const string PremiumSSDLRSValue = "Premium_SSD_LRS";
-        private const string PremiumSSDZRSValue = "Premium_SSD_ZRS";
-        private const string PremiumSSDV2LRSValue = "Premium_SSD_v2_LRS";
+        private const string StandardHddLrsValue = "Standard_HDD_LRS";
+        private const string StandardSsdLrsValue = "Standard_SSD_LRS";
+        private const string StandardSsdZrsValue = "Standard_SSD_ZRS";
+        private const string PremiumSsdLrsValue = "Premium_SSD_LRS";
+        private const string PremiumSsdZrsValue = "Premium_SSD_ZRS";
+        private const string PremiumSsdV2LrsValue = "Premium_SSD_v2_LRS";
 
         /// <summary> Standard_HDD_LRS. </summary>
-        public static DataDiskType StandardHDDLRS { get; } = new DataDiskType(StandardHDDLRSValue);
+        public static DataDiskType StandardHddLrs { get; } = new DataDiskType(StandardHddLrsValue);
         /// <summary> Standard_SSD_LRS. </summary>
-        public static DataDiskType StandardSSDLRS { get; } = new DataDiskType(StandardSSDLRSValue);
+        public static DataDiskType StandardSsdLrs { get; } = new DataDiskType(StandardSsdLrsValue);
         /// <summary> Standard_SSD_ZRS. </summary>
-        public static DataDiskType StandardSSDZRS { get; } = new DataDiskType(StandardSSDZRSValue);
+        public static DataDiskType StandardSsdZrs { get; } = new DataDiskType(StandardSsdZrsValue);
         /// <summary> Premium_SSD_LRS. </summary>
-        public static DataDiskType PremiumSSDLRS { get; } = new DataDiskType(PremiumSSDLRSValue);
+        public static DataDiskType PremiumSsdLrs { get; } = new DataDiskType(PremiumSsdLrsValue);
         /// <summary> Premium_SSD_ZRS. </summary>
-        public static DataDiskType PremiumSSDZRS { get; } = new DataDiskType(PremiumSSDZRSValue);
+        public static DataDiskType PremiumSsdZrs { get; } = new DataDiskType(PremiumSsdZrsValue);
         /// <summary> Premium_SSD_v2_LRS. </summary>
-        public static DataDiskType PremiumSSDV2LRS { get; } = new DataDiskType(PremiumSSDV2LRSValue);
+        public static DataDiskType PremiumSsdV2Lrs { get; } = new DataDiskType(PremiumSsdV2LrsValue);
         /// <summary> Determines if two <see cref="DataDiskType"/> values are the same. </summary>
         public static bool operator ==(DataDiskType left, DataDiskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataDiskType"/> values are not the same. </summary>

@@ -573,6 +573,16 @@
       ]
     },
     {
+      "filename": "**/sdk/hdinsight/**/*.cs",
+      "words": [
+        "trino",
+        "llap",
+        "SSDLRS",
+        "SSDZRS",
+        "HDDLRS"
+      ]
+    },
+    {
       "filename": "**/sdk/healthcareapis/**/*.cs",
       "words": [
         "dicom",
