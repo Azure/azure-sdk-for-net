@@ -422,6 +422,27 @@ namespace Azure.Storage
             public const string UriSubDomain = "queue";
 
             public const string QueueTraitsMetadata = "metadata";
+
+            internal static class Permissions
+            {
+                public const char Read = 'r';
+                public const char Write = 'w';
+                public const char Delete = 'd';
+                public const char DeleteBlobVersion = 'x';
+                public const char List = 'l';
+                public const char Add = 'a';
+                public const char Update = 'u';
+                public const char Process = 'p';
+                public const char Create = 'c';
+                public const char Tag = 't';
+                public const char FilterByTags = 'f';
+                public const char Move = 'm';
+                public const char Execute = 'e';
+                public const char SetImmutabilityPolicy = 'i';
+                public const char ManageOwnership = 'o';
+                public const char ManageAccessControl = 'p';
+                public const char PermanentDelete = 'y';
+            }
         }
 
         /// <summary>
