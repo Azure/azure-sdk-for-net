@@ -1,18 +1,18 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0 (2024-08-01)
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2023-02' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md.
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 - Added Bicep serialization.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.41.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
 
 ## 1.2.0-beta.1 (2023-12-01)
 
