@@ -217,7 +217,7 @@ public abstract class RecordedClientTestBase : ClientTestBase
 
     /// <summary>
     /// Configures the client options for a System.ClientModel based service client. This will be used to configure the transport
-    /// such that all requests are routed to the test proxy during recording (for capture), and playback (for replyaing captured
+    /// such that all requests are routed to the test proxy during recording (for capture), and playback (for replaying captured
     /// requests).
     /// </summary>
     /// <typeparam name="TClientOptions">The type of the client options.</typeparam>
@@ -225,7 +225,7 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// <returns>The configured client options.</returns>
     /// <exception cref="NotSupportedException">The current recording mode is not supported.</exception>
     /// <exception cref="InvalidOperationException">There was no test recording configured for this test.</exception>
-    public virtual TClientOptions InstrumentClientOptions<TClientOptions>(TClientOptions options)
+    public virtual TClientOptions ConfigureClientOptions<TClientOptions>(TClientOptions options)
         where TClientOptions : ClientPipelineOptions
     {
         // If we are in playback, or record mode we should set the transport to the test proxy transport, except
@@ -239,6 +239,7 @@ public abstract class RecordedClientTestBase : ClientTestBase
         switch (Mode)
         {
             case RecordedTestMode.Live:
+                // no need to to anything special
                 return options;
 
             case RecordedTestMode.Record:
@@ -246,8 +247,8 @@ public abstract class RecordedClientTestBase : ClientTestBase
                 break;
 
             case RecordedTestMode.Playback:
-                // continue
-                // TODO FIXME: set reduced timeouts here and retry modes?
+                // force the use of a fixed retry with a short timeout
+                options.RetryPolicy = new TestClientRetryPolicy(delay: TimeSpan.FromMilliseconds(100));
                 break;
 
             default:
