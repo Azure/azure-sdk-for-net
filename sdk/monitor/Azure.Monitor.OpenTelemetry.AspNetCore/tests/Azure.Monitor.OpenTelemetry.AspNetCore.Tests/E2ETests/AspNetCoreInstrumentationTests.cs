@@ -82,11 +82,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                             options.EnrichWithHttpResponse = (activity, response) => { activity.SetTag("enrichedOnStop", "response"); };
                             options.EnrichWithException = (activity, exception) => { activity.SetTag("enrichedOnException", "exception"); };
                         });
-
-                        serviceCollection.Configure<SqlClientTraceInstrumentationOptions>(options =>
-                        {
-                            //options.Filter = (cmd) => false; // This Sql listener is not disposed. This listener is catching the SqlClient calls from the other unit test, and generating extra activities.
-                        });
                     });
 
                     builder.Configure(app =>
@@ -206,11 +201,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
         public void Dispose()
         {
-            var count = _factory.Factories.Count; // OpenTelemetry is registered on a nested Factory which is not disposed between test runs!
-            var f = _factory.Factories[count - 1];
-            f.Dispose();
+            // OpenTelemetry is registered on a nested Factory which is not disposed between test runs!
+            // MUST explicitly dispose the nested Factory to avoid test conflicts.
+            _factory.Factories.Last().Dispose();
 
-            //_factory.Dispose();
+            _factory.Dispose();
         }
     }
 }
