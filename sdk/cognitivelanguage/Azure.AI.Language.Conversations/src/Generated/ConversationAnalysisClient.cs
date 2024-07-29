@@ -199,27 +199,27 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Get analysis status and results. </summary>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="showStatistics"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Get the status of an analysis job. A job can consist of one or more tasks. After all tasks succeed, the job transitions to the succeeded state and results are available for each task. </remarks>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatusAsync(Guid,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeConversationOperationState>> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStats = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeConversationOperationState>> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStatistics = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAnalyzeConversationJobStatusAsync(jobId, showStats, context).ConfigureAwait(false);
+            Response response = await GetAnalyzeConversationJobStatusAsync(jobId, showStatistics, context).ConfigureAwait(false);
             return Response.FromValue(AnalyzeConversationOperationState.FromResponse(response), response);
         }
 
         /// <summary> Get analysis status and results. </summary>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="showStatistics"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Get the status of an analysis job. A job can consist of one or more tasks. After all tasks succeed, the job transitions to the succeeded state and results are available for each task. </remarks>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatus(Guid,bool?,CancellationToken)']/*" />
-        public virtual Response<AnalyzeConversationOperationState> GetAnalyzeConversationJobStatus(Guid jobId, bool? showStats = null, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeConversationOperationState> GetAnalyzeConversationJobStatus(Guid jobId, bool? showStatistics = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAnalyzeConversationJobStatus(jobId, showStats, context);
+            Response response = GetAnalyzeConversationJobStatus(jobId, showStatistics, context);
             return Response.FromValue(AnalyzeConversationOperationState.FromResponse(response), response);
         }
 
@@ -239,18 +239,18 @@ namespace Azure.AI.Language.Conversations
         /// </list>
         /// </summary>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="showStatistics"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatusAsync(Guid,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStats, RequestContext context)
+        public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStatistics, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStats, context);
+                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStatistics, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -276,18 +276,18 @@ namespace Azure.AI.Language.Conversations
         /// </list>
         /// </summary>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="showStatistics"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatus(Guid,bool?,RequestContext)']/*" />
-        public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStats, RequestContext context)
+        public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStatistics, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStats, context);
+                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStatistics, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -490,7 +490,7 @@ namespace Azure.AI.Language.Conversations
             return message;
         }
 
-        internal HttpMessage CreateGetAnalyzeConversationJobStatusRequest(Guid jobId, bool? showStats, RequestContext context)
+        internal HttpMessage CreateGetAnalyzeConversationJobStatusRequest(Guid jobId, bool? showStatistics, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -501,9 +501,9 @@ namespace Azure.AI.Language.Conversations
             uri.AppendPath("/analyze-conversations/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (showStats != null)
+            if (showStatistics != null)
             {
-                uri.AppendQuery("showStats", showStats.Value, true);
+                uri.AppendQuery("showStats", showStatistics.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
