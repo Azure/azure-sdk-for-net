@@ -562,17 +562,17 @@ kind = "ConversationalPIITask",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            MultiLanguageConversationInput conversationInput = new MultiLanguageConversationInput(new ConversationInput[]
+            AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(new MultiLanguageConversationInput(new ConversationInput[]
             {
 new TextConversation("<id>", "<language>", new TextConversationItem[]
 {
 new TextConversationItem("<id>", "<participantId>", "<text>")
 })
-            });
-            Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, conversationInput, new AnalyzeConversationOperationAction[]
+            }), new AnalyzeConversationOperationAction[]
             {
 new PiiOperationAction()
             });
+            Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, analyzeConversationOperationInput);
         }
 
         [Test]
@@ -583,17 +583,17 @@ new PiiOperationAction()
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            MultiLanguageConversationInput conversationInput = new MultiLanguageConversationInput(new ConversationInput[]
+            AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(new MultiLanguageConversationInput(new ConversationInput[]
             {
 new TextConversation("<id>", "<language>", new TextConversationItem[]
 {
 new TextConversationItem("<id>", "<participantId>", "<text>")
 })
-            });
-            Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitUntil.Completed, conversationInput, new AnalyzeConversationOperationAction[]
+            }), new AnalyzeConversationOperationAction[]
             {
 new PiiOperationAction()
             });
+            Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitUntil.Completed, analyzeConversationOperationInput);
         }
 
         [Test]
@@ -732,7 +732,7 @@ taskName = "<taskName>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            MultiLanguageConversationInput conversationInput = new MultiLanguageConversationInput(new ConversationInput[]
+            AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(new MultiLanguageConversationInput(new ConversationInput[]
             {
 new TextConversation("<id>", "<language>", new TextConversationItem[]
 {
@@ -746,8 +746,7 @@ Role = ParticipantRole.Customer,
 {
 Domain = ConversationDomain.Finance,
 }
-            });
-            Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, conversationInput, new AnalyzeConversationOperationAction[]
+            }), new AnalyzeConversationOperationAction[]
             {
 new PiiOperationAction
 {
@@ -763,7 +762,11 @@ ExcludePiiCategories = {ConversationPiiCategoryExclusions.Address},
 },
 Name = "<taskName>",
 }
-            }, displayName: "<displayName>");
+            })
+            {
+                DisplayName = "<displayName>",
+            };
+            Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, analyzeConversationOperationInput);
         }
 
         [Test]
@@ -774,7 +777,7 @@ Name = "<taskName>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            MultiLanguageConversationInput conversationInput = new MultiLanguageConversationInput(new ConversationInput[]
+            AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(new MultiLanguageConversationInput(new ConversationInput[]
             {
 new TextConversation("<id>", "<language>", new TextConversationItem[]
 {
@@ -788,8 +791,7 @@ Role = ParticipantRole.Customer,
 {
 Domain = ConversationDomain.Finance,
 }
-            });
-            Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitUntil.Completed, conversationInput, new AnalyzeConversationOperationAction[]
+            }), new AnalyzeConversationOperationAction[]
             {
 new PiiOperationAction
 {
@@ -805,7 +807,11 @@ ExcludePiiCategories = {ConversationPiiCategoryExclusions.Address},
 },
 Name = "<taskName>",
 }
-            }, displayName: "<displayName>");
+            })
+            {
+                DisplayName = "<displayName>",
+            };
+            Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitUntil.Completed, analyzeConversationOperationInput);
         }
 
         [Test]

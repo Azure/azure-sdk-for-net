@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Models;
@@ -301,38 +299,32 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Analyzes the input conversation utterance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="conversationInput"> Analysis Input. </param>
-        /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
-        /// <param name="displayName"> Display name for the analysis job. </param>
+        /// <param name="analyzeConversationOperationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actions"/> is null. </exception>
-        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationSubmitOperationAsync(WaitUntil,MultiLanguageConversationInput,IEnumerable{AnalyzeConversationOperationAction},string,CancellationToken)']/*" />
-        public virtual async Task<Operation> AnalyzeConversationSubmitOperationAsync(WaitUntil waitUntil, MultiLanguageConversationInput conversationInput, IEnumerable<AnalyzeConversationOperationAction> actions, string displayName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationOperationInput"/> is null. </exception>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationSubmitOperationAsync(WaitUntil,AnalyzeConversationOperationInput,CancellationToken)']/*" />
+        public virtual async Task<Operation> AnalyzeConversationSubmitOperationAsync(WaitUntil waitUntil, AnalyzeConversationOperationInput analyzeConversationOperationInput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(conversationInput, nameof(conversationInput));
-            Argument.AssertNotNull(actions, nameof(actions));
+            Argument.AssertNotNull(analyzeConversationOperationInput, nameof(analyzeConversationOperationInput));
 
-            AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(displayName, conversationInput, actions.ToList(), null);
+            using RequestContent content = analyzeConversationOperationInput.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await AnalyzeConversationSubmitOperationAsync(waitUntil, analyzeConversationOperationInput.ToRequestContent(), context).ConfigureAwait(false);
+            return await AnalyzeConversationSubmitOperationAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="conversationInput"> Analysis Input. </param>
-        /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
-        /// <param name="displayName"> Display name for the analysis job. </param>
+        /// <param name="analyzeConversationOperationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actions"/> is null. </exception>
-        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationSubmitOperation(WaitUntil,MultiLanguageConversationInput,IEnumerable{AnalyzeConversationOperationAction},string,CancellationToken)']/*" />
-        public virtual Operation AnalyzeConversationSubmitOperation(WaitUntil waitUntil, MultiLanguageConversationInput conversationInput, IEnumerable<AnalyzeConversationOperationAction> actions, string displayName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationOperationInput"/> is null. </exception>
+        /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationSubmitOperation(WaitUntil,AnalyzeConversationOperationInput,CancellationToken)']/*" />
+        public virtual Operation AnalyzeConversationSubmitOperation(WaitUntil waitUntil, AnalyzeConversationOperationInput analyzeConversationOperationInput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(conversationInput, nameof(conversationInput));
-            Argument.AssertNotNull(actions, nameof(actions));
+            Argument.AssertNotNull(analyzeConversationOperationInput, nameof(analyzeConversationOperationInput));
 
-            AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(displayName, conversationInput, actions.ToList(), null);
+            using RequestContent content = analyzeConversationOperationInput.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return AnalyzeConversationSubmitOperation(waitUntil, analyzeConversationOperationInput.ToRequestContent(), context);
+            return AnalyzeConversationSubmitOperation(waitUntil, content, context);
         }
 
         /// <summary>
@@ -345,7 +337,7 @@ namespace Azure.AI.Language.Conversations
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeConversationSubmitOperationAsync(WaitUntil,MultiLanguageConversationInput,IEnumerable{AnalyzeConversationOperationAction},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeConversationSubmitOperationAsync(WaitUntil,AnalyzeConversationOperationInput,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -385,7 +377,7 @@ namespace Azure.AI.Language.Conversations
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeConversationSubmitOperation(WaitUntil,MultiLanguageConversationInput,IEnumerable{AnalyzeConversationOperationAction},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeConversationSubmitOperation(WaitUntil,AnalyzeConversationOperationInput,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

@@ -429,7 +429,7 @@ Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversatio
 Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
 ]]></code></example>
     </member>
-    <member name="AnalyzeConversationSubmitOperationAsync(WaitUntil,MultiLanguageConversationInput,IEnumerable{AnalyzeConversationOperationAction},string,CancellationToken)">
+    <member name="AnalyzeConversationSubmitOperationAsync(WaitUntil,AnalyzeConversationOperationInput,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
@@ -437,17 +437,17 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-MultiLanguageConversationInput conversationInput = new MultiLanguageConversationInput(new ConversationInput[]
+AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(new MultiLanguageConversationInput(new ConversationInput[]
 {
     new TextConversation("<id>", "<language>", new TextConversationItem[]
     {
         new TextConversationItem("<id>", "<participantId>", "<text>")
     })
-});
-Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitUntil.Completed, conversationInput, new AnalyzeConversationOperationAction[]
+}), new AnalyzeConversationOperationAction[]
 {
     new PiiOperationAction()
 });
+Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitUntil.Completed, analyzeConversationOperationInput);
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync with all parameters.
 <code><![CDATA[
@@ -455,7 +455,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-MultiLanguageConversationInput conversationInput = new MultiLanguageConversationInput(new ConversationInput[]
+AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(new MultiLanguageConversationInput(new ConversationInput[]
 {
     new TextConversation("<id>", "<language>", new TextConversationItem[]
     {
@@ -469,8 +469,7 @@ MultiLanguageConversationInput conversationInput = new MultiLanguageConversation
     {
         Domain = ConversationDomain.Finance,
     }
-});
-Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitUntil.Completed, conversationInput, new AnalyzeConversationOperationAction[]
+}), new AnalyzeConversationOperationAction[]
 {
     new PiiOperationAction
     {
@@ -486,10 +485,14 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
         },
         Name = "<taskName>",
     }
-}, displayName: "<displayName>");
+})
+{
+    DisplayName = "<displayName>",
+};
+Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitUntil.Completed, analyzeConversationOperationInput);
 ]]></code></example>
     </member>
-    <member name="AnalyzeConversationSubmitOperation(WaitUntil,MultiLanguageConversationInput,IEnumerable{AnalyzeConversationOperationAction},string,CancellationToken)">
+    <member name="AnalyzeConversationSubmitOperation(WaitUntil,AnalyzeConversationOperationInput,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
@@ -497,17 +500,17 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-MultiLanguageConversationInput conversationInput = new MultiLanguageConversationInput(new ConversationInput[]
+AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(new MultiLanguageConversationInput(new ConversationInput[]
 {
     new TextConversation("<id>", "<language>", new TextConversationItem[]
     {
         new TextConversationItem("<id>", "<participantId>", "<text>")
     })
-});
-Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, conversationInput, new AnalyzeConversationOperationAction[]
+}), new AnalyzeConversationOperationAction[]
 {
     new PiiOperationAction()
 });
+Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, analyzeConversationOperationInput);
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation with all parameters.
 <code><![CDATA[
@@ -515,7 +518,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-MultiLanguageConversationInput conversationInput = new MultiLanguageConversationInput(new ConversationInput[]
+AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(new MultiLanguageConversationInput(new ConversationInput[]
 {
     new TextConversation("<id>", "<language>", new TextConversationItem[]
     {
@@ -529,8 +532,7 @@ MultiLanguageConversationInput conversationInput = new MultiLanguageConversation
     {
         Domain = ConversationDomain.Finance,
     }
-});
-Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, conversationInput, new AnalyzeConversationOperationAction[]
+}), new AnalyzeConversationOperationAction[]
 {
     new PiiOperationAction
     {
@@ -546,7 +548,11 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
         },
         Name = "<taskName>",
     }
-}, displayName: "<displayName>");
+})
+{
+    DisplayName = "<displayName>",
+};
+Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, analyzeConversationOperationInput);
 ]]></code></example>
     </member>
     <member name="AnalyzeConversationSubmitOperationAsync(WaitUntil,RequestContent,RequestContext)">

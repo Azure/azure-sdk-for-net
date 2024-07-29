@@ -21,8 +21,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             List<NamedEntity> entitiesDetected = new();
 
-            #region Snippet:AnalyzeConversation_ConversationPii
-            MultiLanguageConversationInput data = new MultiLanguageConversationInput(
+            MultiLanguageConversationInput input = new MultiLanguageConversationInput(
                 new List<ConversationInput>
                 {
                     new TextConversation("1", "en", new List<TextConversationItem>()
@@ -40,11 +39,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Name = "Conversation PII",
                     }
                 };
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
 
-            Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data, actions);
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data);
 
+            #region Snippet:AnalyzeConversation_ConversationPiiSync
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-
+            #endregion
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
                 Console.WriteLine($"Operation action name: {operationResult.Name}");
@@ -92,7 +93,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            #endregion
 
             Assert.NotZero(entitiesDetected.Count);
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
@@ -105,8 +105,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
             List<NamedEntity> entitiesDetected = new();
-
-            var data = new MultiLanguageConversationInput(
+            #region Snippet:AnalyzeConversation_ConversationPii
+            MultiLanguageConversationInput input = new MultiLanguageConversationInput(
                 new List<ConversationInput>
                 {
                     new TextConversation("1", "en", new List<TextConversationItem>()
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
                     })
                 });
-            var actions = new List<AnalyzeConversationOperationAction>
+            List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
                 {
                     new PiiOperationAction()
                     {
@@ -124,11 +124,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Name = "Conversation PII",
                     }
                 };
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
 
-            #region Snippet:AnalyzeConversationAsync_ConversationPii
-
-            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data, actions);
-            #endregion
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
 
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
@@ -179,6 +177,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
+            #endregion
 
             Assert.NotZero(entitiesDetected.Count);
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));

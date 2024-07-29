@@ -112,6 +112,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             throw new NotSupportedException();
         }
+
         /// <summary>
         /// Gets the deployment details for a specified project and deployment name.
         /// </summary>
@@ -123,6 +124,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             throw new NotSupportedException();
         }
+
         public virtual Task<Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();

@@ -21,20 +21,15 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// Convenience method to submit an analysis long running operation for conversations and return the response once processed.
-        /// <param name="conversationInput"> Analysis Input. </param>
-        /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
-        /// <param name="displayName"> Display name for the analysis job. </param>
+        /// <param name="analyzeConversationOperationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationOperationInput"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Response"/> representing the result of the long running operation on the service. </returns>
         /// </summary>
-        public virtual Response<AnalyzeConversationOperationState> AnalyzeConversations(MultiLanguageConversationInput conversationInput, IEnumerable<AnalyzeConversationOperationAction> actions, string displayName = null, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeConversationOperationState> AnalyzeConversations(AnalyzeConversationOperationInput analyzeConversationOperationInput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(conversationInput, nameof(conversationInput));
-            Argument.AssertNotNull(actions, nameof(actions));
-
-            AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(displayName, conversationInput, actions.ToList(), null);
+            Argument.AssertNotNull(analyzeConversationOperationInput, nameof(analyzeConversationOperationInput));
 
             using RequestContent content = analyzeConversationOperationInput.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -46,20 +41,15 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// Convenience method to submit an analysis long running operation for conversations and return the response once processed.
-        /// <param name="conversationInput"> Analysis Input. </param>
-        /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
-        /// <param name="displayName"> Display name for the analysis job. </param>
+        /// <param name="analyzeConversationOperationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationOperationInput"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Response"/> representing the result of the long running operation on the service. </returns>
         /// </summary>
-        public virtual async Task<Response<AnalyzeConversationOperationState>> AnalyzeConversationsAsync(MultiLanguageConversationInput conversationInput, IEnumerable<AnalyzeConversationOperationAction> actions, string displayName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeConversationOperationState>> AnalyzeConversationsAsync(AnalyzeConversationOperationInput analyzeConversationOperationInput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(conversationInput, nameof(conversationInput));
-            Argument.AssertNotNull(actions, nameof(actions));
-
-            AnalyzeConversationOperationInput analyzeConversationOperationInput = new AnalyzeConversationOperationInput(displayName, conversationInput, actions.ToList(), null);
+            Argument.AssertNotNull(analyzeConversationOperationInput, nameof(analyzeConversationOperationInput));
 
             using RequestContent content = analyzeConversationOperationInput.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);

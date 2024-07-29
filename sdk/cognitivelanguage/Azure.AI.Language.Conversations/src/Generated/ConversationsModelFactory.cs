@@ -889,6 +889,22 @@ namespace Azure.AI.Language.Conversations
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationOperationInput"/>. </summary>
+        /// <param name="displayName"> Display name for the analysis job. </param>
+        /// <param name="conversationInput"> Analysis Input. </param>
+        /// <param name="actions">
+        /// Set of tasks to execute on the input conversation.
+        /// Please note <see cref="AnalyzeConversationOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="PiiOperationAction"/>, <see cref="SummarizationOperationAction"/> and <see cref="CustomSummarizationOperationAction"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.AnalyzeConversationOperationInput"/> instance for mocking. </returns>
+        public static AnalyzeConversationOperationInput AnalyzeConversationOperationInput(string displayName = null, MultiLanguageConversationInput conversationInput = null, IEnumerable<AnalyzeConversationOperationAction> actions = null)
+        {
+            actions ??= new List<AnalyzeConversationOperationAction>();
+
+            return new AnalyzeConversationOperationInput(displayName, conversationInput, actions?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ConversationInput"/>. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>

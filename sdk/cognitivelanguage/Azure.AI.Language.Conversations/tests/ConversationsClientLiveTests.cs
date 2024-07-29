@@ -266,7 +266,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversation_ConversationSummarization()
         {
-            MultiLanguageConversationInput data = new MultiLanguageConversationInput(
+            MultiLanguageConversationInput input = new MultiLanguageConversationInput(
                     new List<ConversationInput>
                     {
                         new TextConversation("1", "en", new List<TextConversationItem>()
@@ -296,7 +296,9 @@ namespace Azure.AI.Language.Conversations.Tests
                         }
                     };
 
-            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await Client.AnalyzeConversationsAsync(data, actions);
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await Client.AnalyzeConversationsAsync(data);
             Assert.NotNull(analyzeConversationOperation);
 
             AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;

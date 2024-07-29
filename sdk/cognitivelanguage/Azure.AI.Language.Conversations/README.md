@@ -282,32 +282,14 @@ if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringT
 To summarize a conversation, you can use the `AnalyzeConversationsOperation` method overload that returns an `Response<AnalyzeConversationJobState>`:
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
-MultiLanguageConversationInput data = new MultiLanguageConversationInput(
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
     new List<ConversationInput>
     {
         new TextConversation("1", "en", new List<TextConversationItem>()
         {
-            new TextConversationItem(
-                id: "1",
-                participantId: "Agent_1",
-                text: "Hello, how can I help you?")
-                {
-                    Role = ParticipantRole.Agent
-                },
-            new TextConversationItem(
-                id: "2",
-                participantId: "Customer_1",
-                text: "How to upgrade Office? I am getting error messages the whole day.")
-            {
-                Role = ParticipantRole.Customer
-            },
-            new TextConversationItem(
-                id : "3",
-                participantId : "Agent_1",
-                text : "Press the upgrade button please. Then sign in and follow the instructions.")
-            {
-                Role = ParticipantRole.Agent
-            }
+            new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
+            new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
+            new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
         })
     });
 List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
@@ -329,11 +311,12 @@ List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationO
             Name = "Resolution task",
         }
     };
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
 
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data, actions);
 AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
-foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
+foreach (var operationResult in operationState.Actions.Items)
 {
     Console.WriteLine($"Operation action name: {operationResult.Name}");
     if (operationResult is SummarizationOperationResult summarizationOperationResult)
@@ -376,7 +359,7 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 To detect and redact PII in a conversation, you can use the `AnalyzeConversationsOperation` method overload with an action of type `PiiOperationAction`:
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
-MultiLanguageConversationInput data = new MultiLanguageConversationInput(
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
     new List<ConversationInput>
     {
         new TextConversation("1", "en", new List<TextConversationItem>()
@@ -394,8 +377,9 @@ List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationO
             Name = "Conversation PII",
         }
     };
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
 
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data, actions);
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
 
 AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
