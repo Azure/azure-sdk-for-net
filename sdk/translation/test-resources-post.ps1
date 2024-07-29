@@ -34,21 +34,23 @@ Log 'Login to azure'
 
 Log 'Enable Managed identity on the Translator resource'
 # PowerShell cmd : az cognitiveservices account identity assign --name <TranslatorResourceName> --resource-group <ResourceGroupName>
-az cognitiveservices account identity assign --name $BaseName --resource-group $ResourceGroupName
+# az cognitiveservices account identity assign --name $BaseName --resource-group $ResourceGroupName
 
 Log 'In the storage account, assign Storage-Blob-Data-Contributor role access to translator resource'
-Log 'Step 1: Identify the Storage Account resource ID'
-# PoweShell cmd: $resourceID = az storage account show --name <StorageAccountName> --resource-group <ResourceGroupName> --query "id" -o tsv
-$resourceID = az storage account show --name $storageAccountName --resource-group $ResourceGroupName --query "id" -o tsv
-Log "Resource ID is $($resourceID)"
+Log 'Step 1: Get the Resource ID of the storage account'
+# Azure PoweShell cmd: $storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $storageAccountName
+$storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $storageAccountName
+$storageAccountId = $storageAccount.Id
+Log "Resource ID of the storage accountis $($storageAccountId)"
 
 Log 'Step 2: Get the objectId or the principalId of the translator resource that needs to be added'
-# PowerShell cmd : $objectID = (Get-AzADServicePrincipal -DisplayName "<TranslatorResourceName>").Id'
-$objectID = (Get-AzADServicePrincipal -DisplayName "$BaseName").Id
+# PowerShell cmd : $identityObjectId = (Get-AzADServicePrincipal -DisplayName "$BaseName").Id
+$identityObjectId = (Get-AzADServicePrincipal -DisplayName "$BaseName").Id
 Log "Object ID or the principalId is $($objectID)"
 
 Log 'Step 3: Assign Storage-Blob-Data-Contributor role' 
-# PowerShell cmd : az role assignment create --assignee <PrincipalId/ObjectId> --role "Storage Blob Data Contributor" --scope <ResourceID>
-az role assignment create --assignee $objectID --role "Storage Blob Data Contributor" --scope $resourceID
+# Azure PowerShell cmd : New-AzRoleAssignment -RoleDefinitionName $roleName -ObjectId $identityObjectId -Scope $storageAccountId
+$roleName = "Storage Blob Data Contributor"
+New-AzRoleAssignment -RoleDefinitionName $roleName -ObjectId $identityObjectId -Scope $storageAccountId
 
 Log 'Finishing sdk\translation\test-resources-post.ps1'
