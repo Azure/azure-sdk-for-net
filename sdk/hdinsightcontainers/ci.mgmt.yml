@@ -10,14 +10,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hdinsight/ci.mgmt.yml
-    - sdk/hdinsight/Azure.ResourceManager.HDInsight/
+    - sdk/hdinsightcontainers/ci.mgmt.yml
+    - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: hdinsight
+    ServiceDirectory: hdinsightcontainers
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.HDInsight
-      safeName: AzureResourceManagerHDInsight
+    - name: Azure.ResourceManager.HDInsight.Containers
+      safeName: AzureResourceManagerHDInsightContainers
