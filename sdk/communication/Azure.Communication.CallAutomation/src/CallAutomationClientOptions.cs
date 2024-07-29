@@ -62,7 +62,7 @@ namespace Azure.Communication.CallAutomation
             V2024_04_15 = 3,
 
             /// <summary>
-            /// Latest ALPHA3 (1.3.0-alpha) preview of the CallAutomation service.
+            /// Latest BETA4 (1.3.0-beta) preview of the CallAutomation service.
             /// </summary>
             V2024_06_15_Preview = 4
 #pragma warning restore CA1707 // Identifiers should not contain underscores
