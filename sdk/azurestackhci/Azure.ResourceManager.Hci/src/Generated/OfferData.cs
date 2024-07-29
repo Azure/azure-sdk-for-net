@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the Offer data model.
     /// Offer details.
+    /// Serialized Name: Offer
     /// </summary>
     public partial class OfferData : ResourceData
     {
@@ -62,11 +63,26 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning State. </param>
-        /// <param name="publisherId"> Identifier of the Publisher for the offer. </param>
-        /// <param name="content"> JSON serialized catalog content of the offer. </param>
-        /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
-        /// <param name="skuMappings"> Array of SKU mappings. </param>
+        /// <param name="provisioningState">
+        /// Provisioning State
+        /// Serialized Name: Offer.properties.provisioningState
+        /// </param>
+        /// <param name="publisherId">
+        /// Identifier of the Publisher for the offer
+        /// Serialized Name: Offer.properties.publisherId
+        /// </param>
+        /// <param name="content">
+        /// JSON serialized catalog content of the offer
+        /// Serialized Name: Offer.properties.content
+        /// </param>
+        /// <param name="contentVersion">
+        /// The API version of the catalog service used to serve the catalog content
+        /// Serialized Name: Offer.properties.contentVersion
+        /// </param>
+        /// <param name="skuMappings">
+        /// Array of SKU mappings
+        /// Serialized Name: Offer.properties.skuMappings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string publisherId, string content, string contentVersion, IList<HciSkuMappings> skuMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -78,15 +94,35 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provisioning State. </summary>
+        /// <summary>
+        /// Provisioning State
+        /// Serialized Name: Offer.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary> Identifier of the Publisher for the offer. </summary>
+        /// <summary>
+        /// Identifier of the Publisher for the offer
+        /// Serialized Name: Offer.properties.publisherId
+        /// </summary>
+        [WirePath("properties.publisherId")]
         public string PublisherId { get; set; }
-        /// <summary> JSON serialized catalog content of the offer. </summary>
+        /// <summary>
+        /// JSON serialized catalog content of the offer
+        /// Serialized Name: Offer.properties.content
+        /// </summary>
+        [WirePath("properties.content")]
         public string Content { get; set; }
-        /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
+        /// <summary>
+        /// The API version of the catalog service used to serve the catalog content
+        /// Serialized Name: Offer.properties.contentVersion
+        /// </summary>
+        [WirePath("properties.contentVersion")]
         public string ContentVersion { get; set; }
-        /// <summary> Array of SKU mappings. </summary>
+        /// <summary>
+        /// Array of SKU mappings
+        /// Serialized Name: Offer.properties.skuMappings
+        /// </summary>
+        [WirePath("properties.skuMappings")]
         public IList<HciSkuMappings> SkuMappings { get; }
     }
 }

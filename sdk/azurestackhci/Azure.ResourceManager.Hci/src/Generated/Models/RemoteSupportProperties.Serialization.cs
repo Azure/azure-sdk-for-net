@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -178,6 +180,113 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accessLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessLevel))
+                {
+                    builder.Append("  accessLevel: ");
+                    builder.AppendLine($"'{AccessLevel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpirationTimeStamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expirationTimeStamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpirationTimeStamp))
+                {
+                    builder.Append("  expirationTimeStamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ExpirationTimeStamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteSupportType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  remoteSupportType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteSupportType))
+                {
+                    builder.Append("  remoteSupportType: ");
+                    builder.AppendLine($"'{RemoteSupportType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteSupportNodeSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  remoteSupportNodeSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RemoteSupportNodeSettings))
+                {
+                    if (RemoteSupportNodeSettings.Any())
+                    {
+                        builder.Append("  remoteSupportNodeSettings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RemoteSupportNodeSettings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  remoteSupportNodeSettings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteSupportSessionDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  remoteSupportSessionDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RemoteSupportSessionDetails))
+                {
+                    if (RemoteSupportSessionDetails.Any())
+                    {
+                        builder.Append("  remoteSupportSessionDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RemoteSupportSessionDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  remoteSupportSessionDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RemoteSupportProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +295,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RemoteSupportProperties)} does not support writing '{options.Format}' format.");
             }

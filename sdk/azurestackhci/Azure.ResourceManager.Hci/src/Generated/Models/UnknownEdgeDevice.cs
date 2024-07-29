@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Device kind to support polymorphic resource. </param>
+        /// <param name="kind">
+        /// Device kind to support polymorphic resource.
+        /// Serialized Name: EdgeDevice.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownEdgeDevice(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {

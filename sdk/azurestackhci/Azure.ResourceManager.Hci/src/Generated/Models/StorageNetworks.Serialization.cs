@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -135,6 +137,113 @@ namespace Azure.ResourceManager.Hci.Models
             return new StorageNetworks(name, networkAdapterName, vlanId, storageAdapterIPInfo ?? new ChangeTrackingList<StorageAdapterIPInfo>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkAdapterName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkAdapterName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkAdapterName))
+                {
+                    builder.Append("  networkAdapterName: ");
+                    if (NetworkAdapterName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NetworkAdapterName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NetworkAdapterName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VlanId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vlanId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VlanId))
+                {
+                    builder.Append("  vlanId: ");
+                    if (VlanId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VlanId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VlanId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAdapterIPInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageAdapterIPInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StorageAdapterIPInfo))
+                {
+                    if (StorageAdapterIPInfo.Any())
+                    {
+                        builder.Append("  storageAdapterIPInfo: ");
+                        builder.AppendLine("[");
+                        foreach (var item in StorageAdapterIPInfo)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  storageAdapterIPInfo: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StorageNetworks>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageNetworks>)this).GetFormatFromOptions(options) : options.Format;
@@ -143,6 +252,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageNetworks)} does not support writing '{options.Format}' format.");
             }

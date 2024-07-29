@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> List of Offer proxy resources for the HCI cluster. </summary>
+    /// <summary>
+    /// List of Offer proxy resources for the HCI cluster.
+    /// Serialized Name: OfferList
+    /// </summary>
     internal partial class HciOfferList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciOfferList"/>. </summary>
-        /// <param name="value"> List of Offer proxy resources. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value">
+        /// List of Offer proxy resources.
+        /// Serialized Name: OfferList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to the next set of results.
+        /// Serialized Name: OfferList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciOfferList(IReadOnlyList<OfferData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Offer proxy resources. </summary>
+        /// <summary>
+        /// List of Offer proxy resources.
+        /// Serialized Name: OfferList.value
+        /// </summary>
         public IReadOnlyList<OfferData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
+        /// <summary>
+        /// Link to the next set of results.
+        /// Serialized Name: OfferList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

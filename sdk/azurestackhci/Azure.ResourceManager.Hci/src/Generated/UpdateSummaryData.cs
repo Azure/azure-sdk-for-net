@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the UpdateSummary data model.
     /// Get the update summaries for the cluster
+    /// Serialized Name: UpdateSummaries
     /// </summary>
     public partial class UpdateSummaryData : ResourceData
     {
@@ -63,20 +64,62 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. </param>
-        /// <param name="oemFamily"> OEM family name. </param>
-        /// <param name="currentOemVersion"> Current OEM Version. </param>
-        /// <param name="hardwareModel"> Name of the hardware model. </param>
-        /// <param name="packageVersions"> Current version of each updatable component. </param>
-        /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
-        /// <param name="currentSbeVersion"> Current Sbe version of the stamp. </param>
-        /// <param name="lastUpdated"> Last time an update installation completed successfully. </param>
-        /// <param name="lastChecked"> Last time the update service successfully checked for updates. </param>
-        /// <param name="healthState"> Overall health state for update-specific health checks. </param>
-        /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
-        /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
-        /// <param name="state"> Overall update state of the stamp. </param>
+        /// <param name="location">
+        /// The geo-location where the resource lives
+        /// Serialized Name: UpdateSummaries.location
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the UpdateSummaries proxy resource.
+        /// Serialized Name: UpdateSummaries.properties.provisioningState
+        /// </param>
+        /// <param name="oemFamily">
+        /// OEM family name.
+        /// Serialized Name: UpdateSummaries.properties.oemFamily
+        /// </param>
+        /// <param name="currentOemVersion">
+        /// Current OEM Version.
+        /// Serialized Name: UpdateSummaries.properties.currentOemVersion
+        /// </param>
+        /// <param name="hardwareModel">
+        /// Name of the hardware model.
+        /// Serialized Name: UpdateSummaries.properties.hardwareModel
+        /// </param>
+        /// <param name="packageVersions">
+        /// Current version of each updatable component.
+        /// Serialized Name: UpdateSummaries.properties.packageVersions
+        /// </param>
+        /// <param name="currentVersion">
+        /// Current Solution Bundle version of the stamp.
+        /// Serialized Name: UpdateSummaries.properties.currentVersion
+        /// </param>
+        /// <param name="currentSbeVersion">
+        /// Current Sbe version of the stamp.
+        /// Serialized Name: UpdateSummaries.properties.currentSbeVersion
+        /// </param>
+        /// <param name="lastUpdated">
+        /// Last time an update installation completed successfully.
+        /// Serialized Name: UpdateSummaries.properties.lastUpdated
+        /// </param>
+        /// <param name="lastChecked">
+        /// Last time the update service successfully checked for updates
+        /// Serialized Name: UpdateSummaries.properties.lastChecked
+        /// </param>
+        /// <param name="healthState">
+        /// Overall health state for update-specific health checks.
+        /// Serialized Name: UpdateSummaries.properties.healthState
+        /// </param>
+        /// <param name="healthCheckResult">
+        /// An array of pre-check result objects.
+        /// Serialized Name: UpdateSummaries.properties.healthCheckResult
+        /// </param>
+        /// <param name="healthCheckOn">
+        /// Last time the package-specific checks were run.
+        /// Serialized Name: UpdateSummaries.properties.healthCheckDate
+        /// </param>
+        /// <param name="state">
+        /// Overall update state of the stamp.
+        /// Serialized Name: UpdateSummaries.properties.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdated, DateTimeOffset? lastChecked, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, UpdateSummariesPropertiesState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -97,33 +140,89 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The geo-location where the resource lives. </summary>
+        /// <summary>
+        /// The geo-location where the resource lives
+        /// Serialized Name: UpdateSummaries.location
+        /// </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the UpdateSummaries proxy resource. </summary>
+        /// <summary>
+        /// Provisioning state of the UpdateSummaries proxy resource.
+        /// Serialized Name: UpdateSummaries.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
-        /// <summary> OEM family name. </summary>
+        /// <summary>
+        /// OEM family name.
+        /// Serialized Name: UpdateSummaries.properties.oemFamily
+        /// </summary>
+        [WirePath("properties.oemFamily")]
         public string OemFamily { get; set; }
-        /// <summary> Current OEM Version. </summary>
+        /// <summary>
+        /// Current OEM Version.
+        /// Serialized Name: UpdateSummaries.properties.currentOemVersion
+        /// </summary>
+        [WirePath("properties.currentOemVersion")]
         public string CurrentOemVersion { get; set; }
-        /// <summary> Name of the hardware model. </summary>
+        /// <summary>
+        /// Name of the hardware model.
+        /// Serialized Name: UpdateSummaries.properties.hardwareModel
+        /// </summary>
+        [WirePath("properties.hardwareModel")]
         public string HardwareModel { get; set; }
-        /// <summary> Current version of each updatable component. </summary>
+        /// <summary>
+        /// Current version of each updatable component.
+        /// Serialized Name: UpdateSummaries.properties.packageVersions
+        /// </summary>
+        [WirePath("properties.packageVersions")]
         public IList<HciPackageVersionInfo> PackageVersions { get; }
-        /// <summary> Current Solution Bundle version of the stamp. </summary>
+        /// <summary>
+        /// Current Solution Bundle version of the stamp.
+        /// Serialized Name: UpdateSummaries.properties.currentVersion
+        /// </summary>
+        [WirePath("properties.currentVersion")]
         public string CurrentVersion { get; set; }
-        /// <summary> Current Sbe version of the stamp. </summary>
+        /// <summary>
+        /// Current Sbe version of the stamp.
+        /// Serialized Name: UpdateSummaries.properties.currentSbeVersion
+        /// </summary>
+        [WirePath("properties.currentSbeVersion")]
         public string CurrentSbeVersion { get; set; }
-        /// <summary> Last time an update installation completed successfully. </summary>
+        /// <summary>
+        /// Last time an update installation completed successfully.
+        /// Serialized Name: UpdateSummaries.properties.lastUpdated
+        /// </summary>
+        [WirePath("properties.lastUpdated")]
         public DateTimeOffset? LastUpdated { get; set; }
-        /// <summary> Last time the update service successfully checked for updates. </summary>
+        /// <summary>
+        /// Last time the update service successfully checked for updates
+        /// Serialized Name: UpdateSummaries.properties.lastChecked
+        /// </summary>
+        [WirePath("properties.lastChecked")]
         public DateTimeOffset? LastChecked { get; set; }
-        /// <summary> Overall health state for update-specific health checks. </summary>
+        /// <summary>
+        /// Overall health state for update-specific health checks.
+        /// Serialized Name: UpdateSummaries.properties.healthState
+        /// </summary>
+        [WirePath("properties.healthState")]
         public HciHealthState? HealthState { get; set; }
-        /// <summary> An array of pre-check result objects. </summary>
+        /// <summary>
+        /// An array of pre-check result objects.
+        /// Serialized Name: UpdateSummaries.properties.healthCheckResult
+        /// </summary>
+        [WirePath("properties.healthCheckResult")]
         public IList<HciPrecheckResult> HealthCheckResult { get; }
-        /// <summary> Last time the package-specific checks were run. </summary>
+        /// <summary>
+        /// Last time the package-specific checks were run.
+        /// Serialized Name: UpdateSummaries.properties.healthCheckDate
+        /// </summary>
+        [WirePath("properties.healthCheckDate")]
         public DateTimeOffset? HealthCheckOn { get; set; }
-        /// <summary> Overall update state of the stamp. </summary>
+        /// <summary>
+        /// Overall update state of the stamp.
+        /// Serialized Name: UpdateSummaries.properties.state
+        /// </summary>
+        [WirePath("properties.state")]
         public UpdateSummariesPropertiesState? State { get; set; }
     }
 }

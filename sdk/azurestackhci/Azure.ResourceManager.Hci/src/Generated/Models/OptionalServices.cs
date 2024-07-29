@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The OptionalServices of AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The OptionalServices of AzureStackHCI Cluster.
+    /// Serialized Name: OptionalServices
+    /// </summary>
     internal partial class OptionalServices
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OptionalServices"/>. </summary>
-        /// <param name="customLocation"> The name of custom location. </param>
+        /// <param name="customLocation">
+        /// The name of custom location.
+        /// Serialized Name: OptionalServices.customLocation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OptionalServices(string customLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,11 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of custom location. </summary>
+        /// <summary>
+        /// The name of custom location.
+        /// Serialized Name: OptionalServices.customLocation
+        /// </summary>
+        [WirePath("customLocation")]
         public string CustomLocation { get; set; }
     }
 }

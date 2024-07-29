@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The StorageNetworks of a cluster. </summary>
+    /// <summary>
+    /// The StorageNetworks of a cluster.
+    /// Serialized Name: StorageNetworks
+    /// </summary>
     public partial class StorageNetworks
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageNetworks"/>. </summary>
-        /// <param name="name"> Name of the storage network. </param>
-        /// <param name="networkAdapterName"> Name of the storage network adapter. </param>
-        /// <param name="vlanId"> ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic. </param>
-        /// <param name="storageAdapterIPInfo"> List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="name">
+        /// Name of the storage network.
+        /// Serialized Name: StorageNetworks.name
+        /// </param>
+        /// <param name="networkAdapterName">
+        /// Name of the storage network adapter.
+        /// Serialized Name: StorageNetworks.networkAdapterName
+        /// </param>
+        /// <param name="vlanId">
+        /// ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic.
+        /// Serialized Name: StorageNetworks.vlanId
+        /// </param>
+        /// <param name="storageAdapterIPInfo">
+        /// List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: StorageNetworks.storageAdapterIPInfo
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StorageNetworks(string name, string networkAdapterName, string vlanId, IList<StorageAdapterIPInfo> storageAdapterIPInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,13 +81,29 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the storage network. </summary>
+        /// <summary>
+        /// Name of the storage network.
+        /// Serialized Name: StorageNetworks.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Name of the storage network adapter. </summary>
+        /// <summary>
+        /// Name of the storage network adapter.
+        /// Serialized Name: StorageNetworks.networkAdapterName
+        /// </summary>
+        [WirePath("networkAdapterName")]
         public string NetworkAdapterName { get; set; }
-        /// <summary> ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic. </summary>
+        /// <summary>
+        /// ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic.
+        /// Serialized Name: StorageNetworks.vlanId
+        /// </summary>
+        [WirePath("vlanId")]
         public string VlanId { get; set; }
-        /// <summary> List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: StorageNetworks.storageAdapterIPInfo
+        /// </summary>
+        [WirePath("storageAdapterIPInfo")]
         public IList<StorageAdapterIPInfo> StorageAdapterIPInfo { get; }
     }
 }

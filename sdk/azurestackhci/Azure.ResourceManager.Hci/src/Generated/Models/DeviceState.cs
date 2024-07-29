@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The edge device state. </summary>
+    /// <summary>
+    /// The edge device state.
+    /// Serialized Name: DeviceState
+    /// </summary>
     public readonly partial struct DeviceState : IEquatable<DeviceState>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ResumingValue = "Resuming";
         private const string ProcessingValue = "Processing";
 
-        /// <summary> The edge device state is not specified. </summary>
+        /// <summary>
+        /// The edge device state is not specified.
+        /// Serialized Name: DeviceState.NotSpecified
+        /// </summary>
         public static DeviceState NotSpecified { get; } = new DeviceState(NotSpecifiedValue);
-        /// <summary> The edge device state is in connected state. </summary>
+        /// <summary>
+        /// The edge device state is in connected state.
+        /// Serialized Name: DeviceState.Connected
+        /// </summary>
         public static DeviceState Connected { get; } = new DeviceState(ConnectedValue);
-        /// <summary> The edge device state is in disconnected state. </summary>
+        /// <summary>
+        /// The edge device state is in disconnected state.
+        /// Serialized Name: DeviceState.Disconnected
+        /// </summary>
         public static DeviceState Disconnected { get; } = new DeviceState(DisconnectedValue);
-        /// <summary> The edge device state is in repairing state. </summary>
+        /// <summary>
+        /// The edge device state is in repairing state.
+        /// Serialized Name: DeviceState.Repairing
+        /// </summary>
         public static DeviceState Repairing { get; } = new DeviceState(RepairingValue);
-        /// <summary> The edge device state is in draining state. </summary>
+        /// <summary>
+        /// The edge device state is in draining state.
+        /// Serialized Name: DeviceState.Draining
+        /// </summary>
         public static DeviceState Draining { get; } = new DeviceState(DrainingValue);
-        /// <summary> The edge device state is in maintenance state. </summary>
+        /// <summary>
+        /// The edge device state is in maintenance state.
+        /// Serialized Name: DeviceState.InMaintenance
+        /// </summary>
         public static DeviceState InMaintenance { get; } = new DeviceState(InMaintenanceValue);
-        /// <summary> The edge device state is in resuming state. </summary>
+        /// <summary>
+        /// The edge device state is in resuming state.
+        /// Serialized Name: DeviceState.Resuming
+        /// </summary>
         public static DeviceState Resuming { get; } = new DeviceState(ResumingValue);
-        /// <summary> The edge device state is in processing state. </summary>
+        /// <summary>
+        /// The edge device state is in processing state.
+        /// Serialized Name: DeviceState.Processing
+        /// </summary>
         public static DeviceState Processing { get; } = new DeviceState(ProcessingValue);
         /// <summary> Determines if two <see cref="DeviceState"/> values are the same. </summary>
         public static bool operator ==(DeviceState left, DeviceState right) => left.Equals(right);

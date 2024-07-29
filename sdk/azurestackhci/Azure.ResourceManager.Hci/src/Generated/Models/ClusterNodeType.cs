@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The node type of all the nodes of the cluster. </summary>
+    /// <summary>
+    /// The node type of all the nodes of the cluster.
+    /// Serialized Name: ClusterNodeType
+    /// </summary>
     public readonly partial struct ClusterNodeType : IEquatable<ClusterNodeType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Hci.Models
         private const string FirstPartyValue = "FirstParty";
         private const string ThirdPartyValue = "ThirdParty";
 
-        /// <summary> FirstParty. </summary>
+        /// <summary>
+        /// FirstParty
+        /// Serialized Name: ClusterNodeType.FirstParty
+        /// </summary>
         public static ClusterNodeType FirstParty { get; } = new ClusterNodeType(FirstPartyValue);
-        /// <summary> ThirdParty. </summary>
+        /// <summary>
+        /// ThirdParty
+        /// Serialized Name: ClusterNodeType.ThirdParty
+        /// </summary>
         public static ClusterNodeType ThirdParty { get; } = new ClusterNodeType(ThirdPartyValue);
         /// <summary> Determines if two <see cref="ClusterNodeType"/> values are the same. </summary>
         public static bool operator ==(ClusterNodeType left, ClusterNodeType right) => left.Equals(right);

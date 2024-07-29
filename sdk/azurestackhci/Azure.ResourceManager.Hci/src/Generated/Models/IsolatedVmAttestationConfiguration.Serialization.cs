@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -114,6 +115,82 @@ namespace Azure.ResourceManager.Hci.Models
             return new IsolatedVmAttestationConfiguration(attestationResourceId, relyingPartyServiceEndpoint, attestationServiceEndpoint, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AttestationResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  attestationResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AttestationResourceId))
+                {
+                    builder.Append("  attestationResourceId: ");
+                    builder.AppendLine($"'{AttestationResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelyingPartyServiceEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  relyingPartyServiceEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RelyingPartyServiceEndpoint))
+                {
+                    builder.Append("  relyingPartyServiceEndpoint: ");
+                    if (RelyingPartyServiceEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RelyingPartyServiceEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RelyingPartyServiceEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AttestationServiceEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  attestationServiceEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AttestationServiceEndpoint))
+                {
+                    builder.Append("  attestationServiceEndpoint: ");
+                    if (AttestationServiceEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AttestationServiceEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AttestationServiceEndpoint}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IsolatedVmAttestationConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IsolatedVmAttestationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +199,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IsolatedVmAttestationConfiguration)} does not support writing '{options.Format}' format.");
             }

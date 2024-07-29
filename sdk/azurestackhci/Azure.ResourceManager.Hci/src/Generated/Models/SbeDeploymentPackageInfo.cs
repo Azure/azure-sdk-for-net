@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Solution builder extension (SBE) deployment package information. </summary>
+    /// <summary>
+    /// Solution builder extension (SBE) deployment package information.
+    /// Serialized Name: SbeDeploymentPackageInfo
+    /// </summary>
     public partial class SbeDeploymentPackageInfo
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SbeDeploymentPackageInfo"/>. </summary>
-        /// <param name="code"> SBE deployment validation code. </param>
-        /// <param name="message"> A detailed message that explains the SBE package validation result. </param>
-        /// <param name="sbeManifest"> This represents discovered update results for matching updates and store it as SBE manifest. </param>
+        /// <param name="code">
+        /// SBE deployment validation code.
+        /// Serialized Name: SbeDeploymentPackageInfo.code
+        /// </param>
+        /// <param name="message">
+        /// A detailed message that explains the SBE package validation result.
+        /// Serialized Name: SbeDeploymentPackageInfo.message
+        /// </param>
+        /// <param name="sbeManifest">
+        /// This represents discovered update results for matching updates and store it as SBE manifest.
+        /// Serialized Name: SbeDeploymentPackageInfo.sbeManifest
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SbeDeploymentPackageInfo(string code, string message, string sbeManifest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SBE deployment validation code. </summary>
+        /// <summary>
+        /// SBE deployment validation code.
+        /// Serialized Name: SbeDeploymentPackageInfo.code
+        /// </summary>
+        [WirePath("code")]
         public string Code { get; }
-        /// <summary> A detailed message that explains the SBE package validation result. </summary>
+        /// <summary>
+        /// A detailed message that explains the SBE package validation result.
+        /// Serialized Name: SbeDeploymentPackageInfo.message
+        /// </summary>
+        [WirePath("message")]
         public string Message { get; }
-        /// <summary> This represents discovered update results for matching updates and store it as SBE manifest. </summary>
+        /// <summary>
+        /// This represents discovered update results for matching updates and store it as SBE manifest.
+        /// Serialized Name: SbeDeploymentPackageInfo.sbeManifest
+        /// </summary>
+        [WirePath("sbeManifest")]
         public string SbeManifest { get; }
     }
 }

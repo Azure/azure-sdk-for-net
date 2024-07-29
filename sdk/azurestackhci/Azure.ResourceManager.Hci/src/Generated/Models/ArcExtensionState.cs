@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Arc extension installation state. </summary>
+    /// <summary>
+    /// Arc extension installation state.
+    /// Serialized Name: ArcExtensionState
+    /// </summary>
     public readonly partial struct ArcExtensionState : IEquatable<ArcExtensionState>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DeletingValue = "Deleting";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Arc extension state is not specified. </summary>
+        /// <summary>
+        /// Arc extension state is not specified.
+        /// Serialized Name: ArcExtensionState.NotSpecified
+        /// </summary>
         public static ArcExtensionState NotSpecified { get; } = new ArcExtensionState(NotSpecifiedValue);
-        /// <summary> Arc extension state is Succeeded. </summary>
+        /// <summary>
+        /// Arc extension state is Succeeded.
+        /// Serialized Name: ArcExtensionState.Succeeded
+        /// </summary>
         public static ArcExtensionState Succeeded { get; } = new ArcExtensionState(SucceededValue);
-        /// <summary> Arc extension state is Failed. </summary>
+        /// <summary>
+        /// Arc extension state is Failed.
+        /// Serialized Name: ArcExtensionState.Failed
+        /// </summary>
         public static ArcExtensionState Failed { get; } = new ArcExtensionState(FailedValue);
-        /// <summary> Arc extension state is Canceled. </summary>
+        /// <summary>
+        /// Arc extension state is Canceled.
+        /// Serialized Name: ArcExtensionState.Canceled
+        /// </summary>
         public static ArcExtensionState Canceled { get; } = new ArcExtensionState(CanceledValue);
-        /// <summary> Arc extension state is Accepted when extension installation triggered. </summary>
+        /// <summary>
+        /// Arc extension state is Accepted when extension installation triggered.
+        /// Serialized Name: ArcExtensionState.Accepted
+        /// </summary>
         public static ArcExtensionState Accepted { get; } = new ArcExtensionState(AcceptedValue);
-        /// <summary> Arc extension is in Creating State. </summary>
+        /// <summary>
+        /// Arc extension is in Creating State.
+        /// Serialized Name: ArcExtensionState.Creating
+        /// </summary>
         public static ArcExtensionState Creating { get; } = new ArcExtensionState(CreatingValue);
-        /// <summary> Arc extension is in Updating State. </summary>
+        /// <summary>
+        /// Arc extension is in Updating State.
+        /// Serialized Name: ArcExtensionState.Updating
+        /// </summary>
         public static ArcExtensionState Updating { get; } = new ArcExtensionState(UpdatingValue);
-        /// <summary> Arc extension is in Moving State. </summary>
+        /// <summary>
+        /// Arc extension is in Moving State.
+        /// Serialized Name: ArcExtensionState.Moving
+        /// </summary>
         public static ArcExtensionState Moving { get; } = new ArcExtensionState(MovingValue);
-        /// <summary> Arc extension is in Deleting State. </summary>
+        /// <summary>
+        /// Arc extension is in Deleting State.
+        /// Serialized Name: ArcExtensionState.Deleting
+        /// </summary>
         public static ArcExtensionState Deleting { get; } = new ArcExtensionState(DeletingValue);
-        /// <summary> Arc extension is in Deleted State. </summary>
+        /// <summary>
+        /// Arc extension is in Deleted State.
+        /// Serialized Name: ArcExtensionState.Deleted
+        /// </summary>
         public static ArcExtensionState Deleted { get; } = new ArcExtensionState(DeletedValue);
         /// <summary> Determines if two <see cref="ArcExtensionState"/> values are the same. </summary>
         public static bool operator ==(ArcExtensionState left, ArcExtensionState right) => left.Equals(right);

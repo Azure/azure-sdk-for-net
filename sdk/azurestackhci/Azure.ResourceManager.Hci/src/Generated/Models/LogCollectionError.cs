@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Log Collection Error details of the cluster. </summary>
+    /// <summary>
+    /// Log Collection Error details of the cluster.
+    /// Serialized Name: LogCollectionError
+    /// </summary>
     public partial class LogCollectionError
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionError"/>. </summary>
-        /// <param name="errorCode"> Error Code of the log collection. </param>
-        /// <param name="errorMessage"> Error Message of the log collection. </param>
+        /// <param name="errorCode">
+        /// Error Code of the log collection
+        /// Serialized Name: LogCollectionError.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error Message of the log collection
+        /// Serialized Name: LogCollectionError.errorMessage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LogCollectionError(string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Error Code of the log collection. </summary>
+        /// <summary>
+        /// Error Code of the log collection
+        /// Serialized Name: LogCollectionError.errorCode
+        /// </summary>
+        [WirePath("errorCode")]
         public string ErrorCode { get; }
-        /// <summary> Error Message of the log collection. </summary>
+        /// <summary>
+        /// Error Message of the log collection
+        /// Serialized Name: LogCollectionError.errorMessage
+        /// </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

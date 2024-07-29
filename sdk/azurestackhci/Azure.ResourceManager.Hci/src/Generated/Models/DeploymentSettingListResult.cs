@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The response of a DeploymentSetting list operation. </summary>
+    /// <summary>
+    /// The response of a DeploymentSetting list operation.
+    /// Serialized Name: DeploymentSettingListResult
+    /// </summary>
     internal partial class DeploymentSettingListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.Hci.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingListResult"/>. </summary>
-        /// <param name="value"> The DeploymentSetting items on this page. </param>
+        /// <param name="value">
+        /// The DeploymentSetting items on this page
+        /// Serialized Name: DeploymentSettingListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DeploymentSettingListResult(IEnumerable<DeploymentSettingData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingListResult"/>. </summary>
-        /// <param name="value"> The DeploymentSetting items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The DeploymentSetting items on this page
+        /// Serialized Name: DeploymentSettingListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: DeploymentSettingListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentSettingListResult(IReadOnlyList<DeploymentSettingData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        /// <summary> The DeploymentSetting items on this page. </summary>
+        /// <summary>
+        /// The DeploymentSetting items on this page
+        /// Serialized Name: DeploymentSettingListResult.value
+        /// </summary>
         public IReadOnlyList<DeploymentSettingData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: DeploymentSettingListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

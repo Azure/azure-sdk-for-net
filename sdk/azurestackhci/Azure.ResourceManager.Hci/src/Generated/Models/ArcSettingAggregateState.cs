@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
+    /// <summary>
+    /// Aggregate state of Arc agent across the nodes in this HCI cluster.
+    /// Serialized Name: ArcSettingAggregateState
+    /// </summary>
     public readonly partial struct ArcSettingAggregateState : IEquatable<ArcSettingAggregateState>
     {
         private readonly string _value;
@@ -41,41 +44,95 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ProvisioningValue = "Provisioning";
         private const string DisableInProgressValue = "DisableInProgress";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ArcSettingAggregateState.NotSpecified
+        /// </summary>
         public static ArcSettingAggregateState NotSpecified { get; } = new ArcSettingAggregateState(NotSpecifiedValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: ArcSettingAggregateState.Error
+        /// </summary>
         public static ArcSettingAggregateState Error { get; } = new ArcSettingAggregateState(ErrorValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ArcSettingAggregateState.Succeeded
+        /// </summary>
         public static ArcSettingAggregateState Succeeded { get; } = new ArcSettingAggregateState(SucceededValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ArcSettingAggregateState.Canceled
+        /// </summary>
         public static ArcSettingAggregateState Canceled { get; } = new ArcSettingAggregateState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ArcSettingAggregateState.Failed
+        /// </summary>
         public static ArcSettingAggregateState Failed { get; } = new ArcSettingAggregateState(FailedValue);
-        /// <summary> Connected. </summary>
+        /// <summary>
+        /// Connected
+        /// Serialized Name: ArcSettingAggregateState.Connected
+        /// </summary>
         public static ArcSettingAggregateState Connected { get; } = new ArcSettingAggregateState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary>
+        /// Disconnected
+        /// Serialized Name: ArcSettingAggregateState.Disconnected
+        /// </summary>
         public static ArcSettingAggregateState Disconnected { get; } = new ArcSettingAggregateState(DisconnectedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: ArcSettingAggregateState.Deleted
+        /// </summary>
         public static ArcSettingAggregateState Deleted { get; } = new ArcSettingAggregateState(DeletedValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ArcSettingAggregateState.Creating
+        /// </summary>
         public static ArcSettingAggregateState Creating { get; } = new ArcSettingAggregateState(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: ArcSettingAggregateState.Updating
+        /// </summary>
         public static ArcSettingAggregateState Updating { get; } = new ArcSettingAggregateState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ArcSettingAggregateState.Deleting
+        /// </summary>
         public static ArcSettingAggregateState Deleting { get; } = new ArcSettingAggregateState(DeletingValue);
-        /// <summary> Moving. </summary>
+        /// <summary>
+        /// Moving
+        /// Serialized Name: ArcSettingAggregateState.Moving
+        /// </summary>
         public static ArcSettingAggregateState Moving { get; } = new ArcSettingAggregateState(MovingValue);
-        /// <summary> PartiallySucceeded. </summary>
+        /// <summary>
+        /// PartiallySucceeded
+        /// Serialized Name: ArcSettingAggregateState.PartiallySucceeded
+        /// </summary>
         public static ArcSettingAggregateState PartiallySucceeded { get; } = new ArcSettingAggregateState(PartiallySucceededValue);
-        /// <summary> PartiallyConnected. </summary>
+        /// <summary>
+        /// PartiallyConnected
+        /// Serialized Name: ArcSettingAggregateState.PartiallyConnected
+        /// </summary>
         public static ArcSettingAggregateState PartiallyConnected { get; } = new ArcSettingAggregateState(PartiallyConnectedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: ArcSettingAggregateState.InProgress
+        /// </summary>
         public static ArcSettingAggregateState InProgress { get; } = new ArcSettingAggregateState(InProgressValue);
-        /// <summary> Accepted. </summary>
+        /// <summary>
+        /// Accepted
+        /// Serialized Name: ArcSettingAggregateState.Accepted
+        /// </summary>
         public static ArcSettingAggregateState Accepted { get; } = new ArcSettingAggregateState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary>
+        /// Provisioning
+        /// Serialized Name: ArcSettingAggregateState.Provisioning
+        /// </summary>
         public static ArcSettingAggregateState Provisioning { get; } = new ArcSettingAggregateState(ProvisioningValue);
-        /// <summary> DisableInProgress. </summary>
+        /// <summary>
+        /// DisableInProgress
+        /// Serialized Name: ArcSettingAggregateState.DisableInProgress
+        /// </summary>
         public static ArcSettingAggregateState DisableInProgress { get; } = new ArcSettingAggregateState(DisableInProgressValue);
         /// <summary> Determines if two <see cref="ArcSettingAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcSettingAggregateState left, ArcSettingAggregateState right) => left.Equals(right);

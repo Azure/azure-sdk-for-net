@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Describes the parameters for Extension upgrade. </summary>
+    /// <summary>
+    /// Describes the parameters for Extension upgrade.
+    /// Serialized Name: ExtensionUpgradeParameters
+    /// </summary>
     public partial class ExtensionUpgradeContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtensionUpgradeContent"/>. </summary>
-        /// <param name="targetVersion"> Extension Upgrade Target Version. </param>
+        /// <param name="targetVersion">
+        /// Extension Upgrade Target Version.
+        /// Serialized Name: ExtensionUpgradeParameters.targetVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtensionUpgradeContent(string targetVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,11 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Extension Upgrade Target Version. </summary>
+        /// <summary>
+        /// Extension Upgrade Target Version.
+        /// Serialized Name: ExtensionUpgradeParameters.targetVersion
+        /// </summary>
+        [WirePath("targetVersion")]
         public string TargetVersion { get; set; }
     }
 }

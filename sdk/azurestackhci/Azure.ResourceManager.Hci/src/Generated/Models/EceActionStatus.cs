@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The ECE action plan deployment status for AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The ECE action plan deployment status for AzureStackHCI Cluster.
+    /// Serialized Name: EceActionStatus
+    /// </summary>
     public partial class EceActionStatus
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EceActionStatus"/>. </summary>
-        /// <param name="status"> Status of ECE action AzureStackHCI Cluster Deployment. </param>
-        /// <param name="steps"> List of steps of AzureStackHCI Cluster Deployment. </param>
+        /// <param name="status">
+        /// Status of ECE action AzureStackHCI Cluster Deployment.
+        /// Serialized Name: EceActionStatus.status
+        /// </param>
+        /// <param name="steps">
+        /// List of steps of AzureStackHCI Cluster Deployment.
+        /// Serialized Name: EceActionStatus.steps
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EceActionStatus(string status, IReadOnlyList<DeploymentStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Status of ECE action AzureStackHCI Cluster Deployment. </summary>
+        /// <summary>
+        /// Status of ECE action AzureStackHCI Cluster Deployment.
+        /// Serialized Name: EceActionStatus.status
+        /// </summary>
+        [WirePath("status")]
         public string Status { get; }
-        /// <summary> List of steps of AzureStackHCI Cluster Deployment. </summary>
+        /// <summary>
+        /// List of steps of AzureStackHCI Cluster Deployment.
+        /// Serialized Name: EceActionStatus.steps
+        /// </summary>
+        [WirePath("steps")]
         public IReadOnlyList<DeploymentStep> Steps { get; }
     }
 }

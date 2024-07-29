@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the UpdateRun data model.
     /// Details of an Update run
+    /// Serialized Name: UpdateRun
     /// </summary>
     public partial class UpdateRunData : ResourceData
     {
@@ -62,21 +63,66 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the UpdateRuns proxy resource. </param>
-        /// <param name="timeStarted"> Timestamp of the update run was started. </param>
-        /// <param name="lastUpdatedOn"> Timestamp of the most recently completed step in the update run. </param>
-        /// <param name="duration"> Duration of the update run. </param>
-        /// <param name="state"> State of the update run. </param>
-        /// <param name="namePropertiesProgressName"> Name of the step. </param>
-        /// <param name="description"> More detailed description of the step. </param>
-        /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
-        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
-        /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
-        /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
-        /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
-        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
-        /// <param name="steps"> Recursive model for child steps of this step. </param>
+        /// <param name="location">
+        /// The geo-location where the resource lives
+        /// Serialized Name: UpdateRun.location
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the UpdateRuns proxy resource.
+        /// Serialized Name: UpdateRun.properties.provisioningState
+        /// </param>
+        /// <param name="timeStarted">
+        /// Timestamp of the update run was started.
+        /// Serialized Name: UpdateRun.properties.timeStarted
+        /// </param>
+        /// <param name="lastUpdatedOn">
+        /// Timestamp of the most recently completed step in the update run.
+        /// Serialized Name: UpdateRun.properties.lastUpdatedTime
+        /// </param>
+        /// <param name="duration">
+        /// Duration of the update run.
+        /// Serialized Name: UpdateRun.properties.duration
+        /// </param>
+        /// <param name="state">
+        /// State of the update run.
+        /// Serialized Name: UpdateRun.properties.state
+        /// </param>
+        /// <param name="namePropertiesProgressName">
+        /// Name of the step.
+        /// Serialized Name: UpdateRun.properties.progress.name
+        /// </param>
+        /// <param name="description">
+        /// More detailed description of the step.
+        /// Serialized Name: UpdateRun.properties.progress.description
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error message, specified if the step is in a failed state.
+        /// Serialized Name: UpdateRun.properties.progress.errorMessage
+        /// </param>
+        /// <param name="status">
+        /// Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'.
+        /// Serialized Name: UpdateRun.properties.progress.status
+        /// </param>
+        /// <param name="startTimeUtc">
+        /// When the step started, or empty if it has not started executing.
+        /// Serialized Name: UpdateRun.properties.progress.startTimeUtc
+        /// </param>
+        /// <param name="endTimeUtc">
+        /// When the step reached a terminal state.
+        /// Serialized Name: UpdateRun.properties.progress.endTimeUtc
+        /// </param>
+        /// <param name="lastUpdatedTimeUtc">
+        /// Completion time of this step or the last completed sub-step.
+        /// Serialized Name: UpdateRun.properties.progress.lastUpdatedTimeUtc
+        /// </param>
+        /// <param name="expectedExecutionTime">
+        /// Expected execution time of a given step. This is optionally authored in the update action plan and can be empty.
+        /// Serialized Name: UpdateRun.properties.progress.expectedExecutionTime
+        /// </param>
+        /// <param name="steps">
+        /// Recursive model for child steps of this step.
+        /// Serialized Name: UpdateRun.properties.progress.steps
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, string expectedExecutionTime, IList<HciUpdateStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -98,35 +144,95 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The geo-location where the resource lives. </summary>
+        /// <summary>
+        /// The geo-location where the resource lives
+        /// Serialized Name: UpdateRun.location
+        /// </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the UpdateRuns proxy resource. </summary>
+        /// <summary>
+        /// Provisioning state of the UpdateRuns proxy resource.
+        /// Serialized Name: UpdateRun.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
-        /// <summary> Timestamp of the update run was started. </summary>
+        /// <summary>
+        /// Timestamp of the update run was started.
+        /// Serialized Name: UpdateRun.properties.timeStarted
+        /// </summary>
+        [WirePath("properties.timeStarted")]
         public DateTimeOffset? TimeStarted { get; set; }
-        /// <summary> Timestamp of the most recently completed step in the update run. </summary>
+        /// <summary>
+        /// Timestamp of the most recently completed step in the update run.
+        /// Serialized Name: UpdateRun.properties.lastUpdatedTime
+        /// </summary>
+        [WirePath("properties.lastUpdatedTime")]
         public DateTimeOffset? LastUpdatedOn { get; set; }
-        /// <summary> Duration of the update run. </summary>
+        /// <summary>
+        /// Duration of the update run.
+        /// Serialized Name: UpdateRun.properties.duration
+        /// </summary>
+        [WirePath("properties.duration")]
         public string Duration { get; set; }
-        /// <summary> State of the update run. </summary>
+        /// <summary>
+        /// State of the update run.
+        /// Serialized Name: UpdateRun.properties.state
+        /// </summary>
+        [WirePath("properties.state")]
         public UpdateRunPropertiesState? State { get; set; }
-        /// <summary> Name of the step. </summary>
+        /// <summary>
+        /// Name of the step.
+        /// Serialized Name: UpdateRun.properties.progress.name
+        /// </summary>
+        [WirePath("properties.name")]
         public string NamePropertiesProgressName { get; set; }
-        /// <summary> More detailed description of the step. </summary>
+        /// <summary>
+        /// More detailed description of the step.
+        /// Serialized Name: UpdateRun.properties.progress.description
+        /// </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Error message, specified if the step is in a failed state. </summary>
+        /// <summary>
+        /// Error message, specified if the step is in a failed state.
+        /// Serialized Name: UpdateRun.properties.progress.errorMessage
+        /// </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; set; }
-        /// <summary> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </summary>
+        /// <summary>
+        /// Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'.
+        /// Serialized Name: UpdateRun.properties.progress.status
+        /// </summary>
+        [WirePath("properties.status")]
         public string Status { get; set; }
-        /// <summary> When the step started, or empty if it has not started executing. </summary>
+        /// <summary>
+        /// When the step started, or empty if it has not started executing.
+        /// Serialized Name: UpdateRun.properties.progress.startTimeUtc
+        /// </summary>
+        [WirePath("properties.startTimeUtc")]
         public DateTimeOffset? StartTimeUtc { get; set; }
-        /// <summary> When the step reached a terminal state. </summary>
+        /// <summary>
+        /// When the step reached a terminal state.
+        /// Serialized Name: UpdateRun.properties.progress.endTimeUtc
+        /// </summary>
+        [WirePath("properties.endTimeUtc")]
         public DateTimeOffset? EndTimeUtc { get; set; }
-        /// <summary> Completion time of this step or the last completed sub-step. </summary>
+        /// <summary>
+        /// Completion time of this step or the last completed sub-step.
+        /// Serialized Name: UpdateRun.properties.progress.lastUpdatedTimeUtc
+        /// </summary>
+        [WirePath("properties.lastUpdatedTimeUtc")]
         public DateTimeOffset? LastUpdatedTimeUtc { get; set; }
-        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
+        /// <summary>
+        /// Expected execution time of a given step. This is optionally authored in the update action plan and can be empty.
+        /// Serialized Name: UpdateRun.properties.progress.expectedExecutionTime
+        /// </summary>
+        [WirePath("properties.expectedExecutionTime")]
         public string ExpectedExecutionTime { get; set; }
-        /// <summary> Recursive model for child steps of this step. </summary>
+        /// <summary>
+        /// Recursive model for child steps of this step.
+        /// Serialized Name: UpdateRun.properties.progress.steps
+        /// </summary>
+        [WirePath("properties.steps")]
         public IList<HciUpdateStep> Steps { get; }
     }
 }

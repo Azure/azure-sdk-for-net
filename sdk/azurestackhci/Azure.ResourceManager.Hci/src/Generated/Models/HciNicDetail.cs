@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The NIC Detail of a device. </summary>
+    /// <summary>
+    /// The NIC Detail of a device.
+    /// Serialized Name: HciNicDetail
+    /// </summary>
     public partial class HciNicDetail
     {
         /// <summary>
@@ -52,21 +55,66 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciNicDetail"/>. </summary>
-        /// <param name="adapterName"> Adapter Name of NIC. </param>
-        /// <param name="interfaceDescription"> Interface Description of NIC. </param>
-        /// <param name="componentId"> Component Id of NIC. </param>
-        /// <param name="driverVersion"> Driver Version of NIC. </param>
-        /// <param name="ip4Address"> Subnet Mask of NIC. </param>
-        /// <param name="subnetMask"> Subnet Mask of NIC. </param>
-        /// <param name="defaultGateway"> Default Gateway of NIC. </param>
-        /// <param name="dnsServers"> DNS Servers for NIC. </param>
-        /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
-        /// <param name="macAddress"> MAC address information of NIC. </param>
-        /// <param name="slot"> The slot attached to the NIC. </param>
-        /// <param name="switchName"> The switch attached to the NIC, if any. </param>
-        /// <param name="nicType"> The type of NIC, physical, virtual, management. </param>
-        /// <param name="vlanId"> The VLAN ID of the physical NIC. </param>
-        /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
+        /// <param name="adapterName">
+        /// Adapter Name of NIC
+        /// Serialized Name: HciNicDetail.adapterName
+        /// </param>
+        /// <param name="interfaceDescription">
+        /// Interface Description of NIC
+        /// Serialized Name: HciNicDetail.interfaceDescription
+        /// </param>
+        /// <param name="componentId">
+        /// Component Id of NIC
+        /// Serialized Name: HciNicDetail.componentId
+        /// </param>
+        /// <param name="driverVersion">
+        /// Driver Version of NIC
+        /// Serialized Name: HciNicDetail.driverVersion
+        /// </param>
+        /// <param name="ip4Address">
+        /// Subnet Mask of NIC
+        /// Serialized Name: HciNicDetail.ip4Address
+        /// </param>
+        /// <param name="subnetMask">
+        /// Subnet Mask of NIC
+        /// Serialized Name: HciNicDetail.subnetMask
+        /// </param>
+        /// <param name="defaultGateway">
+        /// Default Gateway of NIC
+        /// Serialized Name: HciNicDetail.defaultGateway
+        /// </param>
+        /// <param name="dnsServers">
+        /// DNS Servers for NIC
+        /// Serialized Name: HciNicDetail.dnsServers
+        /// </param>
+        /// <param name="defaultIsolationId">
+        /// Default Isolation of Management NIC
+        /// Serialized Name: HciNicDetail.defaultIsolationId
+        /// </param>
+        /// <param name="macAddress">
+        /// MAC address information of NIC.
+        /// Serialized Name: HciNicDetail.macAddress
+        /// </param>
+        /// <param name="slot">
+        /// The slot attached to the NIC.
+        /// Serialized Name: HciNicDetail.slot
+        /// </param>
+        /// <param name="switchName">
+        /// The switch attached to the NIC, if any.
+        /// Serialized Name: HciNicDetail.switchName
+        /// </param>
+        /// <param name="nicType">
+        /// The type of NIC, physical, virtual, management.
+        /// Serialized Name: HciNicDetail.nicType
+        /// </param>
+        /// <param name="vlanId">
+        /// The VLAN ID of the physical NIC.
+        /// Serialized Name: HciNicDetail.vlanId
+        /// </param>
+        /// <param name="nicStatus">
+        /// The status of NIC, up, disconnected.
+        /// Serialized Name: HciNicDetail.nicStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ip4Address, string subnetMask, string defaultGateway, IReadOnlyList<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,35 +136,95 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Adapter Name of NIC. </summary>
+        /// <summary>
+        /// Adapter Name of NIC
+        /// Serialized Name: HciNicDetail.adapterName
+        /// </summary>
+        [WirePath("adapterName")]
         public string AdapterName { get; }
-        /// <summary> Interface Description of NIC. </summary>
+        /// <summary>
+        /// Interface Description of NIC
+        /// Serialized Name: HciNicDetail.interfaceDescription
+        /// </summary>
+        [WirePath("interfaceDescription")]
         public string InterfaceDescription { get; }
-        /// <summary> Component Id of NIC. </summary>
+        /// <summary>
+        /// Component Id of NIC
+        /// Serialized Name: HciNicDetail.componentId
+        /// </summary>
+        [WirePath("componentId")]
         public string ComponentId { get; }
-        /// <summary> Driver Version of NIC. </summary>
+        /// <summary>
+        /// Driver Version of NIC
+        /// Serialized Name: HciNicDetail.driverVersion
+        /// </summary>
+        [WirePath("driverVersion")]
         public string DriverVersion { get; }
-        /// <summary> Subnet Mask of NIC. </summary>
+        /// <summary>
+        /// Subnet Mask of NIC
+        /// Serialized Name: HciNicDetail.ip4Address
+        /// </summary>
+        [WirePath("ip4Address")]
         public string Ip4Address { get; }
-        /// <summary> Subnet Mask of NIC. </summary>
+        /// <summary>
+        /// Subnet Mask of NIC
+        /// Serialized Name: HciNicDetail.subnetMask
+        /// </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; }
-        /// <summary> Default Gateway of NIC. </summary>
+        /// <summary>
+        /// Default Gateway of NIC
+        /// Serialized Name: HciNicDetail.defaultGateway
+        /// </summary>
+        [WirePath("defaultGateway")]
         public string DefaultGateway { get; }
-        /// <summary> DNS Servers for NIC. </summary>
+        /// <summary>
+        /// DNS Servers for NIC
+        /// Serialized Name: HciNicDetail.dnsServers
+        /// </summary>
+        [WirePath("dnsServers")]
         public IReadOnlyList<string> DnsServers { get; }
-        /// <summary> Default Isolation of Management NIC. </summary>
+        /// <summary>
+        /// Default Isolation of Management NIC
+        /// Serialized Name: HciNicDetail.defaultIsolationId
+        /// </summary>
+        [WirePath("defaultIsolationId")]
         public string DefaultIsolationId { get; }
-        /// <summary> MAC address information of NIC. </summary>
+        /// <summary>
+        /// MAC address information of NIC.
+        /// Serialized Name: HciNicDetail.macAddress
+        /// </summary>
+        [WirePath("macAddress")]
         public string MacAddress { get; }
-        /// <summary> The slot attached to the NIC. </summary>
+        /// <summary>
+        /// The slot attached to the NIC.
+        /// Serialized Name: HciNicDetail.slot
+        /// </summary>
+        [WirePath("slot")]
         public string Slot { get; }
-        /// <summary> The switch attached to the NIC, if any. </summary>
+        /// <summary>
+        /// The switch attached to the NIC, if any.
+        /// Serialized Name: HciNicDetail.switchName
+        /// </summary>
+        [WirePath("switchName")]
         public string SwitchName { get; }
-        /// <summary> The type of NIC, physical, virtual, management. </summary>
+        /// <summary>
+        /// The type of NIC, physical, virtual, management.
+        /// Serialized Name: HciNicDetail.nicType
+        /// </summary>
+        [WirePath("nicType")]
         public string NicType { get; }
-        /// <summary> The VLAN ID of the physical NIC. </summary>
+        /// <summary>
+        /// The VLAN ID of the physical NIC.
+        /// Serialized Name: HciNicDetail.vlanId
+        /// </summary>
+        [WirePath("vlanId")]
         public string VlanId { get; }
-        /// <summary> The status of NIC, up, disconnected. </summary>
+        /// <summary>
+        /// The status of NIC, up, disconnected.
+        /// Serialized Name: HciNicDetail.nicStatus
+        /// </summary>
+        [WirePath("nicStatus")]
         public string NicStatus { get; }
     }
 }

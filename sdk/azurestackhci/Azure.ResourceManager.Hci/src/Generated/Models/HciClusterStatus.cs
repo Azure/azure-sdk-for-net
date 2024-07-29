@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Status of the cluster agent. </summary>
+    /// <summary>
+    /// Status of the cluster agent.
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct HciClusterStatus : IEquatable<HciClusterStatus>
     {
         private readonly string _value;
@@ -38,35 +41,80 @@ namespace Azure.ResourceManager.Hci.Models
         private const string FailedValue = "Failed";
         private const string InProgressValue = "InProgress";
 
-        /// <summary> NotYetRegistered. </summary>
+        /// <summary>
+        /// NotYetRegistered
+        /// Serialized Name: Status.NotYetRegistered
+        /// </summary>
         public static HciClusterStatus NotYetRegistered { get; } = new HciClusterStatus(NotYetRegisteredValue);
-        /// <summary> ConnectedRecently. </summary>
+        /// <summary>
+        /// ConnectedRecently
+        /// Serialized Name: Status.ConnectedRecently
+        /// </summary>
         public static HciClusterStatus ConnectedRecently { get; } = new HciClusterStatus(ConnectedRecentlyValue);
-        /// <summary> NotConnectedRecently. </summary>
+        /// <summary>
+        /// NotConnectedRecently
+        /// Serialized Name: Status.NotConnectedRecently
+        /// </summary>
         public static HciClusterStatus NotConnectedRecently { get; } = new HciClusterStatus(NotConnectedRecentlyValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary>
+        /// Disconnected
+        /// Serialized Name: Status.Disconnected
+        /// </summary>
         public static HciClusterStatus Disconnected { get; } = new HciClusterStatus(DisconnectedValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: Status.Error
+        /// </summary>
         public static HciClusterStatus Error { get; } = new HciClusterStatus(ErrorValue);
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: Status.NotSpecified
+        /// </summary>
         public static HciClusterStatus NotSpecified { get; } = new HciClusterStatus(NotSpecifiedValue);
-        /// <summary> ValidationInProgress. </summary>
+        /// <summary>
+        /// ValidationInProgress
+        /// Serialized Name: Status.ValidationInProgress
+        /// </summary>
         public static HciClusterStatus ValidationInProgress { get; } = new HciClusterStatus(ValidationInProgressValue);
-        /// <summary> ValidationSuccess. </summary>
+        /// <summary>
+        /// ValidationSuccess
+        /// Serialized Name: Status.ValidationSuccess
+        /// </summary>
         public static HciClusterStatus ValidationSuccess { get; } = new HciClusterStatus(ValidationSuccessValue);
-        /// <summary> ValidationFailed. </summary>
+        /// <summary>
+        /// ValidationFailed
+        /// Serialized Name: Status.ValidationFailed
+        /// </summary>
         public static HciClusterStatus ValidationFailed { get; } = new HciClusterStatus(ValidationFailedValue);
-        /// <summary> DeploymentInProgress. </summary>
+        /// <summary>
+        /// DeploymentInProgress
+        /// Serialized Name: Status.DeploymentInProgress
+        /// </summary>
         public static HciClusterStatus DeploymentInProgress { get; } = new HciClusterStatus(DeploymentInProgressValue);
-        /// <summary> DeploymentFailed. </summary>
+        /// <summary>
+        /// DeploymentFailed
+        /// Serialized Name: Status.DeploymentFailed
+        /// </summary>
         public static HciClusterStatus DeploymentFailed { get; } = new HciClusterStatus(DeploymentFailedValue);
-        /// <summary> DeploymentSuccess. </summary>
+        /// <summary>
+        /// DeploymentSuccess
+        /// Serialized Name: Status.DeploymentSuccess
+        /// </summary>
         public static HciClusterStatus DeploymentSuccess { get; } = new HciClusterStatus(DeploymentSuccessValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: Status.Succeeded
+        /// </summary>
         public static HciClusterStatus Succeeded { get; } = new HciClusterStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: Status.Failed
+        /// </summary>
         public static HciClusterStatus Failed { get; } = new HciClusterStatus(FailedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: Status.InProgress
+        /// </summary>
         public static HciClusterStatus InProgress { get; } = new HciClusterStatus(InProgressValue);
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are the same. </summary>
         public static bool operator ==(HciClusterStatus left, HciClusterStatus right) => left.Equals(right);

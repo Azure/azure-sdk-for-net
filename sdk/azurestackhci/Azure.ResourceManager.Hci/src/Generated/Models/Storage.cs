@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The Storage config of AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The Storage config of AzureStackHCI Cluster.
+    /// Serialized Name: Storage
+    /// </summary>
     internal partial class Storage
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage"/>. </summary>
-        /// <param name="configurationMode"> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </param>
+        /// <param name="configurationMode">
+        /// By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'
+        /// Serialized Name: Storage.configurationMode
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Storage(string configurationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,11 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </summary>
+        /// <summary>
+        /// By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'
+        /// Serialized Name: Storage.configurationMode
+        /// </summary>
+        [WirePath("configurationMode")]
         public string ConfigurationMode { get; set; }
     }
 }

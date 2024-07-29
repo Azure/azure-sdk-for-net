@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Remote Support Request. </summary>
+    /// <summary>
+    /// Remote Support Request
+    /// Serialized Name: RemoteSupportRequest
+    /// </summary>
     public partial class RemoteSupportContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportContent"/>. </summary>
-        /// <param name="properties"> Properties for Remote Support Request. </param>
+        /// <param name="properties">
+        /// Properties for Remote Support Request
+        /// Serialized Name: RemoteSupportRequest.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RemoteSupportContent(RemoteSupportRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,11 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Properties for Remote Support Request. </summary>
+        /// <summary>
+        /// Properties for Remote Support Request
+        /// Serialized Name: RemoteSupportRequest.properties
+        /// </summary>
+        [WirePath("properties")]
         public RemoteSupportRequestProperties Properties { get; set; }
     }
 }

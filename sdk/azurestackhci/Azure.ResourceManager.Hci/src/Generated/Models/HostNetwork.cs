@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The HostNetwork of a cluster. </summary>
+    /// <summary>
+    /// The HostNetwork of a cluster.
+    /// Serialized Name: HostNetwork
+    /// </summary>
     public partial class HostNetwork
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostNetwork"/>. </summary>
-        /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
-        /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less.. </param>
-        /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
+        /// <param name="intents">
+        /// The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM.
+        /// Serialized Name: HostNetwork.intents
+        /// </param>
+        /// <param name="storageNetworks">
+        /// List of StorageNetworks config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: HostNetwork.storageNetworks
+        /// </param>
+        /// <param name="storageConnectivitySwitchless">
+        /// Defines how the storage adapters between nodes are connected either switch or switch less..
+        /// Serialized Name: HostNetwork.storageConnectivitySwitchless
+        /// </param>
+        /// <param name="enableStorageAutoIP">
+        /// Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically.
+        /// Serialized Name: HostNetwork.enableStorageAutoIp
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HostNetwork(IList<Intents> intents, IList<StorageNetworks> storageNetworks, bool? storageConnectivitySwitchless, bool? enableStorageAutoIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,13 +82,29 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </summary>
+        /// <summary>
+        /// The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM.
+        /// Serialized Name: HostNetwork.intents
+        /// </summary>
+        [WirePath("intents")]
         public IList<Intents> Intents { get; }
-        /// <summary> List of StorageNetworks config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// List of StorageNetworks config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: HostNetwork.storageNetworks
+        /// </summary>
+        [WirePath("storageNetworks")]
         public IList<StorageNetworks> StorageNetworks { get; }
-        /// <summary> Defines how the storage adapters between nodes are connected either switch or switch less.. </summary>
+        /// <summary>
+        /// Defines how the storage adapters between nodes are connected either switch or switch less..
+        /// Serialized Name: HostNetwork.storageConnectivitySwitchless
+        /// </summary>
+        [WirePath("storageConnectivitySwitchless")]
         public bool? StorageConnectivitySwitchless { get; set; }
-        /// <summary> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </summary>
+        /// <summary>
+        /// Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically.
+        /// Serialized Name: HostNetwork.enableStorageAutoIp
+        /// </summary>
+        [WirePath("enableStorageAutoIp")]
         public bool? EnableStorageAutoIP { get; set; }
     }
 }

@@ -4,7 +4,9 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added Bicep serialization.
 
 ### Breaking Changes
 
@@ -22,7 +24,7 @@
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -33,7 +35,7 @@
 ### Feature Added
 
 - Upgraded API version to 2023-02-01.
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ## 1.0.1 (2023-02-16)
 
@@ -80,7 +82,7 @@ Polishing since last public beta release:
 
 ### Features Added
 
-- Enable write on ArcInstanceResourceGroup.
+- Enabled write on ArcInstanceResourceGroup.
 - Add patch for arcSettings.
 - Created clusterIdentity and arcIdentity that is the identity created/used for cluster registration.
 

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Software Assurance properties of the cluster. </summary>
+    /// <summary>
+    /// Software Assurance properties of the cluster.
+    /// Serialized Name: SoftwareAssuranceProperties
+    /// </summary>
     public partial class SoftwareAssuranceProperties
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceProperties"/>. </summary>
-        /// <param name="softwareAssuranceStatus"> Status of the Software Assurance for the cluster. </param>
-        /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
-        /// <param name="lastUpdated"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
+        /// <param name="softwareAssuranceStatus">
+        /// Status of the Software Assurance for the cluster.
+        /// Serialized Name: SoftwareAssuranceProperties.softwareAssuranceStatus
+        /// </param>
+        /// <param name="softwareAssuranceIntent">
+        /// Customer Intent for Software Assurance Benefit.
+        /// Serialized Name: SoftwareAssuranceProperties.softwareAssuranceIntent
+        /// </param>
+        /// <param name="lastUpdated">
+        /// TimeStamp denoting the latest SA benefit applicability is validated.
+        /// Serialized Name: SoftwareAssuranceProperties.lastUpdated
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus, SoftwareAssuranceIntent? softwareAssuranceIntent, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Status of the Software Assurance for the cluster. </summary>
+        /// <summary>
+        /// Status of the Software Assurance for the cluster.
+        /// Serialized Name: SoftwareAssuranceProperties.softwareAssuranceStatus
+        /// </summary>
+        [WirePath("softwareAssuranceStatus")]
         public SoftwareAssuranceStatus? SoftwareAssuranceStatus { get; }
-        /// <summary> Customer Intent for Software Assurance Benefit. </summary>
+        /// <summary>
+        /// Customer Intent for Software Assurance Benefit.
+        /// Serialized Name: SoftwareAssuranceProperties.softwareAssuranceIntent
+        /// </summary>
+        [WirePath("softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent { get; set; }
-        /// <summary> TimeStamp denoting the latest SA benefit applicability is validated. </summary>
+        /// <summary>
+        /// TimeStamp denoting the latest SA benefit applicability is validated.
+        /// Serialized Name: SoftwareAssuranceProperties.lastUpdated
+        /// </summary>
+        [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdated { get; }
     }
 }

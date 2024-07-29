@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Scale units will contains list of deployment data. </summary>
+    /// <summary>
+    /// Scale units will contains list of deployment data
+    /// Serialized Name: ScaleUnits
+    /// </summary>
     public partial class ScaleUnits
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.Hci.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScaleUnits"/>. </summary>
-        /// <param name="deploymentData"> Deployment Data to deploy AzureStackHCI Cluster. </param>
+        /// <param name="deploymentData">
+        /// Deployment Data to deploy AzureStackHCI Cluster.
+        /// Serialized Name: ScaleUnits.deploymentData
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentData"/> is null. </exception>
         public ScaleUnits(DeploymentData deploymentData)
         {
@@ -56,8 +62,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScaleUnits"/>. </summary>
-        /// <param name="deploymentData"> Deployment Data to deploy AzureStackHCI Cluster. </param>
-        /// <param name="sbePartnerInfo"> Solution builder extension (SBE) partner properties. </param>
+        /// <param name="deploymentData">
+        /// Deployment Data to deploy AzureStackHCI Cluster.
+        /// Serialized Name: ScaleUnits.deploymentData
+        /// </param>
+        /// <param name="sbePartnerInfo">
+        /// Solution builder extension (SBE) partner properties
+        /// Serialized Name: ScaleUnits.sbePartnerInfo
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ScaleUnits(DeploymentData deploymentData, SbePartnerInfo sbePartnerInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,9 +83,17 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        /// <summary> Deployment Data to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// Deployment Data to deploy AzureStackHCI Cluster.
+        /// Serialized Name: ScaleUnits.deploymentData
+        /// </summary>
+        [WirePath("deploymentData")]
         public DeploymentData DeploymentData { get; set; }
-        /// <summary> Solution builder extension (SBE) partner properties. </summary>
+        /// <summary>
+        /// Solution builder extension (SBE) partner properties
+        /// Serialized Name: ScaleUnits.sbePartnerInfo
+        /// </summary>
+        [WirePath("sbePartnerInfo")]
         public SbePartnerInfo SbePartnerInfo { get; set; }
     }
 }

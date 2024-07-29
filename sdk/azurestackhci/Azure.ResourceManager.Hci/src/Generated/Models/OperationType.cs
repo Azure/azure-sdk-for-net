@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The intended operation for a cluster. </summary>
+    /// <summary>
+    /// The intended operation for a cluster.
+    /// Serialized Name: OperationType
+    /// </summary>
     public readonly partial struct OperationType : IEquatable<OperationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ClusterProvisioningValue = "ClusterProvisioning";
         private const string ClusterUpgradeValue = "ClusterUpgrade";
 
-        /// <summary> Cluster provisioning operation. </summary>
+        /// <summary>
+        /// Cluster provisioning operation.
+        /// Serialized Name: OperationType.ClusterProvisioning
+        /// </summary>
         public static OperationType ClusterProvisioning { get; } = new OperationType(ClusterProvisioningValue);
-        /// <summary> Cluster upgrade operation. </summary>
+        /// <summary>
+        /// Cluster upgrade operation.
+        /// Serialized Name: OperationType.ClusterUpgrade
+        /// </summary>
         public static OperationType ClusterUpgrade { get; } = new OperationType(ClusterUpgradeValue);
         /// <summary> Determines if two <see cref="OperationType"/> values are the same. </summary>
         public static bool operator ==(OperationType left, OperationType right) => left.Equals(right);

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -114,6 +115,83 @@ namespace Azure.ResourceManager.Hci.Models
             return new SwitchExtension(switchId, extensionName, extensionEnabled, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SwitchId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  switchId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SwitchId))
+                {
+                    builder.Append("  switchId: ");
+                    if (SwitchId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SwitchId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SwitchId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtensionName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extensionName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtensionName))
+                {
+                    builder.Append("  extensionName: ");
+                    if (ExtensionName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ExtensionName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ExtensionName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtensionEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extensionEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtensionEnabled))
+                {
+                    builder.Append("  extensionEnabled: ");
+                    var boolValue = ExtensionEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SwitchExtension>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SwitchExtension>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +200,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SwitchExtension)} does not support writing '{options.Format}' format.");
             }

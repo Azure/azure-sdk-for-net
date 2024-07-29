@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -218,6 +219,168 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogStartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogStartOn))
+                {
+                    builder.Append("  logStartTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LogStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogEndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logEndTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogEndOn))
+                {
+                    builder.Append("  logEndTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LogEndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeCollected), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeCollected: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeCollected))
+                {
+                    builder.Append("  timeCollected: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(TimeCollected.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogSize))
+                {
+                    builder.Append("  logSize: ");
+                    builder.AppendLine($"'{LogSize.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogCollectionStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logCollectionStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogCollectionStatus))
+                {
+                    builder.Append("  logCollectionStatus: ");
+                    builder.AppendLine($"'{LogCollectionStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogCollectionJobType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logCollectionJobType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogCollectionJobType))
+                {
+                    builder.Append("  logCollectionJobType: ");
+                    builder.AppendLine($"'{LogCollectionJobType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  correlationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CorrelationId))
+                {
+                    builder.Append("  correlationId: ");
+                    if (CorrelationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CorrelationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CorrelationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTimeCollected), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endTimeCollected: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndTimeCollected))
+                {
+                    builder.Append("  endTimeCollected: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndTimeCollected.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogCollectionError), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logCollectionError: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogCollectionError))
+                {
+                    builder.Append("  logCollectionError: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LogCollectionError, options, 2, false, "  logCollectionError: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LogCollectionSession>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogCollectionSession>)this).GetFormatFromOptions(options) : options.Format;
@@ -226,6 +389,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LogCollectionSession)} does not support writing '{options.Format}' format.");
             }

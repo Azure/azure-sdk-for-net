@@ -9,7 +9,7 @@ csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
 require: https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md
-tag: package-2024-04
+#tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,9 +20,10 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 format-by-name-rules:
   '*TenantId': 'uuid'
@@ -116,4 +117,8 @@ directive:
     where: $.definitions.UpdateRunProperties.properties
     transform: >
       $.duration['x-ms-format'] = 'string';
+  - from: edgeDevices.json
+    where: $.definitions
+    transform: >
+      $.HostNetwork.properties.intents.items['$ref'] = "./deploymentSettings.json#/definitions/Intents";
 ```

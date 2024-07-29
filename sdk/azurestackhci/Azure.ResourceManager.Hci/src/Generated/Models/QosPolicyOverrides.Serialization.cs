@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -110,6 +111,90 @@ namespace Azure.ResourceManager.Hci.Models
             return new QosPolicyOverrides(priorityValue8021ActionCluster, priorityValue8021ActionSMB, bandwidthPercentageSMB, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PriorityValue8021ActionCluster), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  priorityValue8021Action_Cluster: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PriorityValue8021ActionCluster))
+                {
+                    builder.Append("  priorityValue8021Action_Cluster: ");
+                    if (PriorityValue8021ActionCluster.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PriorityValue8021ActionCluster}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PriorityValue8021ActionCluster}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PriorityValue8021ActionSMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  priorityValue8021Action_SMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PriorityValue8021ActionSMB))
+                {
+                    builder.Append("  priorityValue8021Action_SMB: ");
+                    if (PriorityValue8021ActionSMB.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PriorityValue8021ActionSMB}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PriorityValue8021ActionSMB}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BandwidthPercentageSMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bandwidthPercentage_SMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BandwidthPercentageSMB))
+                {
+                    builder.Append("  bandwidthPercentage_SMB: ");
+                    if (BandwidthPercentageSMB.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BandwidthPercentageSMB}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BandwidthPercentageSMB}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<QosPolicyOverrides>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QosPolicyOverrides>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +203,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(QosPolicyOverrides)} does not support writing '{options.Format}' format.");
             }

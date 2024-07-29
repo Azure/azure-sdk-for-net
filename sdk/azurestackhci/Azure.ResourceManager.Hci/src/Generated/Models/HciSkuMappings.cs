@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> SKU Mapping details. </summary>
+    /// <summary>
+    /// SKU Mapping details.
+    /// Serialized Name: SkuMappings
+    /// </summary>
     public partial class HciSkuMappings
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciSkuMappings"/>. </summary>
-        /// <param name="catalogPlanId"> Identifier of the CatalogPlan for the sku. </param>
-        /// <param name="marketplaceSkuId"> Identifier for the sku. </param>
-        /// <param name="marketplaceSkuVersions"> Array of SKU versions available. </param>
+        /// <param name="catalogPlanId">
+        /// Identifier of the CatalogPlan for the sku
+        /// Serialized Name: SkuMappings.catalogPlanId
+        /// </param>
+        /// <param name="marketplaceSkuId">
+        /// Identifier for the sku
+        /// Serialized Name: SkuMappings.marketplaceSkuId
+        /// </param>
+        /// <param name="marketplaceSkuVersions">
+        /// Array of SKU versions available
+        /// Serialized Name: SkuMappings.marketplaceSkuVersions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciSkuMappings(string catalogPlanId, string marketplaceSkuId, IList<string> marketplaceSkuVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +76,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identifier of the CatalogPlan for the sku. </summary>
+        /// <summary>
+        /// Identifier of the CatalogPlan for the sku
+        /// Serialized Name: SkuMappings.catalogPlanId
+        /// </summary>
+        [WirePath("catalogPlanId")]
         public string CatalogPlanId { get; set; }
-        /// <summary> Identifier for the sku. </summary>
+        /// <summary>
+        /// Identifier for the sku
+        /// Serialized Name: SkuMappings.marketplaceSkuId
+        /// </summary>
+        [WirePath("marketplaceSkuId")]
         public string MarketplaceSkuId { get; set; }
-        /// <summary> Array of SKU versions available. </summary>
+        /// <summary>
+        /// Array of SKU versions available
+        /// Serialized Name: SkuMappings.marketplaceSkuVersions
+        /// </summary>
+        [WirePath("marketplaceSkuVersions")]
         public IList<string> MarketplaceSkuVersions { get; }
     }
 }

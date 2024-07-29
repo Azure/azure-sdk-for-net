@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Properties for Log Collection Request. </summary>
+    /// <summary>
+    /// Properties for Log Collection Request
+    /// Serialized Name: LogCollectionRequestProperties
+    /// </summary>
     public partial class LogCollectionRequestProperties
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.Hci.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionRequestProperties"/>. </summary>
-        /// <param name="fromDate"> From DateTimeStamp from when logs need to be connected. </param>
-        /// <param name="toDate"> To DateTimeStamp till when logs need to be connected. </param>
+        /// <param name="fromDate">
+        /// From DateTimeStamp from when logs need to be connected
+        /// Serialized Name: LogCollectionRequestProperties.fromDate
+        /// </param>
+        /// <param name="toDate">
+        /// To DateTimeStamp till when logs need to be connected
+        /// Serialized Name: LogCollectionRequestProperties.toDate
+        /// </param>
         public LogCollectionRequestProperties(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
             FromDate = fromDate;
@@ -55,8 +64,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionRequestProperties"/>. </summary>
-        /// <param name="fromDate"> From DateTimeStamp from when logs need to be connected. </param>
-        /// <param name="toDate"> To DateTimeStamp till when logs need to be connected. </param>
+        /// <param name="fromDate">
+        /// From DateTimeStamp from when logs need to be connected
+        /// Serialized Name: LogCollectionRequestProperties.fromDate
+        /// </param>
+        /// <param name="toDate">
+        /// To DateTimeStamp till when logs need to be connected
+        /// Serialized Name: LogCollectionRequestProperties.toDate
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LogCollectionRequestProperties(DateTimeOffset fromDate, DateTimeOffset toDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,9 +85,17 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        /// <summary> From DateTimeStamp from when logs need to be connected. </summary>
+        /// <summary>
+        /// From DateTimeStamp from when logs need to be connected
+        /// Serialized Name: LogCollectionRequestProperties.fromDate
+        /// </summary>
+        [WirePath("fromDate")]
         public DateTimeOffset FromDate { get; }
-        /// <summary> To DateTimeStamp till when logs need to be connected. </summary>
+        /// <summary>
+        /// To DateTimeStamp till when logs need to be connected
+        /// Serialized Name: LogCollectionRequestProperties.toDate
+        /// </summary>
+        [WirePath("toDate")]
         public DateTimeOffset ToDate { get; }
     }
 }

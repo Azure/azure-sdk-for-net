@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Cluster node details. </summary>
+    /// <summary>
+    /// Cluster node details.
+    /// Serialized Name: ClusterNode
+    /// </summary>
     public partial class HciClusterNode
     {
         /// <summary>
@@ -51,21 +54,66 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterNode"/>. </summary>
-        /// <param name="name"> Name of the cluster node. </param>
-        /// <param name="id"> Id of the node in the cluster. </param>
-        /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>
-        /// <param name="nodeType"> Type of the cluster node hardware. </param>
-        /// <param name="ehcResourceId"> Edge Hardware Center Resource Id. </param>
-        /// <param name="manufacturer"> Manufacturer of the cluster node hardware. </param>
-        /// <param name="model"> Model name of the cluster node hardware. </param>
-        /// <param name="osName"> Operating system running on the cluster node. </param>
-        /// <param name="osVersion"> Version of the operating system running on the cluster node. </param>
-        /// <param name="osDisplayVersion"> Display version of the operating system running on the cluster node. </param>
-        /// <param name="serialNumber"> Immutable id of the cluster node. </param>
-        /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
-        /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
-        /// <param name="lastLicensingTimestamp"> Most recent licensing timestamp. </param>
-        /// <param name="oemActivation"> OEM activation status of the node. </param>
+        /// <param name="name">
+        /// Name of the cluster node.
+        /// Serialized Name: ClusterNode.name
+        /// </param>
+        /// <param name="id">
+        /// Id of the node in the cluster.
+        /// Serialized Name: ClusterNode.id
+        /// </param>
+        /// <param name="windowsServerSubscription">
+        /// State of Windows Server Subscription.
+        /// Serialized Name: ClusterNode.windowsServerSubscription
+        /// </param>
+        /// <param name="nodeType">
+        /// Type of the cluster node hardware.
+        /// Serialized Name: ClusterNode.nodeType
+        /// </param>
+        /// <param name="ehcResourceId">
+        /// Edge Hardware Center Resource Id
+        /// Serialized Name: ClusterNode.ehcResourceId
+        /// </param>
+        /// <param name="manufacturer">
+        /// Manufacturer of the cluster node hardware.
+        /// Serialized Name: ClusterNode.manufacturer
+        /// </param>
+        /// <param name="model">
+        /// Model name of the cluster node hardware.
+        /// Serialized Name: ClusterNode.model
+        /// </param>
+        /// <param name="osName">
+        /// Operating system running on the cluster node.
+        /// Serialized Name: ClusterNode.osName
+        /// </param>
+        /// <param name="osVersion">
+        /// Version of the operating system running on the cluster node.
+        /// Serialized Name: ClusterNode.osVersion
+        /// </param>
+        /// <param name="osDisplayVersion">
+        /// Display version of the operating system running on the cluster node.
+        /// Serialized Name: ClusterNode.osDisplayVersion
+        /// </param>
+        /// <param name="serialNumber">
+        /// Immutable id of the cluster node.
+        /// Serialized Name: ClusterNode.serialNumber
+        /// </param>
+        /// <param name="coreCount">
+        /// Number of physical cores on the cluster node.
+        /// Serialized Name: ClusterNode.coreCount
+        /// </param>
+        /// <param name="memoryInGiB">
+        /// Total available memory on the cluster node (in GiB).
+        /// Serialized Name: ClusterNode.memoryInGiB
+        /// </param>
+        /// <param name="lastLicensingTimestamp">
+        /// Most recent licensing timestamp.
+        /// Serialized Name: ClusterNode.lastLicensingTimestamp
+        /// </param>
+        /// <param name="oemActivation">
+        /// OEM activation status of the node.
+        /// Serialized Name: ClusterNode.oemActivation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp, OemActivation? oemActivation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,35 +135,95 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the cluster node. </summary>
+        /// <summary>
+        /// Name of the cluster node.
+        /// Serialized Name: ClusterNode.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; }
-        /// <summary> Id of the node in the cluster. </summary>
+        /// <summary>
+        /// Id of the node in the cluster.
+        /// Serialized Name: ClusterNode.id
+        /// </summary>
+        [WirePath("id")]
         public float? Id { get; }
-        /// <summary> State of Windows Server Subscription. </summary>
+        /// <summary>
+        /// State of Windows Server Subscription.
+        /// Serialized Name: ClusterNode.windowsServerSubscription
+        /// </summary>
+        [WirePath("windowsServerSubscription")]
         public WindowsServerSubscription? WindowsServerSubscription { get; }
-        /// <summary> Type of the cluster node hardware. </summary>
+        /// <summary>
+        /// Type of the cluster node hardware.
+        /// Serialized Name: ClusterNode.nodeType
+        /// </summary>
+        [WirePath("nodeType")]
         public ClusterNodeType? NodeType { get; }
-        /// <summary> Edge Hardware Center Resource Id. </summary>
+        /// <summary>
+        /// Edge Hardware Center Resource Id
+        /// Serialized Name: ClusterNode.ehcResourceId
+        /// </summary>
+        [WirePath("ehcResourceId")]
         public string EhcResourceId { get; }
-        /// <summary> Manufacturer of the cluster node hardware. </summary>
+        /// <summary>
+        /// Manufacturer of the cluster node hardware.
+        /// Serialized Name: ClusterNode.manufacturer
+        /// </summary>
+        [WirePath("manufacturer")]
         public string Manufacturer { get; }
-        /// <summary> Model name of the cluster node hardware. </summary>
+        /// <summary>
+        /// Model name of the cluster node hardware.
+        /// Serialized Name: ClusterNode.model
+        /// </summary>
+        [WirePath("model")]
         public string Model { get; }
-        /// <summary> Operating system running on the cluster node. </summary>
+        /// <summary>
+        /// Operating system running on the cluster node.
+        /// Serialized Name: ClusterNode.osName
+        /// </summary>
+        [WirePath("osName")]
         public string OSName { get; }
-        /// <summary> Version of the operating system running on the cluster node. </summary>
+        /// <summary>
+        /// Version of the operating system running on the cluster node.
+        /// Serialized Name: ClusterNode.osVersion
+        /// </summary>
+        [WirePath("osVersion")]
         public string OSVersion { get; }
-        /// <summary> Display version of the operating system running on the cluster node. </summary>
+        /// <summary>
+        /// Display version of the operating system running on the cluster node.
+        /// Serialized Name: ClusterNode.osDisplayVersion
+        /// </summary>
+        [WirePath("osDisplayVersion")]
         public string OSDisplayVersion { get; }
-        /// <summary> Immutable id of the cluster node. </summary>
+        /// <summary>
+        /// Immutable id of the cluster node.
+        /// Serialized Name: ClusterNode.serialNumber
+        /// </summary>
+        [WirePath("serialNumber")]
         public string SerialNumber { get; }
-        /// <summary> Number of physical cores on the cluster node. </summary>
+        /// <summary>
+        /// Number of physical cores on the cluster node.
+        /// Serialized Name: ClusterNode.coreCount
+        /// </summary>
+        [WirePath("coreCount")]
         public float? CoreCount { get; }
-        /// <summary> Total available memory on the cluster node (in GiB). </summary>
+        /// <summary>
+        /// Total available memory on the cluster node (in GiB).
+        /// Serialized Name: ClusterNode.memoryInGiB
+        /// </summary>
+        [WirePath("memoryInGiB")]
         public float? MemoryInGiB { get; }
-        /// <summary> Most recent licensing timestamp. </summary>
+        /// <summary>
+        /// Most recent licensing timestamp.
+        /// Serialized Name: ClusterNode.lastLicensingTimestamp
+        /// </summary>
+        [WirePath("lastLicensingTimestamp")]
         public DateTimeOffset? LastLicensingTimestamp { get; }
-        /// <summary> OEM activation status of the node. </summary>
+        /// <summary>
+        /// OEM activation status of the node.
+        /// Serialized Name: ClusterNode.oemActivation
+        /// </summary>
+        [WirePath("oemActivation")]
         public OemActivation? OemActivation { get; }
     }
 }

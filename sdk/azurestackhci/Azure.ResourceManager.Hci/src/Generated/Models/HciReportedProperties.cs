@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The device Configuration for HCI device. </summary>
+    /// <summary>
+    /// The device Configuration for HCI device.
+    /// Serialized Name: HciReportedProperties
+    /// </summary>
     public partial class HciReportedProperties : ReportedProperties
     {
         /// <summary> Initializes a new instance of <see cref="HciReportedProperties"/>. </summary>
@@ -19,12 +22,27 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciReportedProperties"/>. </summary>
-        /// <param name="deviceState"> edge device state. </param>
-        /// <param name="extensionProfile"> Extensions details for edge device. </param>
+        /// <param name="deviceState">
+        /// edge device state.
+        /// Serialized Name: ReportedProperties.deviceState
+        /// </param>
+        /// <param name="extensionProfile">
+        /// Extensions details for edge device.
+        /// Serialized Name: ReportedProperties.extensionProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="networkProfile"> HCI device network information. </param>
-        /// <param name="osProfile"> HCI device OS specific information. </param>
-        /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
+        /// <param name="networkProfile">
+        /// HCI device network information.
+        /// Serialized Name: HciReportedProperties.networkProfile
+        /// </param>
+        /// <param name="osProfile">
+        /// HCI device OS specific information.
+        /// Serialized Name: HciReportedProperties.osProfile
+        /// </param>
+        /// <param name="sbeDeploymentPackageInfo">
+        /// Solution builder extension (SBE) deployment package information.
+        /// Serialized Name: HciReportedProperties.sbeDeploymentPackageInfo
+        /// </param>
         internal HciReportedProperties(DeviceState? deviceState, ExtensionProfile extensionProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo) : base(deviceState, extensionProfile, serializedAdditionalRawData)
         {
             NetworkProfile = networkProfile;
@@ -32,11 +50,23 @@ namespace Azure.ResourceManager.Hci.Models
             SbeDeploymentPackageInfo = sbeDeploymentPackageInfo;
         }
 
-        /// <summary> HCI device network information. </summary>
+        /// <summary>
+        /// HCI device network information.
+        /// Serialized Name: HciReportedProperties.networkProfile
+        /// </summary>
+        [WirePath("networkProfile")]
         public HciNetworkProfile NetworkProfile { get; }
-        /// <summary> HCI device OS specific information. </summary>
+        /// <summary>
+        /// HCI device OS specific information.
+        /// Serialized Name: HciReportedProperties.osProfile
+        /// </summary>
+        [WirePath("osProfile")]
         public HciOSProfile OSProfile { get; }
-        /// <summary> Solution builder extension (SBE) deployment package information. </summary>
+        /// <summary>
+        /// Solution builder extension (SBE) deployment package information.
+        /// Serialized Name: HciReportedProperties.sbeDeploymentPackageInfo
+        /// </summary>
+        [WirePath("sbeDeploymentPackageInfo")]
         public SbeDeploymentPackageInfo SbeDeploymentPackageInfo { get; }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the Update data model.
     /// Update details
+    /// Serialized Name: Update
     /// </summary>
     public partial class UpdateData : ResourceData
     {
@@ -64,29 +65,95 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the Updates proxy resource. </param>
-        /// <param name="installedOn"> Date that the update was installed. </param>
-        /// <param name="description"> Description of the update. </param>
-        /// <param name="minSbeVersionRequired"> Minimum Sbe Version of the update. </param>
-        /// <param name="state"> State of the update as it relates to this stamp. </param>
-        /// <param name="prerequisites"> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </param>
-        /// <param name="componentVersions"> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </param>
-        /// <param name="rebootRequired"></param>
-        /// <param name="healthState"> Overall health state for update-specific health checks. </param>
-        /// <param name="healthCheckResult"> An array of PrecheckResult objects. </param>
-        /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
-        /// <param name="packagePath"> Path where the update package is available. </param>
-        /// <param name="packageSizeInMb"> Size of the package. This value is a combination of the size from update metadata and size of the payload that results from the live scan operation for OS update content. </param>
-        /// <param name="displayName"> Display name of the Update. </param>
-        /// <param name="version"> Version of the update. </param>
-        /// <param name="publisher"> Publisher of the update package. </param>
-        /// <param name="releaseLink"> Link to release notes for the update. </param>
-        /// <param name="availabilityType"> Indicates the way the update content can be downloaded. </param>
-        /// <param name="packageType"> Customer-visible type of the update. </param>
-        /// <param name="additionalProperties"> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </param>
-        /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
-        /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
+        /// <param name="location">
+        /// The geo-location where the resource lives
+        /// Serialized Name: Update.location
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the Updates proxy resource.
+        /// Serialized Name: Update.properties.provisioningState
+        /// </param>
+        /// <param name="installedOn">
+        /// Date that the update was installed.
+        /// Serialized Name: Update.properties.installedDate
+        /// </param>
+        /// <param name="description">
+        /// Description of the update.
+        /// Serialized Name: Update.properties.description
+        /// </param>
+        /// <param name="minSbeVersionRequired">
+        /// Minimum Sbe Version of the update.
+        /// Serialized Name: Update.properties.minSbeVersionRequired
+        /// </param>
+        /// <param name="state">
+        /// State of the update as it relates to this stamp.
+        /// Serialized Name: Update.properties.state
+        /// </param>
+        /// <param name="prerequisites">
+        /// If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty.
+        /// Serialized Name: Update.properties.prerequisites
+        /// </param>
+        /// <param name="componentVersions">
+        /// An array of component versions for a Solution Bundle update, and an empty array otherwise.
+        /// Serialized Name: Update.properties.componentVersions
+        /// </param>
+        /// <param name="rebootRequired"> Serialized Name: Update.properties.rebootRequired. </param>
+        /// <param name="healthState">
+        /// Overall health state for update-specific health checks.
+        /// Serialized Name: Update.properties.healthState
+        /// </param>
+        /// <param name="healthCheckResult">
+        /// An array of PrecheckResult objects.
+        /// Serialized Name: Update.properties.healthCheckResult
+        /// </param>
+        /// <param name="healthCheckOn">
+        /// Last time the package-specific checks were run.
+        /// Serialized Name: Update.properties.healthCheckDate
+        /// </param>
+        /// <param name="packagePath">
+        /// Path where the update package is available.
+        /// Serialized Name: Update.properties.packagePath
+        /// </param>
+        /// <param name="packageSizeInMb">
+        /// Size of the package. This value is a combination of the size from update metadata and size of the payload that results from the live scan operation for OS update content.
+        /// Serialized Name: Update.properties.packageSizeInMb
+        /// </param>
+        /// <param name="displayName">
+        /// Display name of the Update
+        /// Serialized Name: Update.properties.displayName
+        /// </param>
+        /// <param name="version">
+        /// Version of the update.
+        /// Serialized Name: Update.properties.version
+        /// </param>
+        /// <param name="publisher">
+        /// Publisher of the update package.
+        /// Serialized Name: Update.properties.publisher
+        /// </param>
+        /// <param name="releaseLink">
+        /// Link to release notes for the update.
+        /// Serialized Name: Update.properties.releaseLink
+        /// </param>
+        /// <param name="availabilityType">
+        /// Indicates the way the update content can be downloaded.
+        /// Serialized Name: Update.properties.availabilityType
+        /// </param>
+        /// <param name="packageType">
+        /// Customer-visible type of the update.
+        /// Serialized Name: Update.properties.packageType
+        /// </param>
+        /// <param name="additionalProperties">
+        /// Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type.
+        /// Serialized Name: Update.properties.additionalProperties
+        /// </param>
+        /// <param name="progressPercentage">
+        /// Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded.
+        /// Serialized Name: Update.properties.updateStateProperties.progressPercentage
+        /// </param>
+        /// <param name="notifyMessage">
+        /// Brief message with instructions for updates of AvailabilityType Notify.
+        /// Serialized Name: Update.properties.updateStateProperties.notifyMessage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, string minSbeVersionRequired, HciUpdateState? state, IList<UpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -116,51 +183,140 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The geo-location where the resource lives. </summary>
+        /// <summary>
+        /// The geo-location where the resource lives
+        /// Serialized Name: Update.location
+        /// </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the Updates proxy resource. </summary>
+        /// <summary>
+        /// Provisioning state of the Updates proxy resource.
+        /// Serialized Name: Update.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
-        /// <summary> Date that the update was installed. </summary>
+        /// <summary>
+        /// Date that the update was installed.
+        /// Serialized Name: Update.properties.installedDate
+        /// </summary>
+        [WirePath("properties.installedDate")]
         public DateTimeOffset? InstalledOn { get; set; }
-        /// <summary> Description of the update. </summary>
+        /// <summary>
+        /// Description of the update.
+        /// Serialized Name: Update.properties.description
+        /// </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Minimum Sbe Version of the update. </summary>
+        /// <summary>
+        /// Minimum Sbe Version of the update.
+        /// Serialized Name: Update.properties.minSbeVersionRequired
+        /// </summary>
+        [WirePath("properties.minSbeVersionRequired")]
         public string MinSbeVersionRequired { get; set; }
-        /// <summary> State of the update as it relates to this stamp. </summary>
+        /// <summary>
+        /// State of the update as it relates to this stamp.
+        /// Serialized Name: Update.properties.state
+        /// </summary>
+        [WirePath("properties.state")]
         public HciUpdateState? State { get; set; }
-        /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>
+        /// <summary>
+        /// If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty.
+        /// Serialized Name: Update.properties.prerequisites
+        /// </summary>
+        [WirePath("properties.prerequisites")]
         public IList<UpdatePrerequisite> Prerequisites { get; }
-        /// <summary> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </summary>
+        /// <summary>
+        /// An array of component versions for a Solution Bundle update, and an empty array otherwise.
+        /// Serialized Name: Update.properties.componentVersions
+        /// </summary>
+        [WirePath("properties.componentVersions")]
         public IList<HciPackageVersionInfo> ComponentVersions { get; }
-        /// <summary> Gets or sets the reboot required. </summary>
+        /// <summary> Serialized Name: Update.properties.rebootRequired. </summary>
+        [WirePath("properties.rebootRequired")]
         public HciNodeRebootRequirement? RebootRequired { get; set; }
-        /// <summary> Overall health state for update-specific health checks. </summary>
+        /// <summary>
+        /// Overall health state for update-specific health checks.
+        /// Serialized Name: Update.properties.healthState
+        /// </summary>
+        [WirePath("properties.healthState")]
         public HciHealthState? HealthState { get; set; }
-        /// <summary> An array of PrecheckResult objects. </summary>
+        /// <summary>
+        /// An array of PrecheckResult objects.
+        /// Serialized Name: Update.properties.healthCheckResult
+        /// </summary>
+        [WirePath("properties.healthCheckResult")]
         public IList<HciPrecheckResult> HealthCheckResult { get; }
-        /// <summary> Last time the package-specific checks were run. </summary>
+        /// <summary>
+        /// Last time the package-specific checks were run.
+        /// Serialized Name: Update.properties.healthCheckDate
+        /// </summary>
+        [WirePath("properties.healthCheckDate")]
         public DateTimeOffset? HealthCheckOn { get; set; }
-        /// <summary> Path where the update package is available. </summary>
+        /// <summary>
+        /// Path where the update package is available.
+        /// Serialized Name: Update.properties.packagePath
+        /// </summary>
+        [WirePath("properties.packagePath")]
         public string PackagePath { get; set; }
-        /// <summary> Size of the package. This value is a combination of the size from update metadata and size of the payload that results from the live scan operation for OS update content. </summary>
+        /// <summary>
+        /// Size of the package. This value is a combination of the size from update metadata and size of the payload that results from the live scan operation for OS update content.
+        /// Serialized Name: Update.properties.packageSizeInMb
+        /// </summary>
+        [WirePath("properties.packageSizeInMb")]
         public float? PackageSizeInMb { get; set; }
-        /// <summary> Display name of the Update. </summary>
+        /// <summary>
+        /// Display name of the Update
+        /// Serialized Name: Update.properties.displayName
+        /// </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Version of the update. </summary>
+        /// <summary>
+        /// Version of the update.
+        /// Serialized Name: Update.properties.version
+        /// </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
-        /// <summary> Publisher of the update package. </summary>
+        /// <summary>
+        /// Publisher of the update package.
+        /// Serialized Name: Update.properties.publisher
+        /// </summary>
+        [WirePath("properties.publisher")]
         public string Publisher { get; set; }
-        /// <summary> Link to release notes for the update. </summary>
+        /// <summary>
+        /// Link to release notes for the update.
+        /// Serialized Name: Update.properties.releaseLink
+        /// </summary>
+        [WirePath("properties.releaseLink")]
         public string ReleaseLink { get; set; }
-        /// <summary> Indicates the way the update content can be downloaded. </summary>
+        /// <summary>
+        /// Indicates the way the update content can be downloaded.
+        /// Serialized Name: Update.properties.availabilityType
+        /// </summary>
+        [WirePath("properties.availabilityType")]
         public HciAvailabilityType? AvailabilityType { get; set; }
-        /// <summary> Customer-visible type of the update. </summary>
+        /// <summary>
+        /// Customer-visible type of the update.
+        /// Serialized Name: Update.properties.packageType
+        /// </summary>
+        [WirePath("properties.packageType")]
         public string PackageType { get; set; }
-        /// <summary> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </summary>
+        /// <summary>
+        /// Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type.
+        /// Serialized Name: Update.properties.additionalProperties
+        /// </summary>
+        [WirePath("properties.additionalProperties")]
         public string AdditionalProperties { get; set; }
-        /// <summary> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </summary>
+        /// <summary>
+        /// Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded.
+        /// Serialized Name: Update.properties.updateStateProperties.progressPercentage
+        /// </summary>
+        [WirePath("properties.progressPercentage")]
         public float? ProgressPercentage { get; set; }
-        /// <summary> Brief message with instructions for updates of AvailabilityType Notify. </summary>
+        /// <summary>
+        /// Brief message with instructions for updates of AvailabilityType Notify.
+        /// Serialized Name: Update.properties.updateStateProperties.notifyMessage
+        /// </summary>
+        [WirePath("properties.notifyMessage")]
         public string NotifyMessage { get; set; }
     }
 }

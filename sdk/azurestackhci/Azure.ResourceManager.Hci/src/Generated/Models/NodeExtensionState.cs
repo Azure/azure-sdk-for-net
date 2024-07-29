@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> State of Arc Extension in this node. </summary>
+    /// <summary>
+    /// State of Arc Extension in this node.
+    /// Serialized Name: NodeExtensionState
+    /// </summary>
     public readonly partial struct NodeExtensionState : IEquatable<NodeExtensionState>
     {
         private readonly string _value;
@@ -40,39 +43,90 @@ namespace Azure.ResourceManager.Hci.Models
         private const string AcceptedValue = "Accepted";
         private const string ProvisioningValue = "Provisioning";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: NodeExtensionState.NotSpecified
+        /// </summary>
         public static NodeExtensionState NotSpecified { get; } = new NodeExtensionState(NotSpecifiedValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: NodeExtensionState.Error
+        /// </summary>
         public static NodeExtensionState Error { get; } = new NodeExtensionState(ErrorValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: NodeExtensionState.Succeeded
+        /// </summary>
         public static NodeExtensionState Succeeded { get; } = new NodeExtensionState(SucceededValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: NodeExtensionState.Canceled
+        /// </summary>
         public static NodeExtensionState Canceled { get; } = new NodeExtensionState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: NodeExtensionState.Failed
+        /// </summary>
         public static NodeExtensionState Failed { get; } = new NodeExtensionState(FailedValue);
-        /// <summary> Connected. </summary>
+        /// <summary>
+        /// Connected
+        /// Serialized Name: NodeExtensionState.Connected
+        /// </summary>
         public static NodeExtensionState Connected { get; } = new NodeExtensionState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary>
+        /// Disconnected
+        /// Serialized Name: NodeExtensionState.Disconnected
+        /// </summary>
         public static NodeExtensionState Disconnected { get; } = new NodeExtensionState(DisconnectedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: NodeExtensionState.Deleted
+        /// </summary>
         public static NodeExtensionState Deleted { get; } = new NodeExtensionState(DeletedValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: NodeExtensionState.Creating
+        /// </summary>
         public static NodeExtensionState Creating { get; } = new NodeExtensionState(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: NodeExtensionState.Updating
+        /// </summary>
         public static NodeExtensionState Updating { get; } = new NodeExtensionState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: NodeExtensionState.Deleting
+        /// </summary>
         public static NodeExtensionState Deleting { get; } = new NodeExtensionState(DeletingValue);
-        /// <summary> Moving. </summary>
+        /// <summary>
+        /// Moving
+        /// Serialized Name: NodeExtensionState.Moving
+        /// </summary>
         public static NodeExtensionState Moving { get; } = new NodeExtensionState(MovingValue);
-        /// <summary> PartiallySucceeded. </summary>
+        /// <summary>
+        /// PartiallySucceeded
+        /// Serialized Name: NodeExtensionState.PartiallySucceeded
+        /// </summary>
         public static NodeExtensionState PartiallySucceeded { get; } = new NodeExtensionState(PartiallySucceededValue);
-        /// <summary> PartiallyConnected. </summary>
+        /// <summary>
+        /// PartiallyConnected
+        /// Serialized Name: NodeExtensionState.PartiallyConnected
+        /// </summary>
         public static NodeExtensionState PartiallyConnected { get; } = new NodeExtensionState(PartiallyConnectedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: NodeExtensionState.InProgress
+        /// </summary>
         public static NodeExtensionState InProgress { get; } = new NodeExtensionState(InProgressValue);
-        /// <summary> Accepted. </summary>
+        /// <summary>
+        /// Accepted
+        /// Serialized Name: NodeExtensionState.Accepted
+        /// </summary>
         public static NodeExtensionState Accepted { get; } = new NodeExtensionState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary>
+        /// Provisioning
+        /// Serialized Name: NodeExtensionState.Provisioning
+        /// </summary>
         public static NodeExtensionState Provisioning { get; } = new NodeExtensionState(ProvisioningValue);
         /// <summary> Determines if two <see cref="NodeExtensionState"/> values are the same. </summary>
         public static bool operator ==(NodeExtensionState left, NodeExtensionState right) => left.Equals(right);

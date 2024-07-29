@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Extension managed by user or Azure. </summary>
+    /// <summary>
+    /// Extension managed by user or Azure.
+    /// Serialized Name: ExtensionManagedBy
+    /// </summary>
     public readonly partial struct ExtensionManagedBy : IEquatable<ExtensionManagedBy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Hci.Models
         private const string UserValue = "User";
         private const string AzureValue = "Azure";
 
-        /// <summary> User. </summary>
+        /// <summary>
+        /// User
+        /// Serialized Name: ExtensionManagedBy.User
+        /// </summary>
         public static ExtensionManagedBy User { get; } = new ExtensionManagedBy(UserValue);
-        /// <summary> Azure. </summary>
+        /// <summary>
+        /// Azure
+        /// Serialized Name: ExtensionManagedBy.Azure
+        /// </summary>
         public static ExtensionManagedBy Azure { get; } = new ExtensionManagedBy(AzureValue);
         /// <summary> Determines if two <see cref="ExtensionManagedBy"/> values are the same. </summary>
         public static bool operator ==(ExtensionManagedBy left, ExtensionManagedBy right) => left.Equals(right);

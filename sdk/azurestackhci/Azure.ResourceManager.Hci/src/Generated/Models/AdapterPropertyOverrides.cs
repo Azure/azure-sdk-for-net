@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The AdapterPropertyOverrides of a cluster. </summary>
+    /// <summary>
+    /// The AdapterPropertyOverrides of a cluster.
+    /// Serialized Name: AdapterPropertyOverrides
+    /// </summary>
     public partial class AdapterPropertyOverrides
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdapterPropertyOverrides"/>. </summary>
-        /// <param name="jumboPacket"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="networkDirect"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="networkDirectTechnology"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'. </param>
+        /// <param name="jumboPacket">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: AdapterPropertyOverrides.jumboPacket
+        /// </param>
+        /// <param name="networkDirect">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: AdapterPropertyOverrides.networkDirect
+        /// </param>
+        /// <param name="networkDirectTechnology">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'
+        /// Serialized Name: AdapterPropertyOverrides.networkDirectTechnology
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdapterPropertyOverrides(string jumboPacket, string networkDirect, string networkDirectTechnology, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: AdapterPropertyOverrides.jumboPacket
+        /// </summary>
+        [WirePath("jumboPacket")]
         public string JumboPacket { get; set; }
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: AdapterPropertyOverrides.networkDirect
+        /// </summary>
+        [WirePath("networkDirect")]
         public string NetworkDirect { get; set; }
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'
+        /// Serialized Name: AdapterPropertyOverrides.networkDirectTechnology
+        /// </summary>
+        [WirePath("networkDirectTechnology")]
         public string NetworkDirectTechnology { get; set; }
     }
 }

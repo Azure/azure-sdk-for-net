@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The validate request for Edge Device. </summary>
+    /// <summary>
+    /// The validate request for Edge Device.
+    /// Serialized Name: ValidateRequest
+    /// </summary>
     public partial class ValidateContent
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.Hci.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ValidateContent"/>. </summary>
-        /// <param name="edgeDeviceIds"> Node Ids against which, current node has to be validated. </param>
+        /// <param name="edgeDeviceIds">
+        /// Node Ids against which, current node has to be validated.
+        /// Serialized Name: ValidateRequest.edgeDeviceIds
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeDeviceIds"/> is null. </exception>
         public ValidateContent(IEnumerable<string> edgeDeviceIds)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateContent"/>. </summary>
-        /// <param name="edgeDeviceIds"> Node Ids against which, current node has to be validated. </param>
-        /// <param name="additionalInfo"> Additional info required for validation. </param>
+        /// <param name="edgeDeviceIds">
+        /// Node Ids against which, current node has to be validated.
+        /// Serialized Name: ValidateRequest.edgeDeviceIds
+        /// </param>
+        /// <param name="additionalInfo">
+        /// Additional info required for validation.
+        /// Serialized Name: ValidateRequest.additionalInfo
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidateContent(IList<string> edgeDeviceIds, string additionalInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,17 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        /// <summary> Node Ids against which, current node has to be validated. </summary>
+        /// <summary>
+        /// Node Ids against which, current node has to be validated.
+        /// Serialized Name: ValidateRequest.edgeDeviceIds
+        /// </summary>
+        [WirePath("edgeDeviceIds")]
         public IList<string> EdgeDeviceIds { get; }
-        /// <summary> Additional info required for validation. </summary>
+        /// <summary>
+        /// Additional info required for validation.
+        /// Serialized Name: ValidateRequest.additionalInfo
+        /// </summary>
+        [WirePath("additionalInfo")]
         public string AdditionalInfo { get; set; }
     }
 }

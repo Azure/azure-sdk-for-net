@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Describes the properties of a Machine Extension that can be updated. </summary>
+    /// <summary>
+    /// Describes the properties of a Machine Extension that can be updated.
+    /// Serialized Name: ExtensionPatchParameters
+    /// </summary>
     public partial class ExtensionPatchContent
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtensionPatchContent"/>. </summary>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
+        /// <param name="typeHandlerVersion">
+        /// Specifies the version of the script handler. Latest version would be used if not specified.
+        /// Serialized Name: ExtensionPatchParameters.typeHandlerVersion
+        /// </param>
+        /// <param name="enableAutomaticUpgrade">
+        /// Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available.
+        /// Serialized Name: ExtensionPatchParameters.enableAutomaticUpgrade
+        /// </param>
+        /// <param name="settings">
+        /// Json formatted public settings for the extension.
+        /// Serialized Name: ExtensionPatchParameters.settings
+        /// </param>
+        /// <param name="protectedSettings">
+        /// Protected settings (may contain secrets).
+        /// Serialized Name: ExtensionPatchParameters.protectedSettings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtensionPatchContent(string typeHandlerVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,12 +80,21 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the version of the script handler. Latest version would be used if not specified. </summary>
+        /// <summary>
+        /// Specifies the version of the script handler. Latest version would be used if not specified.
+        /// Serialized Name: ExtensionPatchParameters.typeHandlerVersion
+        /// </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
-        /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        /// <summary>
+        /// Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available.
+        /// Serialized Name: ExtensionPatchParameters.enableAutomaticUpgrade
+        /// </summary>
+        [WirePath("enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade { get; set; }
         /// <summary>
         /// Json formatted public settings for the extension.
+        /// Serialized Name: ExtensionPatchParameters.settings
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -99,9 +123,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("settings")]
         public BinaryData Settings { get; set; }
         /// <summary>
         /// Protected settings (may contain secrets).
+        /// Serialized Name: ExtensionPatchParameters.protectedSettings
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -130,6 +156,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("protectedSettings")]
         public BinaryData ProtectedSettings { get; set; }
     }
 }

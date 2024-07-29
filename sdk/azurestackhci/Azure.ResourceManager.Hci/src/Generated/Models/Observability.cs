@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The Observability of AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The Observability of AzureStackHCI Cluster.
+    /// Serialized Name: Observability
+    /// </summary>
     public partial class Observability
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Observability"/>. </summary>
-        /// <param name="streamingDataClient"> Enables telemetry data to be sent to Microsoft. </param>
-        /// <param name="euLocation"> Location of your cluster. The log and diagnostic data is sent to the appropriate diagnostics servers depending upon where your cluster resides. Setting this to false results in all data sent to Microsoft to be stored outside of the EU. </param>
-        /// <param name="episodicDataUpload"> When set to true, collects log data to facilitate quicker issue resolution. </param>
+        /// <param name="streamingDataClient">
+        /// Enables telemetry data to be sent to Microsoft
+        /// Serialized Name: Observability.streamingDataClient
+        /// </param>
+        /// <param name="euLocation">
+        /// Location of your cluster. The log and diagnostic data is sent to the appropriate diagnostics servers depending upon where your cluster resides. Setting this to false results in all data sent to Microsoft to be stored outside of the EU.
+        /// Serialized Name: Observability.euLocation
+        /// </param>
+        /// <param name="episodicDataUpload">
+        /// When set to true, collects log data to facilitate quicker issue resolution.
+        /// Serialized Name: Observability.episodicDataUpload
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Observability(bool? streamingDataClient, bool? euLocation, bool? episodicDataUpload, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enables telemetry data to be sent to Microsoft. </summary>
+        /// <summary>
+        /// Enables telemetry data to be sent to Microsoft
+        /// Serialized Name: Observability.streamingDataClient
+        /// </summary>
+        [WirePath("streamingDataClient")]
         public bool? StreamingDataClient { get; set; }
-        /// <summary> Location of your cluster. The log and diagnostic data is sent to the appropriate diagnostics servers depending upon where your cluster resides. Setting this to false results in all data sent to Microsoft to be stored outside of the EU. </summary>
+        /// <summary>
+        /// Location of your cluster. The log and diagnostic data is sent to the appropriate diagnostics servers depending upon where your cluster resides. Setting this to false results in all data sent to Microsoft to be stored outside of the EU.
+        /// Serialized Name: Observability.euLocation
+        /// </summary>
+        [WirePath("euLocation")]
         public bool? EuLocation { get; set; }
-        /// <summary> When set to true, collects log data to facilitate quicker issue resolution. </summary>
+        /// <summary>
+        /// When set to true, collects log data to facilitate quicker issue resolution.
+        /// Serialized Name: Observability.episodicDataUpload
+        /// </summary>
+        [WirePath("episodicDataUpload")]
         public bool? EpisodicDataUpload { get; set; }
     }
 }

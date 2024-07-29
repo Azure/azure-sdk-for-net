@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the DeploymentSetting data model.
     /// Edge device resource
+    /// Serialized Name: DeploymentSetting
     /// </summary>
     public partial class DeploymentSettingData : ResourceData
     {
@@ -62,12 +63,30 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> DeploymentSetting provisioning state. </param>
-        /// <param name="arcNodeResourceIds"> Azure resource ids of Arc machines to be part of cluster. </param>
-        /// <param name="deploymentMode"> The deployment mode for cluster deployment. </param>
-        /// <param name="operationType"> The intended operation for a cluster. </param>
-        /// <param name="deploymentConfiguration"> Scale units will contains list of deployment data. </param>
-        /// <param name="reportedProperties"> Deployment Status reported from cluster. </param>
+        /// <param name="provisioningState">
+        /// DeploymentSetting provisioning state
+        /// Serialized Name: DeploymentSetting.properties.provisioningState
+        /// </param>
+        /// <param name="arcNodeResourceIds">
+        /// Azure resource ids of Arc machines to be part of cluster.
+        /// Serialized Name: DeploymentSetting.properties.arcNodeResourceIds
+        /// </param>
+        /// <param name="deploymentMode">
+        /// The deployment mode for cluster deployment.
+        /// Serialized Name: DeploymentSetting.properties.deploymentMode
+        /// </param>
+        /// <param name="operationType">
+        /// The intended operation for a cluster.
+        /// Serialized Name: DeploymentSetting.properties.operationType
+        /// </param>
+        /// <param name="deploymentConfiguration">
+        /// Scale units will contains list of deployment data
+        /// Serialized Name: DeploymentSetting.properties.deploymentConfiguration
+        /// </param>
+        /// <param name="reportedProperties">
+        /// Deployment Status reported from cluster.
+        /// Serialized Name: DeploymentSetting.properties.reportedProperties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, IList<string> arcNodeResourceIds, DeploymentMode? deploymentMode, OperationType? operationType, DeploymentConfiguration deploymentConfiguration, EceReportedProperties reportedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -80,17 +99,41 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> DeploymentSetting provisioning state. </summary>
+        /// <summary>
+        /// DeploymentSetting provisioning state
+        /// Serialized Name: DeploymentSetting.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
-        /// <summary> Azure resource ids of Arc machines to be part of cluster. </summary>
+        /// <summary>
+        /// Azure resource ids of Arc machines to be part of cluster.
+        /// Serialized Name: DeploymentSetting.properties.arcNodeResourceIds
+        /// </summary>
+        [WirePath("properties.arcNodeResourceIds")]
         public IList<string> ArcNodeResourceIds { get; }
-        /// <summary> The deployment mode for cluster deployment. </summary>
+        /// <summary>
+        /// The deployment mode for cluster deployment.
+        /// Serialized Name: DeploymentSetting.properties.deploymentMode
+        /// </summary>
+        [WirePath("properties.deploymentMode")]
         public DeploymentMode? DeploymentMode { get; set; }
-        /// <summary> The intended operation for a cluster. </summary>
+        /// <summary>
+        /// The intended operation for a cluster.
+        /// Serialized Name: DeploymentSetting.properties.operationType
+        /// </summary>
+        [WirePath("properties.operationType")]
         public OperationType? OperationType { get; set; }
-        /// <summary> Scale units will contains list of deployment data. </summary>
+        /// <summary>
+        /// Scale units will contains list of deployment data
+        /// Serialized Name: DeploymentSetting.properties.deploymentConfiguration
+        /// </summary>
+        [WirePath("properties.deploymentConfiguration")]
         public DeploymentConfiguration DeploymentConfiguration { get; set; }
-        /// <summary> Deployment Status reported from cluster. </summary>
+        /// <summary>
+        /// Deployment Status reported from cluster.
+        /// Serialized Name: DeploymentSetting.properties.reportedProperties
+        /// </summary>
+        [WirePath("properties.reportedProperties")]
         public EceReportedProperties ReportedProperties { get; }
     }
 }

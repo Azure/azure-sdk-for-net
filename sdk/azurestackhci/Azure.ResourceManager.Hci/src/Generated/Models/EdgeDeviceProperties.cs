@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Edge Device properties. </summary>
+    /// <summary>
+    /// Edge Device properties
+    /// Serialized Name: EdgeDeviceProperties
+    /// </summary>
     public partial class EdgeDeviceProperties
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeDeviceProperties"/>. </summary>
-        /// <param name="deviceConfiguration"> Device Configuration. </param>
-        /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
+        /// <param name="deviceConfiguration">
+        /// Device Configuration
+        /// Serialized Name: EdgeDeviceProperties.deviceConfiguration
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of edgeDevice resource
+        /// Serialized Name: EdgeDeviceProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EdgeDeviceProperties(DeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Device Configuration. </summary>
+        /// <summary>
+        /// Device Configuration
+        /// Serialized Name: EdgeDeviceProperties.deviceConfiguration
+        /// </summary>
+        [WirePath("deviceConfiguration")]
         public DeviceConfiguration DeviceConfiguration { get; set; }
-        /// <summary> Provisioning state of edgeDevice resource. </summary>
+        /// <summary>
+        /// Provisioning state of edgeDevice resource
+        /// Serialized Name: EdgeDeviceProperties.provisioningState
+        /// </summary>
+        [WirePath("provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
     }
 }

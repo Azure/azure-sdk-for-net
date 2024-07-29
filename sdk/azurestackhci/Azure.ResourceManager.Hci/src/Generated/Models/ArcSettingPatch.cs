@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> ArcSetting details to update. </summary>
+    /// <summary>
+    /// ArcSetting details to update.
+    /// Serialized Name: ArcSettingsPatch
+    /// </summary>
     public partial class ArcSettingPatch
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: ArcSettingsPatch.tags
+        /// </param>
+        /// <param name="connectivityProperties">
+        /// contains connectivity related configuration for ARC resources
+        /// Serialized Name: ArcSettingsPatch.properties.connectivityProperties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArcSettingPatch(IDictionary<string, string> tags, BinaryData connectivityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,15 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: ArcSettingsPatch.tags
+        /// </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary>
         /// contains connectivity related configuration for ARC resources
+        /// Serialized Name: ArcSettingsPatch.properties.connectivityProperties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -94,6 +108,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.connectivityProperties")]
         public BinaryData ConnectivityProperties { get; set; }
     }
 }

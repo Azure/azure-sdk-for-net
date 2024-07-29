@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The StorageAdapter physical nodes of a cluster. </summary>
+    /// <summary>
+    /// The StorageAdapter physical nodes of a cluster.
+    /// Serialized Name: StorageAdapterIPInfo
+    /// </summary>
     public partial class StorageAdapterIPInfo
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAdapterIPInfo"/>. </summary>
-        /// <param name="physicalNode"> storage adapter physical node name. </param>
-        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
-        /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="physicalNode">
+        /// storage adapter physical node name.
+        /// Serialized Name: StorageAdapterIPInfo.physicalNode
+        /// </param>
+        /// <param name="ipv4Address">
+        /// The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster.
+        /// Serialized Name: StorageAdapterIPInfo.ipv4Address
+        /// </param>
+        /// <param name="subnetMask">
+        /// The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster.
+        /// Serialized Name: StorageAdapterIPInfo.subnetMask
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StorageAdapterIPInfo(string physicalNode, string ipv4Address, string subnetMask, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> storage adapter physical node name. </summary>
+        /// <summary>
+        /// storage adapter physical node name.
+        /// Serialized Name: StorageAdapterIPInfo.physicalNode
+        /// </summary>
+        [WirePath("physicalNode")]
         public string PhysicalNode { get; set; }
-        /// <summary> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </summary>
+        /// <summary>
+        /// The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster.
+        /// Serialized Name: StorageAdapterIPInfo.ipv4Address
+        /// </summary>
+        [WirePath("ipv4Address")]
         public string IPv4Address { get; set; }
-        /// <summary> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </summary>
+        /// <summary>
+        /// The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster.
+        /// Serialized Name: StorageAdapterIPInfo.subnetMask
+        /// </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
     }
 }

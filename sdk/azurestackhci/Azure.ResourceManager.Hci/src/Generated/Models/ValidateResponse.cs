@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> An Accepted response with an Operation-Location header. </summary>
+    /// <summary>
+    /// An Accepted response with an Operation-Location header.
+    /// Serialized Name: ValidateResponse
+    /// </summary>
     public partial class ValidateResponse
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateResponse"/>. </summary>
-        /// <param name="status"> edge device validation status. </param>
+        /// <param name="status">
+        /// edge device validation status
+        /// Serialized Name: ValidateResponse.status
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidateResponse(string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,11 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> edge device validation status. </summary>
+        /// <summary>
+        /// edge device validation status
+        /// Serialized Name: ValidateResponse.status
+        /// </summary>
+        [WirePath("status")]
         public string Status { get; }
     }
 }

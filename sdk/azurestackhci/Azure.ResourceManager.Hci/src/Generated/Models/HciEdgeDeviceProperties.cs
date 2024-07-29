@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> properties for Arc-enabled edge device with HCI OS. </summary>
+    /// <summary>
+    /// properties for Arc-enabled edge device with HCI OS.
+    /// Serialized Name: HciEdgeDeviceProperties
+    /// </summary>
     public partial class HciEdgeDeviceProperties : EdgeDeviceProperties
     {
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceProperties"/>. </summary>
@@ -19,16 +22,29 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceProperties"/>. </summary>
-        /// <param name="deviceConfiguration"> Device Configuration. </param>
-        /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
+        /// <param name="deviceConfiguration">
+        /// Device Configuration
+        /// Serialized Name: EdgeDeviceProperties.deviceConfiguration
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of edgeDevice resource
+        /// Serialized Name: EdgeDeviceProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="reportedProperties"> The instance view of all current configurations on HCI device. </param>
+        /// <param name="reportedProperties">
+        /// The instance view of all current configurations on HCI device.
+        /// Serialized Name: HciEdgeDeviceProperties.reportedProperties
+        /// </param>
         internal HciEdgeDeviceProperties(DeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, HciReportedProperties reportedProperties) : base(deviceConfiguration, provisioningState, serializedAdditionalRawData)
         {
             ReportedProperties = reportedProperties;
         }
 
-        /// <summary> The instance view of all current configurations on HCI device. </summary>
+        /// <summary>
+        /// The instance view of all current configurations on HCI device.
+        /// Serialized Name: HciEdgeDeviceProperties.reportedProperties
+        /// </summary>
+        [WirePath("reportedProperties")]
         public HciReportedProperties ReportedProperties { get; }
     }
 }

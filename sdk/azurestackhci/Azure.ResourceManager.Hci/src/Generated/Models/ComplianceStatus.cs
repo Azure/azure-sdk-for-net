@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Represents the compliance status of a resource. </summary>
+    /// <summary>
+    /// Represents the compliance status of a resource.
+    /// Serialized Name: ComplianceStatus
+    /// </summary>
     public readonly partial struct ComplianceStatus : IEquatable<ComplianceStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Hci.Models
         private const string NonCompliantValue = "NonCompliant";
         private const string PendingValue = "Pending";
 
-        /// <summary> The resource is compliant. </summary>
+        /// <summary>
+        /// The resource is compliant
+        /// Serialized Name: ComplianceStatus.Compliant
+        /// </summary>
         public static ComplianceStatus Compliant { get; } = new ComplianceStatus(CompliantValue);
-        /// <summary> The resource is non-compliant. </summary>
+        /// <summary>
+        /// The resource is non-compliant
+        /// Serialized Name: ComplianceStatus.NonCompliant
+        /// </summary>
         public static ComplianceStatus NonCompliant { get; } = new ComplianceStatus(NonCompliantValue);
-        /// <summary> The resource compliance status is pending. </summary>
+        /// <summary>
+        /// The resource compliance status is pending
+        /// Serialized Name: ComplianceStatus.Pending
+        /// </summary>
         public static ComplianceStatus Pending { get; } = new ComplianceStatus(PendingValue);
         /// <summary> Determines if two <see cref="ComplianceStatus"/> values are the same. </summary>
         public static bool operator ==(ComplianceStatus left, ComplianceStatus right) => left.Equals(right);

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -262,6 +264,240 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterName))
+                {
+                    builder.Append("  clusterName: ");
+                    if (ClusterName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClusterName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClusterName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterId))
+                {
+                    builder.Append("  clusterId: ");
+                    builder.AppendLine($"'{ClusterId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterVersion))
+                {
+                    builder.Append("  clusterVersion: ");
+                    if (ClusterVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClusterVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClusterVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nodes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Nodes))
+                {
+                    if (Nodes.Any())
+                    {
+                        builder.Append("  nodes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Nodes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  nodes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastUpdated: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdatedOn))
+                {
+                    builder.Append("  lastUpdated: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImdsAttestation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imdsAttestation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImdsAttestation))
+                {
+                    builder.Append("  imdsAttestation: ");
+                    builder.AppendLine($"'{ImdsAttestation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiagnosticLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diagnosticLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiagnosticLevel))
+                {
+                    builder.Append("  diagnosticLevel: ");
+                    builder.AppendLine($"'{DiagnosticLevel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedCapabilities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedCapabilities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedCapabilities))
+                {
+                    if (SupportedCapabilities.Any())
+                    {
+                        builder.Append("  supportedCapabilities: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedCapabilities)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterType))
+                {
+                    builder.Append("  clusterType: ");
+                    builder.AppendLine($"'{ClusterType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Manufacturer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  manufacturer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Manufacturer))
+                {
+                    builder.Append("  manufacturer: ");
+                    if (Manufacturer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Manufacturer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Manufacturer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OemActivation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  oemActivation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OemActivation))
+                {
+                    builder.Append("  oemActivation: ");
+                    builder.AppendLine($"'{OemActivation.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HciClusterReportedProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -270,6 +506,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support writing '{options.Format}' format.");
             }

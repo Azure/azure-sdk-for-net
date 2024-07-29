@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The InfrastructureNetwork of a AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The InfrastructureNetwork of a AzureStackHCI Cluster.
+    /// Serialized Name: InfrastructureNetwork
+    /// </summary>
     public partial class InfrastructureNetwork
     {
         /// <summary>
@@ -53,11 +56,26 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InfrastructureNetwork"/>. </summary>
-        /// <param name="subnetMask"> Subnet mask that matches the provided IP address space. </param>
-        /// <param name="gateway"> Default gateway that should be used for the provided IP address space. </param>
-        /// <param name="ipPools"> Range of IP addresses from which addresses are allocated for nodes within a subnet. </param>
-        /// <param name="dnsServers"> IPv4 address of the DNS servers in your environment. </param>
-        /// <param name="useDhcp"> Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required. </param>
+        /// <param name="subnetMask">
+        /// Subnet mask that matches the provided IP address space.
+        /// Serialized Name: InfrastructureNetwork.subnetMask
+        /// </param>
+        /// <param name="gateway">
+        /// Default gateway that should be used for the provided IP address space.
+        /// Serialized Name: InfrastructureNetwork.gateway
+        /// </param>
+        /// <param name="ipPools">
+        /// Range of IP addresses from which addresses are allocated for nodes within a subnet.
+        /// Serialized Name: InfrastructureNetwork.ipPools
+        /// </param>
+        /// <param name="dnsServers">
+        /// IPv4 address of the DNS servers in your environment.
+        /// Serialized Name: InfrastructureNetwork.dnsServers
+        /// </param>
+        /// <param name="useDhcp">
+        /// Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required
+        /// Serialized Name: InfrastructureNetwork.useDhcp
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InfrastructureNetwork(string subnetMask, string gateway, IList<IPPools> ipPools, IList<string> dnsServers, bool? useDhcp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,15 +87,35 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Subnet mask that matches the provided IP address space. </summary>
+        /// <summary>
+        /// Subnet mask that matches the provided IP address space.
+        /// Serialized Name: InfrastructureNetwork.subnetMask
+        /// </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
-        /// <summary> Default gateway that should be used for the provided IP address space. </summary>
+        /// <summary>
+        /// Default gateway that should be used for the provided IP address space.
+        /// Serialized Name: InfrastructureNetwork.gateway
+        /// </summary>
+        [WirePath("gateway")]
         public string Gateway { get; set; }
-        /// <summary> Range of IP addresses from which addresses are allocated for nodes within a subnet. </summary>
+        /// <summary>
+        /// Range of IP addresses from which addresses are allocated for nodes within a subnet.
+        /// Serialized Name: InfrastructureNetwork.ipPools
+        /// </summary>
+        [WirePath("ipPools")]
         public IList<IPPools> IPPools { get; }
-        /// <summary> IPv4 address of the DNS servers in your environment. </summary>
+        /// <summary>
+        /// IPv4 address of the DNS servers in your environment.
+        /// Serialized Name: InfrastructureNetwork.dnsServers
+        /// </summary>
+        [WirePath("dnsServers")]
         public IList<string> DnsServers { get; }
-        /// <summary> Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required. </summary>
+        /// <summary>
+        /// Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required
+        /// Serialized Name: InfrastructureNetwork.useDhcp
+        /// </summary>
+        [WirePath("useDhcp")]
         public bool? UseDhcp { get; set; }
     }
 }

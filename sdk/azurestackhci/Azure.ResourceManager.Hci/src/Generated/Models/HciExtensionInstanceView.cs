@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Describes the Extension Instance View. </summary>
+    /// <summary>
+    /// Describes the Extension Instance View.
+    /// Serialized Name: ExtensionInstanceView
+    /// </summary>
     public partial class HciExtensionInstanceView
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciExtensionInstanceView"/>. </summary>
-        /// <param name="name"> The extension name. </param>
-        /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="status"> Instance view status. </param>
+        /// <param name="name">
+        /// The extension name.
+        /// Serialized Name: ExtensionInstanceView.name
+        /// </param>
+        /// <param name="extensionInstanceViewType">
+        /// Specifies the type of the extension; an example is "MicrosoftMonitoringAgent".
+        /// Serialized Name: ExtensionInstanceView.type
+        /// </param>
+        /// <param name="typeHandlerVersion">
+        /// Specifies the version of the script handler.
+        /// Serialized Name: ExtensionInstanceView.typeHandlerVersion
+        /// </param>
+        /// <param name="status">
+        /// Instance view status.
+        /// Serialized Name: ExtensionInstanceView.status
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciExtensionInstanceView(string name, string extensionInstanceViewType, string typeHandlerVersion, ExtensionInstanceViewStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,29 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The extension name. </summary>
+        /// <summary>
+        /// The extension name.
+        /// Serialized Name: ExtensionInstanceView.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; }
-        /// <summary> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </summary>
+        /// <summary>
+        /// Specifies the type of the extension; an example is "MicrosoftMonitoringAgent".
+        /// Serialized Name: ExtensionInstanceView.type
+        /// </summary>
+        [WirePath("type")]
         public string ExtensionInstanceViewType { get; }
-        /// <summary> Specifies the version of the script handler. </summary>
+        /// <summary>
+        /// Specifies the version of the script handler.
+        /// Serialized Name: ExtensionInstanceView.typeHandlerVersion
+        /// </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
-        /// <summary> Instance view status. </summary>
+        /// <summary>
+        /// Instance view status.
+        /// Serialized Name: ExtensionInstanceView.status
+        /// </summary>
+        [WirePath("status")]
         public ExtensionInstanceViewStatus Status { get; }
     }
 }

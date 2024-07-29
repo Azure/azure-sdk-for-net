@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The QoSPolicyOverrides of a cluster. </summary>
+    /// <summary>
+    /// The QoSPolicyOverrides of a cluster.
+    /// Serialized Name: QosPolicyOverrides
+    /// </summary>
     public partial class QosPolicyOverrides
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QosPolicyOverrides"/>. </summary>
-        /// <param name="priorityValue8021ActionCluster"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="priorityValue8021ActionSMB"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="bandwidthPercentageSMB"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="priorityValue8021ActionCluster">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: QosPolicyOverrides.priorityValue8021Action_Cluster
+        /// </param>
+        /// <param name="priorityValue8021ActionSMB">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: QosPolicyOverrides.priorityValue8021Action_SMB
+        /// </param>
+        /// <param name="bandwidthPercentageSMB">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: QosPolicyOverrides.bandwidthPercentage_SMB
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QosPolicyOverrides(string priorityValue8021ActionCluster, string priorityValue8021ActionSMB, string bandwidthPercentageSMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: QosPolicyOverrides.priorityValue8021Action_Cluster
+        /// </summary>
+        [WirePath("priorityValue8021Action_Cluster")]
         public string PriorityValue8021ActionCluster { get; set; }
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: QosPolicyOverrides.priorityValue8021Action_SMB
+        /// </summary>
+        [WirePath("priorityValue8021Action_SMB")]
         public string PriorityValue8021ActionSMB { get; set; }
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: QosPolicyOverrides.bandwidthPercentage_SMB
+        /// </summary>
+        [WirePath("bandwidthPercentage_SMB")]
         public string BandwidthPercentageSMB { get; set; }
     }
 }

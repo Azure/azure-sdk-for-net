@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the SecuritySetting data model.
     /// Security settings proxy resource
+    /// Serialized Name: SecuritySetting
     /// </summary>
     public partial class SecuritySettingData : ResourceData
     {
@@ -61,11 +62,26 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="securedCoreComplianceAssignment"> Secured Core Compliance Assignment. </param>
-        /// <param name="wdacComplianceAssignment"> WDAC Compliance Assignment. </param>
-        /// <param name="smbEncryptionForIntraClusterTrafficComplianceAssignment"> SMB encryption for intra-cluster traffic Compliance Assignment. </param>
-        /// <param name="securityComplianceStatus"> Security Compliance Status. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="securedCoreComplianceAssignment">
+        /// Secured Core Compliance Assignment
+        /// Serialized Name: SecuritySetting.properties.securedCoreComplianceAssignment
+        /// </param>
+        /// <param name="wdacComplianceAssignment">
+        /// WDAC Compliance Assignment
+        /// Serialized Name: SecuritySetting.properties.wdacComplianceAssignment
+        /// </param>
+        /// <param name="smbEncryptionForIntraClusterTrafficComplianceAssignment">
+        /// SMB encryption for intra-cluster traffic Compliance Assignment
+        /// Serialized Name: SecuritySetting.properties.smbEncryptionForIntraClusterTrafficComplianceAssignment
+        /// </param>
+        /// <param name="securityComplianceStatus">
+        /// Security Compliance Status
+        /// Serialized Name: SecuritySetting.properties.securityComplianceStatus
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: SecuritySetting.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecuritySettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComplianceAssignmentType? securedCoreComplianceAssignment, ComplianceAssignmentType? wdacComplianceAssignment, ComplianceAssignmentType? smbEncryptionForIntraClusterTrafficComplianceAssignment, SecurityComplianceStatus securityComplianceStatus, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,15 +93,35 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Secured Core Compliance Assignment. </summary>
+        /// <summary>
+        /// Secured Core Compliance Assignment
+        /// Serialized Name: SecuritySetting.properties.securedCoreComplianceAssignment
+        /// </summary>
+        [WirePath("properties.securedCoreComplianceAssignment")]
         public ComplianceAssignmentType? SecuredCoreComplianceAssignment { get; set; }
-        /// <summary> WDAC Compliance Assignment. </summary>
+        /// <summary>
+        /// WDAC Compliance Assignment
+        /// Serialized Name: SecuritySetting.properties.wdacComplianceAssignment
+        /// </summary>
+        [WirePath("properties.wdacComplianceAssignment")]
         public ComplianceAssignmentType? WdacComplianceAssignment { get; set; }
-        /// <summary> SMB encryption for intra-cluster traffic Compliance Assignment. </summary>
+        /// <summary>
+        /// SMB encryption for intra-cluster traffic Compliance Assignment
+        /// Serialized Name: SecuritySetting.properties.smbEncryptionForIntraClusterTrafficComplianceAssignment
+        /// </summary>
+        [WirePath("properties.smbEncryptionForIntraClusterTrafficComplianceAssignment")]
         public ComplianceAssignmentType? SmbEncryptionForIntraClusterTrafficComplianceAssignment { get; set; }
-        /// <summary> Security Compliance Status. </summary>
+        /// <summary>
+        /// Security Compliance Status
+        /// Serialized Name: SecuritySetting.properties.securityComplianceStatus
+        /// </summary>
+        [WirePath("properties.securityComplianceStatus")]
         public SecurityComplianceStatus SecurityComplianceStatus { get; }
-        /// <summary> The status of the last operation. </summary>
+        /// <summary>
+        /// The status of the last operation.
+        /// Serialized Name: SecuritySetting.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; set; }
     }
 }

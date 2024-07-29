@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Overall update state of the stamp. </summary>
+    /// <summary>
+    /// Overall update state of the stamp.
+    /// Serialized Name: UpdateSummariesPropertiesState
+    /// </summary>
     public readonly partial struct UpdateSummariesPropertiesState : IEquatable<UpdateSummariesPropertiesState>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.Hci.Models
         private const string PreparationInProgressValue = "PreparationInProgress";
         private const string PreparationFailedValue = "PreparationFailed";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: UpdateSummariesPropertiesState.Unknown
+        /// </summary>
         public static UpdateSummariesPropertiesState Unknown { get; } = new UpdateSummariesPropertiesState(UnknownValue);
-        /// <summary> AppliedSuccessfully. </summary>
+        /// <summary>
+        /// AppliedSuccessfully
+        /// Serialized Name: UpdateSummariesPropertiesState.AppliedSuccessfully
+        /// </summary>
         public static UpdateSummariesPropertiesState AppliedSuccessfully { get; } = new UpdateSummariesPropertiesState(AppliedSuccessfullyValue);
-        /// <summary> UpdateAvailable. </summary>
+        /// <summary>
+        /// UpdateAvailable
+        /// Serialized Name: UpdateSummariesPropertiesState.UpdateAvailable
+        /// </summary>
         public static UpdateSummariesPropertiesState UpdateAvailable { get; } = new UpdateSummariesPropertiesState(UpdateAvailableValue);
-        /// <summary> UpdateInProgress. </summary>
+        /// <summary>
+        /// UpdateInProgress
+        /// Serialized Name: UpdateSummariesPropertiesState.UpdateInProgress
+        /// </summary>
         public static UpdateSummariesPropertiesState UpdateInProgress { get; } = new UpdateSummariesPropertiesState(UpdateInProgressValue);
-        /// <summary> UpdateFailed. </summary>
+        /// <summary>
+        /// UpdateFailed
+        /// Serialized Name: UpdateSummariesPropertiesState.UpdateFailed
+        /// </summary>
         public static UpdateSummariesPropertiesState UpdateFailed { get; } = new UpdateSummariesPropertiesState(UpdateFailedValue);
-        /// <summary> NeedsAttention. </summary>
+        /// <summary>
+        /// NeedsAttention
+        /// Serialized Name: UpdateSummariesPropertiesState.NeedsAttention
+        /// </summary>
         public static UpdateSummariesPropertiesState NeedsAttention { get; } = new UpdateSummariesPropertiesState(NeedsAttentionValue);
-        /// <summary> PreparationInProgress. </summary>
+        /// <summary>
+        /// PreparationInProgress
+        /// Serialized Name: UpdateSummariesPropertiesState.PreparationInProgress
+        /// </summary>
         public static UpdateSummariesPropertiesState PreparationInProgress { get; } = new UpdateSummariesPropertiesState(PreparationInProgressValue);
-        /// <summary> PreparationFailed. </summary>
+        /// <summary>
+        /// PreparationFailed
+        /// Serialized Name: UpdateSummariesPropertiesState.PreparationFailed
+        /// </summary>
         public static UpdateSummariesPropertiesState PreparationFailed { get; } = new UpdateSummariesPropertiesState(PreparationFailedValue);
         /// <summary> Determines if two <see cref="UpdateSummariesPropertiesState"/> values are the same. </summary>
         public static bool operator ==(UpdateSummariesPropertiesState left, UpdateSummariesPropertiesState right) => left.Equals(right);

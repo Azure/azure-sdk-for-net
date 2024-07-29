@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The Step of AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The Step of AzureStackHCI Cluster.
+    /// Serialized Name: DeploymentStep
+    /// </summary>
     public partial class DeploymentStep
     {
         /// <summary>
@@ -53,14 +56,38 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStep"/>. </summary>
-        /// <param name="name"> Name of step. </param>
-        /// <param name="description"> Description of step. </param>
-        /// <param name="fullStepIndex"> FullStepIndex of step. </param>
-        /// <param name="startTimeUtc"> Start time of step. </param>
-        /// <param name="endTimeUtc"> End time of step. </param>
-        /// <param name="status"> Status of step. Allowed values are 'Error', 'Success', 'InProgress'. </param>
-        /// <param name="steps"> List of nested steps of AzureStackHCI Cluster Deployment. </param>
-        /// <param name="exception"> List of exceptions in AzureStackHCI Cluster Deployment. </param>
+        /// <param name="name">
+        /// Name of step.
+        /// Serialized Name: DeploymentStep.name
+        /// </param>
+        /// <param name="description">
+        /// Description of step.
+        /// Serialized Name: DeploymentStep.description
+        /// </param>
+        /// <param name="fullStepIndex">
+        /// FullStepIndex of step.
+        /// Serialized Name: DeploymentStep.fullStepIndex
+        /// </param>
+        /// <param name="startTimeUtc">
+        /// Start time of step.
+        /// Serialized Name: DeploymentStep.startTimeUtc
+        /// </param>
+        /// <param name="endTimeUtc">
+        /// End time of step.
+        /// Serialized Name: DeploymentStep.endTimeUtc
+        /// </param>
+        /// <param name="status">
+        /// Status of step. Allowed values are 'Error', 'Success', 'InProgress'
+        /// Serialized Name: DeploymentStep.status
+        /// </param>
+        /// <param name="steps">
+        /// List of nested steps of AzureStackHCI Cluster Deployment.
+        /// Serialized Name: DeploymentStep.steps
+        /// </param>
+        /// <param name="exception">
+        /// List of exceptions in AzureStackHCI Cluster Deployment.
+        /// Serialized Name: DeploymentStep.exception
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentStep(string name, string description, string fullStepIndex, string startTimeUtc, string endTimeUtc, string status, IReadOnlyList<DeploymentStep> steps, IReadOnlyList<string> exception, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,21 +102,53 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of step. </summary>
+        /// <summary>
+        /// Name of step.
+        /// Serialized Name: DeploymentStep.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; }
-        /// <summary> Description of step. </summary>
+        /// <summary>
+        /// Description of step.
+        /// Serialized Name: DeploymentStep.description
+        /// </summary>
+        [WirePath("description")]
         public string Description { get; }
-        /// <summary> FullStepIndex of step. </summary>
+        /// <summary>
+        /// FullStepIndex of step.
+        /// Serialized Name: DeploymentStep.fullStepIndex
+        /// </summary>
+        [WirePath("fullStepIndex")]
         public string FullStepIndex { get; }
-        /// <summary> Start time of step. </summary>
+        /// <summary>
+        /// Start time of step.
+        /// Serialized Name: DeploymentStep.startTimeUtc
+        /// </summary>
+        [WirePath("startTimeUtc")]
         public string StartTimeUtc { get; }
-        /// <summary> End time of step. </summary>
+        /// <summary>
+        /// End time of step.
+        /// Serialized Name: DeploymentStep.endTimeUtc
+        /// </summary>
+        [WirePath("endTimeUtc")]
         public string EndTimeUtc { get; }
-        /// <summary> Status of step. Allowed values are 'Error', 'Success', 'InProgress'. </summary>
+        /// <summary>
+        /// Status of step. Allowed values are 'Error', 'Success', 'InProgress'
+        /// Serialized Name: DeploymentStep.status
+        /// </summary>
+        [WirePath("status")]
         public string Status { get; }
-        /// <summary> List of nested steps of AzureStackHCI Cluster Deployment. </summary>
+        /// <summary>
+        /// List of nested steps of AzureStackHCI Cluster Deployment.
+        /// Serialized Name: DeploymentStep.steps
+        /// </summary>
+        [WirePath("steps")]
         public IReadOnlyList<DeploymentStep> Steps { get; }
-        /// <summary> List of exceptions in AzureStackHCI Cluster Deployment. </summary>
+        /// <summary>
+        /// List of exceptions in AzureStackHCI Cluster Deployment.
+        /// Serialized Name: DeploymentStep.exception
+        /// </summary>
+        [WirePath("exception")]
         public IReadOnlyList<string> Exception { get; }
     }
 }

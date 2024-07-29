@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The device Configuration for edge device. </summary>
+    /// <summary>
+    /// The device Configuration for edge device.
+    /// Serialized Name: DeviceConfiguration
+    /// </summary>
     public partial class DeviceConfiguration
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceConfiguration"/>. </summary>
-        /// <param name="nicDetails"> NIC Details of device. </param>
-        /// <param name="deviceMetadata"> Device metadata details. </param>
+        /// <param name="nicDetails">
+        /// NIC Details of device
+        /// Serialized Name: DeviceConfiguration.nicDetails
+        /// </param>
+        /// <param name="deviceMetadata">
+        /// Device metadata details.
+        /// Serialized Name: DeviceConfiguration.deviceMetadata
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeviceConfiguration(IList<NicDetail> nicDetails, string deviceMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> NIC Details of device. </summary>
+        /// <summary>
+        /// NIC Details of device
+        /// Serialized Name: DeviceConfiguration.nicDetails
+        /// </summary>
+        [WirePath("nicDetails")]
         public IList<NicDetail> NicDetails { get; }
-        /// <summary> Device metadata details. </summary>
+        /// <summary>
+        /// Device metadata details.
+        /// Serialized Name: DeviceConfiguration.deviceMetadata
+        /// </summary>
+        [WirePath("deviceMetadata")]
         public string DeviceMetadata { get; set; }
     }
 }

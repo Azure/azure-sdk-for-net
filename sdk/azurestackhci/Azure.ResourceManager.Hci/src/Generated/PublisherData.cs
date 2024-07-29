@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the Publisher data model.
     /// Publisher details.
+    /// Serialized Name: Publisher
     /// </summary>
     public partial class PublisherData : ResourceData
     {
@@ -60,7 +61,10 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="provisioningState">
+        /// Provisioning State
+        /// Serialized Name: Publisher.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PublisherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,7 +72,11 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provisioning State. </summary>
+        /// <summary>
+        /// Provisioning State
+        /// Serialized Name: Publisher.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }
 }

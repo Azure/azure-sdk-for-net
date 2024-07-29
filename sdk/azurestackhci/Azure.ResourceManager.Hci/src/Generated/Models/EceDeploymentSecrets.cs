@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Protected parameters list stored in keyvault. </summary>
+    /// <summary>
+    /// Protected parameters list stored in keyvault.
+    /// Serialized Name: EceDeploymentSecrets
+    /// </summary>
     public partial class EceDeploymentSecrets
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EceDeploymentSecrets"/>. </summary>
-        /// <param name="secretName"> Secret name stored in keyvault. </param>
-        /// <param name="eceSecretName"> Secret name expected for Enterprise Cloud Engine (ECE) deployment. </param>
-        /// <param name="secretLocation"> Secret URI stored in keyvault. </param>
+        /// <param name="secretName">
+        /// Secret name stored in keyvault.
+        /// Serialized Name: EceDeploymentSecrets.secretName
+        /// </param>
+        /// <param name="eceSecretName">
+        /// Secret name expected for Enterprise Cloud Engine (ECE) deployment.
+        /// Serialized Name: EceDeploymentSecrets.eceSecretName
+        /// </param>
+        /// <param name="secretLocation">
+        /// Secret URI stored in keyvault.
+        /// Serialized Name: EceDeploymentSecrets.secretLocation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EceDeploymentSecrets(string secretName, EceSecret? eceSecretName, Uri secretLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Secret name stored in keyvault. </summary>
+        /// <summary>
+        /// Secret name stored in keyvault.
+        /// Serialized Name: EceDeploymentSecrets.secretName
+        /// </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
-        /// <summary> Secret name expected for Enterprise Cloud Engine (ECE) deployment. </summary>
+        /// <summary>
+        /// Secret name expected for Enterprise Cloud Engine (ECE) deployment.
+        /// Serialized Name: EceDeploymentSecrets.eceSecretName
+        /// </summary>
+        [WirePath("eceSecretName")]
         public EceSecret? EceSecretName { get; set; }
-        /// <summary> Secret URI stored in keyvault. </summary>
+        /// <summary>
+        /// Secret URI stored in keyvault.
+        /// Serialized Name: EceDeploymentSecrets.secretLocation
+        /// </summary>
+        [WirePath("secretLocation")]
         public Uri SecretLocation { get; set; }
     }
 }

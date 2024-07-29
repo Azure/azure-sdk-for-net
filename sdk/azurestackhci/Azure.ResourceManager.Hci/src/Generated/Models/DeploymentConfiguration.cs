@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Deployment Configuration. </summary>
+    /// <summary>
+    /// Deployment Configuration
+    /// Serialized Name: DeploymentConfiguration
+    /// </summary>
     public partial class DeploymentConfiguration
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.Hci.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentConfiguration"/>. </summary>
-        /// <param name="scaleUnits"> Scale units will contains list of deployment data. </param>
+        /// <param name="scaleUnits">
+        /// Scale units will contains list of deployment data
+        /// Serialized Name: DeploymentConfiguration.scaleUnits
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scaleUnits"/> is null. </exception>
         public DeploymentConfiguration(IEnumerable<ScaleUnits> scaleUnits)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentConfiguration"/>. </summary>
-        /// <param name="version"> deployment template version. </param>
-        /// <param name="scaleUnits"> Scale units will contains list of deployment data. </param>
+        /// <param name="version">
+        /// deployment template version
+        /// Serialized Name: DeploymentConfiguration.version
+        /// </param>
+        /// <param name="scaleUnits">
+        /// Scale units will contains list of deployment data
+        /// Serialized Name: DeploymentConfiguration.scaleUnits
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentConfiguration(string version, IList<ScaleUnits> scaleUnits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,17 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        /// <summary> deployment template version. </summary>
+        /// <summary>
+        /// deployment template version
+        /// Serialized Name: DeploymentConfiguration.version
+        /// </summary>
+        [WirePath("version")]
         public string Version { get; set; }
-        /// <summary> Scale units will contains list of deployment data. </summary>
+        /// <summary>
+        /// Scale units will contains list of deployment data
+        /// Serialized Name: DeploymentConfiguration.scaleUnits
+        /// </summary>
+        [WirePath("scaleUnits")]
         public IList<ScaleUnits> ScaleUnits { get; }
     }
 }

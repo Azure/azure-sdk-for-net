@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the EdgeDevice data model.
     /// Edge device resource.
+    /// Serialized Name: EdgeDevice
     /// Please note <see cref="EdgeDeviceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="HciEdgeDevice"/>.
     /// </summary>
@@ -63,7 +64,10 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Device kind to support polymorphic resource. </param>
+        /// <param name="kind">
+        /// Device kind to support polymorphic resource.
+        /// Serialized Name: EdgeDevice.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,7 +75,10 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Device kind to support polymorphic resource. </summary>
+        /// <summary>
+        /// Device kind to support polymorphic resource.
+        /// Serialized Name: EdgeDevice.kind
+        /// </summary>
         internal DeviceKind Kind { get; set; }
     }
 }

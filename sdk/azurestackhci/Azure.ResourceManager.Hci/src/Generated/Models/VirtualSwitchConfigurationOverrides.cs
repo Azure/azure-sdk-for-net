@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The VirtualSwitchConfigurationOverrides of a cluster. </summary>
+    /// <summary>
+    /// The VirtualSwitchConfigurationOverrides of a cluster.
+    /// Serialized Name: VirtualSwitchConfigurationOverrides
+    /// </summary>
     public partial class VirtualSwitchConfigurationOverrides
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualSwitchConfigurationOverrides"/>. </summary>
-        /// <param name="enableIov"> Enable IoV for Virtual Switch. </param>
-        /// <param name="loadBalancingAlgorithm"> Load Balancing Algorithm for Virtual Switch. </param>
+        /// <param name="enableIov">
+        /// Enable IoV for Virtual Switch
+        /// Serialized Name: VirtualSwitchConfigurationOverrides.enableIov
+        /// </param>
+        /// <param name="loadBalancingAlgorithm">
+        /// Load Balancing Algorithm for Virtual Switch
+        /// Serialized Name: VirtualSwitchConfigurationOverrides.loadBalancingAlgorithm
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualSwitchConfigurationOverrides(string enableIov, string loadBalancingAlgorithm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enable IoV for Virtual Switch. </summary>
+        /// <summary>
+        /// Enable IoV for Virtual Switch
+        /// Serialized Name: VirtualSwitchConfigurationOverrides.enableIov
+        /// </summary>
+        [WirePath("enableIov")]
         public string EnableIov { get; set; }
-        /// <summary> Load Balancing Algorithm for Virtual Switch. </summary>
+        /// <summary>
+        /// Load Balancing Algorithm for Virtual Switch
+        /// Serialized Name: VirtualSwitchConfigurationOverrides.loadBalancingAlgorithm
+        /// </summary>
+        [WirePath("loadBalancingAlgorithm")]
         public string LoadBalancingAlgorithm { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The dnsServers of a device. </summary>
+    /// <summary>
+    /// The dnsServers of a device.
+    /// Serialized Name: IpPools
+    /// </summary>
     public partial class IPPools
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IPPools"/>. </summary>
-        /// <param name="startingAddress"> Starting IP address for the management network. A minimum of six free, contiguous IPv4 addresses (excluding your host IPs) are needed for infrastructure services such as clustering. </param>
-        /// <param name="endingAddress"> Ending IP address for the management network. A minimum of six free, contiguous IPv4 addresses (excluding your host IPs) are needed for infrastructure services such as clustering. </param>
+        /// <param name="startingAddress">
+        /// Starting IP address for the management network. A minimum of six free, contiguous IPv4 addresses (excluding your host IPs) are needed for infrastructure services such as clustering.
+        /// Serialized Name: IpPools.startingAddress
+        /// </param>
+        /// <param name="endingAddress">
+        /// Ending IP address for the management network. A minimum of six free, contiguous IPv4 addresses (excluding your host IPs) are needed for infrastructure services such as clustering.
+        /// Serialized Name: IpPools.endingAddress
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IPPools(string startingAddress, string endingAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Starting IP address for the management network. A minimum of six free, contiguous IPv4 addresses (excluding your host IPs) are needed for infrastructure services such as clustering. </summary>
+        /// <summary>
+        /// Starting IP address for the management network. A minimum of six free, contiguous IPv4 addresses (excluding your host IPs) are needed for infrastructure services such as clustering.
+        /// Serialized Name: IpPools.startingAddress
+        /// </summary>
+        [WirePath("startingAddress")]
         public string StartingAddress { get; set; }
-        /// <summary> Ending IP address for the management network. A minimum of six free, contiguous IPv4 addresses (excluding your host IPs) are needed for infrastructure services such as clustering. </summary>
+        /// <summary>
+        /// Ending IP address for the management network. A minimum of six free, contiguous IPv4 addresses (excluding your host IPs) are needed for infrastructure services such as clustering.
+        /// Serialized Name: IpPools.endingAddress
+        /// </summary>
+        [WirePath("endingAddress")]
         public string EndingAddress { get; set; }
     }
 }

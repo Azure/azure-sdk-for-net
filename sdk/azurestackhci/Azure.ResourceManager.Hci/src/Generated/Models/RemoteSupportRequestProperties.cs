@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Properties for Remote Support Request. </summary>
+    /// <summary>
+    /// Properties for Remote Support Request
+    /// Serialized Name: RemoteSupportRequestProperties
+    /// </summary>
     public partial class RemoteSupportRequestProperties
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportRequestProperties"/>. </summary>
-        /// <param name="accessLevel"> Remote Support Access Level. </param>
-        /// <param name="expirationTimeStamp"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
-        /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
+        /// <param name="accessLevel">
+        /// Remote Support Access Level
+        /// Serialized Name: RemoteSupportRequestProperties.accessLevel
+        /// </param>
+        /// <param name="expirationTimeStamp">
+        /// Expiration DateTimeStamp when Remote Support Access will be expired
+        /// Serialized Name: RemoteSupportRequestProperties.expirationTimeStamp
+        /// </param>
+        /// <param name="remoteSupportType">
+        /// Remote Support Type for cluster
+        /// Serialized Name: RemoteSupportRequestProperties.remoteSupportType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RemoteSupportRequestProperties(AccessLevel? accessLevel, DateTimeOffset? expirationTimeStamp, RemoteSupportType? remoteSupportType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Remote Support Access Level. </summary>
+        /// <summary>
+        /// Remote Support Access Level
+        /// Serialized Name: RemoteSupportRequestProperties.accessLevel
+        /// </summary>
+        [WirePath("accessLevel")]
         public AccessLevel? AccessLevel { get; }
-        /// <summary> Expiration DateTimeStamp when Remote Support Access will be expired. </summary>
+        /// <summary>
+        /// Expiration DateTimeStamp when Remote Support Access will be expired
+        /// Serialized Name: RemoteSupportRequestProperties.expirationTimeStamp
+        /// </summary>
+        [WirePath("expirationTimeStamp")]
         public DateTimeOffset? ExpirationTimeStamp { get; set; }
-        /// <summary> Remote Support Type for cluster. </summary>
+        /// <summary>
+        /// Remote Support Type for cluster
+        /// Serialized Name: RemoteSupportRequestProperties.remoteSupportType
+        /// </summary>
+        [WirePath("remoteSupportType")]
         public RemoteSupportType? RemoteSupportType { get; set; }
     }
 }

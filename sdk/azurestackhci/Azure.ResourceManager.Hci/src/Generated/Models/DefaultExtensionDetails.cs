@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Properties for a particular default extension category. </summary>
+    /// <summary>
+    /// Properties for a particular default extension category.
+    /// Serialized Name: DefaultExtensionDetails
+    /// </summary>
     public partial class DefaultExtensionDetails
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultExtensionDetails"/>. </summary>
-        /// <param name="category"> Default extension category. </param>
-        /// <param name="consentOn"> Consent time for extension category. </param>
+        /// <param name="category">
+        /// Default extension category
+        /// Serialized Name: DefaultExtensionDetails.category
+        /// </param>
+        /// <param name="consentOn">
+        /// Consent time for extension category
+        /// Serialized Name: DefaultExtensionDetails.consentTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefaultExtensionDetails(string category, DateTimeOffset? consentOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Default extension category. </summary>
+        /// <summary>
+        /// Default extension category
+        /// Serialized Name: DefaultExtensionDetails.category
+        /// </summary>
+        [WirePath("category")]
         public string Category { get; }
-        /// <summary> Consent time for extension category. </summary>
+        /// <summary>
+        /// Consent time for extension category
+        /// Serialized Name: DefaultExtensionDetails.consentTime
+        /// </summary>
+        [WirePath("consentTime")]
         public DateTimeOffset? ConsentOn { get; }
     }
 }

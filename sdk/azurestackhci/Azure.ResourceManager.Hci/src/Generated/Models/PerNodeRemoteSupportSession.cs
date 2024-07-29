@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Remote Support Node Session Details on the Node. </summary>
+    /// <summary>
+    /// Remote Support Node Session Details on the Node.
+    /// Serialized Name: PerNodeRemoteSupportSession
+    /// </summary>
     public partial class PerNodeRemoteSupportSession
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PerNodeRemoteSupportSession"/>. </summary>
-        /// <param name="sessionStartOn"> Remote Support Session StartTime on the Node. </param>
-        /// <param name="sessionEndOn"> Remote Support Session EndTime on the Node. </param>
-        /// <param name="nodeName"> Name of the node. </param>
-        /// <param name="duration"> Duration of Remote Support Enablement. </param>
-        /// <param name="accessLevel"> Remote Support Access Level. </param>
+        /// <param name="sessionStartOn">
+        /// Remote Support Session StartTime on the Node
+        /// Serialized Name: PerNodeRemoteSupportSession.sessionStartTime
+        /// </param>
+        /// <param name="sessionEndOn">
+        /// Remote Support Session EndTime on the Node
+        /// Serialized Name: PerNodeRemoteSupportSession.sessionEndTime
+        /// </param>
+        /// <param name="nodeName">
+        /// Name of the node
+        /// Serialized Name: PerNodeRemoteSupportSession.nodeName
+        /// </param>
+        /// <param name="duration">
+        /// Duration of Remote Support Enablement
+        /// Serialized Name: PerNodeRemoteSupportSession.duration
+        /// </param>
+        /// <param name="accessLevel">
+        /// Remote Support Access Level
+        /// Serialized Name: PerNodeRemoteSupportSession.accessLevel
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, AccessLevel? accessLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,35 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Remote Support Session StartTime on the Node. </summary>
+        /// <summary>
+        /// Remote Support Session StartTime on the Node
+        /// Serialized Name: PerNodeRemoteSupportSession.sessionStartTime
+        /// </summary>
+        [WirePath("sessionStartTime")]
         public DateTimeOffset? SessionStartOn { get; }
-        /// <summary> Remote Support Session EndTime on the Node. </summary>
+        /// <summary>
+        /// Remote Support Session EndTime on the Node
+        /// Serialized Name: PerNodeRemoteSupportSession.sessionEndTime
+        /// </summary>
+        [WirePath("sessionEndTime")]
         public DateTimeOffset? SessionEndOn { get; }
-        /// <summary> Name of the node. </summary>
+        /// <summary>
+        /// Name of the node
+        /// Serialized Name: PerNodeRemoteSupportSession.nodeName
+        /// </summary>
+        [WirePath("nodeName")]
         public string NodeName { get; }
-        /// <summary> Duration of Remote Support Enablement. </summary>
+        /// <summary>
+        /// Duration of Remote Support Enablement
+        /// Serialized Name: PerNodeRemoteSupportSession.duration
+        /// </summary>
+        [WirePath("duration")]
         public long? Duration { get; }
-        /// <summary> Remote Support Access Level. </summary>
+        /// <summary>
+        /// Remote Support Access Level
+        /// Serialized Name: PerNodeRemoteSupportSession.accessLevel
+        /// </summary>
+        [WirePath("accessLevel")]
         public AccessLevel? AccessLevel { get; }
     }
 }

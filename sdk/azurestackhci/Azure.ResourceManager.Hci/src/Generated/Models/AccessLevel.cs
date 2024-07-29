@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Remote Support Access Level. </summary>
+    /// <summary>
+    /// Remote Support Access Level
+    /// Serialized Name: AccessLevel
+    /// </summary>
     public readonly partial struct AccessLevel : IEquatable<AccessLevel>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DiagnosticsValue = "Diagnostics";
         private const string DiagnosticsAndRepairValue = "DiagnosticsAndRepair";
 
-        /// <summary> Diagnostics. </summary>
+        /// <summary>
+        /// Diagnostics
+        /// Serialized Name: AccessLevel.Diagnostics
+        /// </summary>
         public static AccessLevel Diagnostics { get; } = new AccessLevel(DiagnosticsValue);
-        /// <summary> DiagnosticsAndRepair. </summary>
+        /// <summary>
+        /// DiagnosticsAndRepair
+        /// Serialized Name: AccessLevel.DiagnosticsAndRepair
+        /// </summary>
         public static AccessLevel DiagnosticsAndRepair { get; } = new AccessLevel(DiagnosticsAndRepairValue);
         /// <summary> Determines if two <see cref="AccessLevel"/> values are the same. </summary>
         public static bool operator ==(AccessLevel left, AccessLevel right) => left.Equals(right);

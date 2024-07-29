@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Remote Support properties of the cluster. </summary>
+    /// <summary>
+    /// Remote Support properties of the cluster.
+    /// Serialized Name: RemoteSupportProperties
+    /// </summary>
     public partial class RemoteSupportProperties
     {
         /// <summary>
@@ -53,11 +56,20 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportProperties"/>. </summary>
-        /// <param name="accessLevel"> Remote Support Access Level. </param>
-        /// <param name="expirationTimeStamp"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
-        /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
-        /// <param name="remoteSupportNodeSettings"></param>
-        /// <param name="remoteSupportSessionDetails"></param>
+        /// <param name="accessLevel">
+        /// Remote Support Access Level
+        /// Serialized Name: RemoteSupportProperties.accessLevel
+        /// </param>
+        /// <param name="expirationTimeStamp">
+        /// Expiration DateTimeStamp when Remote Support Access will be expired
+        /// Serialized Name: RemoteSupportProperties.expirationTimeStamp
+        /// </param>
+        /// <param name="remoteSupportType">
+        /// Remote Support Type for cluster
+        /// Serialized Name: RemoteSupportProperties.remoteSupportType
+        /// </param>
+        /// <param name="remoteSupportNodeSettings"> Serialized Name: RemoteSupportProperties.remoteSupportNodeSettings. </param>
+        /// <param name="remoteSupportSessionDetails"> Serialized Name: RemoteSupportProperties.remoteSupportSessionDetails. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RemoteSupportProperties(AccessLevel? accessLevel, DateTimeOffset? expirationTimeStamp, RemoteSupportType? remoteSupportType, IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings, IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,15 +81,29 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Remote Support Access Level. </summary>
+        /// <summary>
+        /// Remote Support Access Level
+        /// Serialized Name: RemoteSupportProperties.accessLevel
+        /// </summary>
+        [WirePath("accessLevel")]
         public AccessLevel? AccessLevel { get; }
-        /// <summary> Expiration DateTimeStamp when Remote Support Access will be expired. </summary>
+        /// <summary>
+        /// Expiration DateTimeStamp when Remote Support Access will be expired
+        /// Serialized Name: RemoteSupportProperties.expirationTimeStamp
+        /// </summary>
+        [WirePath("expirationTimeStamp")]
         public DateTimeOffset? ExpirationTimeStamp { get; }
-        /// <summary> Remote Support Type for cluster. </summary>
+        /// <summary>
+        /// Remote Support Type for cluster
+        /// Serialized Name: RemoteSupportProperties.remoteSupportType
+        /// </summary>
+        [WirePath("remoteSupportType")]
         public RemoteSupportType? RemoteSupportType { get; }
-        /// <summary> Gets the remote support node settings. </summary>
+        /// <summary> Serialized Name: RemoteSupportProperties.remoteSupportNodeSettings. </summary>
+        [WirePath("remoteSupportNodeSettings")]
         public IReadOnlyList<RemoteSupportNodeSettings> RemoteSupportNodeSettings { get; }
-        /// <summary> Gets the remote support session details. </summary>
+        /// <summary> Serialized Name: RemoteSupportProperties.remoteSupportSessionDetails. </summary>
+        [WirePath("remoteSupportSessionDetails")]
         public IReadOnlyList<PerNodeRemoteSupportSession> RemoteSupportSessionDetails { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -110,6 +111,90 @@ namespace Azure.ResourceManager.Hci.Models
             return new AdapterPropertyOverrides(jumboPacket, networkDirect, networkDirectTechnology, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JumboPacket), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jumboPacket: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JumboPacket))
+                {
+                    builder.Append("  jumboPacket: ");
+                    if (JumboPacket.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JumboPacket}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JumboPacket}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkDirect), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkDirect: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkDirect))
+                {
+                    builder.Append("  networkDirect: ");
+                    if (NetworkDirect.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NetworkDirect}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NetworkDirect}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkDirectTechnology), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkDirectTechnology: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkDirectTechnology))
+                {
+                    builder.Append("  networkDirectTechnology: ");
+                    if (NetworkDirectTechnology.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NetworkDirectTechnology}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NetworkDirectTechnology}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AdapterPropertyOverrides>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AdapterPropertyOverrides>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +203,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AdapterPropertyOverrides)} does not support writing '{options.Format}' format.");
             }

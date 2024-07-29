@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Instance view status. </summary>
+    /// <summary>
+    /// Instance view status.
+    /// Serialized Name: ExtensionInstanceViewStatus
+    /// </summary>
     public partial class ExtensionInstanceViewStatus
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtensionInstanceViewStatus"/>. </summary>
-        /// <param name="code"> The status code. </param>
-        /// <param name="level"> The level code. </param>
-        /// <param name="displayStatus"> The short localizable label for the status. </param>
-        /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
+        /// <param name="code">
+        /// The status code.
+        /// Serialized Name: ExtensionInstanceViewStatus.code
+        /// </param>
+        /// <param name="level">
+        /// The level code.
+        /// Serialized Name: ExtensionInstanceViewStatus.level
+        /// </param>
+        /// <param name="displayStatus">
+        /// The short localizable label for the status.
+        /// Serialized Name: ExtensionInstanceViewStatus.displayStatus
+        /// </param>
+        /// <param name="message">
+        /// The detailed status message, including for alerts and error messages.
+        /// Serialized Name: ExtensionInstanceViewStatus.message
+        /// </param>
+        /// <param name="time">
+        /// The time of the status.
+        /// Serialized Name: ExtensionInstanceViewStatus.time
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtensionInstanceViewStatus(string code, HciStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,35 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status code. </summary>
+        /// <summary>
+        /// The status code.
+        /// Serialized Name: ExtensionInstanceViewStatus.code
+        /// </summary>
+        [WirePath("code")]
         public string Code { get; }
-        /// <summary> The level code. </summary>
+        /// <summary>
+        /// The level code.
+        /// Serialized Name: ExtensionInstanceViewStatus.level
+        /// </summary>
+        [WirePath("level")]
         public HciStatusLevelType? Level { get; }
-        /// <summary> The short localizable label for the status. </summary>
+        /// <summary>
+        /// The short localizable label for the status.
+        /// Serialized Name: ExtensionInstanceViewStatus.displayStatus
+        /// </summary>
+        [WirePath("displayStatus")]
         public string DisplayStatus { get; }
-        /// <summary> The detailed status message, including for alerts and error messages. </summary>
+        /// <summary>
+        /// The detailed status message, including for alerts and error messages.
+        /// Serialized Name: ExtensionInstanceViewStatus.message
+        /// </summary>
+        [WirePath("message")]
         public string Message { get; }
-        /// <summary> The time of the status. </summary>
+        /// <summary>
+        /// The time of the status.
+        /// Serialized Name: ExtensionInstanceViewStatus.time
+        /// </summary>
+        [WirePath("time")]
         public DateTimeOffset? Time { get; }
     }
 }

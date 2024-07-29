@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>
+    /// <summary>
+    /// If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty.
+    /// Serialized Name: UpdatePrerequisite
+    /// </summary>
     public partial class UpdatePrerequisite
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdatePrerequisite"/>. </summary>
-        /// <param name="updateType"> Updatable component type. </param>
-        /// <param name="version"> Version of the prerequisite. </param>
-        /// <param name="packageName"> Friendly name of the prerequisite. </param>
+        /// <param name="updateType">
+        /// Updatable component type.
+        /// Serialized Name: UpdatePrerequisite.updateType
+        /// </param>
+        /// <param name="version">
+        /// Version of the prerequisite.
+        /// Serialized Name: UpdatePrerequisite.version
+        /// </param>
+        /// <param name="packageName">
+        /// Friendly name of the prerequisite.
+        /// Serialized Name: UpdatePrerequisite.packageName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UpdatePrerequisite(string updateType, string version, string packageName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Updatable component type. </summary>
+        /// <summary>
+        /// Updatable component type.
+        /// Serialized Name: UpdatePrerequisite.updateType
+        /// </summary>
+        [WirePath("updateType")]
         public string UpdateType { get; set; }
-        /// <summary> Version of the prerequisite. </summary>
+        /// <summary>
+        /// Version of the prerequisite.
+        /// Serialized Name: UpdatePrerequisite.version
+        /// </summary>
+        [WirePath("version")]
         public string Version { get; set; }
-        /// <summary> Friendly name of the prerequisite. </summary>
+        /// <summary>
+        /// Friendly name of the prerequisite.
+        /// Serialized Name: UpdatePrerequisite.packageName
+        /// </summary>
+        [WirePath("packageName")]
         public string PackageName { get; set; }
     }
 }

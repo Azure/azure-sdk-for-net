@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Cluster details to update. </summary>
+    /// <summary>
+    /// Cluster details to update.
+    /// Serialized Name: ClusterPatch
+    /// </summary>
     public partial class HciClusterPatch
     {
         /// <summary>
@@ -54,15 +57,42 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
-        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
-        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
-        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: ClusterPatch.tags
+        /// </param>
+        /// <param name="cloudManagementEndpoint">
+        /// Endpoint configured for management from the Azure portal
+        /// Serialized Name: ClusterPatch.properties.cloudManagementEndpoint
+        /// </param>
+        /// <param name="aadClientId">
+        /// App id of cluster AAD identity.
+        /// Serialized Name: ClusterPatch.properties.aadClientId
+        /// </param>
+        /// <param name="aadTenantId">
+        /// Tenant id of cluster AAD identity.
+        /// Serialized Name: ClusterPatch.properties.aadTenantId
+        /// </param>
+        /// <param name="desiredProperties">
+        /// Desired properties of the cluster.
+        /// Serialized Name: ClusterPatch.properties.desiredProperties
+        /// </param>
+        /// <param name="principalId">
+        /// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
+        /// Serialized Name: ClusterPatch.identity.principalId
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+        /// Serialized Name: ClusterPatch.identity.tenantId
+        /// </param>
+        /// <param name="managedServiceIdentityType">
+        /// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+        /// Serialized Name: ClusterPatch.identity.type
+        /// </param>
+        /// <param name="userAssignedIdentities">
+        /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+        /// Serialized Name: ClusterPatch.identity.userAssignedIdentities
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciClusterPatch(IDictionary<string, string> tags, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, HciClusterDesiredProperties desiredProperties, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,23 +108,59 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: ClusterPatch.tags
+        /// </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Endpoint configured for management from the Azure portal. </summary>
+        /// <summary>
+        /// Endpoint configured for management from the Azure portal
+        /// Serialized Name: ClusterPatch.properties.cloudManagementEndpoint
+        /// </summary>
+        [WirePath("properties.cloudManagementEndpoint")]
         public string CloudManagementEndpoint { get; set; }
-        /// <summary> App id of cluster AAD identity. </summary>
+        /// <summary>
+        /// App id of cluster AAD identity.
+        /// Serialized Name: ClusterPatch.properties.aadClientId
+        /// </summary>
+        [WirePath("properties.aadClientId")]
         public Guid? AadClientId { get; set; }
-        /// <summary> Tenant id of cluster AAD identity. </summary>
+        /// <summary>
+        /// Tenant id of cluster AAD identity.
+        /// Serialized Name: ClusterPatch.properties.aadTenantId
+        /// </summary>
+        [WirePath("properties.aadTenantId")]
         public Guid? AadTenantId { get; set; }
-        /// <summary> Desired properties of the cluster. </summary>
+        /// <summary>
+        /// Desired properties of the cluster.
+        /// Serialized Name: ClusterPatch.properties.desiredProperties
+        /// </summary>
+        [WirePath("properties.desiredProperties")]
         public HciClusterDesiredProperties DesiredProperties { get; set; }
-        /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        /// <summary>
+        /// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
+        /// Serialized Name: ClusterPatch.identity.principalId
+        /// </summary>
+        [WirePath("identity.principalId")]
         public Guid? PrincipalId { get; }
-        /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        /// <summary>
+        /// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+        /// Serialized Name: ClusterPatch.identity.tenantId
+        /// </summary>
+        [WirePath("identity.tenantId")]
         public Guid? TenantId { get; }
-        /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
+        /// <summary>
+        /// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+        /// Serialized Name: ClusterPatch.identity.type
+        /// </summary>
+        [WirePath("identity.type")]
         public HciManagedServiceIdentityType? ManagedServiceIdentityType { get; set; }
-        /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
+        /// <summary>
+        /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+        /// Serialized Name: ClusterPatch.identity.userAssignedIdentities
+        /// </summary>
+        [WirePath("identity.userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

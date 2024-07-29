@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The Deployment data of AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The Deployment data of AzureStackHCI Cluster.
+    /// Serialized Name: DeploymentData
+    /// </summary>
     public partial class DeploymentData
     {
         /// <summary>
@@ -54,20 +57,62 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentData"/>. </summary>
-        /// <param name="securitySettings"> SecuritySettings to deploy AzureStackHCI Cluster. </param>
-        /// <param name="observability"> Observability config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="cluster"> Observability config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="storage"> Storage config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="namingPrefix"> naming prefix to deploy cluster. </param>
-        /// <param name="domainFqdn"> FQDN to deploy cluster. </param>
-        /// <param name="infrastructureNetwork"> InfrastructureNetwork config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="physicalNodes"> list of physical nodes config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="sdnIntegration"> SDN Integration config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="adouPath"> The path to the Active Directory Organizational Unit container object prepared for the deployment. </param>
-        /// <param name="secretsLocation"> Azure keyvault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead. </param>
-        /// <param name="secrets"> secrets used for cloud deployment. </param>
-        /// <param name="optionalServices"> OptionalServices config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="securitySettings">
+        /// SecuritySettings to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.securitySettings
+        /// </param>
+        /// <param name="observability">
+        /// Observability config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.observability
+        /// </param>
+        /// <param name="cluster">
+        /// Observability config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.cluster
+        /// </param>
+        /// <param name="storage">
+        /// Storage config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.storage
+        /// </param>
+        /// <param name="namingPrefix">
+        /// naming prefix to deploy cluster.
+        /// Serialized Name: DeploymentData.namingPrefix
+        /// </param>
+        /// <param name="domainFqdn">
+        /// FQDN to deploy cluster
+        /// Serialized Name: DeploymentData.domainFqdn
+        /// </param>
+        /// <param name="infrastructureNetwork">
+        /// InfrastructureNetwork config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.infrastructureNetwork
+        /// </param>
+        /// <param name="physicalNodes">
+        /// list of physical nodes config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.physicalNodes
+        /// </param>
+        /// <param name="hostNetwork">
+        /// HostNetwork config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.hostNetwork
+        /// </param>
+        /// <param name="sdnIntegration">
+        /// SDN Integration config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.sdnIntegration
+        /// </param>
+        /// <param name="adouPath">
+        /// The path to the Active Directory Organizational Unit container object prepared for the deployment.
+        /// Serialized Name: DeploymentData.adouPath
+        /// </param>
+        /// <param name="secretsLocation">
+        /// Azure keyvault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead.
+        /// Serialized Name: DeploymentData.secretsLocation
+        /// </param>
+        /// <param name="secrets">
+        /// secrets used for cloud deployment.
+        /// Serialized Name: DeploymentData.secrets
+        /// </param>
+        /// <param name="optionalServices">
+        /// OptionalServices config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.optionalServices
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentData(DeploymentSecuritySettings securitySettings, Observability observability, DeploymentCluster cluster, Storage storage, string namingPrefix, string domainFqdn, IList<InfrastructureNetwork> infrastructureNetwork, IList<PhysicalNodes> physicalNodes, HostNetwork hostNetwork, SdnIntegration sdnIntegration, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,15 +133,34 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SecuritySettings to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// SecuritySettings to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.securitySettings
+        /// </summary>
+        [WirePath("securitySettings")]
         public DeploymentSecuritySettings SecuritySettings { get; set; }
-        /// <summary> Observability config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// Observability config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.observability
+        /// </summary>
+        [WirePath("observability")]
         public Observability Observability { get; set; }
-        /// <summary> Observability config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// Observability config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.cluster
+        /// </summary>
+        [WirePath("cluster")]
         public DeploymentCluster Cluster { get; set; }
-        /// <summary> Storage config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// Storage config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.storage
+        /// </summary>
         internal Storage Storage { get; set; }
-        /// <summary> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </summary>
+        /// <summary>
+        /// By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'
+        /// Serialized Name: Storage.configurationMode
+        /// </summary>
+        [WirePath("storage.configurationMode")]
         public string StorageConfigurationMode
         {
             get => Storage is null ? default : Storage.ConfigurationMode;
@@ -108,19 +172,46 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <summary> naming prefix to deploy cluster. </summary>
+        /// <summary>
+        /// naming prefix to deploy cluster.
+        /// Serialized Name: DeploymentData.namingPrefix
+        /// </summary>
+        [WirePath("namingPrefix")]
         public string NamingPrefix { get; set; }
-        /// <summary> FQDN to deploy cluster. </summary>
+        /// <summary>
+        /// FQDN to deploy cluster
+        /// Serialized Name: DeploymentData.domainFqdn
+        /// </summary>
+        [WirePath("domainFqdn")]
         public string DomainFqdn { get; set; }
-        /// <summary> InfrastructureNetwork config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// InfrastructureNetwork config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.infrastructureNetwork
+        /// </summary>
+        [WirePath("infrastructureNetwork")]
         public IList<InfrastructureNetwork> InfrastructureNetwork { get; }
-        /// <summary> list of physical nodes config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// list of physical nodes config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.physicalNodes
+        /// </summary>
+        [WirePath("physicalNodes")]
         public IList<PhysicalNodes> PhysicalNodes { get; }
-        /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// HostNetwork config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.hostNetwork
+        /// </summary>
+        [WirePath("hostNetwork")]
         public HostNetwork HostNetwork { get; set; }
-        /// <summary> SDN Integration config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// SDN Integration config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.sdnIntegration
+        /// </summary>
         internal SdnIntegration SdnIntegration { get; set; }
-        /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// network controller config for SDN Integration to deploy AzureStackHCI Cluster.
+        /// Serialized Name: SdnIntegration.networkController
+        /// </summary>
+        [WirePath("sdnIntegration.networkController")]
         public NetworkController SdnIntegrationNetworkController
         {
             get => SdnIntegration is null ? default : SdnIntegration.NetworkController;
@@ -132,15 +223,34 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <summary> The path to the Active Directory Organizational Unit container object prepared for the deployment. </summary>
+        /// <summary>
+        /// The path to the Active Directory Organizational Unit container object prepared for the deployment.
+        /// Serialized Name: DeploymentData.adouPath
+        /// </summary>
+        [WirePath("adouPath")]
         public string AdouPath { get; set; }
-        /// <summary> Azure keyvault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead. </summary>
+        /// <summary>
+        /// Azure keyvault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead.
+        /// Serialized Name: DeploymentData.secretsLocation
+        /// </summary>
+        [WirePath("secretsLocation")]
         public string SecretsLocation { get; set; }
-        /// <summary> secrets used for cloud deployment. </summary>
+        /// <summary>
+        /// secrets used for cloud deployment.
+        /// Serialized Name: DeploymentData.secrets
+        /// </summary>
+        [WirePath("secrets")]
         public IList<EceDeploymentSecrets> Secrets { get; }
-        /// <summary> OptionalServices config to deploy AzureStackHCI Cluster. </summary>
+        /// <summary>
+        /// OptionalServices config to deploy AzureStackHCI Cluster.
+        /// Serialized Name: DeploymentData.optionalServices
+        /// </summary>
         internal OptionalServices OptionalServices { get; set; }
-        /// <summary> The name of custom location. </summary>
+        /// <summary>
+        /// The name of custom location.
+        /// Serialized Name: OptionalServices.customLocation
+        /// </summary>
+        [WirePath("optionalServices.customLocation")]
         public string OptionalServicesCustomLocation
         {
             get => OptionalServices is null ? default : OptionalServices.CustomLocation;

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The DeploymentStatus of AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The DeploymentStatus of AzureStackHCI Cluster.
+    /// Serialized Name: EceReportedProperties
+    /// </summary>
     public partial class EceReportedProperties
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EceReportedProperties"/>. </summary>
-        /// <param name="validationStatus"> validation status of AzureStackHCI Cluster Deployment. </param>
-        /// <param name="deploymentStatus"> Deployment status of AzureStackHCI Cluster Deployment. </param>
+        /// <param name="validationStatus">
+        /// validation status of AzureStackHCI Cluster Deployment.
+        /// Serialized Name: EceReportedProperties.validationStatus
+        /// </param>
+        /// <param name="deploymentStatus">
+        /// Deployment status of AzureStackHCI Cluster Deployment.
+        /// Serialized Name: EceReportedProperties.deploymentStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EceReportedProperties(EceActionStatus validationStatus, EceActionStatus deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> validation status of AzureStackHCI Cluster Deployment. </summary>
+        /// <summary>
+        /// validation status of AzureStackHCI Cluster Deployment.
+        /// Serialized Name: EceReportedProperties.validationStatus
+        /// </summary>
+        [WirePath("validationStatus")]
         public EceActionStatus ValidationStatus { get; }
-        /// <summary> Deployment status of AzureStackHCI Cluster Deployment. </summary>
+        /// <summary>
+        /// Deployment status of AzureStackHCI Cluster Deployment.
+        /// Serialized Name: EceReportedProperties.deploymentStatus
+        /// </summary>
+        [WirePath("deploymentStatus")]
         public EceActionStatus DeploymentStatus { get; }
     }
 }

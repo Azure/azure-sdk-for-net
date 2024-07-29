@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The deployment mode of EnterpriseCloudEngine(ECE) action for a cluster. </summary>
+    /// <summary>
+    /// The deployment mode of EnterpriseCloudEngine(ECE) action for a cluster.
+    /// Serialized Name: DeploymentMode
+    /// </summary>
     public readonly partial struct DeploymentMode : IEquatable<DeploymentMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ValidateValue = "Validate";
         private const string DeployValue = "Deploy";
 
-        /// <summary> Validate ECE action deployment for a cluster. </summary>
+        /// <summary>
+        /// Validate ECE action deployment for a cluster.
+        /// Serialized Name: DeploymentMode.Validate
+        /// </summary>
         public static DeploymentMode Validate { get; } = new DeploymentMode(ValidateValue);
-        /// <summary> Deploy ECE action deployment for a cluster. </summary>
+        /// <summary>
+        /// Deploy ECE action deployment for a cluster.
+        /// Serialized Name: DeploymentMode.Deploy
+        /// </summary>
         public static DeploymentMode Deploy { get; } = new DeploymentMode(DeployValue);
         /// <summary> Determines if two <see cref="DeploymentMode"/> values are the same. </summary>
         public static bool operator ==(DeploymentMode left, DeploymentMode right) => left.Equals(right);

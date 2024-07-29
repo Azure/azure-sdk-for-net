@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Solution builder extension (SBE) partner properties object. </summary>
+    /// <summary>
+    /// Solution builder extension (SBE) partner properties object.
+    /// Serialized Name: SbePartnerProperties
+    /// </summary>
     public partial class SbePartnerProperties
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SbePartnerProperties"/>. </summary>
-        /// <param name="name"> SBE partner property name. </param>
-        /// <param name="value"> SBE partner property value. </param>
+        /// <param name="name">
+        /// SBE partner property name.
+        /// Serialized Name: SbePartnerProperties.name
+        /// </param>
+        /// <param name="value">
+        /// SBE partner property value.
+        /// Serialized Name: SbePartnerProperties.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SbePartnerProperties(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SBE partner property name. </summary>
+        /// <summary>
+        /// SBE partner property name.
+        /// Serialized Name: SbePartnerProperties.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> SBE partner property value. </summary>
+        /// <summary>
+        /// SBE partner property value.
+        /// Serialized Name: SbePartnerProperties.value
+        /// </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

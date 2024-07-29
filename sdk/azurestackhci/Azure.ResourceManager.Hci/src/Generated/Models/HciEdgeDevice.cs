@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Arc-enabled edge device with HCI OS. </summary>
+    /// <summary>
+    /// Arc-enabled edge device with HCI OS.
+    /// Serialized Name: HciEdgeDevice
+    /// </summary>
     public partial class HciEdgeDevice : EdgeDeviceData
     {
         /// <summary> Initializes a new instance of <see cref="HciEdgeDevice"/>. </summary>
@@ -26,16 +29,26 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Device kind to support polymorphic resource. </param>
+        /// <param name="kind">
+        /// Device kind to support polymorphic resource.
+        /// Serialized Name: EdgeDevice.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> properties for Arc-enabled edge device with HCI OS. </param>
+        /// <param name="properties">
+        /// properties for Arc-enabled edge device with HCI OS.
+        /// Serialized Name: HciEdgeDevice.properties
+        /// </param>
         internal HciEdgeDevice(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, HciEdgeDeviceProperties properties) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> properties for Arc-enabled edge device with HCI OS. </summary>
+        /// <summary>
+        /// properties for Arc-enabled edge device with HCI OS.
+        /// Serialized Name: HciEdgeDevice.properties
+        /// </summary>
+        [WirePath("properties")]
         public HciEdgeDeviceProperties Properties { get; set; }
     }
 }

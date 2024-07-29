@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </summary>
+    /// <summary>
+    /// Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster.
+    /// Serialized Name: IsolatedVmAttestationConfiguration
+    /// </summary>
     public partial class IsolatedVmAttestationConfiguration
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IsolatedVmAttestationConfiguration"/>. </summary>
-        /// <param name="attestationResourceId"> Fully qualified Azure resource id of the Microsoft Azure attestation resource associated with this cluster. </param>
-        /// <param name="relyingPartyServiceEndpoint"> Region specific endpoint for relying party service. </param>
-        /// <param name="attestationServiceEndpoint"> Region specific endpoint for Microsoft Azure Attestation service for the cluster. </param>
+        /// <param name="attestationResourceId">
+        /// Fully qualified Azure resource id of the Microsoft Azure attestation resource associated with this cluster.
+        /// Serialized Name: IsolatedVmAttestationConfiguration.attestationResourceId
+        /// </param>
+        /// <param name="relyingPartyServiceEndpoint">
+        /// Region specific endpoint for relying party service.
+        /// Serialized Name: IsolatedVmAttestationConfiguration.relyingPartyServiceEndpoint
+        /// </param>
+        /// <param name="attestationServiceEndpoint">
+        /// Region specific endpoint for Microsoft Azure Attestation service for the cluster
+        /// Serialized Name: IsolatedVmAttestationConfiguration.attestationServiceEndpoint
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IsolatedVmAttestationConfiguration(ResourceIdentifier attestationResourceId, string relyingPartyServiceEndpoint, string attestationServiceEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +76,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Fully qualified Azure resource id of the Microsoft Azure attestation resource associated with this cluster. </summary>
+        /// <summary>
+        /// Fully qualified Azure resource id of the Microsoft Azure attestation resource associated with this cluster.
+        /// Serialized Name: IsolatedVmAttestationConfiguration.attestationResourceId
+        /// </summary>
+        [WirePath("attestationResourceId")]
         public ResourceIdentifier AttestationResourceId { get; }
-        /// <summary> Region specific endpoint for relying party service. </summary>
+        /// <summary>
+        /// Region specific endpoint for relying party service.
+        /// Serialized Name: IsolatedVmAttestationConfiguration.relyingPartyServiceEndpoint
+        /// </summary>
+        [WirePath("relyingPartyServiceEndpoint")]
         public string RelyingPartyServiceEndpoint { get; }
-        /// <summary> Region specific endpoint for Microsoft Azure Attestation service for the cluster. </summary>
+        /// <summary>
+        /// Region specific endpoint for Microsoft Azure Attestation service for the cluster
+        /// Serialized Name: IsolatedVmAttestationConfiguration.attestationServiceEndpoint
+        /// </summary>
+        [WirePath("attestationServiceEndpoint")]
         public string AttestationServiceEndpoint { get; }
     }
 }

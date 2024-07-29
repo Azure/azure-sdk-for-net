@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> LogCollection status. </summary>
+    /// <summary>
+    /// LogCollection status
+    /// Serialized Name: LogCollectionStatus
+    /// </summary>
     public readonly partial struct LogCollectionStatus : IEquatable<LogCollectionStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Hci.Models
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: LogCollectionStatus.None
+        /// </summary>
         public static LogCollectionStatus None { get; } = new LogCollectionStatus(NoneValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: LogCollectionStatus.InProgress
+        /// </summary>
         public static LogCollectionStatus InProgress { get; } = new LogCollectionStatus(InProgressValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: LogCollectionStatus.Failed
+        /// </summary>
         public static LogCollectionStatus Failed { get; } = new LogCollectionStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: LogCollectionStatus.Succeeded
+        /// </summary>
         public static LogCollectionStatus Succeeded { get; } = new LogCollectionStatus(SucceededValue);
         /// <summary> Determines if two <see cref="LogCollectionStatus"/> values are the same. </summary>
         public static bool operator ==(LogCollectionStatus left, LogCollectionStatus right) => left.Equals(right);

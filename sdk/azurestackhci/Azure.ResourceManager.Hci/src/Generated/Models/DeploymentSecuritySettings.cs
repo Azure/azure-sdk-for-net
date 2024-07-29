@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The SecuritySettings of AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// The SecuritySettings of AzureStackHCI Cluster.
+    /// Serialized Name: DeploymentSecuritySettings
+    /// </summary>
     public partial class DeploymentSecuritySettings
     {
         /// <summary>
@@ -51,16 +54,46 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSecuritySettings"/>. </summary>
-        /// <param name="hvciProtection"> By default, Hypervisor-protected Code Integrity is enabled on your Azure HCI cluster. </param>
-        /// <param name="drtmProtection"> By default, Secure Boot is enabled on your Azure HCI cluster. This setting is hardware dependent. </param>
-        /// <param name="driftControlEnforced"> When set to true, the security baseline is re-applied regularly. </param>
-        /// <param name="credentialGuardEnforced"> When set to true, Credential Guard is enabled. </param>
-        /// <param name="smbSigningEnforced"> When set to true, the SMB default instance requires sign in for the client and server services. </param>
-        /// <param name="smbClusterEncryption"> When set to true, cluster east-west traffic is encrypted. </param>
-        /// <param name="sideChannelMitigationEnforced"> When set to true, all the side channel mitigations are enabled. </param>
-        /// <param name="bitlockerBootVolume"> When set to true, BitLocker XTS_AES 256-bit encryption is enabled for all data-at-rest on the OS volume of your Azure Stack HCI cluster. This setting is TPM-hardware dependent. </param>
-        /// <param name="bitlockerDataVolumes"> When set to true, BitLocker XTS-AES 256-bit encryption is enabled for all data-at-rest on your Azure Stack HCI cluster shared volumes. </param>
-        /// <param name="wdacEnforced"> WDAC is enabled by default and limits the applications and the code that you can run on your Azure Stack HCI cluster. </param>
+        /// <param name="hvciProtection">
+        /// By default, Hypervisor-protected Code Integrity is enabled on your Azure HCI cluster.
+        /// Serialized Name: DeploymentSecuritySettings.hvciProtection
+        /// </param>
+        /// <param name="drtmProtection">
+        /// By default, Secure Boot is enabled on your Azure HCI cluster. This setting is hardware dependent.
+        /// Serialized Name: DeploymentSecuritySettings.drtmProtection
+        /// </param>
+        /// <param name="driftControlEnforced">
+        /// When set to true, the security baseline is re-applied regularly.
+        /// Serialized Name: DeploymentSecuritySettings.driftControlEnforced
+        /// </param>
+        /// <param name="credentialGuardEnforced">
+        /// When set to true, Credential Guard is enabled.
+        /// Serialized Name: DeploymentSecuritySettings.credentialGuardEnforced
+        /// </param>
+        /// <param name="smbSigningEnforced">
+        /// When set to true, the SMB default instance requires sign in for the client and server services.
+        /// Serialized Name: DeploymentSecuritySettings.smbSigningEnforced
+        /// </param>
+        /// <param name="smbClusterEncryption">
+        /// When set to true, cluster east-west traffic is encrypted.
+        /// Serialized Name: DeploymentSecuritySettings.smbClusterEncryption
+        /// </param>
+        /// <param name="sideChannelMitigationEnforced">
+        /// When set to true, all the side channel mitigations are enabled
+        /// Serialized Name: DeploymentSecuritySettings.sideChannelMitigationEnforced
+        /// </param>
+        /// <param name="bitlockerBootVolume">
+        /// When set to true, BitLocker XTS_AES 256-bit encryption is enabled for all data-at-rest on the OS volume of your Azure Stack HCI cluster. This setting is TPM-hardware dependent.
+        /// Serialized Name: DeploymentSecuritySettings.bitlockerBootVolume
+        /// </param>
+        /// <param name="bitlockerDataVolumes">
+        /// When set to true, BitLocker XTS-AES 256-bit encryption is enabled for all data-at-rest on your Azure Stack HCI cluster shared volumes.
+        /// Serialized Name: DeploymentSecuritySettings.bitlockerDataVolumes
+        /// </param>
+        /// <param name="wdacEnforced">
+        /// WDAC is enabled by default and limits the applications and the code that you can run on your Azure Stack HCI cluster.
+        /// Serialized Name: DeploymentSecuritySettings.wdacEnforced
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentSecuritySettings(bool? hvciProtection, bool? drtmProtection, bool? driftControlEnforced, bool? credentialGuardEnforced, bool? smbSigningEnforced, bool? smbClusterEncryption, bool? sideChannelMitigationEnforced, bool? bitlockerBootVolume, bool? bitlockerDataVolumes, bool? wdacEnforced, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,25 +110,65 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> By default, Hypervisor-protected Code Integrity is enabled on your Azure HCI cluster. </summary>
+        /// <summary>
+        /// By default, Hypervisor-protected Code Integrity is enabled on your Azure HCI cluster.
+        /// Serialized Name: DeploymentSecuritySettings.hvciProtection
+        /// </summary>
+        [WirePath("hvciProtection")]
         public bool? HvciProtection { get; set; }
-        /// <summary> By default, Secure Boot is enabled on your Azure HCI cluster. This setting is hardware dependent. </summary>
+        /// <summary>
+        /// By default, Secure Boot is enabled on your Azure HCI cluster. This setting is hardware dependent.
+        /// Serialized Name: DeploymentSecuritySettings.drtmProtection
+        /// </summary>
+        [WirePath("drtmProtection")]
         public bool? DrtmProtection { get; set; }
-        /// <summary> When set to true, the security baseline is re-applied regularly. </summary>
+        /// <summary>
+        /// When set to true, the security baseline is re-applied regularly.
+        /// Serialized Name: DeploymentSecuritySettings.driftControlEnforced
+        /// </summary>
+        [WirePath("driftControlEnforced")]
         public bool? DriftControlEnforced { get; set; }
-        /// <summary> When set to true, Credential Guard is enabled. </summary>
+        /// <summary>
+        /// When set to true, Credential Guard is enabled.
+        /// Serialized Name: DeploymentSecuritySettings.credentialGuardEnforced
+        /// </summary>
+        [WirePath("credentialGuardEnforced")]
         public bool? CredentialGuardEnforced { get; set; }
-        /// <summary> When set to true, the SMB default instance requires sign in for the client and server services. </summary>
+        /// <summary>
+        /// When set to true, the SMB default instance requires sign in for the client and server services.
+        /// Serialized Name: DeploymentSecuritySettings.smbSigningEnforced
+        /// </summary>
+        [WirePath("smbSigningEnforced")]
         public bool? SmbSigningEnforced { get; set; }
-        /// <summary> When set to true, cluster east-west traffic is encrypted. </summary>
+        /// <summary>
+        /// When set to true, cluster east-west traffic is encrypted.
+        /// Serialized Name: DeploymentSecuritySettings.smbClusterEncryption
+        /// </summary>
+        [WirePath("smbClusterEncryption")]
         public bool? SmbClusterEncryption { get; set; }
-        /// <summary> When set to true, all the side channel mitigations are enabled. </summary>
+        /// <summary>
+        /// When set to true, all the side channel mitigations are enabled
+        /// Serialized Name: DeploymentSecuritySettings.sideChannelMitigationEnforced
+        /// </summary>
+        [WirePath("sideChannelMitigationEnforced")]
         public bool? SideChannelMitigationEnforced { get; set; }
-        /// <summary> When set to true, BitLocker XTS_AES 256-bit encryption is enabled for all data-at-rest on the OS volume of your Azure Stack HCI cluster. This setting is TPM-hardware dependent. </summary>
+        /// <summary>
+        /// When set to true, BitLocker XTS_AES 256-bit encryption is enabled for all data-at-rest on the OS volume of your Azure Stack HCI cluster. This setting is TPM-hardware dependent.
+        /// Serialized Name: DeploymentSecuritySettings.bitlockerBootVolume
+        /// </summary>
+        [WirePath("bitlockerBootVolume")]
         public bool? BitlockerBootVolume { get; set; }
-        /// <summary> When set to true, BitLocker XTS-AES 256-bit encryption is enabled for all data-at-rest on your Azure Stack HCI cluster shared volumes. </summary>
+        /// <summary>
+        /// When set to true, BitLocker XTS-AES 256-bit encryption is enabled for all data-at-rest on your Azure Stack HCI cluster shared volumes.
+        /// Serialized Name: DeploymentSecuritySettings.bitlockerDataVolumes
+        /// </summary>
+        [WirePath("bitlockerDataVolumes")]
         public bool? BitlockerDataVolumes { get; set; }
-        /// <summary> WDAC is enabled by default and limits the applications and the code that you can run on your Azure Stack HCI cluster. </summary>
+        /// <summary>
+        /// WDAC is enabled by default and limits the applications and the code that you can run on your Azure Stack HCI cluster.
+        /// Serialized Name: DeploymentSecuritySettings.wdacEnforced
+        /// </summary>
+        [WirePath("wdacEnforced")]
         public bool? WdacEnforced { get; set; }
     }
 }

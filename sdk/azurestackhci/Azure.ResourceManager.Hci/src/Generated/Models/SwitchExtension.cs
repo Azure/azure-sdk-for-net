@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> This represents extensions installed on virtualSwitch. </summary>
+    /// <summary>
+    /// This represents extensions installed on virtualSwitch.
+    /// Serialized Name: SwitchExtension
+    /// </summary>
     public partial class SwitchExtension
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SwitchExtension"/>. </summary>
-        /// <param name="switchId"> Unique identifier for virtualSwitch. </param>
-        /// <param name="extensionName"> This will show extension name for virtualSwitch. </param>
-        /// <param name="extensionEnabled"> This represents whether extension is enabled on virtualSwitch. </param>
+        /// <param name="switchId">
+        /// Unique identifier for virtualSwitch.
+        /// Serialized Name: SwitchExtension.switchId
+        /// </param>
+        /// <param name="extensionName">
+        /// This will show extension name for virtualSwitch.
+        /// Serialized Name: SwitchExtension.extensionName
+        /// </param>
+        /// <param name="extensionEnabled">
+        /// This represents whether extension is enabled on virtualSwitch.
+        /// Serialized Name: SwitchExtension.extensionEnabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SwitchExtension(string switchId, string extensionName, bool? extensionEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique identifier for virtualSwitch. </summary>
+        /// <summary>
+        /// Unique identifier for virtualSwitch.
+        /// Serialized Name: SwitchExtension.switchId
+        /// </summary>
+        [WirePath("switchId")]
         public string SwitchId { get; }
-        /// <summary> This will show extension name for virtualSwitch. </summary>
+        /// <summary>
+        /// This will show extension name for virtualSwitch.
+        /// Serialized Name: SwitchExtension.extensionName
+        /// </summary>
+        [WirePath("extensionName")]
         public string ExtensionName { get; }
-        /// <summary> This represents whether extension is enabled on virtualSwitch. </summary>
+        /// <summary>
+        /// This represents whether extension is enabled on virtualSwitch.
+        /// Serialized Name: SwitchExtension.extensionEnabled
+        /// </summary>
+        [WirePath("extensionEnabled")]
         public bool? ExtensionEnabled { get; }
     }
 }

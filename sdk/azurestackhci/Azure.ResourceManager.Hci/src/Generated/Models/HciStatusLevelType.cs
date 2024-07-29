@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The level code. </summary>
+    /// <summary>
+    /// The level code.
+    /// Serialized Name: StatusLevelTypes
+    /// </summary>
     public readonly partial struct HciStatusLevelType : IEquatable<HciStatusLevelType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Hci.Models
         private const string WarningValue = "Warning";
         private const string ErrorValue = "Error";
 
-        /// <summary> Info. </summary>
+        /// <summary>
+        /// Info
+        /// Serialized Name: StatusLevelTypes.Info
+        /// </summary>
         public static HciStatusLevelType Info { get; } = new HciStatusLevelType(InfoValue);
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: StatusLevelTypes.Warning
+        /// </summary>
         public static HciStatusLevelType Warning { get; } = new HciStatusLevelType(WarningValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: StatusLevelTypes.Error
+        /// </summary>
         public static HciStatusLevelType Error { get; } = new HciStatusLevelType(ErrorValue);
         /// <summary> Determines if two <see cref="HciStatusLevelType"/> values are the same. </summary>
         public static bool operator ==(HciStatusLevelType left, HciStatusLevelType right) => left.Equals(right);

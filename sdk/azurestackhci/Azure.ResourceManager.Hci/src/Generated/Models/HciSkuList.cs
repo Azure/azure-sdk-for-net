@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> List of SKU proxy resources for the HCI cluster. </summary>
+    /// <summary>
+    /// List of SKU proxy resources for the HCI cluster.
+    /// Serialized Name: SkuList
+    /// </summary>
     internal partial class HciSkuList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciSkuList"/>. </summary>
-        /// <param name="value"> List of SKU proxy resources. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value">
+        /// List of SKU proxy resources.
+        /// Serialized Name: SkuList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to the next set of results.
+        /// Serialized Name: SkuList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciSkuList(IReadOnlyList<HciSkuData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of SKU proxy resources. </summary>
+        /// <summary>
+        /// List of SKU proxy resources.
+        /// Serialized Name: SkuList.value
+        /// </summary>
         public IReadOnlyList<HciSkuData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
+        /// <summary>
+        /// Link to the next set of results.
+        /// Serialized Name: SkuList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

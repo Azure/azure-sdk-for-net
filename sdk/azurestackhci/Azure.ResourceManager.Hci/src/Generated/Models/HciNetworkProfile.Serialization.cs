@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -142,6 +144,82 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciNetworkProfile(nicDetails ?? new ChangeTrackingList<HciNicDetail>(), switchDetails ?? new ChangeTrackingList<SwitchDetail>(), hostNetwork, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NicDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nicDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NicDetails))
+                {
+                    if (NicDetails.Any())
+                    {
+                        builder.Append("  nicDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NicDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  nicDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SwitchDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  switchDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SwitchDetails))
+                {
+                    if (SwitchDetails.Any())
+                    {
+                        builder.Append("  switchDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SwitchDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  switchDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostNetwork), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostNetwork: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostNetwork))
+                {
+                    builder.Append("  hostNetwork: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HostNetwork, options, 2, false, "  hostNetwork: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HciNetworkProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -150,6 +228,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HciNetworkProfile)} does not support writing '{options.Format}' format.");
             }

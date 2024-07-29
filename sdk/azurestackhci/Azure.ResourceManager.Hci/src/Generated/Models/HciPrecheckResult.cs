@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The HciPrecheckResult. </summary>
+    /// <summary>
+    /// The HciPrecheckResult.
+    /// Serialized Name: PrecheckResult
+    /// </summary>
     public partial class HciPrecheckResult
     {
         /// <summary>
@@ -51,21 +54,66 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciPrecheckResult"/>. </summary>
-        /// <param name="name"> Name of the individual test/rule/alert that was executed. Unique, not exposed to the customer. </param>
-        /// <param name="displayName"> The health check DisplayName localized of the individual test executed. </param>
-        /// <param name="tags"> Key-value pairs that allow grouping/filtering individual tests. </param>
-        /// <param name="healthCheckTags"> Key-value pairs that allow grouping/filtering individual tests. </param>
-        /// <param name="title"> User-facing name; one or more sentences indicating the direct issue. </param>
-        /// <param name="status"> The status of the check running (i.e. Failed, Succeeded, In Progress). This answers whether the check ran, and passed or failed. </param>
-        /// <param name="severity"> Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity. </param>
-        /// <param name="description"> Detailed overview of the issue and what impact the issue has on the stamp. </param>
-        /// <param name="remediation"> Set of steps that can be taken to resolve the issue found. </param>
-        /// <param name="targetResourceId"> The unique identifier for the affected resource (such as a node or drive). </param>
-        /// <param name="targetResourceName"> The name of the affected resource. </param>
-        /// <param name="targetResourceType"> The type of resource being referred to (well-known set of nouns in infrastructure, aligning with Monitoring). </param>
-        /// <param name="timestamp"> The time in which the HealthCheck was called. </param>
-        /// <param name="additionalData"> Property bag of key value pairs for additional information. </param>
-        /// <param name="healthCheckSource"> The name of the services called for the HealthCheck (I.E. Test-AzureStack, Test-Cluster). </param>
+        /// <param name="name">
+        /// Name of the individual test/rule/alert that was executed. Unique, not exposed to the customer.
+        /// Serialized Name: PrecheckResult.name
+        /// </param>
+        /// <param name="displayName">
+        /// The health check DisplayName localized of the individual test executed.
+        /// Serialized Name: PrecheckResult.displayName
+        /// </param>
+        /// <param name="tags">
+        /// Key-value pairs that allow grouping/filtering individual tests.
+        /// Serialized Name: PrecheckResult.tags
+        /// </param>
+        /// <param name="healthCheckTags">
+        /// Key-value pairs that allow grouping/filtering individual tests.
+        /// Serialized Name: PrecheckResult.healthCheckTags
+        /// </param>
+        /// <param name="title">
+        /// User-facing name; one or more sentences indicating the direct issue.
+        /// Serialized Name: PrecheckResult.title
+        /// </param>
+        /// <param name="status">
+        /// The status of the check running (i.e. Failed, Succeeded, In Progress). This answers whether the check ran, and passed or failed.
+        /// Serialized Name: PrecheckResult.status
+        /// </param>
+        /// <param name="severity">
+        /// Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity.
+        /// Serialized Name: PrecheckResult.severity
+        /// </param>
+        /// <param name="description">
+        /// Detailed overview of the issue and what impact the issue has on the stamp.
+        /// Serialized Name: PrecheckResult.description
+        /// </param>
+        /// <param name="remediation">
+        /// Set of steps that can be taken to resolve the issue found.
+        /// Serialized Name: PrecheckResult.remediation
+        /// </param>
+        /// <param name="targetResourceId">
+        /// The unique identifier for the affected resource (such as a node or drive).
+        /// Serialized Name: PrecheckResult.targetResourceID
+        /// </param>
+        /// <param name="targetResourceName">
+        /// The name of the affected resource.
+        /// Serialized Name: PrecheckResult.targetResourceName
+        /// </param>
+        /// <param name="targetResourceType">
+        /// The type of resource being referred to (well-known set of nouns in infrastructure, aligning with Monitoring).
+        /// Serialized Name: PrecheckResult.targetResourceType
+        /// </param>
+        /// <param name="timestamp">
+        /// The time in which the HealthCheck was called.
+        /// Serialized Name: PrecheckResult.timestamp
+        /// </param>
+        /// <param name="additionalData">
+        /// Property bag of key value pairs for additional information.
+        /// Serialized Name: PrecheckResult.additionalData
+        /// </param>
+        /// <param name="healthCheckSource">
+        /// The name of the services called for the HealthCheck (I.E. Test-AzureStack, Test-Cluster).
+        /// Serialized Name: PrecheckResult.healthCheckSource
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciPrecheckResult(string name, string displayName, HciPrecheckResultTags tags, BinaryData healthCheckTags, string title, HciClusterStatus? status, UpdateSeverity? severity, string description, string remediation, string targetResourceId, string targetResourceName, string targetResourceType, DateTimeOffset? timestamp, string additionalData, string healthCheckSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,14 +135,27 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the individual test/rule/alert that was executed. Unique, not exposed to the customer. </summary>
+        /// <summary>
+        /// Name of the individual test/rule/alert that was executed. Unique, not exposed to the customer.
+        /// Serialized Name: PrecheckResult.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The health check DisplayName localized of the individual test executed. </summary>
+        /// <summary>
+        /// The health check DisplayName localized of the individual test executed.
+        /// Serialized Name: PrecheckResult.displayName
+        /// </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Key-value pairs that allow grouping/filtering individual tests. </summary>
+        /// <summary>
+        /// Key-value pairs that allow grouping/filtering individual tests.
+        /// Serialized Name: PrecheckResult.tags
+        /// </summary>
+        [WirePath("tags")]
         public HciPrecheckResultTags Tags { get; set; }
         /// <summary>
         /// Key-value pairs that allow grouping/filtering individual tests.
+        /// Serialized Name: PrecheckResult.healthCheckTags
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -123,28 +184,73 @@ namespace Azure.ResourceManager.Hci.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("healthCheckTags")]
         public BinaryData HealthCheckTags { get; set; }
-        /// <summary> User-facing name; one or more sentences indicating the direct issue. </summary>
+        /// <summary>
+        /// User-facing name; one or more sentences indicating the direct issue.
+        /// Serialized Name: PrecheckResult.title
+        /// </summary>
+        [WirePath("title")]
         public string Title { get; set; }
-        /// <summary> The status of the check running (i.e. Failed, Succeeded, In Progress). This answers whether the check ran, and passed or failed. </summary>
+        /// <summary>
+        /// The status of the check running (i.e. Failed, Succeeded, In Progress). This answers whether the check ran, and passed or failed.
+        /// Serialized Name: PrecheckResult.status
+        /// </summary>
+        [WirePath("status")]
         public HciClusterStatus? Status { get; set; }
-        /// <summary> Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity. </summary>
+        /// <summary>
+        /// Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity.
+        /// Serialized Name: PrecheckResult.severity
+        /// </summary>
+        [WirePath("severity")]
         public UpdateSeverity? Severity { get; set; }
-        /// <summary> Detailed overview of the issue and what impact the issue has on the stamp. </summary>
+        /// <summary>
+        /// Detailed overview of the issue and what impact the issue has on the stamp.
+        /// Serialized Name: PrecheckResult.description
+        /// </summary>
+        [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> Set of steps that can be taken to resolve the issue found. </summary>
+        /// <summary>
+        /// Set of steps that can be taken to resolve the issue found.
+        /// Serialized Name: PrecheckResult.remediation
+        /// </summary>
+        [WirePath("remediation")]
         public string Remediation { get; set; }
-        /// <summary> The unique identifier for the affected resource (such as a node or drive). </summary>
+        /// <summary>
+        /// The unique identifier for the affected resource (such as a node or drive).
+        /// Serialized Name: PrecheckResult.targetResourceID
+        /// </summary>
+        [WirePath("targetResourceID")]
         public string TargetResourceId { get; set; }
-        /// <summary> The name of the affected resource. </summary>
+        /// <summary>
+        /// The name of the affected resource.
+        /// Serialized Name: PrecheckResult.targetResourceName
+        /// </summary>
+        [WirePath("targetResourceName")]
         public string TargetResourceName { get; set; }
-        /// <summary> The type of resource being referred to (well-known set of nouns in infrastructure, aligning with Monitoring). </summary>
+        /// <summary>
+        /// The type of resource being referred to (well-known set of nouns in infrastructure, aligning with Monitoring).
+        /// Serialized Name: PrecheckResult.targetResourceType
+        /// </summary>
+        [WirePath("targetResourceType")]
         public string TargetResourceType { get; set; }
-        /// <summary> The time in which the HealthCheck was called. </summary>
+        /// <summary>
+        /// The time in which the HealthCheck was called.
+        /// Serialized Name: PrecheckResult.timestamp
+        /// </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; set; }
-        /// <summary> Property bag of key value pairs for additional information. </summary>
+        /// <summary>
+        /// Property bag of key value pairs for additional information.
+        /// Serialized Name: PrecheckResult.additionalData
+        /// </summary>
+        [WirePath("additionalData")]
         public string AdditionalData { get; set; }
-        /// <summary> The name of the services called for the HealthCheck (I.E. Test-AzureStack, Test-Cluster). </summary>
+        /// <summary>
+        /// The name of the services called for the HealthCheck (I.E. Test-AzureStack, Test-Cluster).
+        /// Serialized Name: PrecheckResult.healthCheckSource
+        /// </summary>
+        [WirePath("healthCheckSource")]
         public string HealthCheckSource { get; set; }
     }
 }

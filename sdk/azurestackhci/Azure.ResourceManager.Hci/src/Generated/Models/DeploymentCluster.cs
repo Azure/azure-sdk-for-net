@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> AzureStackHCI Cluster deployment properties. </summary>
+    /// <summary>
+    /// AzureStackHCI Cluster deployment properties.
+    /// Serialized Name: DeploymentCluster
+    /// </summary>
     public partial class DeploymentCluster
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentCluster"/>. </summary>
-        /// <param name="name"> The cluster name provided when preparing Active Directory. </param>
-        /// <param name="witnessType"> Use a cloud witness if you have internet access and if you use an Azure Storage account to provide a vote on cluster quorum. A cloud witness uses Azure Blob Storage to read or write a blob file and then uses it to arbitrate in split-brain resolution. Only allowed values are 'Cloud', 'FileShare'. </param>
-        /// <param name="witnessPath"> Specify the fileshare path for the local witness for your Azure Stack HCI cluster. </param>
-        /// <param name="cloudAccountName"> Specify the Azure Storage account name for cloud witness for your Azure Stack HCI cluster. </param>
-        /// <param name="azureServiceEndpoint"> For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net. </param>
+        /// <param name="name">
+        /// The cluster name provided when preparing Active Directory.
+        /// Serialized Name: DeploymentCluster.name
+        /// </param>
+        /// <param name="witnessType">
+        /// Use a cloud witness if you have internet access and if you use an Azure Storage account to provide a vote on cluster quorum. A cloud witness uses Azure Blob Storage to read or write a blob file and then uses it to arbitrate in split-brain resolution. Only allowed values are 'Cloud', 'FileShare'.
+        /// Serialized Name: DeploymentCluster.witnessType
+        /// </param>
+        /// <param name="witnessPath">
+        /// Specify the fileshare path for the local witness for your Azure Stack HCI cluster.
+        /// Serialized Name: DeploymentCluster.witnessPath
+        /// </param>
+        /// <param name="cloudAccountName">
+        /// Specify the Azure Storage account name for cloud witness for your Azure Stack HCI cluster.
+        /// Serialized Name: DeploymentCluster.cloudAccountName
+        /// </param>
+        /// <param name="azureServiceEndpoint">
+        /// For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net.
+        /// Serialized Name: DeploymentCluster.azureServiceEndpoint
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeploymentCluster(string name, string witnessType, string witnessPath, string cloudAccountName, string azureServiceEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,35 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The cluster name provided when preparing Active Directory. </summary>
+        /// <summary>
+        /// The cluster name provided when preparing Active Directory.
+        /// Serialized Name: DeploymentCluster.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Use a cloud witness if you have internet access and if you use an Azure Storage account to provide a vote on cluster quorum. A cloud witness uses Azure Blob Storage to read or write a blob file and then uses it to arbitrate in split-brain resolution. Only allowed values are 'Cloud', 'FileShare'. </summary>
+        /// <summary>
+        /// Use a cloud witness if you have internet access and if you use an Azure Storage account to provide a vote on cluster quorum. A cloud witness uses Azure Blob Storage to read or write a blob file and then uses it to arbitrate in split-brain resolution. Only allowed values are 'Cloud', 'FileShare'.
+        /// Serialized Name: DeploymentCluster.witnessType
+        /// </summary>
+        [WirePath("witnessType")]
         public string WitnessType { get; set; }
-        /// <summary> Specify the fileshare path for the local witness for your Azure Stack HCI cluster. </summary>
+        /// <summary>
+        /// Specify the fileshare path for the local witness for your Azure Stack HCI cluster.
+        /// Serialized Name: DeploymentCluster.witnessPath
+        /// </summary>
+        [WirePath("witnessPath")]
         public string WitnessPath { get; set; }
-        /// <summary> Specify the Azure Storage account name for cloud witness for your Azure Stack HCI cluster. </summary>
+        /// <summary>
+        /// Specify the Azure Storage account name for cloud witness for your Azure Stack HCI cluster.
+        /// Serialized Name: DeploymentCluster.cloudAccountName
+        /// </summary>
+        [WirePath("cloudAccountName")]
         public string CloudAccountName { get; set; }
-        /// <summary> For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net. </summary>
+        /// <summary>
+        /// For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net.
+        /// Serialized Name: DeploymentCluster.azureServiceEndpoint
+        /// </summary>
+        [WirePath("azureServiceEndpoint")]
         public string AzureServiceEndpoint { get; set; }
     }
 }

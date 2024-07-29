@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> List of Updates. </summary>
+    /// <summary>
+    /// List of Updates
+    /// Serialized Name: UpdateList
+    /// </summary>
     internal partial class HciUpdateList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciUpdateList"/>. </summary>
-        /// <param name="value"> List of Updates. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value">
+        /// List of Updates
+        /// Serialized Name: UpdateList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to the next set of results.
+        /// Serialized Name: UpdateList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciUpdateList(IReadOnlyList<UpdateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Updates. </summary>
+        /// <summary>
+        /// List of Updates
+        /// Serialized Name: UpdateList.value
+        /// </summary>
         public IReadOnlyList<UpdateData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
+        /// <summary>
+        /// Link to the next set of results.
+        /// Serialized Name: UpdateList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

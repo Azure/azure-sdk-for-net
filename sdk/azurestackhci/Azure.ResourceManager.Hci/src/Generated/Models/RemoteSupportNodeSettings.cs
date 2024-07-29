@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Remote Support Node Settings of the cluster. </summary>
+    /// <summary>
+    /// Remote Support Node Settings of the cluster.
+    /// Serialized Name: RemoteSupportNodeSettings
+    /// </summary>
     public partial class RemoteSupportNodeSettings
     {
         /// <summary>
@@ -51,13 +54,34 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportNodeSettings"/>. </summary>
-        /// <param name="arcResourceId"> Arc ResourceId of the Node. </param>
-        /// <param name="state"> Remote Support Access Connection State on the Node. </param>
-        /// <param name="createdOn"> Remote Support Enablement Request Created TimeStamp on the Node. </param>
-        /// <param name="updatedOn"> Remote Support Enablement Request Updated TimeStamp on the Node. </param>
-        /// <param name="connectionStatus"> Remote Support Access Connection Status on the Node. </param>
-        /// <param name="connectionErrorMessage"> Remote Support Access Connection Error Message on the Node. </param>
-        /// <param name="transcriptLocation"> Remote Support Transcript location on the node. </param>
+        /// <param name="arcResourceId">
+        /// Arc ResourceId of the Node
+        /// Serialized Name: RemoteSupportNodeSettings.arcResourceId
+        /// </param>
+        /// <param name="state">
+        /// Remote Support Access Connection State on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.state
+        /// </param>
+        /// <param name="createdOn">
+        /// Remote Support Enablement Request Created TimeStamp on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.createdAt
+        /// </param>
+        /// <param name="updatedOn">
+        /// Remote Support Enablement Request Updated TimeStamp on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.updatedAt
+        /// </param>
+        /// <param name="connectionStatus">
+        /// Remote Support Access Connection Status on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.connectionStatus
+        /// </param>
+        /// <param name="connectionErrorMessage">
+        /// Remote Support Access Connection Error Message on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.connectionErrorMessage
+        /// </param>
+        /// <param name="transcriptLocation">
+        /// Remote Support Transcript location on the node
+        /// Serialized Name: RemoteSupportNodeSettings.transcriptLocation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RemoteSupportNodeSettings(string arcResourceId, string state, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string connectionStatus, string connectionErrorMessage, string transcriptLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,19 +95,47 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Arc ResourceId of the Node. </summary>
+        /// <summary>
+        /// Arc ResourceId of the Node
+        /// Serialized Name: RemoteSupportNodeSettings.arcResourceId
+        /// </summary>
+        [WirePath("arcResourceId")]
         public string ArcResourceId { get; }
-        /// <summary> Remote Support Access Connection State on the Node. </summary>
+        /// <summary>
+        /// Remote Support Access Connection State on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.state
+        /// </summary>
+        [WirePath("state")]
         public string State { get; }
-        /// <summary> Remote Support Enablement Request Created TimeStamp on the Node. </summary>
+        /// <summary>
+        /// Remote Support Enablement Request Created TimeStamp on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.createdAt
+        /// </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Remote Support Enablement Request Updated TimeStamp on the Node. </summary>
+        /// <summary>
+        /// Remote Support Enablement Request Updated TimeStamp on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.updatedAt
+        /// </summary>
+        [WirePath("updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Remote Support Access Connection Status on the Node. </summary>
+        /// <summary>
+        /// Remote Support Access Connection Status on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.connectionStatus
+        /// </summary>
+        [WirePath("connectionStatus")]
         public string ConnectionStatus { get; }
-        /// <summary> Remote Support Access Connection Error Message on the Node. </summary>
+        /// <summary>
+        /// Remote Support Access Connection Error Message on the Node
+        /// Serialized Name: RemoteSupportNodeSettings.connectionErrorMessage
+        /// </summary>
+        [WirePath("connectionErrorMessage")]
         public string ConnectionErrorMessage { get; }
-        /// <summary> Remote Support Transcript location on the node. </summary>
+        /// <summary>
+        /// Remote Support Transcript location on the node
+        /// Serialized Name: RemoteSupportNodeSettings.transcriptLocation
+        /// </summary>
+        [WirePath("transcriptLocation")]
         public string TranscriptLocation { get; }
     }
 }

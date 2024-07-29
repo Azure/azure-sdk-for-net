@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Overall connectivity status for the cluster resource. </summary>
+    /// <summary>
+    /// Overall connectivity status for the cluster resource.
+    /// Serialized Name: ConnectivityStatus
+    /// </summary>
     public readonly partial struct ConnectivityStatus : IEquatable<ConnectivityStatus>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DisconnectedValue = "Disconnected";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary> NotYetRegistered. </summary>
+        /// <summary>
+        /// NotYetRegistered
+        /// Serialized Name: ConnectivityStatus.NotYetRegistered
+        /// </summary>
         public static ConnectivityStatus NotYetRegistered { get; } = new ConnectivityStatus(NotYetRegisteredValue);
-        /// <summary> Connected. </summary>
+        /// <summary>
+        /// Connected
+        /// Serialized Name: ConnectivityStatus.Connected
+        /// </summary>
         public static ConnectivityStatus Connected { get; } = new ConnectivityStatus(ConnectedValue);
-        /// <summary> NotConnectedRecently. </summary>
+        /// <summary>
+        /// NotConnectedRecently
+        /// Serialized Name: ConnectivityStatus.NotConnectedRecently
+        /// </summary>
         public static ConnectivityStatus NotConnectedRecently { get; } = new ConnectivityStatus(NotConnectedRecentlyValue);
-        /// <summary> PartiallyConnected. </summary>
+        /// <summary>
+        /// PartiallyConnected
+        /// Serialized Name: ConnectivityStatus.PartiallyConnected
+        /// </summary>
         public static ConnectivityStatus PartiallyConnected { get; } = new ConnectivityStatus(PartiallyConnectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary>
+        /// Disconnected
+        /// Serialized Name: ConnectivityStatus.Disconnected
+        /// </summary>
         public static ConnectivityStatus Disconnected { get; } = new ConnectivityStatus(DisconnectedValue);
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ConnectivityStatus.NotSpecified
+        /// </summary>
         public static ConnectivityStatus NotSpecified { get; } = new ConnectivityStatus(NotSpecifiedValue);
         /// <summary> Determines if two <see cref="ConnectivityStatus"/> values are the same. </summary>
         public static bool operator ==(ConnectivityStatus left, ConnectivityStatus right) => left.Equals(right);

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -238,6 +239,181 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HvciProtection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hvciProtection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HvciProtection))
+                {
+                    builder.Append("  hvciProtection: ");
+                    var boolValue = HvciProtection.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DrtmProtection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  drtmProtection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DrtmProtection))
+                {
+                    builder.Append("  drtmProtection: ");
+                    var boolValue = DrtmProtection.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DriftControlEnforced), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  driftControlEnforced: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DriftControlEnforced))
+                {
+                    builder.Append("  driftControlEnforced: ");
+                    var boolValue = DriftControlEnforced.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CredentialGuardEnforced), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  credentialGuardEnforced: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CredentialGuardEnforced))
+                {
+                    builder.Append("  credentialGuardEnforced: ");
+                    var boolValue = CredentialGuardEnforced.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SmbSigningEnforced), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  smbSigningEnforced: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SmbSigningEnforced))
+                {
+                    builder.Append("  smbSigningEnforced: ");
+                    var boolValue = SmbSigningEnforced.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SmbClusterEncryption), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  smbClusterEncryption: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SmbClusterEncryption))
+                {
+                    builder.Append("  smbClusterEncryption: ");
+                    var boolValue = SmbClusterEncryption.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SideChannelMitigationEnforced), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sideChannelMitigationEnforced: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SideChannelMitigationEnforced))
+                {
+                    builder.Append("  sideChannelMitigationEnforced: ");
+                    var boolValue = SideChannelMitigationEnforced.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BitlockerBootVolume), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bitlockerBootVolume: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BitlockerBootVolume))
+                {
+                    builder.Append("  bitlockerBootVolume: ");
+                    var boolValue = BitlockerBootVolume.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BitlockerDataVolumes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bitlockerDataVolumes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BitlockerDataVolumes))
+                {
+                    builder.Append("  bitlockerDataVolumes: ");
+                    var boolValue = BitlockerDataVolumes.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WdacEnforced), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  wdacEnforced: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WdacEnforced))
+                {
+                    builder.Append("  wdacEnforced: ");
+                    var boolValue = WdacEnforced.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DeploymentSecuritySettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,6 +422,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentSecuritySettings)} does not support writing '{options.Format}' format.");
             }

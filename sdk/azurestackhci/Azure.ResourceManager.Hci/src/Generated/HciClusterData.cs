@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the HciCluster data model.
     /// Cluster details.
+    /// Serialized Name: Cluster
     /// </summary>
     public partial class HciClusterData : TrackedResourceData
     {
@@ -65,32 +66,110 @@ namespace Azure.ResourceManager.Hci
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="status"> Status of the cluster agent. </param>
-        /// <param name="connectivityStatus"> Overall connectivity status for the cluster resource. </param>
-        /// <param name="cloudId"> Unique, immutable resource id. </param>
-        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
-        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
-        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
-        /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
-        /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
-        /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
-        /// <param name="logCollectionProperties"> Log Collection properties of the cluster. </param>
-        /// <param name="remoteSupportProperties"> RemoteSupport properties of the cluster. </param>
-        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
-        /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
-        /// <param name="isolatedVmAttestationConfiguration"> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </param>
-        /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
-        /// <param name="billingModel"> Type of billing applied to the resource. </param>
-        /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
-        /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
-        /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
-        /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
-        /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <param name="provisioningState">
+        /// Provisioning state.
+        /// Serialized Name: Cluster.properties.provisioningState
+        /// </param>
+        /// <param name="status">
+        /// Status of the cluster agent.
+        /// Serialized Name: Cluster.properties.status
+        /// </param>
+        /// <param name="connectivityStatus">
+        /// Overall connectivity status for the cluster resource.
+        /// Serialized Name: Cluster.properties.connectivityStatus
+        /// </param>
+        /// <param name="cloudId">
+        /// Unique, immutable resource id.
+        /// Serialized Name: Cluster.properties.cloudId
+        /// </param>
+        /// <param name="cloudManagementEndpoint">
+        /// Endpoint configured for management from the Azure portal.
+        /// Serialized Name: Cluster.properties.cloudManagementEndpoint
+        /// </param>
+        /// <param name="aadClientId">
+        /// App id of cluster AAD identity.
+        /// Serialized Name: Cluster.properties.aadClientId
+        /// </param>
+        /// <param name="aadTenantId">
+        /// Tenant id of cluster AAD identity.
+        /// Serialized Name: Cluster.properties.aadTenantId
+        /// </param>
+        /// <param name="aadApplicationObjectId">
+        /// Object id of cluster AAD identity.
+        /// Serialized Name: Cluster.properties.aadApplicationObjectId
+        /// </param>
+        /// <param name="aadServicePrincipalObjectId">
+        /// Id of cluster identity service principal.
+        /// Serialized Name: Cluster.properties.aadServicePrincipalObjectId
+        /// </param>
+        /// <param name="softwareAssuranceProperties">
+        /// Software Assurance properties of the cluster.
+        /// Serialized Name: Cluster.properties.softwareAssuranceProperties
+        /// </param>
+        /// <param name="logCollectionProperties">
+        /// Log Collection properties of the cluster.
+        /// Serialized Name: Cluster.properties.logCollectionProperties
+        /// </param>
+        /// <param name="remoteSupportProperties">
+        /// RemoteSupport properties of the cluster.
+        /// Serialized Name: Cluster.properties.remoteSupportProperties
+        /// </param>
+        /// <param name="desiredProperties">
+        /// Desired properties of the cluster.
+        /// Serialized Name: Cluster.properties.desiredProperties
+        /// </param>
+        /// <param name="reportedProperties">
+        /// Properties reported by cluster agent.
+        /// Serialized Name: Cluster.properties.reportedProperties
+        /// </param>
+        /// <param name="isolatedVmAttestationConfiguration">
+        /// Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster.
+        /// Serialized Name: Cluster.properties.isolatedVmAttestationConfiguration
+        /// </param>
+        /// <param name="trialDaysRemaining">
+        /// Number of days remaining in the trial period.
+        /// Serialized Name: Cluster.properties.trialDaysRemaining
+        /// </param>
+        /// <param name="billingModel">
+        /// Type of billing applied to the resource.
+        /// Serialized Name: Cluster.properties.billingModel
+        /// </param>
+        /// <param name="registrationTimestamp">
+        /// First cluster sync timestamp.
+        /// Serialized Name: Cluster.properties.registrationTimestamp
+        /// </param>
+        /// <param name="lastSyncTimestamp">
+        /// Most recent cluster sync timestamp.
+        /// Serialized Name: Cluster.properties.lastSyncTimestamp
+        /// </param>
+        /// <param name="lastBillingTimestamp">
+        /// Most recent billing meter timestamp.
+        /// Serialized Name: Cluster.properties.lastBillingTimestamp
+        /// </param>
+        /// <param name="serviceEndpoint">
+        /// Region specific DataPath Endpoint of the cluster.
+        /// Serialized Name: Cluster.properties.serviceEndpoint
+        /// </param>
+        /// <param name="resourceProviderObjectId">
+        /// Object id of RP Service Principal
+        /// Serialized Name: Cluster.properties.resourceProviderObjectId
+        /// </param>
+        /// <param name="principalId">
+        /// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
+        /// Serialized Name: Cluster.identity.principalId
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+        /// Serialized Name: Cluster.identity.tenantId
+        /// </param>
+        /// <param name="typeIdentityType">
+        /// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+        /// Serialized Name: Cluster.identity.type
+        /// </param>
+        /// <param name="userAssignedIdentities">
+        /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+        /// Serialized Name: Cluster.identity.userAssignedIdentities
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, ConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -128,57 +207,161 @@ namespace Azure.ResourceManager.Hci
         {
         }
 
-        /// <summary> Provisioning state. </summary>
+        /// <summary>
+        /// Provisioning state.
+        /// Serialized Name: Cluster.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
-        /// <summary> Status of the cluster agent. </summary>
+        /// <summary>
+        /// Status of the cluster agent.
+        /// Serialized Name: Cluster.properties.status
+        /// </summary>
+        [WirePath("properties.status")]
         public HciClusterStatus? Status { get; }
-        /// <summary> Overall connectivity status for the cluster resource. </summary>
+        /// <summary>
+        /// Overall connectivity status for the cluster resource.
+        /// Serialized Name: Cluster.properties.connectivityStatus
+        /// </summary>
+        [WirePath("properties.connectivityStatus")]
         public ConnectivityStatus? ConnectivityStatus { get; }
-        /// <summary> Unique, immutable resource id. </summary>
+        /// <summary>
+        /// Unique, immutable resource id.
+        /// Serialized Name: Cluster.properties.cloudId
+        /// </summary>
+        [WirePath("properties.cloudId")]
         public Guid? CloudId { get; }
-        /// <summary> Endpoint configured for management from the Azure portal. </summary>
+        /// <summary>
+        /// Endpoint configured for management from the Azure portal.
+        /// Serialized Name: Cluster.properties.cloudManagementEndpoint
+        /// </summary>
+        [WirePath("properties.cloudManagementEndpoint")]
         public string CloudManagementEndpoint { get; set; }
-        /// <summary> App id of cluster AAD identity. </summary>
+        /// <summary>
+        /// App id of cluster AAD identity.
+        /// Serialized Name: Cluster.properties.aadClientId
+        /// </summary>
+        [WirePath("properties.aadClientId")]
         public Guid? AadClientId { get; set; }
-        /// <summary> Tenant id of cluster AAD identity. </summary>
+        /// <summary>
+        /// Tenant id of cluster AAD identity.
+        /// Serialized Name: Cluster.properties.aadTenantId
+        /// </summary>
+        [WirePath("properties.aadTenantId")]
         public Guid? AadTenantId { get; set; }
-        /// <summary> Object id of cluster AAD identity. </summary>
+        /// <summary>
+        /// Object id of cluster AAD identity.
+        /// Serialized Name: Cluster.properties.aadApplicationObjectId
+        /// </summary>
+        [WirePath("properties.aadApplicationObjectId")]
         public Guid? AadApplicationObjectId { get; set; }
-        /// <summary> Id of cluster identity service principal. </summary>
+        /// <summary>
+        /// Id of cluster identity service principal.
+        /// Serialized Name: Cluster.properties.aadServicePrincipalObjectId
+        /// </summary>
+        [WirePath("properties.aadServicePrincipalObjectId")]
         public Guid? AadServicePrincipalObjectId { get; set; }
-        /// <summary> Software Assurance properties of the cluster. </summary>
+        /// <summary>
+        /// Software Assurance properties of the cluster.
+        /// Serialized Name: Cluster.properties.softwareAssuranceProperties
+        /// </summary>
+        [WirePath("properties.softwareAssuranceProperties")]
         public SoftwareAssuranceProperties SoftwareAssuranceProperties { get; set; }
-        /// <summary> Log Collection properties of the cluster. </summary>
+        /// <summary>
+        /// Log Collection properties of the cluster.
+        /// Serialized Name: Cluster.properties.logCollectionProperties
+        /// </summary>
+        [WirePath("properties.logCollectionProperties")]
         public LogCollectionProperties LogCollectionProperties { get; set; }
-        /// <summary> RemoteSupport properties of the cluster. </summary>
+        /// <summary>
+        /// RemoteSupport properties of the cluster.
+        /// Serialized Name: Cluster.properties.remoteSupportProperties
+        /// </summary>
+        [WirePath("properties.remoteSupportProperties")]
         public RemoteSupportProperties RemoteSupportProperties { get; set; }
-        /// <summary> Desired properties of the cluster. </summary>
+        /// <summary>
+        /// Desired properties of the cluster.
+        /// Serialized Name: Cluster.properties.desiredProperties
+        /// </summary>
+        [WirePath("properties.desiredProperties")]
         public HciClusterDesiredProperties DesiredProperties { get; set; }
-        /// <summary> Properties reported by cluster agent. </summary>
+        /// <summary>
+        /// Properties reported by cluster agent.
+        /// Serialized Name: Cluster.properties.reportedProperties
+        /// </summary>
+        [WirePath("properties.reportedProperties")]
         public HciClusterReportedProperties ReportedProperties { get; }
-        /// <summary> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </summary>
+        /// <summary>
+        /// Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster.
+        /// Serialized Name: Cluster.properties.isolatedVmAttestationConfiguration
+        /// </summary>
+        [WirePath("properties.isolatedVmAttestationConfiguration")]
         public IsolatedVmAttestationConfiguration IsolatedVmAttestationConfiguration { get; }
-        /// <summary> Number of days remaining in the trial period. </summary>
+        /// <summary>
+        /// Number of days remaining in the trial period.
+        /// Serialized Name: Cluster.properties.trialDaysRemaining
+        /// </summary>
+        [WirePath("properties.trialDaysRemaining")]
         public float? TrialDaysRemaining { get; }
-        /// <summary> Type of billing applied to the resource. </summary>
+        /// <summary>
+        /// Type of billing applied to the resource.
+        /// Serialized Name: Cluster.properties.billingModel
+        /// </summary>
+        [WirePath("properties.billingModel")]
         public string BillingModel { get; }
-        /// <summary> First cluster sync timestamp. </summary>
+        /// <summary>
+        /// First cluster sync timestamp.
+        /// Serialized Name: Cluster.properties.registrationTimestamp
+        /// </summary>
+        [WirePath("properties.registrationTimestamp")]
         public DateTimeOffset? RegistrationTimestamp { get; }
-        /// <summary> Most recent cluster sync timestamp. </summary>
+        /// <summary>
+        /// Most recent cluster sync timestamp.
+        /// Serialized Name: Cluster.properties.lastSyncTimestamp
+        /// </summary>
+        [WirePath("properties.lastSyncTimestamp")]
         public DateTimeOffset? LastSyncTimestamp { get; }
-        /// <summary> Most recent billing meter timestamp. </summary>
+        /// <summary>
+        /// Most recent billing meter timestamp.
+        /// Serialized Name: Cluster.properties.lastBillingTimestamp
+        /// </summary>
+        [WirePath("properties.lastBillingTimestamp")]
         public DateTimeOffset? LastBillingTimestamp { get; }
-        /// <summary> Region specific DataPath Endpoint of the cluster. </summary>
+        /// <summary>
+        /// Region specific DataPath Endpoint of the cluster.
+        /// Serialized Name: Cluster.properties.serviceEndpoint
+        /// </summary>
+        [WirePath("properties.serviceEndpoint")]
         public string ServiceEndpoint { get; }
-        /// <summary> Object id of RP Service Principal. </summary>
+        /// <summary>
+        /// Object id of RP Service Principal
+        /// Serialized Name: Cluster.properties.resourceProviderObjectId
+        /// </summary>
+        [WirePath("properties.resourceProviderObjectId")]
         public string ResourceProviderObjectId { get; }
-        /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        /// <summary>
+        /// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
+        /// Serialized Name: Cluster.identity.principalId
+        /// </summary>
+        [WirePath("identity.principalId")]
         public Guid? PrincipalId { get; }
-        /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        /// <summary>
+        /// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+        /// Serialized Name: Cluster.identity.tenantId
+        /// </summary>
+        [WirePath("identity.tenantId")]
         public Guid? TenantId { get; }
-        /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
+        /// <summary>
+        /// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+        /// Serialized Name: Cluster.identity.type
+        /// </summary>
+        [WirePath("identity.type")]
         public HciManagedServiceIdentityType? TypeIdentityType { get; set; }
-        /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
+        /// <summary>
+        /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+        /// Serialized Name: Cluster.identity.userAssignedIdentities
+        /// </summary>
+        [WirePath("identity.userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The NIC Detail of a device. </summary>
+    /// <summary>
+    /// The NIC Detail of a device.
+    /// Serialized Name: NicDetail
+    /// </summary>
     public partial class NicDetail
     {
         /// <summary>
@@ -52,15 +55,42 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NicDetail"/>. </summary>
-        /// <param name="adapterName"> Adapter Name of NIC. </param>
-        /// <param name="interfaceDescription"> Interface Description of NIC. </param>
-        /// <param name="componentId"> Component Id of NIC. </param>
-        /// <param name="driverVersion"> Driver Version of NIC. </param>
-        /// <param name="ip4Address"> Subnet Mask of NIC. </param>
-        /// <param name="subnetMask"> Subnet Mask of NIC. </param>
-        /// <param name="defaultGateway"> Default Gateway of NIC. </param>
-        /// <param name="dnsServers"> DNS Servers for NIC. </param>
-        /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
+        /// <param name="adapterName">
+        /// Adapter Name of NIC
+        /// Serialized Name: NicDetail.adapterName
+        /// </param>
+        /// <param name="interfaceDescription">
+        /// Interface Description of NIC
+        /// Serialized Name: NicDetail.interfaceDescription
+        /// </param>
+        /// <param name="componentId">
+        /// Component Id of NIC
+        /// Serialized Name: NicDetail.componentId
+        /// </param>
+        /// <param name="driverVersion">
+        /// Driver Version of NIC
+        /// Serialized Name: NicDetail.driverVersion
+        /// </param>
+        /// <param name="ip4Address">
+        /// Subnet Mask of NIC
+        /// Serialized Name: NicDetail.ip4Address
+        /// </param>
+        /// <param name="subnetMask">
+        /// Subnet Mask of NIC
+        /// Serialized Name: NicDetail.subnetMask
+        /// </param>
+        /// <param name="defaultGateway">
+        /// Default Gateway of NIC
+        /// Serialized Name: NicDetail.defaultGateway
+        /// </param>
+        /// <param name="dnsServers">
+        /// DNS Servers for NIC
+        /// Serialized Name: NicDetail.dnsServers
+        /// </param>
+        /// <param name="defaultIsolationId">
+        /// Default Isolation of Management NIC
+        /// Serialized Name: NicDetail.defaultIsolationId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ip4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, string defaultIsolationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,23 +106,59 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Adapter Name of NIC. </summary>
+        /// <summary>
+        /// Adapter Name of NIC
+        /// Serialized Name: NicDetail.adapterName
+        /// </summary>
+        [WirePath("adapterName")]
         public string AdapterName { get; set; }
-        /// <summary> Interface Description of NIC. </summary>
+        /// <summary>
+        /// Interface Description of NIC
+        /// Serialized Name: NicDetail.interfaceDescription
+        /// </summary>
+        [WirePath("interfaceDescription")]
         public string InterfaceDescription { get; set; }
-        /// <summary> Component Id of NIC. </summary>
+        /// <summary>
+        /// Component Id of NIC
+        /// Serialized Name: NicDetail.componentId
+        /// </summary>
+        [WirePath("componentId")]
         public string ComponentId { get; set; }
-        /// <summary> Driver Version of NIC. </summary>
+        /// <summary>
+        /// Driver Version of NIC
+        /// Serialized Name: NicDetail.driverVersion
+        /// </summary>
+        [WirePath("driverVersion")]
         public string DriverVersion { get; set; }
-        /// <summary> Subnet Mask of NIC. </summary>
+        /// <summary>
+        /// Subnet Mask of NIC
+        /// Serialized Name: NicDetail.ip4Address
+        /// </summary>
+        [WirePath("ip4Address")]
         public string Ip4Address { get; set; }
-        /// <summary> Subnet Mask of NIC. </summary>
+        /// <summary>
+        /// Subnet Mask of NIC
+        /// Serialized Name: NicDetail.subnetMask
+        /// </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
-        /// <summary> Default Gateway of NIC. </summary>
+        /// <summary>
+        /// Default Gateway of NIC
+        /// Serialized Name: NicDetail.defaultGateway
+        /// </summary>
+        [WirePath("defaultGateway")]
         public string DefaultGateway { get; set; }
-        /// <summary> DNS Servers for NIC. </summary>
+        /// <summary>
+        /// DNS Servers for NIC
+        /// Serialized Name: NicDetail.dnsServers
+        /// </summary>
+        [WirePath("dnsServers")]
         public IList<string> DnsServers { get; }
-        /// <summary> Default Isolation of Management NIC. </summary>
+        /// <summary>
+        /// Default Isolation of Management NIC
+        /// Serialized Name: NicDetail.defaultIsolationId
+        /// </summary>
+        [WirePath("defaultIsolationId")]
         public string DefaultIsolationId { get; set; }
     }
 }

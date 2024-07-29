@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Edge device kind. </summary>
+    /// <summary>
+    /// Edge device kind.
+    /// Serialized Name: DeviceKind
+    /// </summary>
     internal readonly partial struct DeviceKind : IEquatable<DeviceKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         private const string HCIValue = "HCI";
 
-        /// <summary> Arc-enabled edge device with HCI OS. </summary>
+        /// <summary>
+        /// Arc-enabled edge device with HCI OS.
+        /// Serialized Name: DeviceKind.HCI
+        /// </summary>
         public static DeviceKind HCI { get; } = new DeviceKind(HCIValue);
         /// <summary> Determines if two <see cref="DeviceKind"/> values are the same. </summary>
         public static bool operator ==(DeviceKind left, DeviceKind right) => left.Equals(right);

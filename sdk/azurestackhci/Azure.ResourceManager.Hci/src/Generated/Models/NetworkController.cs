@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
+    /// <summary>
+    /// network controller config for SDN Integration to deploy AzureStackHCI Cluster.
+    /// Serialized Name: NetworkController
+    /// </summary>
     public partial class NetworkController
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkController"/>. </summary>
-        /// <param name="macAddressPoolStart"> macAddressPoolStart of network controller used for SDN Integration. </param>
-        /// <param name="macAddressPoolStop"> macAddressPoolStop of network controller used for SDN Integration. </param>
-        /// <param name="networkVirtualizationEnabled"> NetworkVirtualizationEnabled of network controller used for SDN Integration. </param>
+        /// <param name="macAddressPoolStart">
+        /// macAddressPoolStart of network controller used for SDN Integration.
+        /// Serialized Name: NetworkController.macAddressPoolStart
+        /// </param>
+        /// <param name="macAddressPoolStop">
+        /// macAddressPoolStop of network controller used for SDN Integration.
+        /// Serialized Name: NetworkController.macAddressPoolStop
+        /// </param>
+        /// <param name="networkVirtualizationEnabled">
+        /// NetworkVirtualizationEnabled of network controller used for SDN Integration.
+        /// Serialized Name: NetworkController.networkVirtualizationEnabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkController(string macAddressPoolStart, string macAddressPoolStop, bool? networkVirtualizationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,23 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> macAddressPoolStart of network controller used for SDN Integration. </summary>
+        /// <summary>
+        /// macAddressPoolStart of network controller used for SDN Integration.
+        /// Serialized Name: NetworkController.macAddressPoolStart
+        /// </summary>
+        [WirePath("macAddressPoolStart")]
         public string MacAddressPoolStart { get; set; }
-        /// <summary> macAddressPoolStop of network controller used for SDN Integration. </summary>
+        /// <summary>
+        /// macAddressPoolStop of network controller used for SDN Integration.
+        /// Serialized Name: NetworkController.macAddressPoolStop
+        /// </summary>
+        [WirePath("macAddressPoolStop")]
         public string MacAddressPoolStop { get; set; }
-        /// <summary> NetworkVirtualizationEnabled of network controller used for SDN Integration. </summary>
+        /// <summary>
+        /// NetworkVirtualizationEnabled of network controller used for SDN Integration.
+        /// Serialized Name: NetworkController.networkVirtualizationEnabled
+        /// </summary>
+        [WirePath("networkVirtualizationEnabled")]
         public bool? NetworkVirtualizationEnabled { get; set; }
     }
 }

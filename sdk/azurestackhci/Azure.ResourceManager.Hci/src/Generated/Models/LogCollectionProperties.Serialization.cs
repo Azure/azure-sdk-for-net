@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -147,6 +149,92 @@ namespace Azure.ResourceManager.Hci.Models
             return new LogCollectionProperties(fromDate, toDate, lastLogGenerated, logCollectionSessionDetails ?? new ChangeTrackingList<LogCollectionSession>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FromDate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fromDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FromDate))
+                {
+                    builder.Append("  fromDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(FromDate.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ToDate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  toDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ToDate))
+                {
+                    builder.Append("  toDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ToDate.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastLogGenerated), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastLogGenerated: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastLogGenerated))
+                {
+                    builder.Append("  lastLogGenerated: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastLogGenerated.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogCollectionSessionDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logCollectionSessionDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LogCollectionSessionDetails))
+                {
+                    if (LogCollectionSessionDetails.Any())
+                    {
+                        builder.Append("  logCollectionSessionDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LogCollectionSessionDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  logCollectionSessionDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LogCollectionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +243,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LogCollectionProperties)} does not support writing '{options.Format}' format.");
             }

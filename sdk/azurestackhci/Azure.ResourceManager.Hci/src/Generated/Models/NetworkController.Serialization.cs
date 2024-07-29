@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -114,6 +115,83 @@ namespace Azure.ResourceManager.Hci.Models
             return new NetworkController(macAddressPoolStart, macAddressPoolStop, networkVirtualizationEnabled, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MacAddressPoolStart), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  macAddressPoolStart: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MacAddressPoolStart))
+                {
+                    builder.Append("  macAddressPoolStart: ");
+                    if (MacAddressPoolStart.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MacAddressPoolStart}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MacAddressPoolStart}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MacAddressPoolStop), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  macAddressPoolStop: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MacAddressPoolStop))
+                {
+                    builder.Append("  macAddressPoolStop: ");
+                    if (MacAddressPoolStop.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MacAddressPoolStop}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MacAddressPoolStop}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkVirtualizationEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkVirtualizationEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkVirtualizationEnabled))
+                {
+                    builder.Append("  networkVirtualizationEnabled: ");
+                    var boolValue = NetworkVirtualizationEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NetworkController>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkController>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +200,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkController)} does not support writing '{options.Format}' format.");
             }

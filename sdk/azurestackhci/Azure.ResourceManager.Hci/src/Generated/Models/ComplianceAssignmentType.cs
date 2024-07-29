@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Represents the compliance assignment type of a resource. </summary>
+    /// <summary>
+    /// Represents the compliance assignment type of a resource.
+    /// Serialized Name: ComplianceAssignmentType
+    /// </summary>
     public readonly partial struct ComplianceAssignmentType : IEquatable<ComplianceAssignmentType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Hci.Models
         private const string AuditValue = "Audit";
         private const string ApplyAndAutoCorrectValue = "ApplyAndAutoCorrect";
 
-        /// <summary> Report on the state of the machine, but don't make changes. </summary>
+        /// <summary>
+        /// Report on the state of the machine, but don't make changes.
+        /// Serialized Name: ComplianceAssignmentType.Audit
+        /// </summary>
         public static ComplianceAssignmentType Audit { get; } = new ComplianceAssignmentType(AuditValue);
-        /// <summary> Applied to the machine. If it drifts, the local service inside the machine makes a correction at the next evaluation. </summary>
+        /// <summary>
+        /// Applied to the machine. If it drifts, the local service inside the machine makes a correction at the next evaluation.
+        /// Serialized Name: ComplianceAssignmentType.ApplyAndAutoCorrect
+        /// </summary>
         public static ComplianceAssignmentType ApplyAndAutoCorrect { get; } = new ComplianceAssignmentType(ApplyAndAutoCorrectValue);
         /// <summary> Determines if two <see cref="ComplianceAssignmentType"/> values are the same. </summary>
         public static bool operator ==(ComplianceAssignmentType left, ComplianceAssignmentType right) => left.Equals(right);

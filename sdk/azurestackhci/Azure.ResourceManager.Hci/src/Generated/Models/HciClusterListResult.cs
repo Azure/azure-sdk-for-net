@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> List of clusters. </summary>
+    /// <summary>
+    /// List of clusters.
+    /// Serialized Name: ClusterList
+    /// </summary>
     internal partial class HciClusterListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterListResult"/>. </summary>
-        /// <param name="value"> List of clusters. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value">
+        /// List of clusters.
+        /// Serialized Name: ClusterList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to the next set of results.
+        /// Serialized Name: ClusterList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciClusterListResult(IReadOnlyList<HciClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of clusters. </summary>
+        /// <summary>
+        /// List of clusters.
+        /// Serialized Name: ClusterList.value
+        /// </summary>
         public IReadOnlyList<HciClusterData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
+        /// <summary>
+        /// Link to the next set of results.
+        /// Serialized Name: ClusterList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

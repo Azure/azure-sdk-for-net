@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the ArcSetting data model.
     /// ArcSetting details.
+    /// Serialized Name: ArcSetting
     /// </summary>
     public partial class ArcSettingData : ResourceData
     {
@@ -63,16 +64,46 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the ArcSetting proxy resource. </param>
-        /// <param name="arcInstanceResourceGroup"> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </param>
-        /// <param name="arcApplicationClientId"> App id of arc AAD identity. </param>
-        /// <param name="arcApplicationTenantId"> Tenant id of arc AAD identity. </param>
-        /// <param name="arcServicePrincipalObjectId"> Object id of arc AAD service principal. </param>
-        /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
-        /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
-        /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
-        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
-        /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the ArcSetting proxy resource.
+        /// Serialized Name: ArcSetting.properties.provisioningState
+        /// </param>
+        /// <param name="arcInstanceResourceGroup">
+        /// The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources.
+        /// Serialized Name: ArcSetting.properties.arcInstanceResourceGroup
+        /// </param>
+        /// <param name="arcApplicationClientId">
+        /// App id of arc AAD identity.
+        /// Serialized Name: ArcSetting.properties.arcApplicationClientId
+        /// </param>
+        /// <param name="arcApplicationTenantId">
+        /// Tenant id of arc AAD identity.
+        /// Serialized Name: ArcSetting.properties.arcApplicationTenantId
+        /// </param>
+        /// <param name="arcServicePrincipalObjectId">
+        /// Object id of arc AAD service principal.
+        /// Serialized Name: ArcSetting.properties.arcServicePrincipalObjectId
+        /// </param>
+        /// <param name="arcApplicationObjectId">
+        /// Object id of arc AAD identity.
+        /// Serialized Name: ArcSetting.properties.arcApplicationObjectId
+        /// </param>
+        /// <param name="aggregateState">
+        /// Aggregate state of Arc agent across the nodes in this HCI cluster.
+        /// Serialized Name: ArcSetting.properties.aggregateState
+        /// </param>
+        /// <param name="perNodeDetails">
+        /// State of Arc agent in each of the nodes.
+        /// Serialized Name: ArcSetting.properties.perNodeDetails
+        /// </param>
+        /// <param name="connectivityProperties">
+        /// contains connectivity related configuration for ARC resources
+        /// Serialized Name: ArcSetting.properties.connectivityProperties
+        /// </param>
+        /// <param name="defaultExtensions">
+        /// Properties for each of the default extensions category
+        /// Serialized Name: ArcSetting.properties.defaultExtensions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties, IReadOnlyList<DefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -89,24 +120,57 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
+        /// <summary>
+        /// Provisioning state of the ArcSetting proxy resource.
+        /// Serialized Name: ArcSetting.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
-        /// <summary> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </summary>
+        /// <summary>
+        /// The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources.
+        /// Serialized Name: ArcSetting.properties.arcInstanceResourceGroup
+        /// </summary>
+        [WirePath("properties.arcInstanceResourceGroup")]
         public string ArcInstanceResourceGroup { get; set; }
-        /// <summary> App id of arc AAD identity. </summary>
+        /// <summary>
+        /// App id of arc AAD identity.
+        /// Serialized Name: ArcSetting.properties.arcApplicationClientId
+        /// </summary>
+        [WirePath("properties.arcApplicationClientId")]
         public Guid? ArcApplicationClientId { get; set; }
-        /// <summary> Tenant id of arc AAD identity. </summary>
+        /// <summary>
+        /// Tenant id of arc AAD identity.
+        /// Serialized Name: ArcSetting.properties.arcApplicationTenantId
+        /// </summary>
+        [WirePath("properties.arcApplicationTenantId")]
         public Guid? ArcApplicationTenantId { get; set; }
-        /// <summary> Object id of arc AAD service principal. </summary>
+        /// <summary>
+        /// Object id of arc AAD service principal.
+        /// Serialized Name: ArcSetting.properties.arcServicePrincipalObjectId
+        /// </summary>
+        [WirePath("properties.arcServicePrincipalObjectId")]
         public Guid? ArcServicePrincipalObjectId { get; set; }
-        /// <summary> Object id of arc AAD identity. </summary>
+        /// <summary>
+        /// Object id of arc AAD identity.
+        /// Serialized Name: ArcSetting.properties.arcApplicationObjectId
+        /// </summary>
+        [WirePath("properties.arcApplicationObjectId")]
         public Guid? ArcApplicationObjectId { get; set; }
-        /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
+        /// <summary>
+        /// Aggregate state of Arc agent across the nodes in this HCI cluster.
+        /// Serialized Name: ArcSetting.properties.aggregateState
+        /// </summary>
+        [WirePath("properties.aggregateState")]
         public ArcSettingAggregateState? AggregateState { get; }
-        /// <summary> State of Arc agent in each of the nodes. </summary>
+        /// <summary>
+        /// State of Arc agent in each of the nodes.
+        /// Serialized Name: ArcSetting.properties.perNodeDetails
+        /// </summary>
+        [WirePath("properties.perNodeDetails")]
         public IReadOnlyList<PerNodeArcState> PerNodeDetails { get; }
         /// <summary>
         /// contains connectivity related configuration for ARC resources
+        /// Serialized Name: ArcSetting.properties.connectivityProperties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -135,8 +199,13 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.connectivityProperties")]
         public BinaryData ConnectivityProperties { get; set; }
-        /// <summary> Properties for each of the default extensions category. </summary>
+        /// <summary>
+        /// Properties for each of the default extensions category
+        /// Serialized Name: ArcSetting.properties.defaultExtensions
+        /// </summary>
+        [WirePath("properties.defaultExtensions")]
         public IReadOnlyList<DefaultExtensionDetails> DefaultExtensions { get; }
     }
 }

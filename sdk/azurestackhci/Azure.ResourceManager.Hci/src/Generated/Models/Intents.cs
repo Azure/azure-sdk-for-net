@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The Intents of a cluster. </summary>
+    /// <summary>
+    /// The Intents of a cluster.
+    /// Serialized Name: Intents
+    /// </summary>
     public partial class Intents
     {
         /// <summary>
@@ -53,15 +56,42 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Intents"/>. </summary>
-        /// <param name="name"> Name of the network intent you wish to create. </param>
-        /// <param name="trafficType"> List of network traffic types. Only allowed values are 'Compute', 'Storage', 'Management'. </param>
-        /// <param name="adapter"> Array of network interfaces used for the network intent. </param>
-        /// <param name="overrideVirtualSwitchConfiguration"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="virtualSwitchConfigurationOverrides"> Set virtualSwitch ConfigurationOverrides for cluster. </param>
-        /// <param name="overrideQosPolicy"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="qosPolicyOverrides"> Set QoS PolicyOverrides for cluster. </param>
-        /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
+        /// <param name="name">
+        /// Name of the network intent you wish to create.
+        /// Serialized Name: Intents.name
+        /// </param>
+        /// <param name="trafficType">
+        /// List of network traffic types. Only allowed values are 'Compute', 'Storage', 'Management'.
+        /// Serialized Name: Intents.trafficType
+        /// </param>
+        /// <param name="adapter">
+        /// Array of network interfaces used for the network intent.
+        /// Serialized Name: Intents.adapter
+        /// </param>
+        /// <param name="overrideVirtualSwitchConfiguration">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: Intents.overrideVirtualSwitchConfiguration
+        /// </param>
+        /// <param name="virtualSwitchConfigurationOverrides">
+        /// Set virtualSwitch ConfigurationOverrides for cluster.
+        /// Serialized Name: Intents.virtualSwitchConfigurationOverrides
+        /// </param>
+        /// <param name="overrideQosPolicy">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: Intents.overrideQosPolicy
+        /// </param>
+        /// <param name="qosPolicyOverrides">
+        /// Set QoS PolicyOverrides for cluster.
+        /// Serialized Name: Intents.qosPolicyOverrides
+        /// </param>
+        /// <param name="overrideAdapterProperty">
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: Intents.overrideAdapterProperty
+        /// </param>
+        /// <param name="adapterPropertyOverrides">
+        /// Set Adapter PropertyOverrides for cluster.
+        /// Serialized Name: Intents.adapterPropertyOverrides
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Intents(string name, IList<string> trafficType, IList<string> adapter, bool? overrideVirtualSwitchConfiguration, VirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? overrideQosPolicy, QosPolicyOverrides qosPolicyOverrides, bool? overrideAdapterProperty, AdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,23 +107,59 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the network intent you wish to create. </summary>
+        /// <summary>
+        /// Name of the network intent you wish to create.
+        /// Serialized Name: Intents.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> List of network traffic types. Only allowed values are 'Compute', 'Storage', 'Management'. </summary>
+        /// <summary>
+        /// List of network traffic types. Only allowed values are 'Compute', 'Storage', 'Management'.
+        /// Serialized Name: Intents.trafficType
+        /// </summary>
+        [WirePath("trafficType")]
         public IList<string> TrafficType { get; }
-        /// <summary> Array of network interfaces used for the network intent. </summary>
+        /// <summary>
+        /// Array of network interfaces used for the network intent.
+        /// Serialized Name: Intents.adapter
+        /// </summary>
+        [WirePath("adapter")]
         public IList<string> Adapter { get; }
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: Intents.overrideVirtualSwitchConfiguration
+        /// </summary>
+        [WirePath("overrideVirtualSwitchConfiguration")]
         public bool? OverrideVirtualSwitchConfiguration { get; set; }
-        /// <summary> Set virtualSwitch ConfigurationOverrides for cluster. </summary>
+        /// <summary>
+        /// Set virtualSwitch ConfigurationOverrides for cluster.
+        /// Serialized Name: Intents.virtualSwitchConfigurationOverrides
+        /// </summary>
+        [WirePath("virtualSwitchConfigurationOverrides")]
         public VirtualSwitchConfigurationOverrides VirtualSwitchConfigurationOverrides { get; set; }
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: Intents.overrideQosPolicy
+        /// </summary>
+        [WirePath("overrideQosPolicy")]
         public bool? OverrideQosPolicy { get; set; }
-        /// <summary> Set QoS PolicyOverrides for cluster. </summary>
+        /// <summary>
+        /// Set QoS PolicyOverrides for cluster.
+        /// Serialized Name: Intents.qosPolicyOverrides
+        /// </summary>
+        [WirePath("qosPolicyOverrides")]
         public QosPolicyOverrides QosPolicyOverrides { get; set; }
-        /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
+        /// <summary>
+        /// This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation.
+        /// Serialized Name: Intents.overrideAdapterProperty
+        /// </summary>
+        [WirePath("overrideAdapterProperty")]
         public bool? OverrideAdapterProperty { get; set; }
-        /// <summary> Set Adapter PropertyOverrides for cluster. </summary>
+        /// <summary>
+        /// Set Adapter PropertyOverrides for cluster.
+        /// Serialized Name: Intents.adapterPropertyOverrides
+        /// </summary>
+        [WirePath("adapterPropertyOverrides")]
         public AdapterPropertyOverrides AdapterPropertyOverrides { get; set; }
     }
 }
