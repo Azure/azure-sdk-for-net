@@ -1983,8 +1983,7 @@ namespace Azure.Storage.Queues.Test
         {
             // Test #1
             string permissionsStr1 = "ra";
-            QueueAccessPolicyPermissions permissionsEnum1 = QueueAccessPolicyPermissions.None;
-            permissionsEnum1 |= QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add;
+            QueueAccessPolicyPermissions permissionsEnum1 = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add;
 
             QueueAccessPolicy qap = new QueueAccessPolicy
             {
@@ -2006,8 +2005,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum2.ToPermissionsString());
 
             // Test #3
-            QueueAccessPolicyPermissions permissionsEnum3 = QueueAccessPolicyPermissions.None;
-            permissionsEnum3 |= QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process;
+            QueueAccessPolicyPermissions permissionsEnum3 = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process;
             string permissionsStr3 = "rap";
 
             qap.QueueAccessPolicyPermissions = permissionsEnum3;
