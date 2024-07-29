@@ -12,7 +12,7 @@
     },
     "TestTargetFramework": [
         "net6.0",
-        "net8.0"
+        "net7.0"
     ],
     "AZURE_LIVE_TEST_SERVICE_VERSIONS": [
         "V2019_02_02",
