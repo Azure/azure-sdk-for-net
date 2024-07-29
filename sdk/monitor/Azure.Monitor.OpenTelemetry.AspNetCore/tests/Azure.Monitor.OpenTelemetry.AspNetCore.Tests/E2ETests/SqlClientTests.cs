@@ -12,17 +12,17 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Instrumentation.SqlClient;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
-    [CollectionDefinition("InstrumentationLibraries", DisableParallelization = true)]
-    [Collection("InstrumentationLibraries")]
     public class SqlClientTests
     {
         private const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
@@ -36,6 +36,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         private const string TestSqlConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=master";
 
         private readonly FakeSqlClientDiagnosticSource _fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
+
+        private readonly TelemetryItemOutputHelper _telemetryOutput;
+
+        public SqlClientTests(ITestOutputHelper output)
+        {
+            _telemetryOutput = new TelemetryItemOutputHelper(output);
+        }
 
         [Theory]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError)]
@@ -112,6 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             tracerProvider.Shutdown();
 
             // ASSERT
+            _telemetryOutput.Write(telemetryItems);
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             var telemetryItem = telemetryItems.Where(x => x.Name == "RemoteDependency").Single();
             Assert.Single(activities);
@@ -209,6 +217,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             tracerProvider.Shutdown();
 
             // ASSERT
+            _telemetryOutput.Write(telemetryItems);
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             var telemetryItem = telemetryItems.Where(x => x.Name == "RemoteDependency").Single();
             var activity = activities.Single();
