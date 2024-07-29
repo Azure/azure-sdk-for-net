@@ -68,7 +68,7 @@ Note: if you want to authenticate with the azure in China, you can use the follo
             // Create ClientSecretCredential for authentication
             var credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions { AuthorityHost = authorityHost });
             // Create the Azure Resource Manager client
-            var armClient = new ArmClient(credential, subscriptionId, armOptions);
+            ArmClient client = new ArmClient(credential, subscriptionId, armOptions);
 ```
 
 
