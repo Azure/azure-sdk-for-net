@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> bootstrap server connectivity endpoint. </summary>
+        [WirePath("bootstrapServerEndpoint")]
         public string BootstrapServerEndpoint { get; }
         /// <summary> Kafka broker endpoint list. </summary>
+        [WirePath("brokerEndpoints")]
         public IReadOnlyList<string> BrokerEndpoints { get; }
     }
 }

@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Config value. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Config description. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The virtual machine SKU. </summary>
+        [WirePath("vmSize")]
         public string VmSize { get; set; }
         /// <summary> The number of virtual machines. </summary>
+        [WirePath("count")]
         public int? Count { get; }
         /// <summary> The list of Availability zones to use for AKS VMSS nodes. </summary>
+        [WirePath("availabilityZones")]
         public IList<string> AvailabilityZones { get; }
     }
 }

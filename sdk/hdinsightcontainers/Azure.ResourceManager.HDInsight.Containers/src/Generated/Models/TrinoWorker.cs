@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Trino debug configuration. </summary>
+        [WirePath("debug")]
         public TrinoDebugConfig Debug { get; set; }
     }
 }

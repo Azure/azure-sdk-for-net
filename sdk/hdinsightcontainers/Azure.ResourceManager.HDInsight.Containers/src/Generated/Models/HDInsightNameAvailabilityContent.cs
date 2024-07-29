@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Name for checking availability. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The resource type in Microsoft.HDInsight. </summary>
+        [WirePath("type")]
         public string ResourceType { get; set; }
     }
 }

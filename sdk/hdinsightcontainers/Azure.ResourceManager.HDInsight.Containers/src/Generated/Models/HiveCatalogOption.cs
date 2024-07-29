@@ -86,16 +86,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Name of trino catalog which should use specified hive metastore. </summary>
+        [WirePath("catalogName")]
         public string CatalogName { get; set; }
         /// <summary> The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization. </summary>
+        [WirePath("metastoreDbConnectionAuthenticationMode")]
         public MetastoreDBConnectionAuthenticationMode? MetastoreDBConnectionAuthenticationMode { get; set; }
         /// <summary> Secret reference name from secretsProfile.secrets containing password for database connection. </summary>
+        [WirePath("metastoreDbConnectionPasswordSecret")]
         public string MetastoreDBConnectionPasswordSecret { get; set; }
         /// <summary> Connection string for hive metastore database. </summary>
+        [WirePath("metastoreDbConnectionURL")]
         public string MetastoreDBConnectionUriString { get; set; }
         /// <summary> User name for database connection. </summary>
+        [WirePath("metastoreDbConnectionUserName")]
         public string MetastoreDBConnectionUserName { get; set; }
         /// <summary> Metastore root directory URI, format: abfs[s]://&lt;container&gt;@&lt;account_name&gt;.dfs.core.windows.net/&lt;path&gt;. More details: https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction-abfs-uri. </summary>
+        [WirePath("metastoreWarehouseDir")]
         public string MetastoreWarehouseDir { get; set; }
     }
 }

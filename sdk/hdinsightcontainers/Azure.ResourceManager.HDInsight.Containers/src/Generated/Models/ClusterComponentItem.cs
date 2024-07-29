@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the version. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

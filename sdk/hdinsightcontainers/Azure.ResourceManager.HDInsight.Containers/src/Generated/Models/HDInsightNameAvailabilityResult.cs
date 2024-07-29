@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Indicator of availability of the Microsoft.HDInsight resource name. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> The reason of unavailability. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> The error message of unavailability. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

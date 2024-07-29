@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Trino user plugins. </summary>
+        [WirePath("plugins")]
         public IList<TrinoUserPlugin> Plugins { get; }
     }
 }

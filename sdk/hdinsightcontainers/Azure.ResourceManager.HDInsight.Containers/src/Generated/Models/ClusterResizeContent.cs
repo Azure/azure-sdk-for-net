@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Sets the properties. Define cluster resize specific properties. </summary>
         internal ClusterResizeProperties Properties { get; set; }
         /// <summary> Target node count of worker node. </summary>
+        [WirePath("properties.targetWorkerNodeCount")]
         public int? ClusterResizeTargetWorkerNodeCount
         {
             get => Properties is null ? default(int?) : Properties.TargetWorkerNodeCount;

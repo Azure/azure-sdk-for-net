@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Hive Catalog name used to mount external tables on the logs written by trino, if not specified there tables are not created. </summary>
+        [WirePath("hivecatalogName")]
         public string HivecatalogName { get; set; }
         /// <summary> Schema of the above catalog to use, to mount query logs as external tables, if not specified tables will be mounted under schema trinologs. </summary>
+        [WirePath("hivecatalogSchema")]
         public string HivecatalogSchema { get; set; }
         /// <summary> Retention period for query log table partitions, this doesn't have any affect on actual data. </summary>
+        [WirePath("partitionRetentionInDays")]
         public int? PartitionRetentionInDays { get; set; }
         /// <summary> Azure storage location of the blobs. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

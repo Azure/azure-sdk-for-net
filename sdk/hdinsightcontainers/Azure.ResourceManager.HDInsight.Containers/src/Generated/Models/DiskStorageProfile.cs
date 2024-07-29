@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Managed Disk size in GB. The maximum supported disk size for Standard and Premium HDD/SSD is 32TB, except for Premium SSD v2, which supports up to 64TB. </summary>
+        [WirePath("dataDiskSize")]
         public int DataDiskSize { get; set; }
         /// <summary> Managed Disk Type. </summary>
+        [WirePath("dataDiskType")]
         public DataDiskType DataDiskType { get; set; }
     }
 }

@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Enable Ranger for cluster or not. </summary>
+        [WirePath("enabled")]
         public bool IsRangerForClusterEnabled { get; set; }
     }
 }

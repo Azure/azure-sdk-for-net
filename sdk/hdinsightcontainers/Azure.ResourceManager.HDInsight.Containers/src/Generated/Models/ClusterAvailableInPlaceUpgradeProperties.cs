@@ -54,26 +54,37 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Hotfix version upgrade description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Source OSS version of current cluster component. </summary>
+        [WirePath("sourceOssVersion")]
         public string SourceOssVersion { get; set; }
         /// <summary> Source cluster version of current cluster component. </summary>
+        [WirePath("sourceClusterVersion")]
         public string SourceClusterVersion { get; set; }
         /// <summary> Source build number of current cluster component. </summary>
+        [WirePath("sourceBuildNumber")]
         public string SourceBuildNumber { get; set; }
         /// <summary> Target OSS version of component to be upgraded. </summary>
+        [WirePath("targetOssVersion")]
         public string TargetOssVersion { get; set; }
         /// <summary> Target cluster version of component to be upgraded. </summary>
+        [WirePath("targetClusterVersion")]
         public string TargetClusterVersion { get; set; }
         /// <summary> Target build number of component to be upgraded. </summary>
+        [WirePath("targetBuildNumber")]
         public string TargetBuildNumber { get; set; }
         /// <summary> Name of component to be upgraded. </summary>
+        [WirePath("componentName")]
         public string ComponentName { get; set; }
         /// <summary> Severity of this upgrade. </summary>
+        [WirePath("severity")]
         public ClusterUpgradeSeverityType? Severity { get; set; }
         /// <summary> Extended properties of current available upgrade version. </summary>
+        [WirePath("extendedProperties")]
         public string ExtendedProperties { get; set; }
         /// <summary> Created time of current available upgrade version. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; set; }
     }
 }

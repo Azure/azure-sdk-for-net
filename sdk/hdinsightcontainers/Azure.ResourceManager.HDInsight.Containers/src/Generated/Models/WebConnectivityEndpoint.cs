@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Web connectivity endpoint. </summary>
+        [WirePath("fqdn")]
         public string Fqdn { get; }
         /// <summary> Private web connectivity endpoint. This property will only be returned when enableInternalIngress is true. </summary>
+        [WirePath("privateFqdn")]
         public string PrivateFqdn { get; }
     }
 }

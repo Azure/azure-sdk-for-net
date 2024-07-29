@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The required CPU. </summary>
+        [WirePath("cpu")]
         public float Cpu { get; set; }
         /// <summary> The required memory in MB, Container memory will be 110 percentile. </summary>
+        [WirePath("memory")]
         public long Memory { get; set; }
     }
 }

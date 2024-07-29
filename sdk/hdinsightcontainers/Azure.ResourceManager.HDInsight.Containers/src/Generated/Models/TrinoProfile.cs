@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Trino cluster catalog options. </summary>
         internal CatalogOptions CatalogOptions { get; set; }
         /// <summary> hive catalog options. </summary>
+        [WirePath("catalogOptions.hive")]
         public IList<HiveCatalogOption> CatalogOptionsHive
         {
             get
@@ -81,10 +82,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Trino Coordinator. </summary>
+        [WirePath("coordinator")]
         public TrinoCoordinator Coordinator { get; set; }
         /// <summary> Trino user plugins spec. </summary>
         internal TrinoUserPluginListResult UserPluginsSpec { get; set; }
         /// <summary> Trino user plugins. </summary>
+        [WirePath("userPluginsSpec.plugins")]
         public IList<TrinoUserPlugin> Plugins
         {
             get
@@ -98,6 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> User telemetry. </summary>
         internal TrinoUserTelemetry UserTelemetrySpec { get; set; }
         /// <summary> Trino user telemetry definition. </summary>
+        [WirePath("userTelemetrySpec.storage")]
         public TrinoTelemetryConfig UserTelemetrySpecStorage
         {
             get => UserTelemetrySpec is null ? default : UserTelemetrySpec.Storage;
@@ -112,6 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Trino worker. </summary>
         internal TrinoWorker Worker { get; set; }
         /// <summary> Trino debug configuration. </summary>
+        [WirePath("worker.debug")]
         public TrinoDebugConfig WorkerDebug
         {
             get => Worker is null ? default : Worker.Debug;

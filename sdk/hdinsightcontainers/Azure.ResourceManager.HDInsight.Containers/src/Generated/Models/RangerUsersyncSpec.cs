@@ -70,14 +70,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Denotes whether usersync service should be enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> List of groups that should be synced. These group names should match the object id of the respective AAD groups. </summary>
+        [WirePath("groups")]
         public IList<string> Groups { get; }
         /// <summary> User &amp; groups can be synced automatically or via a static list that's refreshed. </summary>
+        [WirePath("mode")]
         public RangerUsersyncMode? Mode { get; set; }
         /// <summary> Azure storage location of a mapping file that lists user &amp; group associations. </summary>
+        [WirePath("userMappingLocation")]
         public string UserMappingLocation { get; set; }
         /// <summary> List of user names that should be synced. These usernames should match the User principal name of the respective AAD users. </summary>
+        [WirePath("users")]
         public IList<string> Users { get; }
     }
 }

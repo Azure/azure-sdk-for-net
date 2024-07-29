@@ -70,8 +70,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> True if log analytics is enabled for cluster pool, otherwise false. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> Log analytics workspace to associate with the OMS agent. </summary>
+        [WirePath("workspaceId")]
         public ResourceIdentifier WorkspaceId { get; set; }
     }
 }

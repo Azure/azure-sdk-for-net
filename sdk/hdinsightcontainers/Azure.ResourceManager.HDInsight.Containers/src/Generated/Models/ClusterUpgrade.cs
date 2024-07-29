@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// Please note <see cref="ClusterUpgradeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ClusterAKSPatchVersionUpgradeProperties"/>, <see cref="ClusterInPlaceUpgradeProperties"/>, <see cref="ClusterHotfixUpgradeProperties"/> and <see cref="ClusterPatchVersionUpgradeProperties"/>.
         /// </summary>
+        [WirePath("properties")]
         public ClusterUpgradeProperties Properties { get; }
     }
 }

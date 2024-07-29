@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Cluster version properties. </summary>
+        [WirePath("properties")]
         public ClusterVersionProperties Properties { get; set; }
     }
 }

@@ -85,12 +85,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The type of managed identity. </summary>
+        [WirePath("type")]
         public HDInsightManagedIdentityType IdentityType { get; set; }
         /// <summary> ResourceId of the managed identity. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> ClientId of the managed identity. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
         /// <summary> ObjectId of the managed identity. </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; set; }
     }
 }

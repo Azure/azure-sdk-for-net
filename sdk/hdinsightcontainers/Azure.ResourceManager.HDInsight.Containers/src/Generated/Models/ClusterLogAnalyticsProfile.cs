@@ -71,10 +71,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> True if log analytics is enabled for the cluster, otherwise false. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> Collection of logs to be enabled or disabled for log analytics. </summary>
+        [WirePath("applicationLogs")]
         public ClusterLogAnalyticsApplicationLogs ApplicationLogs { get; set; }
         /// <summary> True if metrics are enabled, otherwise false. </summary>
+        [WirePath("metricsEnabled")]
         public bool? IsMetricsEnabled { get; set; }
     }
 }

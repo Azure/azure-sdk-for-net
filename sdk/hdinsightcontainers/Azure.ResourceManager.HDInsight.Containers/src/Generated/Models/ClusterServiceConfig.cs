@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Name of the component the config files should apply to. </summary>
+        [WirePath("component")]
         public string Component { get; set; }
         /// <summary> List of Config Files. </summary>
+        [WirePath("files")]
         public IList<ClusterConfigFile> Files { get; }
     }
 }

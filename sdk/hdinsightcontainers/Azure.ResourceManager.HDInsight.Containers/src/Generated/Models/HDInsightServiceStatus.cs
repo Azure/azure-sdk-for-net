@@ -77,10 +77,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Kind of the service. E.g. "Zookeeper". </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Indicates if the service is ready / healthy. Values can be "true", "false", "unknown" or anything else. </summary>
+        [WirePath("ready")]
         public string Ready { get; }
         /// <summary> A message describing the error if any. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

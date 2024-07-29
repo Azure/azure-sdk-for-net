@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Status of the instance view. </summary>
+        [WirePath("status")]
         public ClusterInstanceViewStatus Status { get; }
         /// <summary> List of statuses of relevant services that make up the HDInsight on AKS cluster to surface to the customer. </summary>
+        [WirePath("serviceStatuses")]
         public IReadOnlyList<HDInsightServiceStatus> ServiceStatuses { get; }
     }
 }

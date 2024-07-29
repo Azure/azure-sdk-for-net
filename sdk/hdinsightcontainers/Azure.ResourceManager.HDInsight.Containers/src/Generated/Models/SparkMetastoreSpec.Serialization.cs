@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -160,6 +161,174 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DBServerHost), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dbServerHost: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DBServerHost))
+                {
+                    builder.Append("  dbServerHost: ");
+                    if (DBServerHost.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DBServerHost}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DBServerHost}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DBName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dbName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DBName))
+                {
+                    builder.Append("  dbName: ");
+                    if (DBName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DBName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DBName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DBConnectionAuthenticationMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dbConnectionAuthenticationMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DBConnectionAuthenticationMode))
+                {
+                    builder.Append("  dbConnectionAuthenticationMode: ");
+                    builder.AppendLine($"'{DBConnectionAuthenticationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DBUserName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dbUserName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DBUserName))
+                {
+                    builder.Append("  dbUserName: ");
+                    if (DBUserName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DBUserName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DBUserName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DBPasswordSecretName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dbPasswordSecretName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DBPasswordSecretName))
+                {
+                    builder.Append("  dbPasswordSecretName: ");
+                    if (DBPasswordSecretName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DBPasswordSecretName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DBPasswordSecretName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyVaultId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVaultId))
+                {
+                    builder.Append("  keyVaultId: ");
+                    if (KeyVaultId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyVaultId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyVaultId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThriftUriString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  thriftUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThriftUriString))
+                {
+                    builder.Append("  thriftUrl: ");
+                    if (ThriftUriString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ThriftUriString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ThriftUriString}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SparkMetastoreSpec>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SparkMetastoreSpec>)this).GetFormatFromOptions(options) : options.Format;
@@ -168,6 +337,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support writing '{options.Format}' format.");
             }

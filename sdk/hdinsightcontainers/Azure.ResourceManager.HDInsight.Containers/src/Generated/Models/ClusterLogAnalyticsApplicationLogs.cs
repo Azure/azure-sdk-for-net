@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> True if stdout is enabled, otherwise false. </summary>
+        [WirePath("stdOutEnabled")]
         public bool? IsStdOutEnabled { get; set; }
         /// <summary> True if stderror is enabled, otherwise false. </summary>
+        [WirePath("stdErrorEnabled")]
         public bool? IsStdErrorEnabled { get; set; }
     }
 }

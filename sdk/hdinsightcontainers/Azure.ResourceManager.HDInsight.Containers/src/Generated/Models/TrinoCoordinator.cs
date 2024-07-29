@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Trino debug configuration. </summary>
+        [WirePath("debug")]
         public TrinoDebugConfig Debug { get; set; }
         /// <summary> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </summary>
+        [WirePath("highAvailabilityEnabled")]
         public bool? IsHighAvailabilityEnabled { get; set; }
     }
 }

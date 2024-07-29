@@ -85,18 +85,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The database server host. </summary>
+        [WirePath("dbServerHost")]
         public string DBServerHost { get; set; }
         /// <summary> The database name. </summary>
+        [WirePath("dbName")]
         public string DBName { get; set; }
         /// <summary> The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization. </summary>
+        [WirePath("dbConnectionAuthenticationMode")]
         public DBConnectionAuthenticationMode? DBConnectionAuthenticationMode { get; set; }
         /// <summary> The database user name. </summary>
+        [WirePath("dbUserName")]
         public string DBUserName { get; set; }
         /// <summary> The secret name which contains the database user password. </summary>
+        [WirePath("dbPasswordSecretName")]
         public string DBPasswordSecretName { get; set; }
         /// <summary> The key vault resource id. </summary>
+        [WirePath("keyVaultId")]
         public string KeyVaultId { get; set; }
         /// <summary> The thrift url. </summary>
+        [WirePath("thriftUrl")]
         public string ThriftUriString { get; set; }
     }
 }

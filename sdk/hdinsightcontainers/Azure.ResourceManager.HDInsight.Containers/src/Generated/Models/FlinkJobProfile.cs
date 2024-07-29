@@ -85,16 +85,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> A string property that specifies the directory where the job JAR is located. </summary>
+        [WirePath("jobJarDirectory")]
         public string JobJarDirectory { get; set; }
         /// <summary> A string property that represents the name of the job JAR. </summary>
+        [WirePath("jarName")]
         public string JarName { get; set; }
         /// <summary> A string property that specifies the entry class for the Flink job. If not specified, the entry point is auto-detected from the flink job jar package. </summary>
+        [WirePath("entryClass")]
         public string EntryClass { get; set; }
         /// <summary> A string property representing additional JVM arguments for the Flink job. It should be space separated value. </summary>
+        [WirePath("args")]
         public string Args { get; set; }
         /// <summary> A string property that represents the name of the savepoint for the Flink job. </summary>
+        [WirePath("savePointName")]
         public string SavePointName { get; set; }
         /// <summary> A string property that indicates the upgrade mode to be performed on the Flink job. It can have one of the following enum values =&gt; STATELESS_UPDATE, UPDATE, LAST_STATE_UPDATE. </summary>
+        [WirePath("upgradeMode")]
         public UpgradeMode UpgradeMode { get; set; }
     }
 }

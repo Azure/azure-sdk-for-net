@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -118,6 +119,77 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new SparkProfile(defaultStorageUrl, metastoreSpec, userPluginsSpec, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultStorageUriString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultStorageUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultStorageUriString))
+                {
+                    builder.Append("  defaultStorageUrl: ");
+                    if (DefaultStorageUriString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultStorageUriString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultStorageUriString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetastoreSpec), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metastoreSpec: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetastoreSpec))
+                {
+                    builder.Append("  metastoreSpec: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MetastoreSpec, options, 2, false, "  metastoreSpec: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Plugins", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userPluginsSpec: ");
+                builder.AppendLine("{");
+                builder.Append("    plugins: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(UserPluginsSpec))
+                {
+                    builder.Append("  userPluginsSpec: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, UserPluginsSpec, options, 2, false, "  userPluginsSpec: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SparkProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SparkProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +198,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SparkProfile)} does not support writing '{options.Format}' format.");
             }

@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization. </summary>
+        [WirePath("metastoreDbConnectionAuthenticationMode")]
         public MetastoreDBConnectionAuthenticationMode? MetastoreDBConnectionAuthenticationMode { get; set; }
         /// <summary> Secret reference name from secretsProfile.secrets containing password for database connection. </summary>
+        [WirePath("metastoreDbConnectionPasswordSecret")]
         public string MetastoreDBConnectionPasswordSecret { get; set; }
         /// <summary> Connection string for hive metastore database. </summary>
+        [WirePath("metastoreDbConnectionURL")]
         public string MetastoreDBConnectionUriString { get; set; }
         /// <summary> User name for database connection. </summary>
+        [WirePath("metastoreDbConnectionUserName")]
         public string MetastoreDBConnectionUserName { get; set; }
     }
 }

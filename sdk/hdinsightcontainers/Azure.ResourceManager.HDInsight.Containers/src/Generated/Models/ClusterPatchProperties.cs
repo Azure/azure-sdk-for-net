@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Cluster resource patch properties. </summary>
+        [WirePath("clusterProfile")]
         public UpdatableClusterProfile ClusterProfile { get; set; }
     }
 }

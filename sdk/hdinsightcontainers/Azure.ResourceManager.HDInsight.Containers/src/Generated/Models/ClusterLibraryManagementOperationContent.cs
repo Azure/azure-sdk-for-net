@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Properties of a library management operation. </summary>
+        [WirePath("properties")]
         public ClusterLibraryManagementOperationProperties Properties { get; set; }
     }
 }

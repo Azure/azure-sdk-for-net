@@ -70,8 +70,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Web connectivity endpoint details. </summary>
+        [WirePath("web")]
         public WebConnectivityEndpoint Web { get; }
         /// <summary> List of SSH connectivity endpoints. </summary>
+        [WirePath("ssh")]
         public IReadOnlyList<SshConnectivityEndpoint> Ssh { get; }
     }
 }

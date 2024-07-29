@@ -74,12 +74,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Type of the library. </summary>
         internal Type LibraryType { get; set; }
         /// <summary> Remark of the latest library management operation. </summary>
+        [WirePath("remarks")]
         public string Remarks { get; set; }
         /// <summary> Timestamp of the latest library management operation. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Status of the library. </summary>
+        [WirePath("status")]
         public Status? Status { get; }
         /// <summary> Error message of the library operation when a failure occurs. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

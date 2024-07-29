@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Name of the instance view. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Properties of the instance view. </summary>
+        [WirePath("properties")]
         public ClusterInstanceViewProperties Properties { get; }
     }
 }

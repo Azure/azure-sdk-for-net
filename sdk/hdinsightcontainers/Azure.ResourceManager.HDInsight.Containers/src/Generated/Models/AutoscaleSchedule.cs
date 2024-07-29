@@ -85,12 +85,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> User has to set the start time of current schedule configuration, format like 10:30 (HH:MM). </summary>
+        [WirePath("startTime")]
         public string StartOn { get; set; }
         /// <summary> User has to set the end time of current schedule configuration, format like 10:30 (HH:MM). </summary>
+        [WirePath("endTime")]
         public string EndOn { get; set; }
         /// <summary> User has to set the node count anticipated at end of the scaling operation of the set current schedule configuration, format is integer. </summary>
+        [WirePath("count")]
         public int Count { get; set; }
         /// <summary> User has to set the days where schedule has to be set for autoscale operation. </summary>
+        [WirePath("days")]
         public IList<AutoscaleScheduleDay> Days { get; }
     }
 }

@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Properties for manual rollback of cluster's upgrade. </summary>
         internal ClusterUpgradeRollbackProperties Properties { get; }
         /// <summary> A specific upgrade history to rollback. </summary>
+        [WirePath("properties.upgradeHistory")]
         public string ClusterUpgradeHistory
         {
             get => Properties?.UpgradeHistory;

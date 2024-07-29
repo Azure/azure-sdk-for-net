@@ -34,10 +34,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Current AKS version. </summary>
+        [WirePath("currentVersion")]
         public string CurrentVersion { get; set; }
         /// <summary> Current AKS version's status: whether it is deprecated or supported. </summary>
+        [WirePath("currentVersionStatus")]
         public CurrentClusterPoolAksVersionStatus? CurrentVersionStatus { get; set; }
         /// <summary> Latest AKS patch version. </summary>
+        [WirePath("latestVersion")]
         public string LatestVersion { get; set; }
     }
 }

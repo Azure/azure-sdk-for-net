@@ -79,10 +79,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The node type. </summary>
+        [WirePath("type")]
         public string NodeProfileType { get; set; }
         /// <summary> The virtual machine SKU. </summary>
+        [WirePath("vmSize")]
         public string VmSize { get; set; }
         /// <summary> The number of virtual machines. </summary>
+        [WirePath("count")]
         public int Count { get; set; }
     }
 }

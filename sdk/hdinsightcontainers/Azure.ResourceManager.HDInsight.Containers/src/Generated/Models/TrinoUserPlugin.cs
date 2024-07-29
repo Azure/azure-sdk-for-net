@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Denotes whether the plugin is active or not. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> This field maps to the sub-directory in trino plugins location, that will contain all the plugins under path. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Fully qualified path to the folder containing the plugins. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

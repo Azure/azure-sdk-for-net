@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -185,6 +186,144 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Storage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Storage))
+                {
+                    builder.Append("  storage: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Storage, options, 2, false, "  storage: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumReplicas), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  numReplicas: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumReplicas))
+                {
+                    builder.Append("  numReplicas: ");
+                    builder.AppendLine($"{NumReplicas.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobManager), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobManager: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobManager))
+                {
+                    builder.Append("  jobManager: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, JobManager, options, 2, false, "  jobManager: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HistoryServer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  historyServer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HistoryServer))
+                {
+                    builder.Append("  historyServer: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HistoryServer, options, 2, false, "  historyServer: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskManager), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  taskManager: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TaskManager))
+                {
+                    builder.Append("  taskManager: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TaskManager, options, 2, false, "  taskManager: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CatalogOptionsHive", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  catalogOptions: ");
+                builder.AppendLine("{");
+                builder.Append("    hive: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(CatalogOptions))
+                {
+                    builder.Append("  catalogOptions: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CatalogOptions, options, 2, false, "  catalogOptions: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentMode))
+                {
+                    builder.Append("  deploymentMode: ");
+                    builder.AppendLine($"'{DeploymentMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobSpec), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobSpec: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobSpec))
+                {
+                    builder.Append("  jobSpec: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, JobSpec, options, 2, false, "  jobSpec: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FlinkProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FlinkProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -193,6 +332,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FlinkProfile)} does not support writing '{options.Format}' format.");
             }

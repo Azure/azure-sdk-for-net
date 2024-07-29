@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The type of cluster. </summary>
+        [WirePath("clusterType")]
         public string ClusterType { get; set; }
         /// <summary> Version with three part. </summary>
+        [WirePath("clusterVersion")]
         public string ClusterVersion { get; set; }
         /// <summary> Version with three part. </summary>
+        [WirePath("ossVersion")]
         public string OssVersion { get; set; }
         /// <summary> The two part cluster pool version. If the cluster version is before cluster pool version on-board, the return value will be empty string. </summary>
+        [WirePath("clusterPoolVersion")]
         public string ClusterPoolVersion { get; set; }
         /// <summary> Indicate if this version is in preview or not. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; set; }
         /// <summary> Component list of this cluster type and version. </summary>
+        [WirePath("components")]
         public IReadOnlyList<ClusterComponentItem> Components { get; }
     }
 }

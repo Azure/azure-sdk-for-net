@@ -79,12 +79,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The database URL. </summary>
+        [WirePath("host")]
         public string Host { get; set; }
         /// <summary> The database name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Reference for the database password. </summary>
+        [WirePath("passwordSecretRef")]
         public string PasswordSecretRef { get; set; }
         /// <summary> The name of the database user. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
     }
 }

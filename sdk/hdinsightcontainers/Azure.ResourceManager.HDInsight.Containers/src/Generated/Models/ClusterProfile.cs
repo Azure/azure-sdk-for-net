@@ -125,16 +125,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Version with 3/4 part. </summary>
+        [WirePath("clusterVersion")]
         public string ClusterVersion { get; set; }
         /// <summary> Version with three part. </summary>
+        [WirePath("ossVersion")]
         public string OssVersion { get; set; }
         /// <summary> Component list of this cluster type and version. </summary>
+        [WirePath("components")]
         public IReadOnlyList<ClusterComponentItem> Components { get; }
         /// <summary> This is deprecated. Please use managed identity profile instead. </summary>
+        [WirePath("identityProfile")]
         public HDInsightIdentityProfile IdentityProfile { get; set; }
         /// <summary> This property is required by Trino, Spark and Flink cluster but is optional for Kafka cluster. </summary>
         internal ManagedIdentityProfile ManagedIdentityProfile { get; set; }
         /// <summary> The list of managed identity. </summary>
+        [WirePath("managedIdentityProfile.identityList")]
         public IList<HDInsightManagedIdentitySpec> IdentityList
         {
             get => ManagedIdentityProfile is null ? default : ManagedIdentityProfile.IdentityList;
@@ -142,20 +147,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </summary>
+        [WirePath("authorizationProfile")]
         public AuthorizationProfile AuthorizationProfile { get; set; }
         /// <summary> The cluster secret profile. </summary>
+        [WirePath("secretsProfile")]
         public ClusterSecretsProfile SecretsProfile { get; set; }
         /// <summary> The service configs profiles. </summary>
+        [WirePath("serviceConfigsProfiles")]
         public IList<ClusterServiceConfigsProfile> ServiceConfigsProfiles { get; }
         /// <summary> Cluster connectivity profile. </summary>
+        [WirePath("connectivityProfile")]
         public ClusterConnectivityProfile ConnectivityProfile { get; }
         /// <summary> Cluster access profile. </summary>
+        [WirePath("clusterAccessProfile")]
         public ClusterAccessProfile ClusterAccessProfile { get; set; }
         /// <summary> Cluster log analytics profile to enable or disable OMS agent for cluster. </summary>
+        [WirePath("logAnalyticsProfile")]
         public ClusterLogAnalyticsProfile LogAnalyticsProfile { get; set; }
         /// <summary> Cluster Prometheus profile. </summary>
         internal ClusterPrometheusProfile PrometheusProfile { get; set; }
         /// <summary> Enable Prometheus for cluster or not. </summary>
+        [WirePath("prometheusProfile.enabled")]
         public bool? IsEnabled
         {
             get => PrometheusProfile is null ? default(bool?) : PrometheusProfile.IsEnabled;
@@ -166,12 +178,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Ssh profile for the cluster. </summary>
+        [WirePath("sshProfile")]
         public ClusterSshProfile SshProfile { get; set; }
         /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
+        [WirePath("autoscaleProfile")]
         public ClusterAutoscaleProfile AutoscaleProfile { get; set; }
         /// <summary> Cluster Ranger plugin profile. </summary>
         internal ClusterRangerPluginProfile RangerPluginProfile { get; set; }
         /// <summary> Enable Ranger for cluster or not. </summary>
+        [WirePath("rangerPluginProfile.enabled")]
         public bool? IsRangerForClusterEnabled
         {
             get => RangerPluginProfile is null ? default(bool?) : RangerPluginProfile.IsRangerForClusterEnabled;
@@ -182,8 +197,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The Kafka cluster profile. </summary>
+        [WirePath("kafkaProfile")]
         public KafkaProfile KafkaProfile { get; set; }
         /// <summary> Trino Cluster profile. </summary>
+        [WirePath("trinoProfile")]
         public TrinoProfile TrinoProfile { get; set; }
         /// <summary>
         /// LLAP cluster profile.
@@ -215,12 +232,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("llapProfile")]
         public IDictionary<string, BinaryData> LlapProfile { get; }
         /// <summary> The Flink cluster profile. </summary>
+        [WirePath("flinkProfile")]
         public FlinkProfile FlinkProfile { get; set; }
         /// <summary> The spark cluster profile. </summary>
+        [WirePath("sparkProfile")]
         public SparkProfile SparkProfile { get; set; }
         /// <summary> The ranger cluster profile. </summary>
+        [WirePath("rangerProfile")]
         public RangerProfile RangerProfile { get; set; }
         /// <summary>
         /// Stub cluster profile.
@@ -252,8 +273,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("stubProfile")]
         public IDictionary<string, BinaryData> StubProfile { get; }
         /// <summary> The script action profile list. </summary>
+        [WirePath("scriptActionProfiles")]
         public IList<ScriptActionProfile> ScriptActionProfiles { get; }
     }
 }

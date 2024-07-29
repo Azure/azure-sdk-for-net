@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Name of the user Key Vault where all the cluster specific user secrets are stored. </summary>
+        [WirePath("keyVaultResourceId")]
         public ResourceIdentifier KeyVaultResourceId { get; set; }
         /// <summary> Properties of Key Vault secret. </summary>
+        [WirePath("secrets")]
         public IList<ClusterSecretReference> Secrets { get; }
     }
 }

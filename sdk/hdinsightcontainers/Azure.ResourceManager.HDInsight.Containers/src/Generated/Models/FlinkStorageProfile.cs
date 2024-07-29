@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Storage account uri which is used for savepoint and checkpoint state. </summary>
+        [WirePath("storageUri")]
         public string StorageUriString { get; set; }
         /// <summary> Storage key is only required for wasb(s) storage. </summary>
+        [WirePath("storagekey")]
         public string Storagekey { get; set; }
     }
 }

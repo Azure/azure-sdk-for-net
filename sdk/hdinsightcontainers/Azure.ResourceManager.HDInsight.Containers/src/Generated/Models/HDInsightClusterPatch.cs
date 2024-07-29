@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Define cluster patch specific properties. </summary>
         internal ClusterPatchProperties Properties { get; set; }
         /// <summary> Cluster resource patch properties. </summary>
+        [WirePath("properties.clusterProfile")]
         public UpdatableClusterProfile ClusterProfile
         {
             get => Properties is null ? default : Properties.ClusterProfile;
@@ -77,6 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

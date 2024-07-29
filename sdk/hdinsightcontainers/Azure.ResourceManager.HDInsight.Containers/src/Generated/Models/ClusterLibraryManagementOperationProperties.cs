@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The library management action. </summary>
+        [WirePath("action")]
         public LibraryManagementAction Action { get; set; }
         /// <summary> The libraries to be installed/updated/uninstalled. </summary>
+        [WirePath("libraries")]
         public IList<ClusterLibrary> Libraries { get; }
     }
 }

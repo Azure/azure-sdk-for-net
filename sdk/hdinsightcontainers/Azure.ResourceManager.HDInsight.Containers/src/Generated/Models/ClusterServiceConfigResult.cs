@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Cluster instance service config properties. </summary>
+        [WirePath("properties")]
         public ClusterServiceConfigProperties Properties { get; }
     }
 }

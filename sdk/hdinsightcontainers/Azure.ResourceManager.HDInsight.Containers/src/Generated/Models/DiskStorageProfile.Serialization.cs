@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -93,6 +94,45 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new DiskStorageProfile(dataDiskSize, dataDiskType, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataDiskSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataDiskSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  dataDiskSize: ");
+                builder.AppendLine($"{DataDiskSize}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataDiskType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataDiskType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  dataDiskType: ");
+                builder.AppendLine($"'{DataDiskType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DiskStorageProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +141,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DiskStorageProfile)} does not support writing '{options.Format}' format.");
             }

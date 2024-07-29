@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -141,6 +142,148 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobJarDirectory), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobJarDirectory: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobJarDirectory))
+                {
+                    builder.Append("  jobJarDirectory: ");
+                    if (JobJarDirectory.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobJarDirectory}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobJarDirectory}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JarName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jarName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JarName))
+                {
+                    builder.Append("  jarName: ");
+                    if (JarName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JarName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JarName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntryClass), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  entryClass: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EntryClass))
+                {
+                    builder.Append("  entryClass: ");
+                    if (EntryClass.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EntryClass}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EntryClass}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Args), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  args: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Args))
+                {
+                    builder.Append("  args: ");
+                    if (Args.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Args}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Args}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SavePointName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  savePointName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SavePointName))
+                {
+                    builder.Append("  savePointName: ");
+                    if (SavePointName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SavePointName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SavePointName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradeMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upgradeMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  upgradeMode: ");
+                builder.AppendLine($"'{UpgradeMode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FlinkJobProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FlinkJobProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,6 +292,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FlinkJobProfile)} does not support writing '{options.Format}' format.");
             }

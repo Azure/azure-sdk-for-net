@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -151,6 +152,94 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  enabled: ");
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GracefulDecommissionTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gracefulDecommissionTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GracefulDecommissionTimeout))
+                {
+                    builder.Append("  gracefulDecommissionTimeout: ");
+                    builder.AppendLine($"{GracefulDecommissionTimeout.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoscaleType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  autoscaleType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoscaleType))
+                {
+                    builder.Append("  autoscaleType: ");
+                    builder.AppendLine($"'{AutoscaleType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduleBasedConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scheduleBasedConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScheduleBasedConfig))
+                {
+                    builder.Append("  scheduleBasedConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ScheduleBasedConfig, options, 2, false, "  scheduleBasedConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadBasedConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  loadBasedConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LoadBasedConfig))
+                {
+                    builder.Append("  loadBasedConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LoadBasedConfig, options, 2, false, "  loadBasedConfig: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ClusterAutoscaleProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -159,6 +248,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterAutoscaleProfile)} does not support writing '{options.Format}' format.");
             }

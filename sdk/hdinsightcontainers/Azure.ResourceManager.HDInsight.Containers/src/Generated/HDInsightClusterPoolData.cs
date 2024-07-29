@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         }
 
         /// <summary> Gets or sets the properties. Define cluster pool specific properties. </summary>
+        [WirePath("properties")]
         public HDInsightClusterPoolProperties Properties { get; set; }
     }
 }

@@ -60,20 +60,28 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Version with three part. </summary>
+        [WirePath("sourceClusterVersion")]
         public string SourceClusterVersion { get; set; }
         /// <summary> Version with three part. </summary>
+        [WirePath("sourceOssVersion")]
         public string SourceOssVersion { get; set; }
         /// <summary> Source build number. </summary>
+        [WirePath("sourceBuildNumber")]
         public string SourceBuildNumber { get; set; }
         /// <summary> Version with three part. </summary>
+        [WirePath("targetClusterVersion")]
         public string TargetClusterVersion { get; set; }
         /// <summary> Version with three part. </summary>
+        [WirePath("targetOssVersion")]
         public string TargetOssVersion { get; set; }
         /// <summary> Target build number. </summary>
+        [WirePath("targetBuildNumber")]
         public string TargetBuildNumber { get; set; }
         /// <summary> Component name to upgrade. </summary>
+        [WirePath("componentName")]
         public string ComponentName { get; set; }
         /// <summary> Severity of this upgrade. </summary>
+        [WirePath("severity")]
         public ClusterUpgradeHistorySeverityType? Severity { get; set; }
     }
 }

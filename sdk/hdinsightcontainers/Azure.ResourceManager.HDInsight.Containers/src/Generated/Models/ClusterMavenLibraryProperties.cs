@@ -51,10 +51,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> GroupId of the Maven package. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
         /// <summary> ArtifactId of the Maven package. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Version of the Maven package. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
     }
 }

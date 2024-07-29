@@ -77,10 +77,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Specification for the Ranger Admin service. </summary>
+        [WirePath("rangerAdmin")]
         public RangerAdminSpec RangerAdmin { get; set; }
         /// <summary> Properties required to describe audit log storage. </summary>
         internal RangerAuditSpec RangerAudit { get; set; }
         /// <summary> Azure storage location of the blobs. MSI should have read/write access to this Storage account. </summary>
+        [WirePath("rangerAudit.storageAccount")]
         public string RangerAuditStorageAccount
         {
             get => RangerAudit is null ? default : RangerAudit.StorageAccount;
@@ -93,6 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Specification for the Ranger Usersync service. </summary>
+        [WirePath("rangerUsersync")]
         public RangerUsersyncSpec RangerUsersync { get; set; }
     }
 }

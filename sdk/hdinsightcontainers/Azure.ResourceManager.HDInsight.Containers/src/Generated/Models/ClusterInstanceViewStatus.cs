@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The cluster ready status. </summary>
+        [WirePath("ready")]
         public string Ready { get; }
         /// <summary> The status reason. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> The additional message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

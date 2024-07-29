@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> hive catalog options. </summary>
+        [WirePath("hive")]
         public IList<HiveCatalogOption> Hive { get; }
     }
 }

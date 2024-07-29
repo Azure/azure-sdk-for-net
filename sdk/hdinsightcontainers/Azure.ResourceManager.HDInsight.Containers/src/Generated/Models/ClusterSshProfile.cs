@@ -71,10 +71,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Number of ssh pods per cluster. </summary>
+        [WirePath("count")]
         public int Count { get; set; }
         /// <summary> Prefix of the pod names. Pod number will be appended to the prefix. The ingress URLs for the pods will be available at &lt;clusterFqdn&gt;/&lt;sshBasePath&gt;/&lt;prefix&gt;-&lt;number&gt;. </summary>
+        [WirePath("podPrefix")]
         public string PodPrefix { get; }
         /// <summary> The virtual machine SKU. </summary>
+        [WirePath("vmSize")]
         public string VmSize { get; set; }
     }
 }

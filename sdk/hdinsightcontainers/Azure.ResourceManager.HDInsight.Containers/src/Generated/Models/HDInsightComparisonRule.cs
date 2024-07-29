@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The comparison operator. </summary>
+        [WirePath("operator")]
         public HDInsightComparisonOperator Operator { get; set; }
         /// <summary> Threshold setting. </summary>
+        [WirePath("threshold")]
         public float Threshold { get; set; }
     }
 }

@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Name of the service the configurations should apply to. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; set; }
         /// <summary> List of service configs. </summary>
+        [WirePath("configs")]
         public IList<ClusterServiceConfig> Configs { get; }
     }
 }

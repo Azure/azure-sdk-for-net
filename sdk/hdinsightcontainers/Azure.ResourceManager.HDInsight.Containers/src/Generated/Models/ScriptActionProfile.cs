@@ -92,18 +92,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Type of the script action. Supported type is bash scripts. </summary>
+        [WirePath("type")]
         public string ScriptActionProfileType { get; set; }
         /// <summary> Script name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Url of the script file. </summary>
+        [WirePath("url")]
         public string UriString { get; set; }
         /// <summary> Additional parameters for the script action. It should be space-separated list of arguments required for script execution. </summary>
+        [WirePath("parameters")]
         public string Parameters { get; set; }
         /// <summary> List of services to apply the script action. </summary>
+        [WirePath("services")]
         public IList<string> Services { get; }
         /// <summary> Timeout duration for the script action in minutes. </summary>
+        [WirePath("timeoutInMinutes")]
         public int? TimeoutInMinutes { get; set; }
         /// <summary> Specify if the script should persist on the cluster. </summary>
+        [WirePath("shouldPersist")]
         public bool? ShouldPersist { get; set; }
     }
 }

@@ -88,6 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// Please note <see cref="ClusterPoolUpgradeHistoryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ClusterPoolAksPatchUpgradeHistoryProperties"/> and <see cref="ClusterPoolNodeOSUpgradeHistoryProperties"/>.
         /// </summary>
+        [WirePath("properties")]
         public ClusterPoolUpgradeHistoryProperties Properties { get; set; }
     }
 }

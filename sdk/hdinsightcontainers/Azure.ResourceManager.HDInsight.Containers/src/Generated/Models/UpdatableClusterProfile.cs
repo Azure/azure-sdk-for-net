@@ -82,18 +82,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The service configs profiles. </summary>
+        [WirePath("serviceConfigsProfiles")]
         public IList<ClusterServiceConfigsProfile> ServiceConfigsProfiles { get; }
         /// <summary> Ssh profile for the cluster. </summary>
+        [WirePath("sshProfile")]
         public ClusterSshProfile SshProfile { get; set; }
         /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
+        [WirePath("autoscaleProfile")]
         public ClusterAutoscaleProfile AutoscaleProfile { get; set; }
         /// <summary> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </summary>
+        [WirePath("authorizationProfile")]
         public AuthorizationProfile AuthorizationProfile { get; set; }
         /// <summary> Cluster log analytics profile to enable or disable OMS agent for cluster. </summary>
+        [WirePath("logAnalyticsProfile")]
         public ClusterLogAnalyticsProfile LogAnalyticsProfile { get; set; }
         /// <summary> Cluster Prometheus profile. </summary>
         internal ClusterPrometheusProfile PrometheusProfile { get; set; }
         /// <summary> Enable Prometheus for cluster or not. </summary>
+        [WirePath("prometheusProfile.enabled")]
         public bool? IsEnabled
         {
             get => PrometheusProfile is null ? default(bool?) : PrometheusProfile.IsEnabled;
@@ -106,6 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Cluster Ranger plugin profile. </summary>
         internal ClusterRangerPluginProfile RangerPluginProfile { get; set; }
         /// <summary> Enable Ranger for cluster or not. </summary>
+        [WirePath("rangerPluginProfile.enabled")]
         public bool? IsRangerForClusterEnabled
         {
             get => RangerPluginProfile is null ? default(bool?) : RangerPluginProfile.IsRangerForClusterEnabled;
@@ -116,12 +123,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The ranger cluster profile. </summary>
+        [WirePath("rangerProfile")]
         public RangerProfile RangerProfile { get; set; }
         /// <summary> The script action profile list. </summary>
+        [WirePath("scriptActionProfiles")]
         public IList<ScriptActionProfile> ScriptActionProfiles { get; }
         /// <summary> The cluster secret profile. </summary>
+        [WirePath("secretsProfile")]
         public ClusterSecretsProfile SecretsProfile { get; set; }
         /// <summary> Trino Cluster profile. </summary>
+        [WirePath("trinoProfile")]
         public TrinoProfile TrinoProfile { get; set; }
     }
 }

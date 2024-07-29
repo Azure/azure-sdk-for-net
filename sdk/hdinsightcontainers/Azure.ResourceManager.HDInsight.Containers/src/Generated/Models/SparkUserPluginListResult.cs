@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Spark user plugins. </summary>
+        [WirePath("plugins")]
         public IList<SparkUserPlugin> Plugins { get; }
     }
 }

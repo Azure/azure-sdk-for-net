@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -107,6 +108,52 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new TrinoCoordinator(debug, highAvailabilityEnabled, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Debug), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  debug: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Debug))
+                {
+                    builder.Append("  debug: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Debug, options, 2, false, "  debug: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHighAvailabilityEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  highAvailabilityEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHighAvailabilityEnabled))
+                {
+                    builder.Append("  highAvailabilityEnabled: ");
+                    var boolValue = IsHighAvailabilityEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TrinoCoordinator>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrinoCoordinator>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +162,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support writing '{options.Format}' format.");
             }

@@ -78,12 +78,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Cluster pool subnet resource id. </summary>
+        [WirePath("subnetId")]
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> This can only be set at cluster pool creation time and cannot be changed later. </summary>
+        [WirePath("outboundType")]
         public OutboundType? OutboundType { get; set; }
         /// <summary> ClusterPool is based on AKS cluster. AKS cluster exposes the API server to public internet by default. If you set this property to true, a private AKS cluster will be created, and it will use private apiserver, which is not exposed to public internet. </summary>
+        [WirePath("enablePrivateApiServer")]
         public bool? IsPrivateApiServerEnabled { get; set; }
         /// <summary> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with private AKS clusters. So you cannot set enablePrivateApiServer to true and apiServerAuthorizedIpRanges at the same time. Currently, this property is not supported and please don't use it. </summary>
+        [WirePath("apiServerAuthorizedIpRanges")]
         public IList<string> ApiServerAuthorizedIPRanges { get; }
     }
 }

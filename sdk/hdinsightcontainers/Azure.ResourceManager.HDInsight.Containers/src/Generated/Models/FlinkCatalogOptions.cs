@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Hive Catalog Option for Flink cluster. </summary>
+        [WirePath("hive")]
         public FlinkHiveCatalogOption Hive { get; set; }
     }
 }

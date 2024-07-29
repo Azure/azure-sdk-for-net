@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -215,6 +216,206 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentId))
+                {
+                    builder.Append("  deploymentId: ");
+                    if (DeploymentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedResourceGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managedResourceGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedResourceGroupName))
+                {
+                    builder.Append("  managedResourceGroupName: ");
+                    if (ManagedResourceGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ManagedResourceGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ManagedResourceGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AksManagedResourceGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aksManagedResourceGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AksManagedResourceGroupName))
+                {
+                    builder.Append("  aksManagedResourceGroupName: ");
+                    if (AksManagedResourceGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AksManagedResourceGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AksManagedResourceGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ClusterPoolVersion", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clusterPoolProfile: ");
+                builder.AppendLine("{");
+                builder.Append("    clusterPoolVersion: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterPoolProfile))
+                {
+                    builder.Append("  clusterPoolProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ClusterPoolProfile, options, 2, false, "  clusterPoolProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  computeProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComputeProfile))
+                {
+                    builder.Append("  computeProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ComputeProfile, options, 2, false, "  computeProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AksClusterProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aksClusterProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AksClusterProfile))
+                {
+                    builder.Append("  aksClusterProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AksClusterProfile, options, 2, false, "  aksClusterProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkProfile))
+                {
+                    builder.Append("  networkProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkProfile, options, 2, false, "  networkProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogAnalyticsProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logAnalyticsProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogAnalyticsProfile))
+                {
+                    builder.Append("  logAnalyticsProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LogAnalyticsProfile, options, 2, false, "  logAnalyticsProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HDInsightClusterPoolProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -223,6 +424,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightClusterPoolProperties)} does not support writing '{options.Format}' format.");
             }

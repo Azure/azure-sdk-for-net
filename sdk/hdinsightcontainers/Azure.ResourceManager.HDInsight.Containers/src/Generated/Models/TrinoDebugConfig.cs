@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The flag that if enable debug or not. </summary>
+        [WirePath("enable")]
         public bool? IsEnabled { get; set; }
         /// <summary> The debug port. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
         /// <summary> The flag that if suspend debug or not. </summary>
+        [WirePath("suspend")]
         public bool? IsSuspendEnabled { get; set; }
     }
 }

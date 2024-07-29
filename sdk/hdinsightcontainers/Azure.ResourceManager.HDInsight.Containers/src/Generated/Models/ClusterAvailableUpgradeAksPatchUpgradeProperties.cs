@@ -34,10 +34,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Current node pool version. </summary>
+        [WirePath("currentVersion")]
         public string CurrentVersion { get; set; }
         /// <summary> Current AKS version's status: whether it is deprecated or supported. </summary>
+        [WirePath("currentVersionStatus")]
         public CurrentClusterAksVersionStatus? CurrentVersionStatus { get; set; }
         /// <summary> Latest available version, which should be equal to AKS control plane version if it's not deprecated. </summary>
+        [WirePath("latestVersion")]
         public string LatestVersion { get; set; }
     }
 }

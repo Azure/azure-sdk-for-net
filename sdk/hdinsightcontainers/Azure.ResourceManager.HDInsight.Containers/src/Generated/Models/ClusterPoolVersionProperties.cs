@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Cluster pool version is a 2-part version. </summary>
+        [WirePath("clusterPoolVersion")]
         public string ClusterPoolVersion { get; set; }
         /// <summary> AKS version. </summary>
+        [WirePath("aksVersion")]
         public string AksVersion { get; set; }
         /// <summary> Indicate if this version is in preview or not. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; set; }
     }
 }

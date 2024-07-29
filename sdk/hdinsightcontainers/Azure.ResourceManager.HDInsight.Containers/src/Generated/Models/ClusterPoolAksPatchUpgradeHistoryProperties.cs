@@ -48,12 +48,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Whether upgrade cluster pool. </summary>
+        [WirePath("upgradeClusterPool")]
         public bool? UpgradeClusterPool { get; set; }
         /// <summary> Whether upgrade all cluster nodes. </summary>
+        [WirePath("upgradeAllClusterNodes")]
         public bool? UpgradeAllClusterNodes { get; set; }
         /// <summary> Version before update. </summary>
+        [WirePath("originalVersion")]
         public string OriginalVersion { get; set; }
         /// <summary> Version going to update. </summary>
+        [WirePath("newVersion")]
         public string NewVersion { get; set; }
     }
 }

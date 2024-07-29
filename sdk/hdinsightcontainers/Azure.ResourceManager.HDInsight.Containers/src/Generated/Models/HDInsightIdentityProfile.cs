@@ -81,10 +81,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> ResourceId of the MSI. </summary>
+        [WirePath("msiResourceId")]
         public ResourceIdentifier MsiResourceId { get; set; }
         /// <summary> ClientId of the MSI. </summary>
+        [WirePath("msiClientId")]
         public string MsiClientId { get; set; }
         /// <summary> ObjectId of the MSI. </summary>
+        [WirePath("msiObjectId")]
         public string MsiObjectId { get; set; }
     }
 }

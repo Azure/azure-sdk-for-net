@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The latest node OS version. </summary>
+        [WirePath("latestVersion")]
         public string LatestVersion { get; set; }
     }
 }

@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The list of managed identity. </summary>
+        [WirePath("identityList")]
         public IList<HDInsightManagedIdentitySpec> IdentityList { get; }
     }
 }

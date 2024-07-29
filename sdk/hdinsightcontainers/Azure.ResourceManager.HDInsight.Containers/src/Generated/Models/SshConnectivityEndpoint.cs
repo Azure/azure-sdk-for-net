@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> SSH connectivity endpoint. </summary>
+        [WirePath("endpoint")]
         public string Endpoint { get; }
         /// <summary> Private SSH connectivity endpoint. This property will only be returned when enableInternalIngress is true. </summary>
+        [WirePath("privateSshEndpoint")]
         public string PrivateSshEndpoint { get; }
     }
 }

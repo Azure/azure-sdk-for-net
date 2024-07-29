@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -161,6 +162,146 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 newVersion);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradeClusterPool), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upgradeClusterPool: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpgradeClusterPool))
+                {
+                    builder.Append("  upgradeClusterPool: ");
+                    var boolValue = UpgradeClusterPool.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradeAllClusterNodes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upgradeAllClusterNodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpgradeAllClusterNodes))
+                {
+                    builder.Append("  upgradeAllClusterNodes: ");
+                    var boolValue = UpgradeAllClusterNodes.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OriginalVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  originalVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OriginalVersion))
+                {
+                    builder.Append("  originalVersion: ");
+                    if (OriginalVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OriginalVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OriginalVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NewVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  newVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NewVersion))
+                {
+                    builder.Append("  newVersion: ");
+                    if (NewVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NewVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NewVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upgradeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  upgradeType: ");
+                builder.AppendLine($"'{UpgradeType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UtcTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  utcTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UtcTime))
+                {
+                    builder.Append("  utcTime: ");
+                    if (UtcTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UtcTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UtcTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradeResult), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upgradeResult: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  upgradeResult: ");
+                builder.AppendLine($"'{UpgradeResult.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ClusterPoolAksPatchUpgradeHistoryProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterPoolAksPatchUpgradeHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -169,6 +310,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterPoolAksPatchUpgradeHistoryProperties)} does not support writing '{options.Format}' format.");
             }

@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> List of usernames that should be marked as ranger admins. These usernames should match the user principal name (UPN) of the respective AAD users. </summary>
+        [WirePath("admins")]
         public IList<string> Admins { get; }
         /// <summary> Gets or sets the database. </summary>
+        [WirePath("database")]
         public RangerAdminSpecDatabase Database { get; set; }
     }
 }

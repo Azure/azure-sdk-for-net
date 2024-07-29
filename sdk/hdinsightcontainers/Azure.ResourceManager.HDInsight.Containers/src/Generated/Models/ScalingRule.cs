@@ -83,12 +83,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The action type. </summary>
+        [WirePath("actionType")]
         public ScaleActionType ActionType { get; set; }
         /// <summary> This is an evaluation count for a scaling condition, the number of times a trigger condition should be successful, before scaling activity is triggered. </summary>
+        [WirePath("evaluationCount")]
         public int EvaluationCount { get; set; }
         /// <summary> Metrics name for individual workloads. For example: cpu. </summary>
+        [WirePath("scalingMetric")]
         public string ScalingMetric { get; set; }
         /// <summary> The comparison rule. </summary>
+        [WirePath("comparisonRule")]
         public HDInsightComparisonRule ComparisonRule { get; set; }
     }
 }

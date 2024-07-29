@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Trino user telemetry definition. </summary>
+        [WirePath("storage")]
         public TrinoTelemetryConfig Storage { get; set; }
     }
 }

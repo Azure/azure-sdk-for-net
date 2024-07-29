@@ -40,12 +40,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Target OSS version of component to be upgraded. </summary>
+        [WirePath("targetOssVersion")]
         public string TargetOssVersion { get; set; }
         /// <summary> Target cluster version of component to be upgraded. </summary>
+        [WirePath("targetClusterVersion")]
         public string TargetClusterVersion { get; set; }
         /// <summary> Target build number of component to be upgraded. </summary>
+        [WirePath("targetBuildNumber")]
         public string TargetBuildNumber { get; set; }
         /// <summary> Name of component to be upgraded. </summary>
+        [WirePath("componentName")]
         public string ComponentName { get; set; }
     }
 }

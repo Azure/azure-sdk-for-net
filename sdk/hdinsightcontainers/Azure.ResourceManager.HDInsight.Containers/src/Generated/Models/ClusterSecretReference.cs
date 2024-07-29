@@ -81,12 +81,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Reference name of the secret to be used in service configs. </summary>
+        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
         /// <summary> Type of key vault object: secret, key or certificate. </summary>
+        [WirePath("type")]
         public KeyVaultObjectType KeyVaultObjectType { get; set; }
         /// <summary> Version of the secret in key vault. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
         /// <summary> Object identifier name of the secret in key vault. </summary>
+        [WirePath("keyVaultObjectName")]
         public string KeyVaultObjectName { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -147,6 +148,106 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsKRaftEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableKRaft: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsKRaftEnabled))
+                {
+                    builder.Append("  enableKRaft: ");
+                    var boolValue = IsKRaftEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPublicEndpointsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enablePublicEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsPublicEndpointsEnabled))
+                {
+                    builder.Append("  enablePublicEndpoints: ");
+                    var boolValue = IsPublicEndpointsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteStorageUriString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  remoteStorageUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteStorageUriString))
+                {
+                    builder.Append("  remoteStorageUri: ");
+                    if (RemoteStorageUriString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RemoteStorageUriString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RemoteStorageUriString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskStorage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diskStorage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskStorage))
+                {
+                    builder.Append("  diskStorage: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DiskStorage, options, 2, false, "  diskStorage: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityEndpoints), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectivityEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectivityEndpoints))
+                {
+                    builder.Append("  connectivityEndpoints: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConnectivityEndpoints, options, 2, false, "  connectivityEndpoints: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KafkaProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KafkaProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +256,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KafkaProfile)} does not support writing '{options.Format}' format.");
             }

@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The nodes definitions. </summary>
+        [WirePath("nodes")]
         public IList<ClusterComputeNodeProfile> Nodes { get; }
         /// <summary> The list of Availability zones to use for AKS VMSS nodes. </summary>
+        [WirePath("availabilityZones")]
         public IList<string> AvailabilityZones { get; }
     }
 }

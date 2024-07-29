@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -125,6 +126,105 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new TrinoTelemetryConfig(hivecatalogName, hivecatalogSchema, partitionRetentionInDays, path, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HivecatalogName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hivecatalogName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HivecatalogName))
+                {
+                    builder.Append("  hivecatalogName: ");
+                    if (HivecatalogName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HivecatalogName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HivecatalogName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HivecatalogSchema), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hivecatalogSchema: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HivecatalogSchema))
+                {
+                    builder.Append("  hivecatalogSchema: ");
+                    if (HivecatalogSchema.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HivecatalogSchema}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HivecatalogSchema}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionRetentionInDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  partitionRetentionInDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartitionRetentionInDays))
+                {
+                    builder.Append("  partitionRetentionInDays: ");
+                    builder.AppendLine($"{PartitionRetentionInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  path: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
+                {
+                    builder.Append("  path: ");
+                    if (Path.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Path}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Path}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TrinoTelemetryConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrinoTelemetryConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +233,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support writing '{options.Format}' format.");
             }

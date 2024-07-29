@@ -82,8 +82,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Type of upgrade. </summary>
         internal ClusterPoolUpgradeHistoryType UpgradeType { get; set; }
         /// <summary> Time when created this upgrade history. </summary>
+        [WirePath("utcTime")]
         public string UtcTime { get; set; }
         /// <summary> Result of this upgrade. </summary>
+        [WirePath("upgradeResult")]
         public ClusterPoolUpgradeHistoryUpgradeResultType UpgradeResult { get; set; }
     }
 }

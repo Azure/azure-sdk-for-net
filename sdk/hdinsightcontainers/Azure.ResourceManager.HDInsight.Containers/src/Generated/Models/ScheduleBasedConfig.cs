@@ -80,10 +80,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> User has to specify the timezone on which the schedule has to be set for schedule based autoscale configuration. </summary>
+        [WirePath("timeZone")]
         public string TimeZone { get; set; }
         /// <summary> Setting default node count of current schedule configuration. Default node count specifies the number of nodes which are default when an specified scaling operation is executed (scale up/scale down). </summary>
+        [WirePath("defaultCount")]
         public int DefaultCount { get; set; }
         /// <summary> This specifies the schedules where scheduled based Autoscale to be enabled, the user has a choice to set multiple rules within the schedule across days and times (start/end). </summary>
+        [WirePath("schedules")]
         public IList<AutoscaleSchedule> Schedules { get; }
     }
 }

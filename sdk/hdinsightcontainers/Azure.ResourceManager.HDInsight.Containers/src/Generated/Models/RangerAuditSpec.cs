@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Azure storage location of the blobs. MSI should have read/write access to this Storage account. </summary>
+        [WirePath("storageAccount")]
         public string StorageAccount { get; set; }
     }
 }

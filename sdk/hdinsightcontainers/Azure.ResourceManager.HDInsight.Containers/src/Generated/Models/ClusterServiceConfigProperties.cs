@@ -92,20 +92,28 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Service Config Name. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; }
         /// <summary> File Name. </summary>
+        [WirePath("fileName")]
         public string FileName { get; }
         /// <summary> Content in the service config file. </summary>
+        [WirePath("content")]
         public string Content { get; }
         /// <summary> Component Name. </summary>
+        [WirePath("componentName")]
         public string ComponentName { get; }
         /// <summary> Config type. </summary>
+        [WirePath("type")]
         public string ServiceConfigListResultPropertiesType { get; }
         /// <summary> Config file path. </summary>
+        [WirePath("path")]
         public string Path { get; }
         /// <summary> The custom keys. </summary>
+        [WirePath("customKeys")]
         public IReadOnlyDictionary<string, string> CustomKeys { get; }
         /// <summary> The default keys. </summary>
+        [WirePath("defaultKeys")]
         public IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> DefaultKeys { get; }
     }
 }

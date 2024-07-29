@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -96,6 +97,67 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new FlinkStorageProfile(storageUri, storagekey, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageUriString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageUriString))
+                {
+                    builder.Append("  storageUri: ");
+                    if (StorageUriString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageUriString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageUriString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Storagekey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storagekey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Storagekey))
+                {
+                    builder.Append("  storagekey: ");
+                    if (Storagekey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Storagekey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Storagekey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FlinkStorageProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FlinkStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -104,6 +166,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FlinkStorageProfile)} does not support writing '{options.Format}' format.");
             }

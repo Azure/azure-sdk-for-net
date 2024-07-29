@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> A specific upgrade history to rollback. </summary>
+        [WirePath("upgradeHistory")]
         public string UpgradeHistory { get; }
     }
 }

@@ -82,17 +82,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Configuration file name. </summary>
+        [WirePath("fileName")]
         public string FileName { get; set; }
         /// <summary> Free form content of the entire configuration file. </summary>
+        [WirePath("content")]
         public string Content { get; set; }
         /// <summary> This property indicates if the content is encoded and is case-insensitive. Please set the value to base64 if the content is base64 encoded. Set it to none or skip it if the content is plain text. </summary>
+        [WirePath("encoding")]
         public HDInsightContentEncoding? Encoding { get; set; }
         /// <summary> Path of the config file if content is specified. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary>
         /// List of key value pairs
         /// where key represents a valid service configuration name and value represents the value of the config.
         /// </summary>
+        [WirePath("values")]
         public IDictionary<string, string> Values { get; }
     }
 }

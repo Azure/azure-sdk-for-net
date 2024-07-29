@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Expose Kafka cluster in KRaft mode. </summary>
+        [WirePath("enableKRaft")]
         public bool? IsKRaftEnabled { get; set; }
         /// <summary> Expose worker nodes as public endpoints. </summary>
+        [WirePath("enablePublicEndpoints")]
         public bool? IsPublicEndpointsEnabled { get; set; }
         /// <summary> Fully qualified path of Azure Storage container used for Tiered Storage. </summary>
+        [WirePath("remoteStorageUri")]
         public string RemoteStorageUriString { get; set; }
         /// <summary> Kafka disk storage profile. </summary>
+        [WirePath("diskStorage")]
         public DiskStorageProfile DiskStorage { get; set; }
         /// <summary> Kafka bootstrap server and brokers related connectivity endpoints. </summary>
+        [WirePath("connectivityEndpoints")]
         public KafkaConnectivityEndpoints ConnectivityEndpoints { get; }
     }
 }

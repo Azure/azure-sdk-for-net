@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Fully qualified path to the folder containing the plugins. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

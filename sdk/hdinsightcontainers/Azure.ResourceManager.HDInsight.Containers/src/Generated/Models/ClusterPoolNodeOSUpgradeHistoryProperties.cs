@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> New Node Os version. </summary>
+        [WirePath("newNodeOs")]
         public string NewNodeOS { get; set; }
     }
 }

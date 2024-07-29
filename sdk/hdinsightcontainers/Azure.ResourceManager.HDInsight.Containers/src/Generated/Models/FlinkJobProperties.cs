@@ -57,32 +57,46 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Run id of job. </summary>
+        [WirePath("runId")]
         public string RunId { get; set; }
         /// <summary> Name of job. </summary>
+        [WirePath("jobName")]
         public string JobName { get; set; }
         /// <summary> A string property that specifies the directory where the job JAR is located. </summary>
+        [WirePath("jobJarDirectory")]
         public string JobJarDirectory { get; set; }
         /// <summary> A string property that represents the name of the job JAR. </summary>
+        [WirePath("jarName")]
         public string JarName { get; set; }
         /// <summary> A string property that specifies the entry class for the Flink job. </summary>
+        [WirePath("entryClass")]
         public string EntryClass { get; set; }
         /// <summary> A string property representing additional JVM arguments for the Flink job. It should be space separated value. </summary>
+        [WirePath("args")]
         public string Args { get; set; }
         /// <summary> A string property that represents the name of the savepoint for the Flink job. </summary>
+        [WirePath("savePointName")]
         public string SavePointName { get; set; }
         /// <summary> A string property that indicates the action to be performed on the Flink job. It can have one of the following enum values =&gt; NEW, UPDATE, STATELESS_UPDATE, STOP, START, CANCEL, SAVEPOINT, LIST_SAVEPOINT, or DELETE. </summary>
+        [WirePath("action")]
         public FlinkJobAction? Action { get; set; }
         /// <summary> Additional properties used to configure Flink jobs. It allows users to set properties such as parallelism and jobSavePointDirectory. It accepts additional key-value pairs as properties, where the keys are strings and the values are strings as well. </summary>
+        [WirePath("flinkConfiguration")]
         public IDictionary<string, string> FlinkConfiguration { get; }
         /// <summary> Unique id for identifying a job. </summary>
+        [WirePath("jobId")]
         public string JobId { get; }
         /// <summary> Status of job. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Output of job. </summary>
+        [WirePath("jobOutput")]
         public string JobOutput { get; }
         /// <summary> Action result of job. </summary>
+        [WirePath("actionResult")]
         public string ActionResult { get; }
         /// <summary> The last savepoint. </summary>
+        [WirePath("lastSavePoint")]
         public string LastSavePoint { get; }
     }
 }

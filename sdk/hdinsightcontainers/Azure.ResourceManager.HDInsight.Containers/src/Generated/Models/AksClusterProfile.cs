@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> ARM Resource ID of the AKS cluster. </summary>
+        [WirePath("aksClusterResourceId")]
         public ResourceIdentifier AksClusterResourceId { get; }
         /// <summary> Identity properties of the AKS cluster agentpool MSI. </summary>
+        [WirePath("aksClusterAgentPoolIdentityProfile")]
         public HDInsightIdentityProfile AksClusterAgentPoolIdentityProfile { get; }
         /// <summary> AKS control plane and default node pool version of this ClusterPool. </summary>
+        [WirePath("aksVersion")]
         public string AksVersion { get; }
     }
 }

@@ -70,8 +70,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Whether to create cluster using private IP instead of public IP. This property must be set at create time. </summary>
+        [WirePath("enableInternalIngress")]
         public bool EnableInternalIngress { get; set; }
         /// <summary> Private link service resource ID. Only when enableInternalIngress is true, this property will be returned. </summary>
+        [WirePath("privateLinkServiceId")]
         public ResourceIdentifier PrivateLinkServiceId { get; }
     }
 }

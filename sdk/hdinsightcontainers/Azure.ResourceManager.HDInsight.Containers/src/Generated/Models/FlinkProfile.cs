@@ -90,18 +90,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The storage profile. </summary>
+        [WirePath("storage")]
         public FlinkStorageProfile Storage { get; set; }
         /// <summary> The number of task managers. </summary>
+        [WirePath("numReplicas")]
         public int? NumReplicas { get; set; }
         /// <summary> Job Manager container/ process CPU and memory requirements. </summary>
+        [WirePath("jobManager")]
         public ComputeResourceRequirement JobManager { get; set; }
         /// <summary> History Server container/ process CPU and memory requirements. </summary>
+        [WirePath("historyServer")]
         public ComputeResourceRequirement HistoryServer { get; set; }
         /// <summary> Task Manager container/ process CPU and memory requirements. </summary>
+        [WirePath("taskManager")]
         public ComputeResourceRequirement TaskManager { get; set; }
         /// <summary> Flink cluster catalog options. </summary>
         internal FlinkCatalogOptions CatalogOptions { get; set; }
         /// <summary> Hive Catalog Option for Flink cluster. </summary>
+        [WirePath("catalogOptions.hive")]
         public FlinkHiveCatalogOption CatalogOptionsHive
         {
             get => CatalogOptions is null ? default : CatalogOptions.Hive;
@@ -114,8 +120,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> A string property that indicates the deployment mode of Flink cluster. It can have one of the following enum values =&gt; Application, Session. Default value is Session. </summary>
+        [WirePath("deploymentMode")]
         public DeploymentMode? DeploymentMode { get; set; }
         /// <summary> Job specifications for flink clusters in application deployment mode. The specification is immutable even if job properties are changed by calling the RunJob API, please use the ListJob API to get the latest job information. </summary>
+        [WirePath("jobSpec")]
         public FlinkJobProfile JobSpec { get; set; }
     }
 }

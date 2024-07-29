@@ -34,10 +34,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> whether upgrade cluster pool or not. If it's true, upgradeAllClusterNodes should be false. </summary>
+        [WirePath("upgradeClusterPool")]
         public bool? UpgradeClusterPool { get; set; }
         /// <summary> whether upgrade all clusters' nodes. If it's true, upgradeClusterPool should be false. </summary>
+        [WirePath("upgradeAllClusterNodes")]
         public bool? UpgradeAllClusterNodes { get; set; }
         /// <summary> Target AKS version. When it's not set, latest version will be used. When upgradeClusterPool is true and upgradeAllClusterNodes is false, target version should be greater or equal to current version. When upgradeClusterPool is false and upgradeAllClusterNodes is true, target version should be equal to AKS version of cluster pool. </summary>
+        [WirePath("targetAksVersion")]
         public string TargetAksVersion { get; set; }
     }
 }

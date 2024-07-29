@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -274,6 +276,361 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 lastSavePoint);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  runId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RunId))
+                {
+                    builder.Append("  runId: ");
+                    if (RunId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RunId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RunId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobName))
+                {
+                    builder.Append("  jobName: ");
+                    if (JobName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobJarDirectory), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobJarDirectory: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobJarDirectory))
+                {
+                    builder.Append("  jobJarDirectory: ");
+                    if (JobJarDirectory.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobJarDirectory}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobJarDirectory}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JarName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jarName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JarName))
+                {
+                    builder.Append("  jarName: ");
+                    if (JarName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JarName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JarName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntryClass), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  entryClass: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EntryClass))
+                {
+                    builder.Append("  entryClass: ");
+                    if (EntryClass.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EntryClass}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EntryClass}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Args), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  args: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Args))
+                {
+                    builder.Append("  args: ");
+                    if (Args.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Args}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Args}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SavePointName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  savePointName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SavePointName))
+                {
+                    builder.Append("  savePointName: ");
+                    if (SavePointName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SavePointName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SavePointName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  action: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Action))
+                {
+                    builder.Append("  action: ");
+                    builder.AppendLine($"'{Action.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FlinkConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  flinkConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FlinkConfiguration))
+                {
+                    if (FlinkConfiguration.Any())
+                    {
+                        builder.Append("  flinkConfiguration: ");
+                        builder.AppendLine("{");
+                        foreach (var item in FlinkConfiguration)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobId))
+                {
+                    builder.Append("  jobId: ");
+                    if (JobId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobOutput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobOutput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobOutput))
+                {
+                    builder.Append("  jobOutput: ");
+                    if (JobOutput.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobOutput}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobOutput}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionResult), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionResult: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionResult))
+                {
+                    builder.Append("  actionResult: ");
+                    if (ActionResult.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ActionResult}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ActionResult}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSavePoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastSavePoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastSavePoint))
+                {
+                    builder.Append("  lastSavePoint: ");
+                    if (LastSavePoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastSavePoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastSavePoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  jobType: ");
+                builder.AppendLine($"'{JobType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FlinkJobProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FlinkJobProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -282,6 +639,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support writing '{options.Format}' format.");
             }

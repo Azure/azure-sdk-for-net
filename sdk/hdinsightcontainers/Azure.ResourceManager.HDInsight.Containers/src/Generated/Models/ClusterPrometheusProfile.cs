@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Enable Prometheus for cluster or not. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
     }
 }

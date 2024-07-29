@@ -46,8 +46,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Name of the PyPi package. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Version of the PyPi package. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
     }
 }

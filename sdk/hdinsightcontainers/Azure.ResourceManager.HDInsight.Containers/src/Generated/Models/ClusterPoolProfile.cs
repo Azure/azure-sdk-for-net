@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Cluster pool version is a 2-part version. </summary>
+        [WirePath("clusterPoolVersion")]
         public string ClusterPoolVersion { get; set; }
     }
 }

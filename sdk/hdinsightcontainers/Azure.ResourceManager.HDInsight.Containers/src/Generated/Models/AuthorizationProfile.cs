@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> AAD user Ids authorized for data plane access. </summary>
+        [WirePath("userIds")]
         public IList<string> UserIds { get; }
         /// <summary> AAD group Ids authorized for data plane access. </summary>
+        [WirePath("groupIds")]
         public IList<string> GroupIds { get; }
     }
 }

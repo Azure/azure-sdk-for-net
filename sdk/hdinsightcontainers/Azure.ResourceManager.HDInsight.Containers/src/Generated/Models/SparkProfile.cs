@@ -64,12 +64,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The default storage URL. </summary>
+        [WirePath("defaultStorageUrl")]
         public string DefaultStorageUriString { get; set; }
         /// <summary> The metastore specification for Spark cluster. </summary>
+        [WirePath("metastoreSpec")]
         public SparkMetastoreSpec MetastoreSpec { get; set; }
         /// <summary> Spark user plugins spec. </summary>
         internal SparkUserPluginListResult UserPluginsSpec { get; set; }
         /// <summary> Spark user plugins. </summary>
+        [WirePath("userPluginsSpec.plugins")]
         public IList<SparkUserPlugin> Plugins
         {
             get

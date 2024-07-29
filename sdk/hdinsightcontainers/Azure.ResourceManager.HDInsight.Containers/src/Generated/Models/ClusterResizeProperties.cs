@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Target node count of worker node. </summary>
+        [WirePath("targetWorkerNodeCount")]
         public int TargetWorkerNodeCount { get; set; }
     }
 }

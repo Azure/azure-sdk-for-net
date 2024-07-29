@@ -12,6 +12,8 @@
         - Ebabled rollback cluster upgrade.
         - Enabled manage cluster library.
         - Enabled multiple managedIdentity, cluster version is required to be above 1.2.0.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added Bicep serialization.
 
 ## 1.0.0-beta.3 (2024-03-23)
 
