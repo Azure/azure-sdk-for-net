@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Models;
@@ -69,7 +67,7 @@ namespace Azure.AI.Language.Conversations
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeConversations(MultiLanguageConversationInput,IEnumerable{AnalyzeConversationOperationAction},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeConversations(AnalyzeConversationOperationInput,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -107,7 +105,7 @@ namespace Azure.AI.Language.Conversations
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeConversationsAsync(MultiLanguageConversationInput,IEnumerable{AnalyzeConversationOperationAction},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeConversationsAsync(AnalyzeConversationOperationInput,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
