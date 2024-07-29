@@ -1994,10 +1994,11 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum1.ToPermissionsString());
 
             // Test #2
+            string input2 = "paru";
             string permissionsStr2 = "raup";
             QueueAccessPolicyPermissions permissionsEnum2 = QueueAccessPolicyPermissions.All;
 
-            qap.Permissions = permissionsStr2;
+            qap.Permissions = input2;
 
             Assert.AreNotEqual(qap.Permissions, permissionsStr1);
             Assert.AreEqual(qap.Permissions, permissionsStr2);
