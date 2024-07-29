@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> Controls what happens if extra parameters, undefined by the REST ApI are passed in the JSON request payload. </summary>
+    /// <summary> Controls what happens if extra parameters, undefined by the REST API, are passed in the JSON request payload. </summary>
     public readonly partial struct ExtraParameters : IEquatable<ExtraParameters>
     {
         private readonly string _value;
