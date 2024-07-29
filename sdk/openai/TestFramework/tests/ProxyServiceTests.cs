@@ -12,7 +12,7 @@ using OpenAI.TestFramework.Recording.Transforms;
 namespace OpenAI.TestFramework.Tests
 {
     [NonParallelizable]
-    public class ProxyServiceTests(bool isAsync) : SyncAsyncTestBase(isAsync)
+    public class ProxyServiceTests(bool isAsync) : ClientTestBase(isAsync)
     {
         #region Properties and setup/teardown methods
 
@@ -86,7 +86,7 @@ namespace OpenAI.TestFramework.Tests
                 new BodyRegexSanitizer("(.*)")
                 {
                     GroupForReplace = "1",
-                    Condition = new Recording.Common.Condition()
+                    Condition = new Recording.Condition()
                     {
                         ResponseHeader = new()
                         {
@@ -222,7 +222,7 @@ namespace OpenAI.TestFramework.Tests
                 Assert.DoesNotThrow(proxy.ThrowOnErrors);
                 Assert.That(proxy.Client, Is.Not.Null);
 
-                var wrappedClient = WrapForSyncAsync(proxy.Client);
+                var wrappedClient = WrapClient(proxy.Client);
                 var setter = typeof(ProxyService).GetMethod("SetClient", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
                     ?? throw new InvalidOperationException("Could not find the ProxyService.SetClient method");
                 setter.Invoke(proxy, [wrappedClient]);

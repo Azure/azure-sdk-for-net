@@ -3,7 +3,6 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using OpenAI.TestFramework.Recording.Common;
 using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Recording.Transforms;

@@ -8,7 +8,7 @@ using OpenAI.TestFramework.Tests.Helpers;
 
 namespace OpenAI.TestFramework.Tests;
 
-public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
+public class FrameworkTests(bool useAsync) : ClientTestBase(useAsync)
 {
     private static readonly string EX_MSG = Guid.NewGuid().ToString();
 
@@ -17,7 +17,7 @@ public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
     {
         MockClient original = new MockClient();
 
-        MockClient instrumented = WrapForSyncAsync(original);
+        MockClient instrumented = WrapClient(original);
         Assert.That(instrumented, Is.Not.Null);
         Assert.That(ReferenceEquals(original, instrumented), Is.False);
         Assert.That(typeof(MockClient).IsAssignableFrom(instrumented.GetType()), Is.True);
@@ -32,10 +32,10 @@ public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
     {
         var context = new MockClientContext();
 
-        MockClient client = WrapForSyncAsync(new MockClient(), context);
+        MockClient client = WrapClient(new MockClient(), context);
         Assert.That(client, Is.Not.Null);
 
-        var recoveredContext = GetWrappedContext(client) as MockClientContext;
+        var recoveredContext = GetClientContext(client) as MockClientContext;
         Assert.That(recoveredContext, Is.Not.Null);
         Assert.That(recoveredContext!.Id, Is.EqualTo(context.Id));
         Assert.That(ReferenceEquals(recoveredContext, context), Is.True);
@@ -44,7 +44,7 @@ public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
     [Test]
     public async Task TaskWorks()
     {
-        MockClient client = WrapForSyncAsync(new MockClient());
+        MockClient client = WrapClient(new MockClient());
         await client.DoAsync();
 
         if (IsAsync)
@@ -62,7 +62,7 @@ public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
     [Test]
     public void FailedTaskWorks()
     {
-        MockClient client = WrapForSyncAsync(new MockClient());
+        MockClient client = WrapClient(new MockClient());
         ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => client.FailAsync(EX_MSG));
         Assert.That(ex, Is.Not.Null);
         Assert.That(ex!.Message, Is.EqualTo(EX_MSG));
@@ -82,7 +82,7 @@ public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
     [Test]
     public async Task TaskWithResultWorks()
     {
-        MockClient client = WrapForSyncAsync(new MockClient());
+        MockClient client = WrapClient(new MockClient());
         int count = await client.CountAsync();
 
         if (IsAsync)
@@ -102,7 +102,7 @@ public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
     [Test]
     public void FailedTaskWithResultWorks()
     {
-        MockClient client = WrapForSyncAsync(new MockClient());
+        MockClient client = WrapClient(new MockClient());
         ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => client.FailWithResultAsync(EX_MSG));
         Assert.That(ex, Is.Not.Null);
         Assert.That(ex!.Message, Is.EqualTo(EX_MSG));
@@ -125,7 +125,7 @@ public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
         const int num = 3;
         const int increment = 2;
 
-        MockClient client = WrapForSyncAsync(new MockClient());
+        MockClient client = WrapClient(new MockClient());
         AsyncResultCollection<int> coll = client.ResultCollectionAsync(num, increment);
 
         Assert.IsNotNull(coll);
@@ -157,7 +157,7 @@ public class FrameworkTests(bool useAsync) : SyncAsyncTestBase(useAsync)
     [Test]
     public void FailedResultCollection()
     {
-        MockClient client = WrapForSyncAsync(new MockClient());
+        MockClient client = WrapClient(new MockClient());
 
         // For now we mimic how the OpenAI and Azure OpenAI libraries work in that no service requests are sent
         // until we try to enumerate the async collections. So exceptions aren't expected initially

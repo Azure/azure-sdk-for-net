@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.TestFramework.Recording.Common;
-
 namespace OpenAI.TestFramework.Recording.Sanitizers;
 
 /// <summary>

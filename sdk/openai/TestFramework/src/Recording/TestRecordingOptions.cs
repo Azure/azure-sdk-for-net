@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using OpenAI.TestFramework.Recording.Common;
 using OpenAI.TestFramework.Recording.Matchers;
 using OpenAI.TestFramework.Recording.RecordingProxy;
 using OpenAI.TestFramework.Recording.Sanitizers;
 using OpenAI.TestFramework.Recording.Transforms;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Recording;
 

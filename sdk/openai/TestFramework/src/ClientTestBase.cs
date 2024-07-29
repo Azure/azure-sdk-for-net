@@ -16,7 +16,7 @@ namespace OpenAI.TestFramework;
 /// </summary>
 [TestFixture(true)]
 [TestFixture(false)]
-public abstract class SyncAsyncTestBase
+public abstract class ClientTestBase
 {
     private static ProxyGenerator? s_proxyGenerator = null;
     private static ThisLeakInterceptor? s_thisLeakInterceptor = null;
@@ -27,7 +27,7 @@ public abstract class SyncAsyncTestBase
     /// Creates a new instance.
     /// </summary>
     /// <param name="isAsync">True to run the async version of a test, false to run the sync version of a test.</param>
-    public SyncAsyncTestBase(bool isAsync)
+    public ClientTestBase(bool isAsync)
     {
         IsAsync = isAsync;
     }
@@ -64,61 +64,61 @@ public abstract class SyncAsyncTestBase
     protected static AsyncToSyncInterceptor UseAsyncMethodInterceptor => s_asyncInterceptor ??= new AsyncToSyncInterceptor(true);
 
     /// <summary>
-    /// Wraps an instance for automatic sync/async testing. This will return a proxied version of the client that will allow you to
+    /// Wraps a client for automatic sync/async testing. This will return a proxied version of the client that will allow you to
     /// automatically use the sync versions of a method.
     /// </summary>
     /// <typeparam name="T">The type of the client instance.</typeparam>
-    /// <param name="instance">The client instance to instrument for testing.</param>
-    /// <param name="context">(Optional) Any additional context to associate with the instrumented client.</param>
+    /// <param name="client">The client instance to instrument for testing.</param>
+    /// <param name="context">(Optional) Any additional context to associate with the wrapped client.</param>
     /// <param name="interceptors">(Optional) Any additional interceptors to use.</param>
     /// <returns>The proxied version of the client.</returns>
-    public T WrapForSyncAsync<T>(T instance, object? context = null, params IInterceptor[] interceptors) where T : class
-        => (T)WrapForSyncAsync(typeof(T), instance, context, interceptors);
+    public T WrapClient<T>(T client, object? context = null, params IInterceptor[] interceptors) where T : class
+        => (T)WrapClient(typeof(T), client, context, interceptors);
 
     /// <summary>
-    /// Gets the original un-instrumented instance from an instrumented client.
+    /// Gets the original client from a wrapped client.
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
-    /// <param name="wrapped">The instrumented client instance.</param>
-    /// <returns>The original instance.</returns>
-    /// <exception cref="NotSupportedException">The the instance passed was not wrapped.</exception>
+    /// <param name="wrapped">The wrapped client instance.</param>
+    /// <returns>The original client instance.</returns>
+    /// <exception cref="NotSupportedException">The the client passed was not wrapped.</exception>
     public virtual T UnWrap<T>(T wrapped) where T : class
     {
-        if (wrapped is IInstrumented instrumented)
+        if (wrapped is IWrapped instrumented)
         {
             return (T)instrumented.Original;
         }
 
-        throw new NotSupportedException($"That instance was not wrapped using {nameof(WrapForSyncAsync)}");
+        throw new NotSupportedException($"That instance was not wrapped using {nameof(WrapClient)}");
     }
 
     /// <summary>
     /// Gets the context associated with the wrapped instance.
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
-    /// <param name="wrapped">The wrapped instance.</param>
+    /// <param name="client">The wrapped client.</param>
     /// <returns>The associated context for the wrapped instance. Will be null if none was set.</returns>
     /// <exception cref="NotSupportedException">The the instance passed was not wrapped.</exception>
-    public virtual object? GetWrappedContext<T>(T wrapped) where T : class
+    public virtual object? GetClientContext<T>(T client) where T : class
     {
-        if (wrapped is IInstrumented instrumented)
+        if (client is IWrapped instrumented)
         {
             return instrumented.Context;
         }
 
-        throw new NotSupportedException($"That instance was not wrapped using {nameof(WrapForSyncAsync)}");
+        throw new NotSupportedException($"That instance was not wrapped using {nameof(WrapClient)}");
     }
 
     /// <summary>
-    /// Wraps an instance with sync/async equivalent methods for testing. This enables the automatic testing of the sync version
+    /// Wraps a client with sync/async equivalent methods for testing. This enables the automatic testing of the sync version
     /// of methods if you write an async test case.
     /// </summary>
     /// <param name="instanceType">The type of the client.</param>
-    /// <param name="instance">The instance.</param>
-    /// <param name="context">(Optional) Any additional context to associate with the instrumented client.</param>
+    /// <param name="client">The client instance to wrap.</param>
+    /// <param name="context">(Optional) Any additional context to associate with the wrapped client.</param>
     /// <param name="interceptors">(Optional) Any additional interceptors to include.</param>
-    /// <returns>The wrapped version of the instance.</returns>
-    protected internal virtual object WrapForSyncAsync(Type instanceType, object instance, object? context, IEnumerable<IInterceptor>? interceptors)
+    /// <returns>The wrapped version of the client.</returns>
+    protected internal virtual object WrapClient(Type instanceType, object client, object? context, IEnumerable<IInterceptor>? interceptors)
     {
         List<IInterceptor> allInterceptors = new();
 
@@ -131,12 +131,12 @@ public abstract class SyncAsyncTestBase
         allInterceptors.Add(IsAsync ? UseAsyncMethodInterceptor : UseSyncMethodInterceptor);
 
         ProxyGenerationOptions options = new();
-        options.AddMixinInstance(new InstrumentedMixIn(instance, context));
+        options.AddMixinInstance(new WrappedMixIn(client, context));
 
         object proxy = ProxyGenerator.CreateClassProxyWithTarget(
             instanceType,
             [],
-            instance,
+            client,
             options,
             allInterceptors.ToArray());
 

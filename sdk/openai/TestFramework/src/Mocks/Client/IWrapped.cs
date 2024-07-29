@@ -7,7 +7,7 @@ namespace OpenAI.TestFramework.Mocks.Client;
 /// An interface that serves as a way to identify a proxied class, as well as get the original un-proxied
 /// instance.
 /// </summary>
-public interface IInstrumented
+public interface IWrapped
 {
     /// <summary>
     /// Gets the original un-proxied instance back.

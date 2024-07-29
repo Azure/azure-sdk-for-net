@@ -8,15 +8,16 @@
 namespace OpenAI.TestFramework.Mocks.Client;
 
 /// <summary>
-/// An implementation of <see cref="IInstrumented"/> that allows you to get the original back.
+/// An implementation of <see cref="IWrapped"/> that allows you to get the original back, as well as a place
+/// to store an additional context.
 /// </summary>
-public class InstrumentedMixIn : IInstrumented
+public class WrappedMixIn : IWrapped
 {
     /// <summary>
     /// Creates a new instance.
     /// </summary>
     /// <param name="original">The original instance.</param>
-    public InstrumentedMixIn(object original, object? context = null)
+    public WrappedMixIn(object original, object? context = null)
     {
         Original = original;
         Context = context;

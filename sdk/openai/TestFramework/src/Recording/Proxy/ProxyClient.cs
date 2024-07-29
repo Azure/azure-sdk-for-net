@@ -5,12 +5,12 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Net.Http;
 using System.Text.Json;
-using OpenAI.TestFramework.Recording.Common;
 using OpenAI.TestFramework.Recording.Matchers;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.Proxy.Service;
 using OpenAI.TestFramework.Recording.Sanitizers;
 using OpenAI.TestFramework.Recording.Transforms;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Recording.RecordingProxy;
 

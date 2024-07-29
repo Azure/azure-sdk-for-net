@@ -4,9 +4,8 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using OpenAI.TestFramework.Utils;
 
-namespace OpenAI.TestFramework.Recording.Common;
+namespace OpenAI.TestFramework.Utils;
 
 /// <summary>
 /// Options used for various recordings.
@@ -17,6 +16,7 @@ public static class Default
     private static JsonSerializerOptions? _innerRecordingJsonOptions = null;
     private static JsonSerializerOptions? _testProxyJsonOptions = null;
     private static TimeSpan? _testProxyWaitTime = null;
+    private static TimeSpan? _requestRetryDelay = null;
 
     /// <summary>
     /// Gets the default value to replace matches with while sanitizing.
@@ -83,4 +83,14 @@ public static class Default
     /// and configuration, or saving a recording and teardown).
     /// </summary>
     public static TimeSpan TestProxyWaitTime => _testProxyWaitTime ??= TimeSpan.FromMinutes(2);
+
+    /// <summary>
+    /// Gets the maximum number of times to retry requests
+    /// </summary>
+    public const int MaxRequestRetries = 3;
+
+    /// <summary>
+    /// The amount of time to wait between requests
+    /// </summary>
+    public static TimeSpan RequestRetryDelay => _requestRetryDelay ??= TimeSpan.FromSeconds(0.8);
 }

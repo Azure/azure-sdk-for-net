@@ -6,7 +6,6 @@ using System.Net;
 using System.Text;
 using NUnit.Framework;
 using OpenAI.TestFramework.Recording;
-using OpenAI.TestFramework.Recording.Common;
 using OpenAI.TestFramework.Recording.Matchers;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.Proxy.Service;
@@ -20,10 +19,10 @@ namespace OpenAI.TestFramework;
 /// support is provided by use of the Test Proxy <see href="https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md" />.
 /// This provides the basic framework to start the Test Proxy, create a recording for a test or playback a recording
 /// for a test. It also provides support for automatic testing of async and sync versions of methods (see
-/// <see cref="SyncAsyncTestBase"/> for more details).
+/// <see cref="ClientTestBase"/> for more details).
 /// </summary>
 [NonParallelizable]
-public abstract class RecordingTestBase : SyncAsyncTestBase
+public abstract class RecordedClientTestBase : ClientTestBase
 {
     /// <summary>
     /// Invalid characters that will be removed from test names when creating recordings.
@@ -49,7 +48,7 @@ public abstract class RecordingTestBase : SyncAsyncTestBase
     /// </summary>
     /// <param name="isAsync">True to run the async version of a test, false to run the sync version of a test.</param>
     /// <param name="mode">(Optional) The recorded test mode to use. If unset, the default recorded test mode will be used.</param>
-    public RecordingTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
+    public RecordedClientTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
     {
         _options = new TestRecordingOptions();
         Mode = mode ?? GetDefaultRecordedTestMode();
