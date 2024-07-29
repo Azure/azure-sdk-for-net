@@ -573,7 +573,7 @@
       ]
     },
     {
-      "filename": "**/sdk/hdinsight/**/*.cs",
+      "filename": "**/sdk/hdinsightcontainers/**/*.cs",
       "words": [
         "trino",
         "llap",
