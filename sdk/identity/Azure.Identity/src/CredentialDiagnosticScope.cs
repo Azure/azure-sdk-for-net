@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -46,7 +47,7 @@ namespace Azure.Identity
 
         public Exception FailWrapAndThrow(Exception ex, string additionalMessage = null, bool isCredentialUnavailable = false)
         {
-            var wrapped = TryWrapException(ref ex, additionalMessage);
+            var wrapped = TryWrapException(ref ex, additionalMessage, isCredentialUnavailable);
             RegisterFailed(ex);
 
             if (!wrapped)
@@ -79,7 +80,24 @@ namespace Azure.Identity
                     return true;
                 }
             }
-            string exceptionMessage = $"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: {exception.Message}";
+
+            string exceptionMessage = $"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: ";
+
+            if (exception is MsalServiceException mse)
+            {
+                if (mse.ErrorCode == "user_assigned_managed_identity_not_supported")
+                {
+                    exceptionMessage += Constants.MiSourceNoUserAssignedIdentityMessage;
+                }
+                else if (mse.ErrorCode == "managed_identity_request_failed")
+                {
+                    exceptionMessage += mse.Message;
+                }
+            }
+            else
+            {
+                exceptionMessage += exception.Message;
+            }
             if (additionalMessageText != null)
             {
                 exceptionMessage = exceptionMessage + $"\n{additionalMessageText}";

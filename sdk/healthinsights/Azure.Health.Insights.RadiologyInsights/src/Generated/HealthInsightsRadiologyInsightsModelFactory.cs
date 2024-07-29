@@ -504,6 +504,15 @@ namespace Azure.Health.Insights.RadiologyInsights
                 note?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4ConditionStage"/>. </summary>
+        /// <param name="summary"> Simple summary (disease specific). </param>
+        /// <param name="type"> Kind of staging. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4ConditionStage"/> instance for mocking. </returns>
+        public static FhirR4ConditionStage FhirR4ConditionStage(FhirR4CodeableConcept summary = null, FhirR4CodeableConcept type = null)
+        {
+            return new FhirR4ConditionStage(summary, type, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4ResearchStudy"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="meta"> Metadata about the resource. </param>
@@ -593,6 +602,57 @@ namespace Azure.Health.Insights.RadiologyInsights
                 note?.ToList(),
                 arm?.ToList(),
                 objective?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4ContactDetail"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="name"> Name of an individual to contact. </param>
+        /// <param name="telecom"> Contact details for individual or organization. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4ContactDetail"/> instance for mocking. </returns>
+        public static FhirR4ContactDetail FhirR4ContactDetail(string id = null, IEnumerable<FhirR4Extension> extension = null, string name = null, IEnumerable<FhirR4ContactPoint> telecom = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+            telecom ??= new List<FhirR4ContactPoint>();
+
+            return new FhirR4ContactDetail(id, extension?.ToList(), serializedAdditionalRawData: null, name, telecom?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4ContactPoint"/>. </summary>
+        /// <param name="system"> phone | fax | email | pager | url | sms | other. </param>
+        /// <param name="value"> The actual contact point details. </param>
+        /// <param name="use"> home | work | temp | old | mobile - purpose of this contact point. </param>
+        /// <param name="rank"> Specify preferred order of use (1 = highest). </param>
+        /// <param name="period"> Time period when the contact point was/is in use. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4ContactPoint"/> instance for mocking. </returns>
+        public static FhirR4ContactPoint FhirR4ContactPoint(ContactPointSystem? system = null, string value = null, ContactPointUse? use = null, int? rank = null, FhirR4Period period = null)
+        {
+            return new FhirR4ContactPoint(
+                system,
+                value,
+                use,
+                rank,
+                period,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.ResearchStudyArm"/>. </summary>
+        /// <param name="name"> Label for study arm. </param>
+        /// <param name="type"> Categorization of study arm. </param>
+        /// <param name="description"> Short explanation of study path. </param>
+        /// <returns> A new <see cref="RadiologyInsights.ResearchStudyArm"/> instance for mocking. </returns>
+        public static ResearchStudyArm ResearchStudyArm(string name = null, FhirR4CodeableConcept type = null, string description = null)
+        {
+            return new ResearchStudyArm(name, type, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.ResearchStudyObjective"/>. </summary>
+        /// <param name="name"> Label for the objective. </param>
+        /// <param name="type"> primary | secondary | exploratory. </param>
+        /// <returns> A new <see cref="RadiologyInsights.ResearchStudyObjective"/> instance for mocking. </returns>
+        public static ResearchStudyObjective ResearchStudyObjective(string name = null, FhirR4CodeableConcept type = null)
+        {
+            return new ResearchStudyObjective(name, type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.CriticalResultInference"/>. </summary>
