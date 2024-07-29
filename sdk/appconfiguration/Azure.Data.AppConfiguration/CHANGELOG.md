@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for the `2023-11-01` service version.
+- Added a new method `ConfigurationClient.GetLabels` to support listing labels.
+- Added new classes `Label`, `LabelSelector`, and a new enum `LabelFields`.
+- Added a new property `TagsFilter` to `SettingSelector` type to support filtering settings or revisions with tags filter.
+- Added a new property `Tags` to `ConfigurationSettingsFilter` to support filtering settings with tags filter for a configuration snapshot.
 
 ## 1.4.1 (2024-04-17)
 
@@ -40,7 +40,7 @@
 ### Breaking Changes
 
 - Renamed `key` tag reported on `ConfigurationClient` activities to `az.appconfiguration.key` following OpenTelemetry attribute naming conventions.
-  
+
 ### Bugs Fixed
 
 ### Other Changes
