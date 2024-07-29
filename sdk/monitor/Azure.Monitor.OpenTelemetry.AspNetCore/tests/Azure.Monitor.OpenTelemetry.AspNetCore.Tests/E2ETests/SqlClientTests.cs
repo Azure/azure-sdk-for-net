@@ -12,17 +12,17 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Instrumentation.SqlClient;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
-    [CollectionDefinition("SqlClient", DisableParallelization = true)]
-    [Collection("SqlClient")]
     public class SqlClientTests
     {
         private const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
@@ -37,15 +37,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
         private readonly FakeSqlClientDiagnosticSource _fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
 
-        private const string TestServiceName = nameof(TestServiceName), TestServiceNamespace = nameof(TestServiceNamespace), TestServiceInstance = nameof(TestServiceInstance), TestServiceVersion = nameof(TestServiceVersion);
-        private const string TestRoleName = $"[{TestServiceNamespace}]/{TestServiceName}";
-        private readonly Dictionary<string, object> _testResourceAttributes = new()
+        private readonly TelemetryItemOutputHelper _telemetryOutput;
+
+        public SqlClientTests(ITestOutputHelper output)
         {
-            { "service.name", TestServiceName },
-            { "service.namespace", TestServiceNamespace },
-            { "service.instance.id", TestServiceInstance },
-            { "service.version", TestServiceVersion }
-        };
+            _telemetryOutput = new TelemetryItemOutputHelper(output);
+        }
 
         [Theory]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError)]
@@ -75,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 .UseAzureMonitor(x => x.ConnectionString = testConnectionString)
                 .WithTracing(x => x.AddInMemoryExporter(activities))
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
-                .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
+                .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));
             serviceCollection.Configure<SqlClientTraceInstrumentationOptions>(options =>
             {
                 options.RecordException = recordException;
@@ -122,6 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             tracerProvider.Shutdown();
 
             // ASSERT
+            _telemetryOutput.Write(telemetryItems);
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             var telemetryItem = telemetryItems.Where(x => x.Name == "RemoteDependency").Single();
             Assert.Single(activities);
@@ -172,7 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 .UseAzureMonitor(x => x.ConnectionString = testConnectionString)
                 .WithTracing(x => x.AddInMemoryExporter(activities))
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
-                .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
+                .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));
             serviceCollection.Configure<SqlClientTraceInstrumentationOptions>(options =>
             {
                 options.SetDbStatementForText = captureTextCommandContent;
@@ -219,6 +217,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             tracerProvider.Shutdown();
 
             // ASSERT
+            _telemetryOutput.Write(telemetryItems);
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             var telemetryItem = telemetryItems.Where(x => x.Name == "RemoteDependency").Single();
             var activity = activities.Single();
@@ -264,9 +263,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             // TELEMETRY ITEM
             Assert.Equal(5, telemetryItem.Tags.Count);
             Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.operation.id" && kvp.Value == activity.TraceId.ToHexString());
-            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.cloud.role" && kvp.Value == TestRoleName);
-            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.application.ver" && kvp.Value == TestServiceVersion);
-            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.cloud.roleInstance" && kvp.Value == TestServiceInstance);
+            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.cloud.role" && kvp.Value == SharedTestVars.TestRoleName);
+            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.application.ver" && kvp.Value == SharedTestVars.TestServiceVersion);
+            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.cloud.roleInstance" && kvp.Value == SharedTestVars.TestServiceInstance);
             Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.internal.sdkVersion");
 
             // TELEMETRY DATA

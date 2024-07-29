@@ -599,10 +599,9 @@
 # ServiceOwners:                                                   @Lighthouse-Azure
 
 # PRLabel: %Maps
-/sdk/maps/                                                         @dubiety @khmic5 @andykao1213
-
+/sdk/maps/                                                         @dubiety @jecmenicanikola
 # ServiceLabel: %Maps
-# ServiceOwners:                                                   @dubiety @khmic5 @andykao1213
+# ServiceOwners:                                                   @dubiety @jecmenicanikola
 
 # ServiceLabel: %MariaDB
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
@@ -644,6 +643,9 @@
 
 # PRLabel: %Monitor - Distro
 /sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+
+# PRLabel: %Monitor - Distro
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # ServiceLabel: %Monitor - Distro
 # ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
@@ -850,13 +852,13 @@
 # ServiceOwners:                                                   @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft
+/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft @nickliu-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft
+/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft @nickliu-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft
+/sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft @nickliu-msft
 
 # ServiceLabel: %Storage
 # ServiceOwners:                                                   @xgithubtriage
