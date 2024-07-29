@@ -19,18 +19,15 @@
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0' ">
-    <PackageReference Include="System.Numerics.Vectors" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="System.Text.Encodings.Web" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Numerics.Vectors" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="System.Memory.Data" />
 
     <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
