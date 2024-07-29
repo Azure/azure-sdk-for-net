@@ -4,11 +4,8 @@
 
 ### Features Added
 
-- Added support for the `2023-11-01` service version.
-- Added a new method `ConfigurationClient.GetLabels` to support listing labels.
-- Added new classes `Label`, `LabelSelector`, and a new enum `LabelFields`.
-- Added a new property `TagsFilter` to `SettingSelector` type to support filtering settings or revisions with tags filter.
-- Added a new property `Tags` to `ConfigurationSettingsFilter` to support filtering settings with tags filter for a configuration snapshot.
+- Added support for listing labels.
+- Added support for filtering by tags.
 
 ## 1.4.1 (2024-04-17)
 
