@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Text
             using var scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
-            AnalyzeTextOperationInput analyzeTextOperationInput = new AnalyzeTextOperationInput(displayName, textInput, actions.ToList(), defaultLanguage, null);
+            AnalyzeTextSubmitJobRequest analyzeTextOperationInput = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null);
             RequestContext context = FromCancellationToken(cancellationToken);
 
             try
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text
             using var scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
-            AnalyzeTextOperationInput analyzeTextOperationInput = new AnalyzeTextOperationInput(displayName, textInput, actions.ToList(), defaultLanguage, null);
+            AnalyzeTextSubmitJobRequest analyzeTextOperationInput = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null);
             RequestContext context = FromCancellationToken(cancellationToken);
 
             try

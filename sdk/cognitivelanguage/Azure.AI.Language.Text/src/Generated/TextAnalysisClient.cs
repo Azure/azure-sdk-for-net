@@ -324,9 +324,9 @@ namespace Azure.AI.Language.Text
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
 
-            AnalyzeTextOperationInput analyzeTextOperationInput = new AnalyzeTextOperationInput(displayName, textInput, actions.ToList(), defaultLanguage, null);
+            AnalyzeTextSubmitJobRequest analyzeTextSubmitJobRequest = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await AnalyzeTextSubmitOperationAsync(waitUntil, analyzeTextOperationInput.ToRequestContent(), context).ConfigureAwait(false);
+            return await AnalyzeTextSubmitOperationAsync(waitUntil, analyzeTextSubmitJobRequest.ToRequestContent(), context).ConfigureAwait(false);
         }
 
         /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </summary>
@@ -343,9 +343,9 @@ namespace Azure.AI.Language.Text
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
 
-            AnalyzeTextOperationInput analyzeTextOperationInput = new AnalyzeTextOperationInput(displayName, textInput, actions.ToList(), defaultLanguage, null);
+            AnalyzeTextSubmitJobRequest analyzeTextSubmitJobRequest = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            return AnalyzeTextSubmitOperation(waitUntil, analyzeTextOperationInput.ToRequestContent(), context);
+            return AnalyzeTextSubmitOperation(waitUntil, analyzeTextSubmitJobRequest.ToRequestContent(), context);
         }
 
         /// <summary>

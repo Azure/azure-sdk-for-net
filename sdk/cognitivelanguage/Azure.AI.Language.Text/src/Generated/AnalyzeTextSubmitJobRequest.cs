@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The input object for the analyze text LRO. </summary>
-    internal partial class AnalyzeTextOperationInput
+    /// <summary> The AnalyzeTextSubmitJobRequest. </summary>
+    internal partial class AnalyzeTextSubmitJobRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobRequest"/>. </summary>
         /// <param name="textInput"> Contains the input to be analyzed. </param>
         /// <param name="actions">
         /// List of tasks to be performed as part of the LRO.
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Text
         /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomAbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomHealthcareOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSentimentAnalysisOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/> and <see cref="SentimentAnalysisOperationAction"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textInput"/> or <paramref name="actions"/> is null. </exception>
-        public AnalyzeTextOperationInput(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions)
+        internal AnalyzeTextSubmitJobRequest(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions)
         {
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobRequest"/>. </summary>
         /// <param name="displayName"> Name for the task. </param>
         /// <param name="textInput"> Contains the input to be analyzed. </param>
         /// <param name="actions">
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Text
         /// </param>
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextOperationInput(string displayName, MultiLanguageTextInput textInput, IList<AnalyzeTextOperationAction> actions, string defaultLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeTextSubmitJobRequest(string displayName, MultiLanguageTextInput textInput, IReadOnlyList<AnalyzeTextOperationAction> actions, string defaultLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             TextInput = textInput;
@@ -82,13 +82,13 @@ namespace Azure.AI.Language.Text
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationInput"/> for deserialization. </summary>
-        internal AnalyzeTextOperationInput()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobRequest"/> for deserialization. </summary>
+        internal AnalyzeTextSubmitJobRequest()
         {
         }
 
         /// <summary> Name for the task. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
         /// <summary> Contains the input to be analyzed. </summary>
         public MultiLanguageTextInput TextInput { get; }
         /// <summary>
@@ -96,8 +96,8 @@ namespace Azure.AI.Language.Text
         /// Please note <see cref="AnalyzeTextOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomAbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomHealthcareOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSentimentAnalysisOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/> and <see cref="SentimentAnalysisOperationAction"/>.
         /// </summary>
-        public IList<AnalyzeTextOperationAction> Actions { get; }
+        public IReadOnlyList<AnalyzeTextOperationAction> Actions { get; }
         /// <summary> Default language to use for records requesting automatic language detection. </summary>
-        public string DefaultLanguage { get; set; }
+        public string DefaultLanguage { get; }
     }
 }
