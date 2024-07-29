@@ -277,7 +277,7 @@ if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringT
 }
 ```
 
-#### Conversational summarization
+### Summarize a conversation
 
 To summarize a conversation, you can use the `AnalyzeConversationsOperation` method overload that returns an `Response<AnalyzeConversationJobState>`:
 
@@ -354,7 +354,7 @@ foreach (var operationResult in operationState.Actions.Items)
 }
 ```
 
-#### Conversational PII extraction
+### Extract PII from a conversation
 
 To detect and redact PII in a conversation, you can use the `AnalyzeConversationsOperation` method overload with an action of type `PiiOperationAction`:
 
