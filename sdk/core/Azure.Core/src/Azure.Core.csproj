@@ -23,14 +23,14 @@
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Memory.Data" VersionOverride="6.0.0" />
+    <PackageReference Include="System.Text.Json" VersionOverride="6.0.0" />
 
     <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
