@@ -39,7 +39,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// To get/set the permissions enum for the queue access policy.
         /// </summary>
-        [CodeGenMember("QueueAccessPolicyPermissions")]
+        [CodeGenMember("QueueAccessPolicyPermission")]
         public QueueAccessPolicyPermissions QueueAccessPolicyPermissions { get; set; }
     }
 }

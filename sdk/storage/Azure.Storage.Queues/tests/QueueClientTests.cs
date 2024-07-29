@@ -1791,7 +1791,7 @@ namespace Azure.Storage.Queues.Test
                     GetOptions()));
 
             // Act
-            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = queueClient.GenerateSasUri(permissions, expiresOn);
 
             // Assert
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
@@ -1976,6 +1976,57 @@ namespace Azure.Storage.Queues.Test
             mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
+        }
+
+        [RecordedTest]
+        public void QueueClientPolicyPermissions_checkIfSetCorrectly()
+        {
+            // Test #1
+            string permissionsStr1 = "ra";
+            QueueAccessPolicyPermissions permissionsEnum1 = QueueAccessPolicyPermissions.None;
+            permissionsEnum1 |= QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add;
+
+            QueueAccessPolicy qap = new QueueAccessPolicy
+            {
+                Permissions = permissionsStr1
+            };
+
+            Assert.AreEqual(qap.Permissions, permissionsStr1);
+            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum1.ToPermissionsString());
+
+            // Test #2
+            string permissionsStr2 = "raup";
+            QueueAccessPolicyPermissions permissionsEnum2 = QueueAccessPolicyPermissions.All;
+
+            qap.Permissions = permissionsStr2;
+
+            Assert.AreNotEqual(qap.Permissions, permissionsStr1);
+            Assert.AreEqual(qap.Permissions, permissionsStr2);
+            Assert.AreNotEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum1.ToPermissionsString());
+            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum2.ToPermissionsString());
+
+            // Test #3
+            QueueAccessPolicyPermissions permissionsEnum3 = QueueAccessPolicyPermissions.None;
+            permissionsEnum3 |= QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process;
+            string permissionsStr3 = "rap";
+
+            qap.QueueAccessPolicyPermissions = permissionsEnum3;
+
+            Assert.AreNotEqual(qap.Permissions, permissionsStr2);
+            Assert.AreEqual(qap.Permissions, permissionsStr3);
+            Assert.AreNotEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum2.ToPermissionsString());
+            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum3.ToPermissionsString());
+
+            // Test #4
+            QueueAccessPolicyPermissions permissionsEnum4 = QueueAccessPolicyPermissions.None;
+            string permissionsStr4 = "";
+
+            qap.QueueAccessPolicyPermissions = permissionsEnum4;
+
+            Assert.AreNotEqual(qap.Permissions, permissionsStr3);
+            Assert.AreEqual(qap.Permissions, permissionsStr4);
+            Assert.AreNotEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum3.ToPermissionsString());
+            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum4.ToPermissionsString());
         }
     }
 }

@@ -98,7 +98,6 @@ namespace Azure.Storage.Queues.Models
                     permissionsEnum |= QueueAccessPolicyPermissions.Process;
                 }
             }
-
             return permissionsEnum;
         }
     }
