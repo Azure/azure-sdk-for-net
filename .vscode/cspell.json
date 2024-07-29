@@ -576,6 +576,7 @@
       "filename": "**/sdk/hdinsightcontainers/**/*.cs",
       "words": [
         "trino",
+        "flink",
         "llap",
         "SSDLRS",
         "SSDZRS",
