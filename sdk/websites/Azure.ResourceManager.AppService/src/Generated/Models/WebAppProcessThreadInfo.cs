@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Kudu thread information elements. </summary>
-    internal partial class ProcessThreadInfoListResult
+    /// <summary> Process Thread Information. </summary>
+    public partial class WebAppProcessThreadInfo : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +47,31 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProcessThreadInfoListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ProcessThreadInfoListResult(IEnumerable<ProcessThreadInfo> value)
+        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfo"/>. </summary>
+        public WebAppProcessThreadInfo()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProcessThreadInfoListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfo"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> ProcessThreadInfo resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessThreadInfoListResult(IReadOnlyList<ProcessThreadInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebAppProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebAppProcessThreadProperties properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Properties = properties;
+            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProcessThreadInfoListResult"/> for deserialization. </summary>
-        internal ProcessThreadInfoListResult()
-        {
-        }
-
-        /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<ProcessThreadInfo> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> ProcessThreadInfo resource specific properties. </summary>
+        [WirePath("properties")]
+        public WebAppProcessThreadProperties Properties { get; set; }
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
     }
 }
