@@ -38,18 +38,19 @@ Log 'Enable Managed identity on the Translator resource'
 
 Log 'In the storage account, assign Storage-Blob-Data-Contributor role access to translator resource'
 Log 'Step 1: Get the Resource ID of the storage account'
-# Azure PoweShell cmd: $storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $storageAccountName
+Log 'Executing Azure PoweShell cmd: $storageAccount = Get-AzStorageAccount -ResourceGroupName $($ResourceGroupName) -Name $($storageAccountName)'
 $storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $storageAccountName
 $storageAccountId = $storageAccount.Id
 Log "Resource ID of the storage accountis $($storageAccountId)"
 
 Log 'Step 2: Get the objectId or the principalId of the translator resource that needs to be added'
-# PowerShell cmd : $identityObjectId = (Get-AzADServicePrincipal -DisplayName "$BaseName").Id
-$identityObjectId = (Get-AzADServicePrincipal -DisplayName "$BaseName").Id
-Log "Object ID or the principalId is $($objectID)"
+Log 'Executing PowerShell cmd : $identityObjectId = (Get-AzADServicePrincipal -DisplayName "$($BaseName)").Id'
+$identityObject = Get-AzADServicePrincipal -DisplayName $BaseName
+$identityObjectId = $identityObject.Id
+Log "Object ID or the principalId is $($identityObjectId)"
 
 Log 'Step 3: Assign Storage-Blob-Data-Contributor role' 
-# Azure PowerShell cmd : New-AzRoleAssignment -RoleDefinitionName $roleName -ObjectId $identityObjectId -Scope $storageAccountId
+Log 'Executing Azure PowerShell cmd : New-AzRoleAssignment -RoleDefinitionName $($roleName) -ObjectId $($identityObjectId) -Scope $($storageAccountId)'
 $roleName = "Storage Blob Data Contributor"
 New-AzRoleAssignment -RoleDefinitionName $roleName -ObjectId $identityObjectId -Scope $storageAccountId
 
