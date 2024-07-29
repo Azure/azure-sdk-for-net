@@ -23,7 +23,7 @@ using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
-    public class SqlClientTests
+    public class SqlClientInstrumentationTests
     {
         private const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
         private const string SqlDataBeforeExecuteCommand = "System.Data.SqlClient.WriteCommandBefore";
@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
         private readonly TelemetryItemOutputHelper _telemetryOutput;
 
-        public SqlClientTests(ITestOutputHelper output)
+        public SqlClientInstrumentationTests(ITestOutputHelper output)
         {
             _telemetryOutput = new TelemetryItemOutputHelper(output);
         }
