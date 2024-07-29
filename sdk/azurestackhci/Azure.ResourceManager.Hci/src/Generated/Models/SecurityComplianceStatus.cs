@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Security compliance properties of the resource
-    /// Serialized Name: SecurityComplianceStatus
-    /// </summary>
+    /// <summary> Security compliance properties of the resource. </summary>
     public partial class SecurityComplianceStatus
     {
         /// <summary>
@@ -54,66 +51,36 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityComplianceStatus"/>. </summary>
-        /// <param name="securedCoreCompliance">
-        /// Indicates whether HCI hosts meets secured-core server requirements.
-        /// Serialized Name: SecurityComplianceStatus.securedCoreCompliance
-        /// </param>
-        /// <param name="wdacCompliance">
-        /// Indicates whether HCI hosts have enforced consistent Windows Defender Application Control.
-        /// Serialized Name: SecurityComplianceStatus.wdacCompliance
-        /// </param>
-        /// <param name="dataAtRestEncrypted">
-        /// Indicates whether data at-rest encryption is enabled on Azure Stack HCI clustered volumes.
-        /// Serialized Name: SecurityComplianceStatus.dataAtRestEncrypted
-        /// </param>
-        /// <param name="dataInTransitProtected">
-        /// Indicates whether HCI cluster has data in-transit protection.
-        /// Serialized Name: SecurityComplianceStatus.dataInTransitProtected
-        /// </param>
-        /// <param name="lastUpdated">
-        /// Time in UTC when compliance status was last updated.
-        /// Serialized Name: SecurityComplianceStatus.lastUpdated
-        /// </param>
+        /// <param name="securedCoreCompliance"> Indicates whether HCI hosts meets secured-core server requirements. </param>
+        /// <param name="wdacCompliance"> Indicates whether HCI hosts have enforced consistent Windows Defender Application Control. </param>
+        /// <param name="dataAtRestEncrypted"> Indicates whether data at-rest encryption is enabled on Azure Stack HCI clustered volumes. </param>
+        /// <param name="dataInTransitProtected"> Indicates whether HCI cluster has data in-transit protection. </param>
+        /// <param name="lastUpdatedOn"> Time in UTC when compliance status was last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityComplianceStatus(ComplianceStatus? securedCoreCompliance, ComplianceStatus? wdacCompliance, ComplianceStatus? dataAtRestEncrypted, ComplianceStatus? dataInTransitProtected, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityComplianceStatus(HciClusterComplianceStatus? securedCoreCompliance, HciClusterComplianceStatus? wdacCompliance, HciClusterComplianceStatus? dataAtRestEncrypted, HciClusterComplianceStatus? dataInTransitProtected, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecuredCoreCompliance = securedCoreCompliance;
             WdacCompliance = wdacCompliance;
             DataAtRestEncrypted = dataAtRestEncrypted;
             DataInTransitProtected = dataInTransitProtected;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Indicates whether HCI hosts meets secured-core server requirements.
-        /// Serialized Name: SecurityComplianceStatus.securedCoreCompliance
-        /// </summary>
+        /// <summary> Indicates whether HCI hosts meets secured-core server requirements. </summary>
         [WirePath("securedCoreCompliance")]
-        public ComplianceStatus? SecuredCoreCompliance { get; }
-        /// <summary>
-        /// Indicates whether HCI hosts have enforced consistent Windows Defender Application Control.
-        /// Serialized Name: SecurityComplianceStatus.wdacCompliance
-        /// </summary>
+        public HciClusterComplianceStatus? SecuredCoreCompliance { get; }
+        /// <summary> Indicates whether HCI hosts have enforced consistent Windows Defender Application Control. </summary>
         [WirePath("wdacCompliance")]
-        public ComplianceStatus? WdacCompliance { get; }
-        /// <summary>
-        /// Indicates whether data at-rest encryption is enabled on Azure Stack HCI clustered volumes.
-        /// Serialized Name: SecurityComplianceStatus.dataAtRestEncrypted
-        /// </summary>
+        public HciClusterComplianceStatus? WdacCompliance { get; }
+        /// <summary> Indicates whether data at-rest encryption is enabled on Azure Stack HCI clustered volumes. </summary>
         [WirePath("dataAtRestEncrypted")]
-        public ComplianceStatus? DataAtRestEncrypted { get; }
-        /// <summary>
-        /// Indicates whether HCI cluster has data in-transit protection.
-        /// Serialized Name: SecurityComplianceStatus.dataInTransitProtected
-        /// </summary>
+        public HciClusterComplianceStatus? DataAtRestEncrypted { get; }
+        /// <summary> Indicates whether HCI cluster has data in-transit protection. </summary>
         [WirePath("dataInTransitProtected")]
-        public ComplianceStatus? DataInTransitProtected { get; }
-        /// <summary>
-        /// Time in UTC when compliance status was last updated.
-        /// Serialized Name: SecurityComplianceStatus.lastUpdated
-        /// </summary>
+        public HciClusterComplianceStatus? DataInTransitProtected { get; }
+        /// <summary> Time in UTC when compliance status was last updated. </summary>
         [WirePath("lastUpdated")]
-        public DateTimeOffset? LastUpdated { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Status of Arc Extension for a particular node in HCI Cluster.
-    /// Serialized Name: PerNodeExtensionState
-    /// </summary>
+    /// <summary> Status of Arc Extension for a particular node in HCI Cluster. </summary>
     public partial class PerNodeExtensionState
     {
         /// <summary>
@@ -54,28 +51,13 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PerNodeExtensionState"/>. </summary>
-        /// <param name="name">
-        /// Name of the node in HCI Cluster.
-        /// Serialized Name: PerNodeExtensionState.name
-        /// </param>
-        /// <param name="extension">
-        /// Fully qualified resource ID for the particular Arc Extension on this node.
-        /// Serialized Name: PerNodeExtensionState.extension
-        /// </param>
-        /// <param name="typeHandlerVersion">
-        /// Specifies the version of the script handler.
-        /// Serialized Name: PerNodeExtensionState.typeHandlerVersion
-        /// </param>
-        /// <param name="state">
-        /// State of Arc Extension in this node.
-        /// Serialized Name: PerNodeExtensionState.state
-        /// </param>
-        /// <param name="instanceView">
-        /// The extension instance view.
-        /// Serialized Name: PerNodeExtensionState.instanceView
-        /// </param>
+        /// <param name="name"> Name of the node in HCI Cluster. </param>
+        /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="state"> State of Arc Extension in this node. </param>
+        /// <param name="instanceView"> The extension instance view. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, HciExtensionInstanceView instanceView, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ArcExtensionInstanceView instanceView, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Extension = extension;
@@ -85,35 +67,20 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the node in HCI Cluster.
-        /// Serialized Name: PerNodeExtensionState.name
-        /// </summary>
+        /// <summary> Name of the node in HCI Cluster. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Fully qualified resource ID for the particular Arc Extension on this node.
-        /// Serialized Name: PerNodeExtensionState.extension
-        /// </summary>
+        /// <summary> Fully qualified resource ID for the particular Arc Extension on this node. </summary>
         [WirePath("extension")]
         public string Extension { get; }
-        /// <summary>
-        /// Specifies the version of the script handler.
-        /// Serialized Name: PerNodeExtensionState.typeHandlerVersion
-        /// </summary>
+        /// <summary> Specifies the version of the script handler. </summary>
         [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
-        /// <summary>
-        /// State of Arc Extension in this node.
-        /// Serialized Name: PerNodeExtensionState.state
-        /// </summary>
+        /// <summary> State of Arc Extension in this node. </summary>
         [WirePath("state")]
         public NodeExtensionState? State { get; }
-        /// <summary>
-        /// The extension instance view.
-        /// Serialized Name: PerNodeExtensionState.instanceView
-        /// </summary>
+        /// <summary> The extension instance view. </summary>
         [WirePath("instanceView")]
-        public HciExtensionInstanceView InstanceView { get; }
+        public ArcExtensionInstanceView InstanceView { get; }
     }
 }

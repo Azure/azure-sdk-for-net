@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Provisioning state of the ArcSetting proxy resource.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
     public readonly partial struct HciProvisioningState : IEquatable<HciProvisioningState>
     {
         private readonly string _value;
@@ -44,95 +41,41 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ProvisioningValue = "Provisioning";
         private const string DisableInProgressValue = "DisableInProgress";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ProvisioningState.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static HciProvisioningState NotSpecified { get; } = new HciProvisioningState(NotSpecifiedValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: ProvisioningState.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static HciProvisioningState Error { get; } = new HciProvisioningState(ErrorValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static HciProvisioningState Succeeded { get; } = new HciProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static HciProvisioningState Failed { get; } = new HciProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static HciProvisioningState Canceled { get; } = new HciProvisioningState(CanceledValue);
-        /// <summary>
-        /// Connected
-        /// Serialized Name: ProvisioningState.Connected
-        /// </summary>
+        /// <summary> Connected. </summary>
         public static HciProvisioningState Connected { get; } = new HciProvisioningState(ConnectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: ProvisioningState.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static HciProvisioningState Disconnected { get; } = new HciProvisioningState(DisconnectedValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: ProvisioningState.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static HciProvisioningState Deleted { get; } = new HciProvisioningState(DeletedValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static HciProvisioningState Creating { get; } = new HciProvisioningState(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static HciProvisioningState Updating { get; } = new HciProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static HciProvisioningState Deleting { get; } = new HciProvisioningState(DeletingValue);
-        /// <summary>
-        /// Moving
-        /// Serialized Name: ProvisioningState.Moving
-        /// </summary>
+        /// <summary> Moving. </summary>
         public static HciProvisioningState Moving { get; } = new HciProvisioningState(MovingValue);
-        /// <summary>
-        /// PartiallySucceeded
-        /// Serialized Name: ProvisioningState.PartiallySucceeded
-        /// </summary>
+        /// <summary> PartiallySucceeded. </summary>
         public static HciProvisioningState PartiallySucceeded { get; } = new HciProvisioningState(PartiallySucceededValue);
-        /// <summary>
-        /// PartiallyConnected
-        /// Serialized Name: ProvisioningState.PartiallyConnected
-        /// </summary>
+        /// <summary> PartiallyConnected. </summary>
         public static HciProvisioningState PartiallyConnected { get; } = new HciProvisioningState(PartiallyConnectedValue);
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: ProvisioningState.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static HciProvisioningState InProgress { get; } = new HciProvisioningState(InProgressValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static HciProvisioningState Accepted { get; } = new HciProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: ProvisioningState.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static HciProvisioningState Provisioning { get; } = new HciProvisioningState(ProvisioningValue);
-        /// <summary>
-        /// DisableInProgress
-        /// Serialized Name: ProvisioningState.DisableInProgress
-        /// </summary>
+        /// <summary> DisableInProgress. </summary>
         public static HciProvisioningState DisableInProgress { get; } = new HciProvisioningState(DisableInProgressValue);
         /// <summary> Determines if two <see cref="HciProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HciProvisioningState left, HciProvisioningState right) => left.Equals(right);

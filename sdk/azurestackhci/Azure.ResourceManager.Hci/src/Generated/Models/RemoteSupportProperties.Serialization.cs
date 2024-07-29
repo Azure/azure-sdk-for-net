@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("accessLevel"u8);
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeStamp))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeStamp"u8);
-                writer.WriteStringValue(ExpirationTimeStamp.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(RemoteSupportType))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            AccessLevel? accessLevel = default;
+            HciClusterAccessLevel? accessLevel = default;
             DateTimeOffset? expirationTimeStamp = default;
             RemoteSupportType? remoteSupportType = default;
             IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    accessLevel = new AccessLevel(property.Value.GetString());
+                    accessLevel = new HciClusterAccessLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expirationTimeStamp"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpirationTimeStamp), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  expirationTimeStamp: ");
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.Hci.Models
             }
             else
             {
-                if (Optional.IsDefined(ExpirationTimeStamp))
+                if (Optional.IsDefined(ExpireOn))
                 {
                     builder.Append("  expirationTimeStamp: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ExpirationTimeStamp.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

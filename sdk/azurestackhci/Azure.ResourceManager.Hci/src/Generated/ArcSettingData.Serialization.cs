@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
             ArcSettingAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeArcState> perNodeDetails = default;
             BinaryData connectivityProperties = default;
-            IReadOnlyList<DefaultExtensionDetails> defaultExtensions = default;
+            IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            List<DefaultExtensionDetails> array = new List<DefaultExtensionDetails>();
+                            List<ArcDefaultExtensionDetails> array = new List<ArcDefaultExtensionDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DefaultExtensionDetails.DeserializeDefaultExtensionDetails(item, options));
+                                array.Add(ArcDefaultExtensionDetails.DeserializeArcDefaultExtensionDetails(item, options));
                             }
                             defaultExtensions = array;
                             continue;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Hci
                 aggregateState,
                 perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>(),
                 connectivityProperties,
-                defaultExtensions ?? new ChangeTrackingList<DefaultExtensionDetails>(),
+                defaultExtensions ?? new ChangeTrackingList<ArcDefaultExtensionDetails>(),
                 serializedAdditionalRawData);
         }
 

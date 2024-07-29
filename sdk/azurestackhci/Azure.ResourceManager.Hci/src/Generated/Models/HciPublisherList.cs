@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// List of Publisher proxy resources for the HCI cluster.
-    /// Serialized Name: PublisherList
-    /// </summary>
+    /// <summary> List of Publisher proxy resources for the HCI cluster. </summary>
     internal partial class HciPublisherList
     {
         /// <summary>
@@ -51,35 +48,23 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciPublisherList"/>. </summary>
         internal HciPublisherList()
         {
-            Value = new ChangeTrackingList<PublisherData>();
+            Value = new ChangeTrackingList<HciClusterPublisherData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciPublisherList"/>. </summary>
-        /// <param name="value">
-        /// List of Publisher proxy resources.
-        /// Serialized Name: PublisherList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to the next set of results.
-        /// Serialized Name: PublisherList.nextLink
-        /// </param>
+        /// <param name="value"> List of Publisher proxy resources. </param>
+        /// <param name="nextLink"> Link to the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciPublisherList(IReadOnlyList<PublisherData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciPublisherList(IReadOnlyList<HciClusterPublisherData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Publisher proxy resources.
-        /// Serialized Name: PublisherList.value
-        /// </summary>
-        public IReadOnlyList<PublisherData> Value { get; }
-        /// <summary>
-        /// Link to the next set of results.
-        /// Serialized Name: PublisherList.nextLink
-        /// </summary>
+        /// <summary> List of Publisher proxy resources. </summary>
+        public IReadOnlyList<HciClusterPublisherData> Value { get; }
+        /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }
 }

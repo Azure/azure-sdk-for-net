@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// The HciClusterCertificateContent.
-    /// Serialized Name: UploadCertificateRequest
-    /// </summary>
+    /// <summary> The HciClusterCertificateContent. </summary>
     public partial class HciClusterCertificateContent
     {
         /// <summary>
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterCertificateContent"/>. </summary>
-        /// <param name="properties"> Serialized Name: UploadCertificateRequest.properties. </param>
+        /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciClusterCertificateContent(HciClusterRawCertificate properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +59,9 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: UploadCertificateRequest.properties. </summary>
+        /// <summary> Gets or sets the properties. </summary>
         internal HciClusterRawCertificate Properties { get; set; }
-        /// <summary> Serialized Name: RawCertificateData.certificates. </summary>
+        /// <summary> Gets the certificates. </summary>
         [WirePath("properties.certificates")]
         public IList<string> Certificates
         {

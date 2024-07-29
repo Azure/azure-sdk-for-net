@@ -22,8 +22,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   '*TenantId': 'uuid'
@@ -57,6 +57,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SMB: Smb|smb
 
 prepend-rp-prefix:
   - Cluster
@@ -75,14 +76,16 @@ prepend-rp-prefix:
   - SkuList
   - SkuMappings
   - UpdateList
-  - PublisherCollection
-  - ExtensionInstanceView
   - StatusLevelTypes
 
 rename-mapping:
   Extension: ArcExtension
   Extension.properties.extensionParameters.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion
   Extension.properties.extensionParameters.type: ArcExtensionType
+  ExtensionInstanceView: ArcExtensionInstanceView
+  ExtensionInstanceViewStatus: ArcExtensionInstanceViewStatus
+  ExtensionManagedBy: ArcExtensionManagedBy
+  ExtensionUpgradeParameters: ArcExtensionUpgradeContent
   Status: HciClusterStatus
   ClusterReportedProperties.clusterId: -|uuid
   Cluster.properties.cloudId: -|uuid
@@ -102,12 +105,93 @@ rename-mapping:
   Severity: UpdateSeverity
   State: HciUpdateState
   Step: HciUpdateStep
-  OfferCollection: HciOfferCollection
-  OfferData: HciOfferData
   ClusterPatch.identity.type: ManagedServiceIdentityType
-  ExtensionPatchParameters: ExtensionPatchContent
-  ExtendedLocation: ArcVmExtendedLocation
-  ExtendedLocationTypes: ArcVmExtendedLocationTypes
+  ExtensionPatchParameters: ArcExtensionPatchContent
+  ExtensionPatchParameters.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
+  DeploymentSetting: HciClusterDeploymentSetting
+  DeploymentSetting.properties.arcNodeResourceIds: -|arm-id
+  OperationType: HciClusterOperationType
+  DeploymentConfiguration: HciClusterDeploymentConfiguration
+  HciEdgeDevice: HciArcEnabledEdgeDevice
+  HciEdgeDeviceProperties: HciArcEnabledEdgeDeviceProperties
+  EdgeDeviceProperties: HciEdgeDeviceProperties
+  EdgeDevice: HciEdgeDevice
+  SecuritySetting: HciClusterSecuritySetting
+  AccessLevel: HciClusterAccessLevel
+  ComplianceAssignmentType: HciClusterComplianceAssignmentType
+  ComplianceStatus: HciClusterComplianceStatus
+  ConnectivityStatus: HciClusterConnectivityStatus
+  DefaultExtensionDetails: ArcDefaultExtensionDetails
+  DeploymentCluster: HciDeploymentCluster
+  DeploymentData: HciClusterDeploymentInfo
+  DeploymentMode: EceDeploymentMode
+  DeploymentSecuritySettings: HciClusterDeploymentSecuritySettings
+  DeploymentSecuritySettings.hvciProtection: IsHvciProtectionEnabled
+  DeploymentSecuritySettings.drtmProtection: IsDrtmProtectionEnabled
+  DeploymentSecuritySettings.driftControlEnforced: IsDriftControlEnforced
+  DeploymentSecuritySettings.credentialGuardEnforced: IsCredentialGuardEnforced
+  DeploymentSecuritySettings.smbSigningEnforced: IsSmbSigningEnforced
+  DeploymentSecuritySettings.smbClusterEncryption: IsSmbClusterEncryptionEnabled
+  DeploymentSecuritySettings.sideChannelMitigationEnforced: IsSideChannelMitigationEnforced
+  DeploymentSecuritySettings.bitlockerBootVolume: IsBitlockerBootVolumeEnabled
+  DeploymentSecuritySettings.bitlockerDataVolumes: AreBitlockerDataVolumesEnabled
+  DeploymentSecuritySettings.wdacEnforced: IsWdacEnforced
+  DeploymentStep: HciClusterDeploymentStep
+  DeploymentStep.startTimeUtc: StartOn
+  DeploymentStep.endTimeUtc: EndOn
+  DeviceConfiguration: HciEdgeDeviceConfiguration
+  DeviceState: HciEdgeDeviceState
+  EceSecrets.AzureStackLCMUserCredential: AzureStackLcmUserCredential
+  EceSecrets.DefaultARBApplication: DefaultArbApplication
+  HostNetwork: HciClusterHostNetwork
+  InfrastructureNetwork: HciClusterInfrastructureNetwork
+  Intents: HciClusterIntents
+  IpPools: HciClusterIPPools
+  LogCollectionRequestProperties: LogCollectionContentProperties
+  NetworkController: HciClusterNetworkController
+  NicDetail: HciEdgeDeviceNicDetail
+  NicDetail.ip4Address: IPv4Address
+  HciNicDetail.ip4Address: IPv4Address
+  Observability: HciClusterObservability
+  Observability.streamingDataClient: IsStreamingDataClientEnabled
+  Observability.euLocation: IsEULocation
+  Observability.episodicDataUpload: IsEpisodicDataUploadEnabled
+  PhysicalNodes: HciClusterPhysicalNodes
+  QosPolicyOverrides: HciClusterQosPolicyOverrides
+  RemoteSupportRequestProperties: RemoteSupportContentProperties
+  RemoteSupportNodeSettings.arcResourceId: -|arm-id
+  RemoteSupportProperties.expirationTimeStamp: ExpireOn
+  RemoteSupportRequestProperties.expirationTimeStamp: ExpireOn
+  ReportedProperties: HciEdgeDeviceReportedProperties
+  ScaleUnits: HciClusterScaleUnits
+  Storage: HciClusterStorage
+  StorageAdapterIPInfo: HciClusterStorageAdapterIPInfo
+  StorageNetworks: HciClusterStorageNetworks
+  SwitchDetail: HciEdgeDeviceSwitchDetail
+  SwitchExtension: HciEdgeSwitchExtension
+  SwitchExtension.extensionEnabled: IsExtensionEnabled
+  ValidateRequest: HciEdgeDeviceValidateContent
+  ValidateRequest.edgeDeviceIds: -|arm-id
+  ValidateResponse: HciEdgeDeviceValidateResult
+  Offer: HciClusterOffer
+  Publisher: HciClusterPublisher
+  Update: HciClusterUpdate
+  UpdatePrerequisite: HciClusterUpdatePrerequisite
+  UpdateRun: HciClusterUpdateRun
+  UpdateSummaries: HciClusterUpdateSummary
+  YpdateSummariesPropertiesState: HciClusterUpdateState
+  PackageVersionInfo.lastUpdated: LastUpdatedOn
+  SecurityComplianceStatus.lastUpdated: LastUpdatedOn
+  SoftwareAssuranceProperties.lastUpdated: LastUpdatedOn
+  UpdateSummaries.properties.lastUpdated: LastUpdatedOn
+  UpdateRun.properties.progress.lastUpdatedTimeUtc: LastCompletedOn
+  UpdateRun.properties.progress.startTimeUtc: StartOn
+  UpdateRun.properties.progress.endTimeUtc: EndOn
+  Step.lastUpdatedTimeUtc: LastUpdatedOn
+  Step.startTimeUtc: StartOn
+  Step.endTimeUtc: EndOn
+  DeviceKind: HciEdgeDeviceKind
+  ExtensionProfile: HciEdgeDeviceExtensionProfile
 
 directive:
   - from: swagger-document
@@ -121,4 +205,7 @@ directive:
     where: $.definitions
     transform: >
       $.HostNetwork.properties.intents.items['$ref'] = "./deploymentSettings.json#/definitions/Intents";
+      $.HciNetworkProfile.properties.hostNetwork['$ref'] = "./deploymentSettings.json#/definitions/HostNetwork";
+      $.ErrorDetail['x-ms-client-name'] = 'HciValidationFailureDetail';
+      $.Extension['x-ms-client-name'] = 'HciEdgeDeviceArcExtension';
 ```

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// secrets used for solution builder extension (SBE) partner extensibility.
-    /// Serialized Name: SbeCredentials
-    /// </summary>
+    /// <summary> secrets used for solution builder extension (SBE) partner extensibility. </summary>
     public partial class SbeCredentials
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SbeCredentials"/>. </summary>
-        /// <param name="secretName">
-        /// secret name stored in keyvault.
-        /// Serialized Name: SbeCredentials.secretName
-        /// </param>
-        /// <param name="eceSecretName">
-        /// secret name expected for Enterprise Cloud Engine (ECE).
-        /// Serialized Name: SbeCredentials.eceSecretName
-        /// </param>
-        /// <param name="secretLocation">
-        /// secret URI stored in keyvault.
-        /// Serialized Name: SbeCredentials.secretLocation
-        /// </param>
+        /// <param name="secretName"> secret name stored in keyvault. </param>
+        /// <param name="eceSecretName"> secret name expected for Enterprise Cloud Engine (ECE). </param>
+        /// <param name="secretLocation"> secret URI stored in keyvault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SbeCredentials(string secretName, string eceSecretName, Uri secretLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// secret name stored in keyvault.
-        /// Serialized Name: SbeCredentials.secretName
-        /// </summary>
+        /// <summary> secret name stored in keyvault. </summary>
         [WirePath("secretName")]
         public string SecretName { get; set; }
-        /// <summary>
-        /// secret name expected for Enterprise Cloud Engine (ECE).
-        /// Serialized Name: SbeCredentials.eceSecretName
-        /// </summary>
+        /// <summary> secret name expected for Enterprise Cloud Engine (ECE). </summary>
         [WirePath("eceSecretName")]
         public string EceSecretName { get; set; }
-        /// <summary>
-        /// secret URI stored in keyvault.
-        /// Serialized Name: SbeCredentials.secretLocation
-        /// </summary>
+        /// <summary> secret URI stored in keyvault. </summary>
         [WirePath("secretLocation")]
         public Uri SecretLocation { get; set; }
     }

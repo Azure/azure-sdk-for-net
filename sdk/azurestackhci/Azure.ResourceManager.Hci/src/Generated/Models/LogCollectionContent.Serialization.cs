@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            LogCollectionRequestProperties properties = default;
+            LogCollectionContentProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = LogCollectionRequestProperties.DeserializeLogCollectionRequestProperties(property.Value, options);
+                    properties = LogCollectionContentProperties.DeserializeLogCollectionContentProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

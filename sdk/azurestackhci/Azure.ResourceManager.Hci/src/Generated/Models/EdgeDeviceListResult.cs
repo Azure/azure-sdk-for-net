@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// The response of a EdgeDevice list operation.
-    /// Serialized Name: EdgeDeviceListResult
-    /// </summary>
+    /// <summary> The response of a EdgeDevice list operation. </summary>
     internal partial class EdgeDeviceListResult
     {
         /// <summary>
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeDeviceListResult"/>. </summary>
         /// <param name="value">
         /// The EdgeDevice items on this page
-        /// Serialized Name: EdgeDeviceListResult.value
-        /// Please note <see cref="EdgeDeviceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HciEdgeDevice"/>.
+        /// Please note <see cref="HciEdgeDeviceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HciArcEnabledEdgeDevice"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EdgeDeviceListResult(IEnumerable<EdgeDeviceData> value)
+        internal EdgeDeviceListResult(IEnumerable<HciEdgeDeviceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -67,16 +63,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeDeviceListResult"/>. </summary>
         /// <param name="value">
         /// The EdgeDevice items on this page
-        /// Serialized Name: EdgeDeviceListResult.value
-        /// Please note <see cref="EdgeDeviceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HciEdgeDevice"/>.
+        /// Please note <see cref="HciEdgeDeviceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HciArcEnabledEdgeDevice"/>.
         /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: EdgeDeviceListResult.nextLink
-        /// </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDeviceListResult(IReadOnlyList<EdgeDeviceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeDeviceListResult(IReadOnlyList<HciEdgeDeviceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -90,15 +82,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary>
         /// The EdgeDevice items on this page
-        /// Serialized Name: EdgeDeviceListResult.value
-        /// Please note <see cref="EdgeDeviceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HciEdgeDevice"/>.
+        /// Please note <see cref="HciEdgeDeviceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HciArcEnabledEdgeDevice"/>.
         /// </summary>
-        public IReadOnlyList<EdgeDeviceData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: EdgeDeviceListResult.nextLink
-        /// </summary>
+        public IReadOnlyList<HciEdgeDeviceData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

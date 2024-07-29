@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("dataInTransitProtected"u8);
                 writer.WriteStringValue(DataInTransitProtected.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdated.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            ComplianceStatus? securedCoreCompliance = default;
-            ComplianceStatus? wdacCompliance = default;
-            ComplianceStatus? dataAtRestEncrypted = default;
-            ComplianceStatus? dataInTransitProtected = default;
+            HciClusterComplianceStatus? securedCoreCompliance = default;
+            HciClusterComplianceStatus? wdacCompliance = default;
+            HciClusterComplianceStatus? dataAtRestEncrypted = default;
+            HciClusterComplianceStatus? dataInTransitProtected = default;
             DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    securedCoreCompliance = new ComplianceStatus(property.Value.GetString());
+                    securedCoreCompliance = new HciClusterComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("wdacCompliance"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    wdacCompliance = new ComplianceStatus(property.Value.GetString());
+                    wdacCompliance = new HciClusterComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataAtRestEncrypted"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    dataAtRestEncrypted = new ComplianceStatus(property.Value.GetString());
+                    dataAtRestEncrypted = new HciClusterComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataInTransitProtected"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    dataInTransitProtected = new ComplianceStatus(property.Value.GetString());
+                    dataInTransitProtected = new HciClusterComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastUpdated"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdated), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  lastUpdated: ");
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.Hci.Models
             }
             else
             {
-                if (Optional.IsDefined(LastUpdated))
+                if (Optional.IsDefined(LastUpdatedOn))
                 {
                     builder.Append("  lastUpdated: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdated.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

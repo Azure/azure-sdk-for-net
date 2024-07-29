@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string status = default;
-            IReadOnlyList<DeploymentStep> steps = default;
+            IReadOnlyList<HciClusterDeploymentStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<DeploymentStep> array = new List<DeploymentStep>();
+                    List<HciClusterDeploymentStep> array = new List<HciClusterDeploymentStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentStep.DeserializeDeploymentStep(item, options));
+                        array.Add(HciClusterDeploymentStep.DeserializeHciClusterDeploymentStep(item, options));
                     }
                     steps = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EceActionStatus(status, steps ?? new ChangeTrackingList<DeploymentStep>(), serializedAdditionalRawData);
+            return new EceActionStatus(status, steps ?? new ChangeTrackingList<HciClusterDeploymentStep>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

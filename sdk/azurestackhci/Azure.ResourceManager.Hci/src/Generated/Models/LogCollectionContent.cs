@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Log Collection Request
-    /// Serialized Name: LogCollectionRequest
-    /// </summary>
+    /// <summary> Log Collection Request. </summary>
     public partial class LogCollectionContent
     {
         /// <summary>
@@ -54,22 +51,16 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionContent"/>. </summary>
-        /// <param name="properties">
-        /// Properties for Log Collection Request
-        /// Serialized Name: LogCollectionRequest.properties
-        /// </param>
+        /// <param name="properties"> Properties for Log Collection Request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogCollectionContent(LogCollectionRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LogCollectionContent(LogCollectionContentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Properties for Log Collection Request
-        /// Serialized Name: LogCollectionRequest.properties
-        /// </summary>
+        /// <summary> Properties for Log Collection Request. </summary>
         [WirePath("properties")]
-        public LogCollectionRequestProperties Properties { get; set; }
+        public LogCollectionContentProperties Properties { get; set; }
     }
 }

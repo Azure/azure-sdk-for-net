@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data)
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, HciClusterUpdateRunData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Hci
             return uri;
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data)
+        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, HciClusterUpdateRunData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/>, <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateRunData>> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterUpdateRunData>> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, HciClusterUpdateRunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -311,9 +311,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
+                        HciClusterUpdateRunData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        value = HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/>, <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateRunData> Put(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data, CancellationToken cancellationToken = default)
+        public Response<HciClusterUpdateRunData> Put(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, HciClusterUpdateRunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -346,9 +346,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
+                        HciClusterUpdateRunData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        value = HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateRunData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterUpdateRunData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -421,13 +421,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
+                        HciClusterUpdateRunData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        value = HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateRunData)null, message.Response);
+                    return Response.FromValue((HciClusterUpdateRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateRunData> Get(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
+        public Response<HciClusterUpdateRunData> Get(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -456,13 +456,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
+                        HciClusterUpdateRunData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        value = HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateRunData)null, message.Response);
+                    return Response.FromValue((HciClusterUpdateRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

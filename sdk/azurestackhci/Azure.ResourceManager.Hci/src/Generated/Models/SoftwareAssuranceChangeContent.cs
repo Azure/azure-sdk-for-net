@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// The SoftwareAssuranceChangeRequest.
-    /// Serialized Name: SoftwareAssuranceChangeRequest
-    /// </summary>
+    /// <summary> The SoftwareAssuranceChangeContent. </summary>
     public partial class SoftwareAssuranceChangeContent
     {
         /// <summary>
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceChangeContent"/>. </summary>
-        /// <param name="properties"> Serialized Name: SoftwareAssuranceChangeRequest.properties. </param>
+        /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SoftwareAssuranceChangeContent(SoftwareAssuranceChangeRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,12 +59,9 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: SoftwareAssuranceChangeRequest.properties. </summary>
+        /// <summary> Gets or sets the properties. </summary>
         internal SoftwareAssuranceChangeRequestProperties Properties { get; set; }
-        /// <summary>
-        /// Customer Intent for Software Assurance Benefit.
-        /// Serialized Name: SoftwareAssuranceChangeRequestProperties.softwareAssuranceIntent
-        /// </summary>
+        /// <summary> Customer Intent for Software Assurance Benefit. </summary>
         [WirePath("properties.softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent
         {

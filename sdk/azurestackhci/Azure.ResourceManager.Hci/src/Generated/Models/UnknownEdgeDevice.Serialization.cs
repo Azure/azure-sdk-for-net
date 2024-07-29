@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class UnknownEdgeDevice : IUtf8JsonSerializable, IJsonModel<EdgeDeviceData>
+    internal partial class UnknownEdgeDevice : IUtf8JsonSerializable, IJsonModel<HciEdgeDeviceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeDeviceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciEdgeDeviceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EdgeDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciEdgeDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeDeviceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciEdgeDeviceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-        EdgeDeviceData IJsonModel<EdgeDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciEdgeDeviceData IJsonModel<HciEdgeDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeDeviceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciEdgeDeviceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEdgeDeviceData(document.RootElement, options);
+            return DeserializeHciEdgeDeviceData(document.RootElement, options);
         }
 
         internal static UnknownEdgeDevice DeserializeUnknownEdgeDevice(JsonElement element, ModelReaderWriterOptions options = null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            DeviceKind kind = "Unknown";
+            HciEdgeDeviceKind kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new DeviceKind(property.Value.GetString());
+                    kind = new HciEdgeDeviceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.Hci.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<EdgeDeviceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HciEdgeDeviceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -232,26 +232,26 @@ namespace Azure.ResourceManager.Hci.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeDeviceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EdgeDeviceData IPersistableModel<EdgeDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HciEdgeDeviceData IPersistableModel<HciEdgeDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEdgeDeviceData(document.RootElement, options);
+                        return DeserializeHciEdgeDeviceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeDeviceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EdgeDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciEdgeDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

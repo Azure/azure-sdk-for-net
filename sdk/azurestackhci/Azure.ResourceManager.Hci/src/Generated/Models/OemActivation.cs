@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// OEM activation status of the cluster.
-    /// Serialized Name: OemActivation
-    /// </summary>
+    /// <summary> OEM activation status of the cluster. </summary>
     public readonly partial struct OemActivation : IEquatable<OemActivation>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: OemActivation.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static OemActivation Disabled { get; } = new OemActivation(DisabledValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: OemActivation.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static OemActivation Enabled { get; } = new OemActivation(EnabledValue);
         /// <summary> Determines if two <see cref="OemActivation"/> values are the same. </summary>
         public static bool operator ==(OemActivation left, OemActivation right) => left.Equals(right);

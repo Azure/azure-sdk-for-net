@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IReadOnlyList<DeploymentSettingData> value = default;
+            IReadOnlyList<HciClusterDeploymentSettingData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DeploymentSettingData> array = new List<DeploymentSettingData>();
+                    List<HciClusterDeploymentSettingData> array = new List<HciClusterDeploymentSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentSettingData.DeserializeDeploymentSettingData(item, options));
+                        array.Add(HciClusterDeploymentSettingData.DeserializeHciClusterDeploymentSettingData(item, options));
                     }
                     value = array;
                     continue;

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// List of Extensions in HCI cluster.
-    /// Serialized Name: ExtensionList
-    /// </summary>
+    /// <summary> List of Extensions in HCI cluster. </summary>
     internal partial class ArcExtensionListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcExtensionListResult"/>. </summary>
-        /// <param name="value">
-        /// List of Extensions in HCI cluster.
-        /// Serialized Name: ExtensionList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to the next set of results.
-        /// Serialized Name: ExtensionList.nextLink
-        /// </param>
+        /// <param name="value"> List of Extensions in HCI cluster. </param>
+        /// <param name="nextLink"> Link to the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArcExtensionListResult(IReadOnlyList<ArcExtensionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Extensions in HCI cluster.
-        /// Serialized Name: ExtensionList.value
-        /// </summary>
+        /// <summary> List of Extensions in HCI cluster. </summary>
         public IReadOnlyList<ArcExtensionData> Value { get; }
-        /// <summary>
-        /// Link to the next set of results.
-        /// Serialized Name: ExtensionList.nextLink
-        /// </summary>
+        /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }
 }

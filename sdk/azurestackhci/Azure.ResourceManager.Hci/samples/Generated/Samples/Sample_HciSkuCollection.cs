@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OfferResource created on azure
-            // for more information of creating OfferResource, please refer to the document of OfferResource
+            // this example assumes you already have this HciClusterOfferResource created on azure
+            // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";
             string offerName = "offer1";
-            ResourceIdentifier offerResourceId = OfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
-            OfferResource offer = client.GetOfferResource(offerResourceId);
+            ResourceIdentifier hciClusterOfferResourceId = HciClusterOfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
+            HciClusterOfferResource hciClusterOffer = client.GetHciClusterOfferResource(hciClusterOfferResourceId);
 
             // get the collection of this HciSkuResource
-            HciSkuCollection collection = offer.GetHciSkus();
+            HciSkuCollection collection = hciClusterOffer.GetHciSkus();
 
             // invoke the operation and iterate over the result
             await foreach (HciSkuResource item in collection.GetAllAsync())
@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OfferResource created on azure
-            // for more information of creating OfferResource, please refer to the document of OfferResource
+            // this example assumes you already have this HciClusterOfferResource created on azure
+            // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";
             string offerName = "offer1";
-            ResourceIdentifier offerResourceId = OfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
-            OfferResource offer = client.GetOfferResource(offerResourceId);
+            ResourceIdentifier hciClusterOfferResourceId = HciClusterOfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
+            HciClusterOfferResource hciClusterOffer = client.GetHciClusterOfferResource(hciClusterOfferResourceId);
 
             // get the collection of this HciSkuResource
-            HciSkuCollection collection = offer.GetHciSkus();
+            HciSkuCollection collection = hciClusterOffer.GetHciSkus();
 
             // invoke the operation
             string skuName = "sku1";
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OfferResource created on azure
-            // for more information of creating OfferResource, please refer to the document of OfferResource
+            // this example assumes you already have this HciClusterOfferResource created on azure
+            // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";
             string offerName = "offer1";
-            ResourceIdentifier offerResourceId = OfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
-            OfferResource offer = client.GetOfferResource(offerResourceId);
+            ResourceIdentifier hciClusterOfferResourceId = HciClusterOfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
+            HciClusterOfferResource hciClusterOffer = client.GetHciClusterOfferResource(hciClusterOfferResourceId);
 
             // get the collection of this HciSkuResource
-            HciSkuCollection collection = offer.GetHciSkus();
+            HciSkuCollection collection = hciClusterOffer.GetHciSkus();
 
             // invoke the operation
             string skuName = "sku1";
@@ -136,18 +136,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OfferResource created on azure
-            // for more information of creating OfferResource, please refer to the document of OfferResource
+            // this example assumes you already have this HciClusterOfferResource created on azure
+            // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";
             string offerName = "offer1";
-            ResourceIdentifier offerResourceId = OfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
-            OfferResource offer = client.GetOfferResource(offerResourceId);
+            ResourceIdentifier hciClusterOfferResourceId = HciClusterOfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
+            HciClusterOfferResource hciClusterOffer = client.GetHciClusterOfferResource(hciClusterOfferResourceId);
 
             // get the collection of this HciSkuResource
-            HciSkuCollection collection = offer.GetHciSkus();
+            HciSkuCollection collection = hciClusterOffer.GetHciSkus();
 
             // invoke the operation
             string skuName = "sku1";

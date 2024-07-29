@@ -13,19 +13,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Unknown version of EdgeDevice. </summary>
-    internal partial class UnknownEdgeDevice : EdgeDeviceData
+    internal partial class UnknownEdgeDevice : HciEdgeDeviceData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEdgeDevice"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Device kind to support polymorphic resource.
-        /// Serialized Name: EdgeDevice.kind
-        /// </param>
+        /// <param name="kind"> Device kind to support polymorphic resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEdgeDevice(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        internal UnknownEdgeDevice(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciEdgeDeviceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             Kind = kind;
         }

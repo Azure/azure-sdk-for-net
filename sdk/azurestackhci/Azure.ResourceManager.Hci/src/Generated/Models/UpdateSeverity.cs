@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity.
-    /// Serialized Name: Severity
-    /// </summary>
+    /// <summary> Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity. </summary>
     public readonly partial struct UpdateSeverity : IEquatable<UpdateSeverity>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Hci.Models
         private const string InformationalValue = "Informational";
         private const string HiddenValue = "Hidden";
 
-        /// <summary>
-        /// Critical
-        /// Serialized Name: Severity.Critical
-        /// </summary>
+        /// <summary> Critical. </summary>
         public static UpdateSeverity Critical { get; } = new UpdateSeverity(CriticalValue);
-        /// <summary>
-        /// Warning
-        /// Serialized Name: Severity.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         public static UpdateSeverity Warning { get; } = new UpdateSeverity(WarningValue);
-        /// <summary>
-        /// Informational
-        /// Serialized Name: Severity.Informational
-        /// </summary>
+        /// <summary> Informational. </summary>
         public static UpdateSeverity Informational { get; } = new UpdateSeverity(InformationalValue);
-        /// <summary>
-        /// Hidden
-        /// Serialized Name: Severity.Hidden
-        /// </summary>
+        /// <summary> Hidden. </summary>
         public static UpdateSeverity Hidden { get; } = new UpdateSeverity(HiddenValue);
         /// <summary> Determines if two <see cref="UpdateSeverity"/> values are the same. </summary>
         public static bool operator ==(UpdateSeverity left, UpdateSeverity right) => left.Equals(right);

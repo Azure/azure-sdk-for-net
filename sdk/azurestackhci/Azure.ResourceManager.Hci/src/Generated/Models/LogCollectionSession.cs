@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Log Collection Session details of the cluster.
-    /// Serialized Name: LogCollectionSession
-    /// </summary>
+    /// <summary> Log Collection Session details of the cluster. </summary>
     public partial class LogCollectionSession
     {
         /// <summary>
@@ -54,42 +51,15 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionSession"/>. </summary>
-        /// <param name="logStartOn">
-        /// Start Time of the logs when it was collected
-        /// Serialized Name: LogCollectionSession.logStartTime
-        /// </param>
-        /// <param name="logEndOn">
-        /// End Time of the logs when it was collected
-        /// Serialized Name: LogCollectionSession.logEndTime
-        /// </param>
-        /// <param name="timeCollected">
-        /// Duration of logs collected
-        /// Serialized Name: LogCollectionSession.timeCollected
-        /// </param>
-        /// <param name="logSize">
-        /// Size of the logs collected
-        /// Serialized Name: LogCollectionSession.logSize
-        /// </param>
-        /// <param name="logCollectionStatus">
-        /// LogCollection status
-        /// Serialized Name: LogCollectionSession.logCollectionStatus
-        /// </param>
-        /// <param name="logCollectionJobType">
-        /// LogCollection job type
-        /// Serialized Name: LogCollectionSession.logCollectionJobType
-        /// </param>
-        /// <param name="correlationId">
-        /// CorrelationId of the log collection
-        /// Serialized Name: LogCollectionSession.correlationId
-        /// </param>
-        /// <param name="endTimeCollected">
-        /// End Time of the logs when it was collected
-        /// Serialized Name: LogCollectionSession.endTimeCollected
-        /// </param>
-        /// <param name="logCollectionError">
-        /// Log Collection Error details of the cluster.
-        /// Serialized Name: LogCollectionSession.logCollectionError
-        /// </param>
+        /// <param name="logStartOn"> Start Time of the logs when it was collected. </param>
+        /// <param name="logEndOn"> End Time of the logs when it was collected. </param>
+        /// <param name="timeCollected"> Duration of logs collected. </param>
+        /// <param name="logSize"> Size of the logs collected. </param>
+        /// <param name="logCollectionStatus"> LogCollection status. </param>
+        /// <param name="logCollectionJobType"> LogCollection job type. </param>
+        /// <param name="correlationId"> CorrelationId of the log collection. </param>
+        /// <param name="endTimeCollected"> End Time of the logs when it was collected. </param>
+        /// <param name="logCollectionError"> Log Collection Error details of the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LogCollectionSession(DateTimeOffset? logStartOn, DateTimeOffset? logEndOn, DateTimeOffset? timeCollected, long? logSize, LogCollectionStatus? logCollectionStatus, LogCollectionJobType? logCollectionJobType, string correlationId, DateTimeOffset? endTimeCollected, LogCollectionError logCollectionError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -105,58 +75,31 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Start Time of the logs when it was collected
-        /// Serialized Name: LogCollectionSession.logStartTime
-        /// </summary>
+        /// <summary> Start Time of the logs when it was collected. </summary>
         [WirePath("logStartTime")]
         public DateTimeOffset? LogStartOn { get; }
-        /// <summary>
-        /// End Time of the logs when it was collected
-        /// Serialized Name: LogCollectionSession.logEndTime
-        /// </summary>
+        /// <summary> End Time of the logs when it was collected. </summary>
         [WirePath("logEndTime")]
         public DateTimeOffset? LogEndOn { get; }
-        /// <summary>
-        /// Duration of logs collected
-        /// Serialized Name: LogCollectionSession.timeCollected
-        /// </summary>
+        /// <summary> Duration of logs collected. </summary>
         [WirePath("timeCollected")]
         public DateTimeOffset? TimeCollected { get; }
-        /// <summary>
-        /// Size of the logs collected
-        /// Serialized Name: LogCollectionSession.logSize
-        /// </summary>
+        /// <summary> Size of the logs collected. </summary>
         [WirePath("logSize")]
         public long? LogSize { get; }
-        /// <summary>
-        /// LogCollection status
-        /// Serialized Name: LogCollectionSession.logCollectionStatus
-        /// </summary>
+        /// <summary> LogCollection status. </summary>
         [WirePath("logCollectionStatus")]
         public LogCollectionStatus? LogCollectionStatus { get; }
-        /// <summary>
-        /// LogCollection job type
-        /// Serialized Name: LogCollectionSession.logCollectionJobType
-        /// </summary>
+        /// <summary> LogCollection job type. </summary>
         [WirePath("logCollectionJobType")]
         public LogCollectionJobType? LogCollectionJobType { get; }
-        /// <summary>
-        /// CorrelationId of the log collection
-        /// Serialized Name: LogCollectionSession.correlationId
-        /// </summary>
+        /// <summary> CorrelationId of the log collection. </summary>
         [WirePath("correlationId")]
         public string CorrelationId { get; }
-        /// <summary>
-        /// End Time of the logs when it was collected
-        /// Serialized Name: LogCollectionSession.endTimeCollected
-        /// </summary>
+        /// <summary> End Time of the logs when it was collected. </summary>
         [WirePath("endTimeCollected")]
         public DateTimeOffset? EndTimeCollected { get; }
-        /// <summary>
-        /// Log Collection Error details of the cluster.
-        /// Serialized Name: LogCollectionSession.logCollectionError
-        /// </summary>
+        /// <summary> Log Collection Error details of the cluster. </summary>
         [WirePath("logCollectionError")]
         public LogCollectionError LogCollectionError { get; }
     }

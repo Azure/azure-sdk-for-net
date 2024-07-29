@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// The ArcPasswordCredential.
-    /// Serialized Name: PasswordCredential
-    /// </summary>
+    /// <summary> The ArcPasswordCredential. </summary>
     public partial class ArcPasswordCredential
     {
         /// <summary>
@@ -54,10 +51,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcPasswordCredential"/>. </summary>
-        /// <param name="secretText"> Serialized Name: PasswordCredential.secretText. </param>
-        /// <param name="keyId"> Serialized Name: PasswordCredential.keyId. </param>
-        /// <param name="startOn"> Serialized Name: PasswordCredential.startDateTime. </param>
-        /// <param name="endOn"> Serialized Name: PasswordCredential.endDateTime. </param>
+        /// <param name="secretText"></param>
+        /// <param name="keyId"></param>
+        /// <param name="startOn"></param>
+        /// <param name="endOn"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArcPasswordCredential(string secretText, string keyId, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,16 +65,16 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: PasswordCredential.secretText. </summary>
+        /// <summary> Gets the secret text. </summary>
         [WirePath("secretText")]
         public string SecretText { get; }
-        /// <summary> Serialized Name: PasswordCredential.keyId. </summary>
+        /// <summary> Gets the key id. </summary>
         [WirePath("keyId")]
         public string KeyId { get; }
-        /// <summary> Serialized Name: PasswordCredential.startDateTime. </summary>
+        /// <summary> Gets the start on. </summary>
         [WirePath("startDateTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary> Serialized Name: PasswordCredential.endDateTime. </summary>
+        /// <summary> Gets the end on. </summary>
         [WirePath("endDateTime")]
         public DateTimeOffset? EndOn { get; }
     }

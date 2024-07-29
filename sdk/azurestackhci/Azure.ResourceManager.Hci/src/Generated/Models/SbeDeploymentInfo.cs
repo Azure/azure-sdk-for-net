@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Solution builder extension (SBE) package and manifest information for the solution builder extension staged for AzureStackHCI cluster deployment.
-    /// Serialized Name: SbeDeploymentInfo
-    /// </summary>
+    /// <summary> Solution builder extension (SBE) package and manifest information for the solution builder extension staged for AzureStackHCI cluster deployment. </summary>
     public partial class SbeDeploymentInfo
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SbeDeploymentInfo"/>. </summary>
-        /// <param name="version">
-        /// SBE package version.
-        /// Serialized Name: SbeDeploymentInfo.version
-        /// </param>
-        /// <param name="family">
-        /// SBE family name.
-        /// Serialized Name: SbeDeploymentInfo.family
-        /// </param>
-        /// <param name="publisher">
-        /// SBE manifest publisher.
-        /// Serialized Name: SbeDeploymentInfo.publisher
-        /// </param>
-        /// <param name="sbeManifestSource">
-        /// SBE Manifest Source.
-        /// Serialized Name: SbeDeploymentInfo.sbeManifestSource
-        /// </param>
-        /// <param name="sbeManifestCreationOn">
-        /// SBE Manifest Creation Date.
-        /// Serialized Name: SbeDeploymentInfo.sbeManifestCreationDate
-        /// </param>
+        /// <param name="version"> SBE package version. </param>
+        /// <param name="family"> SBE family name. </param>
+        /// <param name="publisher"> SBE manifest publisher. </param>
+        /// <param name="sbeManifestSource"> SBE Manifest Source. </param>
+        /// <param name="sbeManifestCreationOn"> SBE Manifest Creation Date. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SbeDeploymentInfo(string version, string family, string publisher, string sbeManifestSource, DateTimeOffset? sbeManifestCreationOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,34 +67,19 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// SBE package version.
-        /// Serialized Name: SbeDeploymentInfo.version
-        /// </summary>
+        /// <summary> SBE package version. </summary>
         [WirePath("version")]
         public string Version { get; set; }
-        /// <summary>
-        /// SBE family name.
-        /// Serialized Name: SbeDeploymentInfo.family
-        /// </summary>
+        /// <summary> SBE family name. </summary>
         [WirePath("family")]
         public string Family { get; set; }
-        /// <summary>
-        /// SBE manifest publisher.
-        /// Serialized Name: SbeDeploymentInfo.publisher
-        /// </summary>
+        /// <summary> SBE manifest publisher. </summary>
         [WirePath("publisher")]
         public string Publisher { get; set; }
-        /// <summary>
-        /// SBE Manifest Source.
-        /// Serialized Name: SbeDeploymentInfo.sbeManifestSource
-        /// </summary>
+        /// <summary> SBE Manifest Source. </summary>
         [WirePath("sbeManifestSource")]
         public string SbeManifestSource { get; set; }
-        /// <summary>
-        /// SBE Manifest Creation Date.
-        /// Serialized Name: SbeDeploymentInfo.sbeManifestCreationDate
-        /// </summary>
+        /// <summary> SBE Manifest Creation Date. </summary>
         [WirePath("sbeManifestCreationDate")]
         public DateTimeOffset? SbeManifestCreationOn { get; set; }
     }

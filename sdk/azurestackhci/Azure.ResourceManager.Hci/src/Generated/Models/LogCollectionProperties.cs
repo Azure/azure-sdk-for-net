@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Log Collection properties of the cluster.
-    /// Serialized Name: LogCollectionProperties
-    /// </summary>
+    /// <summary> Log Collection properties of the cluster. </summary>
     public partial class LogCollectionProperties
     {
         /// <summary>
@@ -55,19 +52,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionProperties"/>. </summary>
-        /// <param name="fromDate">
-        /// From DateTimeStamp from when logs need to be connected
-        /// Serialized Name: LogCollectionProperties.fromDate
-        /// </param>
-        /// <param name="toDate">
-        /// To DateTimeStamp till when logs need to be connected
-        /// Serialized Name: LogCollectionProperties.toDate
-        /// </param>
-        /// <param name="lastLogGenerated">
-        /// Recent DateTimeStamp where logs are successfully generated
-        /// Serialized Name: LogCollectionProperties.lastLogGenerated
-        /// </param>
-        /// <param name="logCollectionSessionDetails"> Serialized Name: LogCollectionProperties.logCollectionSessionDetails. </param>
+        /// <param name="fromDate"> From DateTimeStamp from when logs need to be connected. </param>
+        /// <param name="toDate"> To DateTimeStamp till when logs need to be connected. </param>
+        /// <param name="lastLogGenerated"> Recent DateTimeStamp where logs are successfully generated. </param>
+        /// <param name="logCollectionSessionDetails"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LogCollectionProperties(DateTimeOffset? fromDate, DateTimeOffset? toDate, DateTimeOffset? lastLogGenerated, IReadOnlyList<LogCollectionSession> logCollectionSessionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,25 +66,16 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// From DateTimeStamp from when logs need to be connected
-        /// Serialized Name: LogCollectionProperties.fromDate
-        /// </summary>
+        /// <summary> From DateTimeStamp from when logs need to be connected. </summary>
         [WirePath("fromDate")]
         public DateTimeOffset? FromDate { get; }
-        /// <summary>
-        /// To DateTimeStamp till when logs need to be connected
-        /// Serialized Name: LogCollectionProperties.toDate
-        /// </summary>
+        /// <summary> To DateTimeStamp till when logs need to be connected. </summary>
         [WirePath("toDate")]
         public DateTimeOffset? ToDate { get; }
-        /// <summary>
-        /// Recent DateTimeStamp where logs are successfully generated
-        /// Serialized Name: LogCollectionProperties.lastLogGenerated
-        /// </summary>
+        /// <summary> Recent DateTimeStamp where logs are successfully generated. </summary>
         [WirePath("lastLogGenerated")]
         public DateTimeOffset? LastLogGenerated { get; }
-        /// <summary> Serialized Name: LogCollectionProperties.logCollectionSessionDetails. </summary>
+        /// <summary> Gets the log collection session details. </summary>
         [WirePath("logCollectionSessionDetails")]
         public IReadOnlyList<LogCollectionSession> LogCollectionSessionDetails { get; }
     }

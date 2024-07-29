@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// State of the update as it relates to this stamp.
-    /// Serialized Name: State
-    /// </summary>
+    /// <summary> State of the update as it relates to this stamp. </summary>
     public readonly partial struct HciUpdateState : IEquatable<HciUpdateState>
     {
         private readonly string _value;
@@ -45,100 +42,43 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ScanFailedValue = "ScanFailed";
         private const string AdditionalContentRequiredValue = "AdditionalContentRequired";
 
-        /// <summary>
-        /// HasPrerequisite
-        /// Serialized Name: State.HasPrerequisite
-        /// </summary>
+        /// <summary> HasPrerequisite. </summary>
         public static HciUpdateState HasPrerequisite { get; } = new HciUpdateState(HasPrerequisiteValue);
-        /// <summary>
-        /// Obsolete
-        /// Serialized Name: State.Obsolete
-        /// </summary>
+        /// <summary> Obsolete. </summary>
         public static HciUpdateState Obsolete { get; } = new HciUpdateState(ObsoleteValue);
-        /// <summary>
-        /// Ready
-        /// Serialized Name: State.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         public static HciUpdateState Ready { get; } = new HciUpdateState(ReadyValue);
-        /// <summary>
-        /// NotApplicableBecauseAnotherUpdateIsInProgress
-        /// Serialized Name: State.NotApplicableBecauseAnotherUpdateIsInProgress
-        /// </summary>
+        /// <summary> NotApplicableBecauseAnotherUpdateIsInProgress. </summary>
         public static HciUpdateState NotApplicableBecauseAnotherUpdateIsInProgress { get; } = new HciUpdateState(NotApplicableBecauseAnotherUpdateIsInProgressValue);
-        /// <summary>
-        /// Preparing
-        /// Serialized Name: State.Preparing
-        /// </summary>
+        /// <summary> Preparing. </summary>
         public static HciUpdateState Preparing { get; } = new HciUpdateState(PreparingValue);
-        /// <summary>
-        /// Installing
-        /// Serialized Name: State.Installing
-        /// </summary>
+        /// <summary> Installing. </summary>
         public static HciUpdateState Installing { get; } = new HciUpdateState(InstallingValue);
-        /// <summary>
-        /// Installed
-        /// Serialized Name: State.Installed
-        /// </summary>
+        /// <summary> Installed. </summary>
         public static HciUpdateState Installed { get; } = new HciUpdateState(InstalledValue);
-        /// <summary>
-        /// PreparationFailed
-        /// Serialized Name: State.PreparationFailed
-        /// </summary>
+        /// <summary> PreparationFailed. </summary>
         public static HciUpdateState PreparationFailed { get; } = new HciUpdateState(PreparationFailedValue);
-        /// <summary>
-        /// InstallationFailed
-        /// Serialized Name: State.InstallationFailed
-        /// </summary>
+        /// <summary> InstallationFailed. </summary>
         public static HciUpdateState InstallationFailed { get; } = new HciUpdateState(InstallationFailedValue);
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: State.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static HciUpdateState Invalid { get; } = new HciUpdateState(InvalidValue);
-        /// <summary>
-        /// Recalled
-        /// Serialized Name: State.Recalled
-        /// </summary>
+        /// <summary> Recalled. </summary>
         public static HciUpdateState Recalled { get; } = new HciUpdateState(RecalledValue);
-        /// <summary>
-        /// Downloading
-        /// Serialized Name: State.Downloading
-        /// </summary>
+        /// <summary> Downloading. </summary>
         public static HciUpdateState Downloading { get; } = new HciUpdateState(DownloadingValue);
-        /// <summary>
-        /// DownloadFailed
-        /// Serialized Name: State.DownloadFailed
-        /// </summary>
+        /// <summary> DownloadFailed. </summary>
         public static HciUpdateState DownloadFailed { get; } = new HciUpdateState(DownloadFailedValue);
-        /// <summary>
-        /// HealthChecking
-        /// Serialized Name: State.HealthChecking
-        /// </summary>
+        /// <summary> HealthChecking. </summary>
         public static HciUpdateState HealthChecking { get; } = new HciUpdateState(HealthCheckingValue);
-        /// <summary>
-        /// HealthCheckFailed
-        /// Serialized Name: State.HealthCheckFailed
-        /// </summary>
+        /// <summary> HealthCheckFailed. </summary>
         public static HciUpdateState HealthCheckFailed { get; } = new HciUpdateState(HealthCheckFailedValue);
-        /// <summary>
-        /// ReadyToInstall
-        /// Serialized Name: State.ReadyToInstall
-        /// </summary>
+        /// <summary> ReadyToInstall. </summary>
         public static HciUpdateState ReadyToInstall { get; } = new HciUpdateState(ReadyToInstallValue);
-        /// <summary>
-        /// ScanInProgress
-        /// Serialized Name: State.ScanInProgress
-        /// </summary>
+        /// <summary> ScanInProgress. </summary>
         public static HciUpdateState ScanInProgress { get; } = new HciUpdateState(ScanInProgressValue);
-        /// <summary>
-        /// ScanFailed
-        /// Serialized Name: State.ScanFailed
-        /// </summary>
+        /// <summary> ScanFailed. </summary>
         public static HciUpdateState ScanFailed { get; } = new HciUpdateState(ScanFailedValue);
-        /// <summary>
-        /// AdditionalContentRequired
-        /// Serialized Name: State.AdditionalContentRequired
-        /// </summary>
+        /// <summary> AdditionalContentRequired. </summary>
         public static HciUpdateState AdditionalContentRequired { get; } = new HciUpdateState(AdditionalContentRequiredValue);
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are the same. </summary>
         public static bool operator ==(HciUpdateState left, HciUpdateState right) => left.Equals(right);

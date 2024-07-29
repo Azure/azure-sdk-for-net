@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// SDN Integration config to deploy AzureStackHCI Cluster.
-    /// Serialized Name: SdnIntegration
-    /// </summary>
+    /// <summary> SDN Integration config to deploy AzureStackHCI Cluster. </summary>
     internal partial class SdnIntegration
     {
         /// <summary>
@@ -54,22 +51,16 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SdnIntegration"/>. </summary>
-        /// <param name="networkController">
-        /// network controller config for SDN Integration to deploy AzureStackHCI Cluster.
-        /// Serialized Name: SdnIntegration.networkController
-        /// </param>
+        /// <param name="networkController"> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SdnIntegration(NetworkController networkController, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SdnIntegration(HciClusterNetworkController networkController, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkController = networkController;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// network controller config for SDN Integration to deploy AzureStackHCI Cluster.
-        /// Serialized Name: SdnIntegration.networkController
-        /// </summary>
+        /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
         [WirePath("networkController")]
-        public NetworkController NetworkController { get; set; }
+        public HciClusterNetworkController NetworkController { get; set; }
     }
 }

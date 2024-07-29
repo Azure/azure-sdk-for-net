@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Desired properties of the cluster.
-    /// Serialized Name: ClusterDesiredProperties
-    /// </summary>
+    /// <summary> Desired properties of the cluster. </summary>
     public partial class HciClusterDesiredProperties
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDesiredProperties"/>. </summary>
-        /// <param name="windowsServerSubscription">
-        /// Desired state of Windows Server Subscription.
-        /// Serialized Name: ClusterDesiredProperties.windowsServerSubscription
-        /// </param>
-        /// <param name="diagnosticLevel">
-        /// Desired level of diagnostic data emitted by the cluster.
-        /// Serialized Name: ClusterDesiredProperties.diagnosticLevel
-        /// </param>
+        /// <param name="windowsServerSubscription"> Desired state of Windows Server Subscription. </param>
+        /// <param name="diagnosticLevel"> Desired level of diagnostic data emitted by the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciClusterDesiredProperties(WindowsServerSubscription? windowsServerSubscription, HciClusterDiagnosticLevel? diagnosticLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Desired state of Windows Server Subscription.
-        /// Serialized Name: ClusterDesiredProperties.windowsServerSubscription
-        /// </summary>
+        /// <summary> Desired state of Windows Server Subscription. </summary>
         [WirePath("windowsServerSubscription")]
         public WindowsServerSubscription? WindowsServerSubscription { get; set; }
-        /// <summary>
-        /// Desired level of diagnostic data emitted by the cluster.
-        /// Serialized Name: ClusterDesiredProperties.diagnosticLevel
-        /// </summary>
+        /// <summary> Desired level of diagnostic data emitted by the cluster. </summary>
         [WirePath("diagnosticLevel")]
         public HciClusterDiagnosticLevel? DiagnosticLevel { get; set; }
     }

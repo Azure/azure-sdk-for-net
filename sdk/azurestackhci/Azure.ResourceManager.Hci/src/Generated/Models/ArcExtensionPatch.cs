@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Extension Details to update
-    /// Serialized Name: ExtensionPatch
-    /// </summary>
+    /// <summary> Extension Details to update. </summary>
     public partial class ArcExtensionPatch
     {
         /// <summary>
@@ -54,22 +51,16 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcExtensionPatch"/>. </summary>
-        /// <param name="extensionParameters">
-        /// Describes the properties of a Machine Extension that can be updated.
-        /// Serialized Name: ExtensionPatch.properties.extensionParameters
-        /// </param>
+        /// <param name="extensionParameters"> Describes the properties of a Machine Extension that can be updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcExtensionPatch(ExtensionPatchContent extensionParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArcExtensionPatch(ArcExtensionPatchContent extensionParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtensionParameters = extensionParameters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Describes the properties of a Machine Extension that can be updated.
-        /// Serialized Name: ExtensionPatch.properties.extensionParameters
-        /// </summary>
+        /// <summary> Describes the properties of a Machine Extension that can be updated. </summary>
         [WirePath("properties.extensionParameters")]
-        public ExtensionPatchContent ExtensionParameters { get; set; }
+        public ArcExtensionPatchContent ExtensionParameters { get; set; }
     }
 }

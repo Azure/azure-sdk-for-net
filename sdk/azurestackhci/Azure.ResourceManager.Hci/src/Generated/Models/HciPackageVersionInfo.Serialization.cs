@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdated.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdated), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  lastUpdated: ");
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.Hci.Models
             }
             else
             {
-                if (Optional.IsDefined(LastUpdated))
+                if (Optional.IsDefined(LastUpdatedOn))
                 {
                     builder.Append("  lastUpdated: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdated.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Aggregate state of Arc Extensions across the nodes in this HCI cluster.
-    /// Serialized Name: ExtensionAggregateState
-    /// </summary>
+    /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </summary>
     public readonly partial struct ArcExtensionAggregateState : IEquatable<ArcExtensionAggregateState>
     {
         private readonly string _value;
@@ -44,95 +41,41 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ProvisioningValue = "Provisioning";
         private const string UpgradeFailedRollbackSucceededValue = "UpgradeFailedRollbackSucceeded";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ExtensionAggregateState.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ArcExtensionAggregateState NotSpecified { get; } = new ArcExtensionAggregateState(NotSpecifiedValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: ExtensionAggregateState.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static ArcExtensionAggregateState Error { get; } = new ArcExtensionAggregateState(ErrorValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ExtensionAggregateState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static ArcExtensionAggregateState Succeeded { get; } = new ArcExtensionAggregateState(SucceededValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ExtensionAggregateState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static ArcExtensionAggregateState Canceled { get; } = new ArcExtensionAggregateState(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ExtensionAggregateState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static ArcExtensionAggregateState Failed { get; } = new ArcExtensionAggregateState(FailedValue);
-        /// <summary>
-        /// Connected
-        /// Serialized Name: ExtensionAggregateState.Connected
-        /// </summary>
+        /// <summary> Connected. </summary>
         public static ArcExtensionAggregateState Connected { get; } = new ArcExtensionAggregateState(ConnectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: ExtensionAggregateState.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static ArcExtensionAggregateState Disconnected { get; } = new ArcExtensionAggregateState(DisconnectedValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: ExtensionAggregateState.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static ArcExtensionAggregateState Deleted { get; } = new ArcExtensionAggregateState(DeletedValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ExtensionAggregateState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static ArcExtensionAggregateState Creating { get; } = new ArcExtensionAggregateState(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ExtensionAggregateState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static ArcExtensionAggregateState Updating { get; } = new ArcExtensionAggregateState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ExtensionAggregateState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static ArcExtensionAggregateState Deleting { get; } = new ArcExtensionAggregateState(DeletingValue);
-        /// <summary>
-        /// Moving
-        /// Serialized Name: ExtensionAggregateState.Moving
-        /// </summary>
+        /// <summary> Moving. </summary>
         public static ArcExtensionAggregateState Moving { get; } = new ArcExtensionAggregateState(MovingValue);
-        /// <summary>
-        /// PartiallySucceeded
-        /// Serialized Name: ExtensionAggregateState.PartiallySucceeded
-        /// </summary>
+        /// <summary> PartiallySucceeded. </summary>
         public static ArcExtensionAggregateState PartiallySucceeded { get; } = new ArcExtensionAggregateState(PartiallySucceededValue);
-        /// <summary>
-        /// PartiallyConnected
-        /// Serialized Name: ExtensionAggregateState.PartiallyConnected
-        /// </summary>
+        /// <summary> PartiallyConnected. </summary>
         public static ArcExtensionAggregateState PartiallyConnected { get; } = new ArcExtensionAggregateState(PartiallyConnectedValue);
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: ExtensionAggregateState.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static ArcExtensionAggregateState InProgress { get; } = new ArcExtensionAggregateState(InProgressValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: ExtensionAggregateState.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static ArcExtensionAggregateState Accepted { get; } = new ArcExtensionAggregateState(AcceptedValue);
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: ExtensionAggregateState.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static ArcExtensionAggregateState Provisioning { get; } = new ArcExtensionAggregateState(ProvisioningValue);
-        /// <summary>
-        /// UpgradeFailedRollbackSucceeded
-        /// Serialized Name: ExtensionAggregateState.UpgradeFailedRollbackSucceeded
-        /// </summary>
+        /// <summary> UpgradeFailedRollbackSucceeded. </summary>
         public static ArcExtensionAggregateState UpgradeFailedRollbackSucceeded { get; } = new ArcExtensionAggregateState(UpgradeFailedRollbackSucceededValue);
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcExtensionAggregateState left, ArcExtensionAggregateState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// IMDS attestation status of the cluster.
-    /// Serialized Name: ImdsAttestation
-    /// </summary>
+    /// <summary> IMDS attestation status of the cluster. </summary>
     public readonly partial struct ImdsAttestationState : IEquatable<ImdsAttestationState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ImdsAttestation.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static ImdsAttestationState Disabled { get; } = new ImdsAttestationState(DisabledValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ImdsAttestation.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static ImdsAttestationState Enabled { get; } = new ImdsAttestationState(EnabledValue);
         /// <summary> Determines if two <see cref="ImdsAttestationState"/> values are the same. </summary>
         public static bool operator ==(ImdsAttestationState left, ImdsAttestationState right) => left.Equals(right);

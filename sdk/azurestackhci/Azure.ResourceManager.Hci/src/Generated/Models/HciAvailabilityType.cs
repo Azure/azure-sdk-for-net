@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Indicates the way the update content can be downloaded.
-    /// Serialized Name: AvailabilityType
-    /// </summary>
+    /// <summary> Indicates the way the update content can be downloaded. </summary>
     public readonly partial struct HciAvailabilityType : IEquatable<HciAvailabilityType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Hci.Models
         private const string OnlineValue = "Online";
         private const string NotifyValue = "Notify";
 
-        /// <summary>
-        /// Local
-        /// Serialized Name: AvailabilityType.Local
-        /// </summary>
+        /// <summary> Local. </summary>
         public static HciAvailabilityType Local { get; } = new HciAvailabilityType(LocalValue);
-        /// <summary>
-        /// Online
-        /// Serialized Name: AvailabilityType.Online
-        /// </summary>
+        /// <summary> Online. </summary>
         public static HciAvailabilityType Online { get; } = new HciAvailabilityType(OnlineValue);
-        /// <summary>
-        /// Notify
-        /// Serialized Name: AvailabilityType.Notify
-        /// </summary>
+        /// <summary> Notify. </summary>
         public static HciAvailabilityType Notify { get; } = new HciAvailabilityType(NotifyValue);
         /// <summary> Determines if two <see cref="HciAvailabilityType"/> values are the same. </summary>
         public static bool operator ==(HciAvailabilityType left, HciAvailabilityType right) => left.Equals(right);

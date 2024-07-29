@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.Hci.Models
             HciNetworkProfile networkProfile = default;
             HciOSProfile osProfile = default;
             SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default;
-            DeviceState? deviceState = default;
-            ExtensionProfile extensionProfile = default;
+            HciEdgeDeviceState? deviceState = default;
+            HciEdgeDeviceExtensionProfile extensionProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    deviceState = new DeviceState(property.Value.GetString());
+                    deviceState = new HciEdgeDeviceState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extensionProfile"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    extensionProfile = ExtensionProfile.DeserializeExtensionProfile(property.Value, options);
+                    extensionProfile = HciEdgeDeviceExtensionProfile.DeserializeHciEdgeDeviceExtensionProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

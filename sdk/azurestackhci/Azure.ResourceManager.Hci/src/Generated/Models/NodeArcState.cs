@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// State of Arc agent in this node.
-    /// Serialized Name: NodeArcState
-    /// </summary>
+    /// <summary> State of Arc agent in this node. </summary>
     public readonly partial struct NodeArcState : IEquatable<NodeArcState>
     {
         private readonly string _value;
@@ -44,95 +41,41 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ProvisioningValue = "Provisioning";
         private const string DisableInProgressValue = "DisableInProgress";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: NodeArcState.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static NodeArcState NotSpecified { get; } = new NodeArcState(NotSpecifiedValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: NodeArcState.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static NodeArcState Error { get; } = new NodeArcState(ErrorValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: NodeArcState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static NodeArcState Succeeded { get; } = new NodeArcState(SucceededValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: NodeArcState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static NodeArcState Canceled { get; } = new NodeArcState(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: NodeArcState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static NodeArcState Failed { get; } = new NodeArcState(FailedValue);
-        /// <summary>
-        /// Connected
-        /// Serialized Name: NodeArcState.Connected
-        /// </summary>
+        /// <summary> Connected. </summary>
         public static NodeArcState Connected { get; } = new NodeArcState(ConnectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: NodeArcState.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static NodeArcState Disconnected { get; } = new NodeArcState(DisconnectedValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: NodeArcState.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static NodeArcState Deleted { get; } = new NodeArcState(DeletedValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: NodeArcState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static NodeArcState Creating { get; } = new NodeArcState(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: NodeArcState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static NodeArcState Updating { get; } = new NodeArcState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: NodeArcState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static NodeArcState Deleting { get; } = new NodeArcState(DeletingValue);
-        /// <summary>
-        /// Moving
-        /// Serialized Name: NodeArcState.Moving
-        /// </summary>
+        /// <summary> Moving. </summary>
         public static NodeArcState Moving { get; } = new NodeArcState(MovingValue);
-        /// <summary>
-        /// PartiallySucceeded
-        /// Serialized Name: NodeArcState.PartiallySucceeded
-        /// </summary>
+        /// <summary> PartiallySucceeded. </summary>
         public static NodeArcState PartiallySucceeded { get; } = new NodeArcState(PartiallySucceededValue);
-        /// <summary>
-        /// PartiallyConnected
-        /// Serialized Name: NodeArcState.PartiallyConnected
-        /// </summary>
+        /// <summary> PartiallyConnected. </summary>
         public static NodeArcState PartiallyConnected { get; } = new NodeArcState(PartiallyConnectedValue);
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: NodeArcState.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static NodeArcState InProgress { get; } = new NodeArcState(InProgressValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: NodeArcState.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static NodeArcState Accepted { get; } = new NodeArcState(AcceptedValue);
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: NodeArcState.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static NodeArcState Provisioning { get; } = new NodeArcState(ProvisioningValue);
-        /// <summary>
-        /// DisableInProgress
-        /// Serialized Name: NodeArcState.DisableInProgress
-        /// </summary>
+        /// <summary> DisableInProgress. </summary>
         public static NodeArcState DisableInProgress { get; } = new NodeArcState(DisableInProgressValue);
         /// <summary> Determines if two <see cref="NodeArcState"/> values are the same. </summary>
         public static bool operator ==(NodeArcState left, NodeArcState right) => left.Equals(right);

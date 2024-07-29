@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the ArcExtension data model.
     /// Details of a particular extension in HCI Cluster.
-    /// Serialized Name: Extension
     /// </summary>
     public partial class ArcExtensionData : ResourceData
     {
@@ -63,56 +62,20 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the Extension proxy resource.
-        /// Serialized Name: Extension.properties.provisioningState
-        /// </param>
-        /// <param name="aggregateState">
-        /// Aggregate state of Arc Extensions across the nodes in this HCI cluster.
-        /// Serialized Name: Extension.properties.aggregateState
-        /// </param>
-        /// <param name="perNodeExtensionDetails">
-        /// State of Arc Extension in each of the nodes.
-        /// Serialized Name: Extension.properties.perNodeExtensionDetails
-        /// </param>
-        /// <param name="managedBy">
-        /// Indicates if the extension is managed by azure or the user.
-        /// Serialized Name: Extension.properties.managedBy
-        /// </param>
-        /// <param name="forceUpdateTag">
-        /// How the extension handler should be forced to update even if the extension configuration has not changed.
-        /// Serialized Name: Extension.properties.extensionParameters.forceUpdateTag
-        /// </param>
-        /// <param name="publisher">
-        /// The name of the extension handler publisher.
-        /// Serialized Name: Extension.properties.extensionParameters.publisher
-        /// </param>
-        /// <param name="arcExtensionType">
-        /// Specifies the type of the extension; an example is "CustomScriptExtension".
-        /// Serialized Name: Extension.properties.extensionParameters.type
-        /// </param>
-        /// <param name="typeHandlerVersion">
-        /// Specifies the version of the script handler. Latest version would be used if not specified.
-        /// Serialized Name: Extension.properties.extensionParameters.typeHandlerVersion
-        /// </param>
-        /// <param name="shouldAutoUpgradeMinorVersion">
-        /// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true.
-        /// Serialized Name: Extension.properties.extensionParameters.autoUpgradeMinorVersion
-        /// </param>
-        /// <param name="settings">
-        /// Json formatted public settings for the extension.
-        /// Serialized Name: Extension.properties.extensionParameters.settings
-        /// </param>
-        /// <param name="protectedSettings">
-        /// Protected settings (may contain secrets).
-        /// Serialized Name: Extension.properties.extensionParameters.protectedSettings
-        /// </param>
-        /// <param name="enableAutomaticUpgrade">
-        /// Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available.
-        /// Serialized Name: Extension.properties.extensionParameters.enableAutomaticUpgrade
-        /// </param>
+        /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
+        /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
+        /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
+        /// <param name="managedBy"> Indicates if the extension is managed by azure or the user. </param>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
+        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, ExtensionManagedBy? managedBy, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, ArcExtensionManagedBy? managedBy, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AggregateState = aggregateState;
@@ -129,63 +92,35 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Provisioning state of the Extension proxy resource.
-        /// Serialized Name: Extension.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning state of the Extension proxy resource. </summary>
         [WirePath("properties.provisioningState")]
         public HciProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Aggregate state of Arc Extensions across the nodes in this HCI cluster.
-        /// Serialized Name: Extension.properties.aggregateState
-        /// </summary>
+        /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </summary>
         [WirePath("properties.aggregateState")]
         public ArcExtensionAggregateState? AggregateState { get; }
-        /// <summary>
-        /// State of Arc Extension in each of the nodes.
-        /// Serialized Name: Extension.properties.perNodeExtensionDetails
-        /// </summary>
+        /// <summary> State of Arc Extension in each of the nodes. </summary>
         [WirePath("properties.perNodeExtensionDetails")]
         public IReadOnlyList<PerNodeExtensionState> PerNodeExtensionDetails { get; }
-        /// <summary>
-        /// Indicates if the extension is managed by azure or the user.
-        /// Serialized Name: Extension.properties.managedBy
-        /// </summary>
+        /// <summary> Indicates if the extension is managed by azure or the user. </summary>
         [WirePath("properties.managedBy")]
-        public ExtensionManagedBy? ManagedBy { get; }
-        /// <summary>
-        /// How the extension handler should be forced to update even if the extension configuration has not changed.
-        /// Serialized Name: Extension.properties.extensionParameters.forceUpdateTag
-        /// </summary>
+        public ArcExtensionManagedBy? ManagedBy { get; }
+        /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
         [WirePath("properties.forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
-        /// <summary>
-        /// The name of the extension handler publisher.
-        /// Serialized Name: Extension.properties.extensionParameters.publisher
-        /// </summary>
+        /// <summary> The name of the extension handler publisher. </summary>
         [WirePath("properties.publisher")]
         public string Publisher { get; set; }
-        /// <summary>
-        /// Specifies the type of the extension; an example is "CustomScriptExtension".
-        /// Serialized Name: Extension.properties.extensionParameters.type
-        /// </summary>
+        /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         [WirePath("properties.type")]
         public string ArcExtensionType { get; set; }
-        /// <summary>
-        /// Specifies the version of the script handler. Latest version would be used if not specified.
-        /// Serialized Name: Extension.properties.extensionParameters.typeHandlerVersion
-        /// </summary>
+        /// <summary> Specifies the version of the script handler. Latest version would be used if not specified. </summary>
         [WirePath("properties.typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
-        /// <summary>
-        /// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true.
-        /// Serialized Name: Extension.properties.extensionParameters.autoUpgradeMinorVersion
-        /// </summary>
+        /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
         [WirePath("properties.autoUpgradeMinorVersion")]
         public bool? ShouldAutoUpgradeMinorVersion { get; set; }
         /// <summary>
         /// Json formatted public settings for the extension.
-        /// Serialized Name: Extension.properties.extensionParameters.settings
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -218,7 +153,6 @@ namespace Azure.ResourceManager.Hci
         public BinaryData Settings { get; set; }
         /// <summary>
         /// Protected settings (may contain secrets).
-        /// Serialized Name: Extension.properties.extensionParameters.protectedSettings
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -249,10 +183,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         [WirePath("properties.protectedSettings")]
         public BinaryData ProtectedSettings { get; set; }
-        /// <summary>
-        /// Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available.
-        /// Serialized Name: Extension.properties.extensionParameters.enableAutomaticUpgrade
-        /// </summary>
+        /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
         [WirePath("properties.enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade { get; set; }
     }

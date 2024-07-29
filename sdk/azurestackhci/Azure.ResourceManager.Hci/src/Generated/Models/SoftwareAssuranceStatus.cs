@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Status of the Software Assurance for the cluster.
-    /// Serialized Name: SoftwareAssuranceStatus
-    /// </summary>
+    /// <summary> Status of the Software Assurance for the cluster. </summary>
     public readonly partial struct SoftwareAssuranceStatus : IEquatable<SoftwareAssuranceStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: SoftwareAssuranceStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static SoftwareAssuranceStatus Enabled { get; } = new SoftwareAssuranceStatus(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: SoftwareAssuranceStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static SoftwareAssuranceStatus Disabled { get; } = new SoftwareAssuranceStatus(DisabledValue);
         /// <summary> Determines if two <see cref="SoftwareAssuranceStatus"/> values are the same. </summary>
         public static bool operator ==(SoftwareAssuranceStatus left, SoftwareAssuranceStatus right) => left.Equals(right);

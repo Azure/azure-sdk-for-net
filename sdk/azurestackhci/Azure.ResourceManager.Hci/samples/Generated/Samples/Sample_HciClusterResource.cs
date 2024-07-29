@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             LogCollectionContent content = new LogCollectionContent()
             {
-                Properties = new LogCollectionRequestProperties(DateTimeOffset.Parse("2020-01-01T17:18:19.1234567Z"), DateTimeOffset.Parse("2021-01-01T17:18:19.1234567Z")),
+                Properties = new LogCollectionContentProperties(DateTimeOffset.Parse("2020-01-01T17:18:19.1234567Z"), DateTimeOffset.Parse("2021-01-01T17:18:19.1234567Z")),
             };
             ArmOperation<HciClusterResource> lro = await hciCluster.TriggerLogCollectionAsync(WaitUntil.Completed, content);
             HciClusterResource result = lro.Value;
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             RemoteSupportContent content = new RemoteSupportContent()
             {
-                Properties = new RemoteSupportRequestProperties()
+                Properties = new RemoteSupportContentProperties()
                 {
-                    ExpirationTimeStamp = DateTimeOffset.Parse("2020-01-01T17:18:19.1234567Z"),
+                    ExpireOn = DateTimeOffset.Parse("2020-01-01T17:18:19.1234567Z"),
                     RemoteSupportType = RemoteSupportType.Enable,
                 },
             };
@@ -348,11 +348,11 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OfferResource item in hciCluster.GetOffersAsync())
+            await foreach (HciClusterOfferResource item in hciCluster.GetOffersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OfferData resourceData = item.Data;
+                HciClusterOfferData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

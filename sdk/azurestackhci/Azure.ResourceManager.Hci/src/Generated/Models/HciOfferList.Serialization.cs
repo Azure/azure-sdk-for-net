@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IReadOnlyList<OfferData> value = default;
+            IReadOnlyList<HciClusterOfferData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<OfferData> array = new List<OfferData>();
+                    List<HciClusterOfferData> array = new List<HciClusterOfferData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OfferData.DeserializeOfferData(item, options));
+                        array.Add(HciClusterOfferData.DeserializeHciClusterOfferData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HciOfferList(value ?? new ChangeTrackingList<OfferData>(), nextLink, serializedAdditionalRawData);
+            return new HciOfferList(value ?? new ChangeTrackingList<HciClusterOfferData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

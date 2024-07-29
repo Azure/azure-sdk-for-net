@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// State of the update run.
-    /// Serialized Name: UpdateRunPropertiesState
-    /// </summary>
+    /// <summary> State of the update run. </summary>
     public readonly partial struct UpdateRunPropertiesState : IEquatable<UpdateRunPropertiesState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Hci.Models
         private const string InProgressValue = "InProgress";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: UpdateRunPropertiesState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static UpdateRunPropertiesState Unknown { get; } = new UpdateRunPropertiesState(UnknownValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: UpdateRunPropertiesState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static UpdateRunPropertiesState Succeeded { get; } = new UpdateRunPropertiesState(SucceededValue);
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: UpdateRunPropertiesState.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static UpdateRunPropertiesState InProgress { get; } = new UpdateRunPropertiesState(InProgressValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: UpdateRunPropertiesState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static UpdateRunPropertiesState Failed { get; } = new UpdateRunPropertiesState(FailedValue);
         /// <summary> Determines if two <see cref="UpdateRunPropertiesState"/> values are the same. </summary>
         public static bool operator ==(UpdateRunPropertiesState left, UpdateRunPropertiesState right) => left.Equals(right);

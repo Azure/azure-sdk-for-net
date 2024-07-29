@@ -27,11 +27,6 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
-            {
-                writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue(ReportedProperties, options);
-            }
             if (Optional.IsDefined(DeviceConfiguration))
             {
                 writer.WritePropertyName("deviceConfiguration"u8);
@@ -80,29 +75,19 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            HciReportedProperties reportedProperties = default;
-            DeviceConfiguration deviceConfiguration = default;
+            HciEdgeDeviceConfiguration deviceConfiguration = default;
             HciProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reportedProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    reportedProperties = HciReportedProperties.DeserializeHciReportedProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("deviceConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deviceConfiguration = DeviceConfiguration.DeserializeDeviceConfiguration(property.Value, options);
+                    deviceConfiguration = HciEdgeDeviceConfiguration.DeserializeHciEdgeDeviceConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -120,7 +105,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HciEdgeDeviceProperties(deviceConfiguration, provisioningState, serializedAdditionalRawData, reportedProperties);
+            return new HciEdgeDeviceProperties(deviceConfiguration, provisioningState, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -133,21 +118,6 @@ namespace Azure.ResourceManager.Hci.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReportedProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reportedProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReportedProperties))
-                {
-                    builder.Append("  reportedProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ReportedProperties, options, 2, false, "  reportedProperties: ");
-                }
-            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceConfiguration), out propertyOverride);
             if (hasPropertyOverride)

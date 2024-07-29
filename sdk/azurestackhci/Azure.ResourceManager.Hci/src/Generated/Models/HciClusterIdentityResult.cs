@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Cluster Identity details.
-    /// Serialized Name: ClusterIdentityResponse
-    /// </summary>
+    /// <summary> Cluster Identity details. </summary>
     public partial class HciClusterIdentityResult
     {
         /// <summary>
@@ -54,10 +51,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterIdentityResult"/>. </summary>
-        /// <param name="aadClientId"> Serialized Name: ClusterIdentityResponse.properties.aadClientId. </param>
-        /// <param name="aadTenantId"> Serialized Name: ClusterIdentityResponse.properties.aadTenantId. </param>
-        /// <param name="aadServicePrincipalObjectId"> Serialized Name: ClusterIdentityResponse.properties.aadServicePrincipalObjectId. </param>
-        /// <param name="aadApplicationObjectId"> Serialized Name: ClusterIdentityResponse.properties.aadApplicationObjectId. </param>
+        /// <param name="aadClientId"></param>
+        /// <param name="aadTenantId"></param>
+        /// <param name="aadServicePrincipalObjectId"></param>
+        /// <param name="aadApplicationObjectId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciClusterIdentityResult(Guid? aadClientId, Guid? aadTenantId, Guid? aadServicePrincipalObjectId, Guid? aadApplicationObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,16 +65,16 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ClusterIdentityResponse.properties.aadClientId. </summary>
+        /// <summary> Gets the aad client id. </summary>
         [WirePath("properties.aadClientId")]
         public Guid? AadClientId { get; }
-        /// <summary> Serialized Name: ClusterIdentityResponse.properties.aadTenantId. </summary>
+        /// <summary> Gets the aad tenant id. </summary>
         [WirePath("properties.aadTenantId")]
         public Guid? AadTenantId { get; }
-        /// <summary> Serialized Name: ClusterIdentityResponse.properties.aadServicePrincipalObjectId. </summary>
+        /// <summary> Gets the aad service principal object id. </summary>
         [WirePath("properties.aadServicePrincipalObjectId")]
         public Guid? AadServicePrincipalObjectId { get; }
-        /// <summary> Serialized Name: ClusterIdentityResponse.properties.aadApplicationObjectId. </summary>
+        /// <summary> Gets the aad application object id. </summary>
         [WirePath("properties.aadApplicationObjectId")]
         public Guid? AadApplicationObjectId { get; }
     }

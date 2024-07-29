@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Progress representation of the update run steps.
-    /// Serialized Name: Step
-    /// </summary>
+    /// <summary> Progress representation of the update run steps. </summary>
     public partial class HciUpdateStep
     {
         /// <summary>
@@ -55,109 +52,55 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciUpdateStep"/>. </summary>
-        /// <param name="name">
-        /// Name of the step.
-        /// Serialized Name: Step.name
-        /// </param>
-        /// <param name="description">
-        /// More detailed description of the step.
-        /// Serialized Name: Step.description
-        /// </param>
-        /// <param name="errorMessage">
-        /// Error message, specified if the step is in a failed state.
-        /// Serialized Name: Step.errorMessage
-        /// </param>
-        /// <param name="status">
-        /// Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'.
-        /// Serialized Name: Step.status
-        /// </param>
-        /// <param name="startTimeUtc">
-        /// When the step started, or empty if it has not started executing.
-        /// Serialized Name: Step.startTimeUtc
-        /// </param>
-        /// <param name="endTimeUtc">
-        /// When the step reached a terminal state.
-        /// Serialized Name: Step.endTimeUtc
-        /// </param>
-        /// <param name="lastUpdatedTimeUtc">
-        /// Completion time of this step or the last completed sub-step.
-        /// Serialized Name: Step.lastUpdatedTimeUtc
-        /// </param>
-        /// <param name="expectedExecutionTime">
-        /// Expected execution time of a given step. This is optionally authored in the update action plan and can be empty.
-        /// Serialized Name: Step.expectedExecutionTime
-        /// </param>
-        /// <param name="steps">
-        /// Recursive model for child steps of this step.
-        /// Serialized Name: Step.steps
-        /// </param>
+        /// <param name="name"> Name of the step. </param>
+        /// <param name="description"> More detailed description of the step. </param>
+        /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
+        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
+        /// <param name="startOn"> When the step started, or empty if it has not started executing. </param>
+        /// <param name="endOn"> When the step reached a terminal state. </param>
+        /// <param name="lastUpdatedOn"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
+        /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciUpdateStep(string name, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, string expectedExecutionTime, IList<HciUpdateStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciUpdateStep(string name, string description, string errorMessage, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastUpdatedOn, string expectedExecutionTime, IList<HciUpdateStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             ErrorMessage = errorMessage;
             Status = status;
-            StartTimeUtc = startTimeUtc;
-            EndTimeUtc = endTimeUtc;
-            LastUpdatedTimeUtc = lastUpdatedTimeUtc;
+            StartOn = startOn;
+            EndOn = endOn;
+            LastUpdatedOn = lastUpdatedOn;
             ExpectedExecutionTime = expectedExecutionTime;
             Steps = steps;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the step.
-        /// Serialized Name: Step.name
-        /// </summary>
+        /// <summary> Name of the step. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// More detailed description of the step.
-        /// Serialized Name: Step.description
-        /// </summary>
+        /// <summary> More detailed description of the step. </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Error message, specified if the step is in a failed state.
-        /// Serialized Name: Step.errorMessage
-        /// </summary>
+        /// <summary> Error message, specified if the step is in a failed state. </summary>
         [WirePath("errorMessage")]
         public string ErrorMessage { get; set; }
-        /// <summary>
-        /// Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'.
-        /// Serialized Name: Step.status
-        /// </summary>
+        /// <summary> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </summary>
         [WirePath("status")]
         public string Status { get; set; }
-        /// <summary>
-        /// When the step started, or empty if it has not started executing.
-        /// Serialized Name: Step.startTimeUtc
-        /// </summary>
+        /// <summary> When the step started, or empty if it has not started executing. </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc { get; set; }
-        /// <summary>
-        /// When the step reached a terminal state.
-        /// Serialized Name: Step.endTimeUtc
-        /// </summary>
+        public DateTimeOffset? StartOn { get; set; }
+        /// <summary> When the step reached a terminal state. </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc { get; set; }
-        /// <summary>
-        /// Completion time of this step or the last completed sub-step.
-        /// Serialized Name: Step.lastUpdatedTimeUtc
-        /// </summary>
+        public DateTimeOffset? EndOn { get; set; }
+        /// <summary> Completion time of this step or the last completed sub-step. </summary>
         [WirePath("lastUpdatedTimeUtc")]
-        public DateTimeOffset? LastUpdatedTimeUtc { get; set; }
-        /// <summary>
-        /// Expected execution time of a given step. This is optionally authored in the update action plan and can be empty.
-        /// Serialized Name: Step.expectedExecutionTime
-        /// </summary>
+        public DateTimeOffset? LastUpdatedOn { get; set; }
+        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
         [WirePath("expectedExecutionTime")]
         public string ExpectedExecutionTime { get; set; }
-        /// <summary>
-        /// Recursive model for child steps of this step.
-        /// Serialized Name: Step.steps
-        /// </summary>
+        /// <summary> Recursive model for child steps of this step. </summary>
         [WirePath("steps")]
         public IList<HciUpdateStep> Steps { get; }
     }

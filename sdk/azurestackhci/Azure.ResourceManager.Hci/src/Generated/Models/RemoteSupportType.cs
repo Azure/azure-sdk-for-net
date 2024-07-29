@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Remote Support Type for cluster
-    /// Serialized Name: RemoteSupportType
-    /// </summary>
+    /// <summary> Remote Support Type for cluster. </summary>
     public readonly partial struct RemoteSupportType : IEquatable<RemoteSupportType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string EnableValue = "Enable";
         private const string RevokeValue = "Revoke";
 
-        /// <summary>
-        /// Enable
-        /// Serialized Name: RemoteSupportType.Enable
-        /// </summary>
+        /// <summary> Enable. </summary>
         public static RemoteSupportType Enable { get; } = new RemoteSupportType(EnableValue);
-        /// <summary>
-        /// Revoke
-        /// Serialized Name: RemoteSupportType.Revoke
-        /// </summary>
+        /// <summary> Revoke. </summary>
         public static RemoteSupportType Revoke { get; } = new RemoteSupportType(RevokeValue);
         /// <summary> Determines if two <see cref="RemoteSupportType"/> values are the same. </summary>
         public static bool operator ==(RemoteSupportType left, RemoteSupportType right) => left.Equals(right);

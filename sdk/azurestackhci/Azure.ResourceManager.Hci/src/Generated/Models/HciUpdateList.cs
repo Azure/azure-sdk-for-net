@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// List of Updates
-    /// Serialized Name: UpdateList
-    /// </summary>
+    /// <summary> List of Updates. </summary>
     internal partial class HciUpdateList
     {
         /// <summary>
@@ -51,35 +48,23 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciUpdateList"/>. </summary>
         internal HciUpdateList()
         {
-            Value = new ChangeTrackingList<UpdateData>();
+            Value = new ChangeTrackingList<HciClusterUpdateData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciUpdateList"/>. </summary>
-        /// <param name="value">
-        /// List of Updates
-        /// Serialized Name: UpdateList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to the next set of results.
-        /// Serialized Name: UpdateList.nextLink
-        /// </param>
+        /// <param name="value"> List of Updates. </param>
+        /// <param name="nextLink"> Link to the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciUpdateList(IReadOnlyList<UpdateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciUpdateList(IReadOnlyList<HciClusterUpdateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Updates
-        /// Serialized Name: UpdateList.value
-        /// </summary>
-        public IReadOnlyList<UpdateData> Value { get; }
-        /// <summary>
-        /// Link to the next set of results.
-        /// Serialized Name: UpdateList.nextLink
-        /// </summary>
+        /// <summary> List of Updates. </summary>
+        public IReadOnlyList<HciClusterUpdateData> Value { get; }
+        /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }
 }

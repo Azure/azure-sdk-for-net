@@ -10,41 +10,62 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// properties for Arc-enabled edge device with HCI OS.
-    /// Serialized Name: HciEdgeDeviceProperties
-    /// </summary>
-    public partial class HciEdgeDeviceProperties : EdgeDeviceProperties
+    /// <summary> Edge Device properties. </summary>
+    public partial class HciEdgeDeviceProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceProperties"/>. </summary>
         public HciEdgeDeviceProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceProperties"/>. </summary>
-        /// <param name="deviceConfiguration">
-        /// Device Configuration
-        /// Serialized Name: EdgeDeviceProperties.deviceConfiguration
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of edgeDevice resource
-        /// Serialized Name: EdgeDeviceProperties.provisioningState
-        /// </param>
+        /// <param name="deviceConfiguration"> Device Configuration. </param>
+        /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="reportedProperties">
-        /// The instance view of all current configurations on HCI device.
-        /// Serialized Name: HciEdgeDeviceProperties.reportedProperties
-        /// </param>
-        internal HciEdgeDeviceProperties(DeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, HciReportedProperties reportedProperties) : base(deviceConfiguration, provisioningState, serializedAdditionalRawData)
+        internal HciEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ReportedProperties = reportedProperties;
+            DeviceConfiguration = deviceConfiguration;
+            ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The instance view of all current configurations on HCI device.
-        /// Serialized Name: HciEdgeDeviceProperties.reportedProperties
-        /// </summary>
-        [WirePath("reportedProperties")]
-        public HciReportedProperties ReportedProperties { get; }
+        /// <summary> Device Configuration. </summary>
+        [WirePath("deviceConfiguration")]
+        public HciEdgeDeviceConfiguration DeviceConfiguration { get; set; }
+        /// <summary> Provisioning state of edgeDevice resource. </summary>
+        [WirePath("provisioningState")]
+        public HciProvisioningState? ProvisioningState { get; }
     }
 }

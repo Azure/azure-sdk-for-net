@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Customer Intent for Software Assurance Benefit.
-    /// Serialized Name: SoftwareAssuranceIntent
-    /// </summary>
+    /// <summary> Customer Intent for Software Assurance Benefit. </summary>
     public readonly partial struct SoftwareAssuranceIntent : IEquatable<SoftwareAssuranceIntent>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string EnableValue = "Enable";
         private const string DisableValue = "Disable";
 
-        /// <summary>
-        /// Enable
-        /// Serialized Name: SoftwareAssuranceIntent.Enable
-        /// </summary>
+        /// <summary> Enable. </summary>
         public static SoftwareAssuranceIntent Enable { get; } = new SoftwareAssuranceIntent(EnableValue);
-        /// <summary>
-        /// Disable
-        /// Serialized Name: SoftwareAssuranceIntent.Disable
-        /// </summary>
+        /// <summary> Disable. </summary>
         public static SoftwareAssuranceIntent Disable { get; } = new SoftwareAssuranceIntent(DisableValue);
         /// <summary> Determines if two <see cref="SoftwareAssuranceIntent"/> values are the same. </summary>
         public static bool operator ==(SoftwareAssuranceIntent left, SoftwareAssuranceIntent right) => left.Equals(right);

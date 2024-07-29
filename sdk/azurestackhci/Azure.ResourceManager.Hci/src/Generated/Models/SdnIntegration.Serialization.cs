@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            NetworkController networkController = default;
+            HciClusterNetworkController networkController = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    networkController = NetworkController.DeserializeNetworkController(property.Value, options);
+                    networkController = HciClusterNetworkController.DeserializeHciClusterNetworkController(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

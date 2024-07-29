@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("driverVersion"u8);
                 writer.WriteStringValue(DriverVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ip4Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ip4Address"u8);
-                writer.WriteStringValue(Ip4Address);
+                writer.WriteStringValue(IPv4Address);
             }
             if (options.Format != "W" && Optional.IsDefined(SubnetMask))
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Ip4Address), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv4Address), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  ip4Address: ");
@@ -385,17 +385,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
             else
             {
-                if (Optional.IsDefined(Ip4Address))
+                if (Optional.IsDefined(IPv4Address))
                 {
                     builder.Append("  ip4Address: ");
-                    if (Ip4Address.Contains(Environment.NewLine))
+                    if (IPv4Address.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Ip4Address}'''");
+                        builder.AppendLine($"{IPv4Address}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Ip4Address}'");
+                        builder.AppendLine($"'{IPv4Address}'");
                     }
                 }
             }

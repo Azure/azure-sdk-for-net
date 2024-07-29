@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Secret names allowed for Enterprise Cloud Engine (ECE) deployment.
-    /// Serialized Name: EceSecrets
-    /// </summary>
+    /// <summary> Secret names allowed for Enterprise Cloud Engine (ECE) deployment. </summary>
     public readonly partial struct EceSecret : IEquatable<EceSecret>
     {
         private readonly string _value;
@@ -25,30 +22,18 @@ namespace Azure.ResourceManager.Hci.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureStackLCMUserCredentialValue = "AzureStackLCMUserCredential";
-        private const string DefaultARBApplicationValue = "DefaultARBApplication";
+        private const string AzureStackLcmUserCredentialValue = "AzureStackLCMUserCredential";
+        private const string DefaultArbApplicationValue = "DefaultARBApplication";
         private const string LocalAdminCredentialValue = "LocalAdminCredential";
         private const string WitnessStorageKeyValue = "WitnessStorageKey";
 
-        /// <summary>
-        /// AzureStackLCMUserCredential used for LCM operations for AzureStackHCI cluster.
-        /// Serialized Name: EceSecrets.AzureStackLCMUserCredential
-        /// </summary>
-        public static EceSecret AzureStackLCMUserCredential { get; } = new EceSecret(AzureStackLCMUserCredentialValue);
-        /// <summary>
-        /// DefaultARBApplication used to manage Azure Arc resource bridge (ARB) for AzureStackHCI cluster.
-        /// Serialized Name: EceSecrets.DefaultARBApplication
-        /// </summary>
-        public static EceSecret DefaultARBApplication { get; } = new EceSecret(DefaultARBApplicationValue);
-        /// <summary>
-        /// LocalAdminCredential used for admin operations for AzureStackHCI cluster.
-        /// Serialized Name: EceSecrets.LocalAdminCredential
-        /// </summary>
+        /// <summary> AzureStackLCMUserCredential used for LCM operations for AzureStackHCI cluster. </summary>
+        public static EceSecret AzureStackLcmUserCredential { get; } = new EceSecret(AzureStackLcmUserCredentialValue);
+        /// <summary> DefaultARBApplication used to manage Azure Arc resource bridge (ARB) for AzureStackHCI cluster. </summary>
+        public static EceSecret DefaultArbApplication { get; } = new EceSecret(DefaultArbApplicationValue);
+        /// <summary> LocalAdminCredential used for admin operations for AzureStackHCI cluster. </summary>
         public static EceSecret LocalAdminCredential { get; } = new EceSecret(LocalAdminCredentialValue);
-        /// <summary>
-        /// WitnessStorageKey used for setting up a cloud witness for AzureStackHCI cluster.
-        /// Serialized Name: EceSecrets.WitnessStorageKey
-        /// </summary>
+        /// <summary> WitnessStorageKey used for setting up a cloud witness for AzureStackHCI cluster. </summary>
         public static EceSecret WitnessStorageKey { get; } = new EceSecret(WitnessStorageKeyValue);
         /// <summary> Determines if two <see cref="EceSecret"/> values are the same. </summary>
         public static bool operator ==(EceSecret left, EceSecret right) => left.Equals(right);

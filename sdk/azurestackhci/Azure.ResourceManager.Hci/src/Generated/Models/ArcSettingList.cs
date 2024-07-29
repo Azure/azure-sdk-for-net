@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// List of ArcSetting proxy resources for the HCI cluster.
-    /// Serialized Name: ArcSettingList
-    /// </summary>
+    /// <summary> List of ArcSetting proxy resources for the HCI cluster. </summary>
     internal partial class ArcSettingList
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingList"/>. </summary>
-        /// <param name="value">
-        /// List of ArcSetting proxy resources.
-        /// Serialized Name: ArcSettingList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to the next set of results.
-        /// Serialized Name: ArcSettingList.nextLink
-        /// </param>
+        /// <param name="value"> List of ArcSetting proxy resources. </param>
+        /// <param name="nextLink"> Link to the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArcSettingList(IReadOnlyList<ArcSettingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of ArcSetting proxy resources.
-        /// Serialized Name: ArcSettingList.value
-        /// </summary>
+        /// <summary> List of ArcSetting proxy resources. </summary>
         public IReadOnlyList<ArcSettingData> Value { get; }
-        /// <summary>
-        /// Link to the next set of results.
-        /// Serialized Name: ArcSettingList.nextLink
-        /// </summary>
+        /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }
 }

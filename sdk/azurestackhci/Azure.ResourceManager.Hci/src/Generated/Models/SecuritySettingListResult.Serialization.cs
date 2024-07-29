@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IReadOnlyList<SecuritySettingData> value = default;
+            IReadOnlyList<HciClusterSecuritySettingData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SecuritySettingData> array = new List<SecuritySettingData>();
+                    List<HciClusterSecuritySettingData> array = new List<HciClusterSecuritySettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecuritySettingData.DeserializeSecuritySettingData(item, options));
+                        array.Add(HciClusterSecuritySettingData.DeserializeHciClusterSecuritySettingData(item, options));
                     }
                     value = array;
                     continue;

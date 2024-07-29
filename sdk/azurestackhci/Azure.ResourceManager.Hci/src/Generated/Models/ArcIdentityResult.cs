@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// ArcIdentity details.
-    /// Serialized Name: ArcIdentityResponse
-    /// </summary>
+    /// <summary> ArcIdentity details. </summary>
     public partial class ArcIdentityResult
     {
         /// <summary>
@@ -54,10 +51,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcIdentityResult"/>. </summary>
-        /// <param name="arcApplicationClientId"> Serialized Name: ArcIdentityResponse.properties.arcApplicationClientId. </param>
-        /// <param name="arcApplicationTenantId"> Serialized Name: ArcIdentityResponse.properties.arcApplicationTenantId. </param>
-        /// <param name="arcServicePrincipalObjectId"> Serialized Name: ArcIdentityResponse.properties.arcServicePrincipalObjectId. </param>
-        /// <param name="arcApplicationObjectId"> Serialized Name: ArcIdentityResponse.properties.arcApplicationObjectId. </param>
+        /// <param name="arcApplicationClientId"></param>
+        /// <param name="arcApplicationTenantId"></param>
+        /// <param name="arcServicePrincipalObjectId"></param>
+        /// <param name="arcApplicationObjectId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArcIdentityResult(Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,16 +65,16 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ArcIdentityResponse.properties.arcApplicationClientId. </summary>
+        /// <summary> Gets the arc application client id. </summary>
         [WirePath("properties.arcApplicationClientId")]
         public Guid? ArcApplicationClientId { get; }
-        /// <summary> Serialized Name: ArcIdentityResponse.properties.arcApplicationTenantId. </summary>
+        /// <summary> Gets the arc application tenant id. </summary>
         [WirePath("properties.arcApplicationTenantId")]
         public Guid? ArcApplicationTenantId { get; }
-        /// <summary> Serialized Name: ArcIdentityResponse.properties.arcServicePrincipalObjectId. </summary>
+        /// <summary> Gets the arc service principal object id. </summary>
         [WirePath("properties.arcServicePrincipalObjectId")]
         public Guid? ArcServicePrincipalObjectId { get; }
-        /// <summary> Serialized Name: ArcIdentityResponse.properties.arcApplicationObjectId. </summary>
+        /// <summary> Gets the arc application object id. </summary>
         [WirePath("properties.arcApplicationObjectId")]
         public Guid? ArcApplicationObjectId { get; }
     }

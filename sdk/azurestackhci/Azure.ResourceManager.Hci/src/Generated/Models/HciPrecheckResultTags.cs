@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Key-value pairs that allow grouping/filtering individual tests.
-    /// Serialized Name: PrecheckResultTags
-    /// </summary>
+    /// <summary> Key-value pairs that allow grouping/filtering individual tests. </summary>
     public partial class HciPrecheckResultTags
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciPrecheckResultTags"/>. </summary>
-        /// <param name="key">
-        /// Key that allow grouping/filtering individual tests.
-        /// Serialized Name: PrecheckResultTags.key
-        /// </param>
-        /// <param name="value">
-        /// Value of the key that allow grouping/filtering individual tests.
-        /// Serialized Name: PrecheckResultTags.value
-        /// </param>
+        /// <param name="key"> Key that allow grouping/filtering individual tests. </param>
+        /// <param name="value"> Value of the key that allow grouping/filtering individual tests. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciPrecheckResultTags(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Key that allow grouping/filtering individual tests.
-        /// Serialized Name: PrecheckResultTags.key
-        /// </summary>
+        /// <summary> Key that allow grouping/filtering individual tests. </summary>
         [WirePath("key")]
         public string Key { get; set; }
-        /// <summary>
-        /// Value of the key that allow grouping/filtering individual tests.
-        /// Serialized Name: PrecheckResultTags.value
-        /// </summary>
+        /// <summary> Value of the key that allow grouping/filtering individual tests. </summary>
         [WirePath("value")]
         public string Value { get; set; }
     }

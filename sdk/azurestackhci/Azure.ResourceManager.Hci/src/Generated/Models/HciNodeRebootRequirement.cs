@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// The HciNodeRebootRequirement.
-    /// Serialized Name: RebootRequirement
-    /// </summary>
+    /// <summary> The HciNodeRebootRequirement. </summary>
     public readonly partial struct HciNodeRebootRequirement : IEquatable<HciNodeRebootRequirement>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Hci.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: RebootRequirement.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static HciNodeRebootRequirement Unknown { get; } = new HciNodeRebootRequirement(UnknownValue);
-        /// <summary>
-        /// True
-        /// Serialized Name: RebootRequirement.True
-        /// </summary>
+        /// <summary> True. </summary>
         public static HciNodeRebootRequirement True { get; } = new HciNodeRebootRequirement(TrueValue);
-        /// <summary>
-        /// False
-        /// Serialized Name: RebootRequirement.False
-        /// </summary>
+        /// <summary> False. </summary>
         public static HciNodeRebootRequirement False { get; } = new HciNodeRebootRequirement(FalseValue);
         /// <summary> Determines if two <see cref="HciNodeRebootRequirement"/> values are the same. </summary>
         public static bool operator ==(HciNodeRebootRequirement left, HciNodeRebootRequirement right) => left.Equals(right);

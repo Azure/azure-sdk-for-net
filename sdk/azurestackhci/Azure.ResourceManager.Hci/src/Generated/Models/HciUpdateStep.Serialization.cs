@@ -48,20 +48,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartTimeUtc))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTimeUtc))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedTimeUtc))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(ExpectedExecutionTime))
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTimeUtc), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  startTimeUtc: ");
@@ -325,15 +325,15 @@ namespace Azure.ResourceManager.Hci.Models
             }
             else
             {
-                if (Optional.IsDefined(StartTimeUtc))
+                if (Optional.IsDefined(StartOn))
                 {
                     builder.Append("  startTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartTimeUtc.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTimeUtc), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  endTimeUtc: ");
@@ -341,15 +341,15 @@ namespace Azure.ResourceManager.Hci.Models
             }
             else
             {
-                if (Optional.IsDefined(EndTimeUtc))
+                if (Optional.IsDefined(EndOn))
                 {
                     builder.Append("  endTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EndTimeUtc.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedTimeUtc), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  lastUpdatedTimeUtc: ");
@@ -357,10 +357,10 @@ namespace Azure.ResourceManager.Hci.Models
             }
             else
             {
-                if (Optional.IsDefined(LastUpdatedTimeUtc))
+                if (Optional.IsDefined(LastUpdatedOn))
                 {
                     builder.Append("  lastUpdatedTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedTimeUtc.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

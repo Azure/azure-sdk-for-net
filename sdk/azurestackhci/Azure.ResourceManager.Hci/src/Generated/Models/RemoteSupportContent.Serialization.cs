@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            RemoteSupportRequestProperties properties = default;
+            RemoteSupportContentProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = RemoteSupportRequestProperties.DeserializeRemoteSupportRequestProperties(property.Value, options);
+                    properties = RemoteSupportContentProperties.DeserializeRemoteSupportContentProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

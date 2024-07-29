@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Hci
             HciProvisioningState? provisioningState = default;
             ArcExtensionAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails = default;
-            ExtensionManagedBy? managedBy = default;
+            ArcExtensionManagedBy? managedBy = default;
             string forceUpdateTag = default;
             string publisher = default;
             string type0 = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            managedBy = new ExtensionManagedBy(property0.Value.GetString());
+                            managedBy = new ArcExtensionManagedBy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extensionParameters"u8))

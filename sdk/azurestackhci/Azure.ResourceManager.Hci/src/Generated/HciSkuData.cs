@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing the HciSku data model.
     /// Sku details.
-    /// Serialized Name: Sku
     /// </summary>
     public partial class HciSkuData : ResourceData
     {
@@ -63,30 +62,12 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// Provisioning State
-        /// Serialized Name: Sku.properties.provisioningState
-        /// </param>
-        /// <param name="publisherId">
-        /// Identifier of the Publisher for the offer
-        /// Serialized Name: Sku.properties.publisherId
-        /// </param>
-        /// <param name="offerId">
-        /// Identifier of the Offer for the sku
-        /// Serialized Name: Sku.properties.offerId
-        /// </param>
-        /// <param name="content">
-        /// JSON serialized catalog content of the sku offer
-        /// Serialized Name: Sku.properties.content
-        /// </param>
-        /// <param name="contentVersion">
-        /// The API version of the catalog service used to serve the catalog content
-        /// Serialized Name: Sku.properties.contentVersion
-        /// </param>
-        /// <param name="skuMappings">
-        /// Array of SKU mappings
-        /// Serialized Name: Sku.properties.skuMappings
-        /// </param>
+        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="publisherId"> Identifier of the Publisher for the offer. </param>
+        /// <param name="offerId"> Identifier of the Offer for the sku. </param>
+        /// <param name="content"> JSON serialized catalog content of the sku offer. </param>
+        /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
+        /// <param name="skuMappings"> Array of SKU mappings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string publisherId, string offerId, string content, string contentVersion, IList<HciSkuMappings> skuMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -99,40 +80,22 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Provisioning State
-        /// Serialized Name: Sku.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning State. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Identifier of the Publisher for the offer
-        /// Serialized Name: Sku.properties.publisherId
-        /// </summary>
+        /// <summary> Identifier of the Publisher for the offer. </summary>
         [WirePath("properties.publisherId")]
         public string PublisherId { get; set; }
-        /// <summary>
-        /// Identifier of the Offer for the sku
-        /// Serialized Name: Sku.properties.offerId
-        /// </summary>
+        /// <summary> Identifier of the Offer for the sku. </summary>
         [WirePath("properties.offerId")]
         public string OfferId { get; set; }
-        /// <summary>
-        /// JSON serialized catalog content of the sku offer
-        /// Serialized Name: Sku.properties.content
-        /// </summary>
+        /// <summary> JSON serialized catalog content of the sku offer. </summary>
         [WirePath("properties.content")]
         public string Content { get; set; }
-        /// <summary>
-        /// The API version of the catalog service used to serve the catalog content
-        /// Serialized Name: Sku.properties.contentVersion
-        /// </summary>
+        /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
         [WirePath("properties.contentVersion")]
         public string ContentVersion { get; set; }
-        /// <summary>
-        /// Array of SKU mappings
-        /// Serialized Name: Sku.properties.skuMappings
-        /// </summary>
+        /// <summary> Array of SKU mappings. </summary>
         [WirePath("properties.skuMappings")]
         public IList<HciSkuMappings> SkuMappings { get; }
     }

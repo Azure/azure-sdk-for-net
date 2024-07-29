@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Hci
             SystemData systemData = default;
             HciProvisioningState? provisioningState = default;
             HciClusterStatus? status = default;
-            ConnectivityStatus? connectivityStatus = default;
+            HciClusterConnectivityStatus? connectivityStatus = default;
             Guid? cloudId = default;
             string cloudManagementEndpoint = default;
             Guid? aadClientId = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            connectivityStatus = new ConnectivityStatus(property0.Value.GetString());
+                            connectivityStatus = new HciClusterConnectivityStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("cloudId"u8))

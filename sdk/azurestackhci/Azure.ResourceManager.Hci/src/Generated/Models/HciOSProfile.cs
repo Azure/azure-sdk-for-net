@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// OS configurations for HCI device.
-    /// Serialized Name: HciOsProfile
-    /// </summary>
+    /// <summary> OS configurations for HCI device. </summary>
     public partial class HciOSProfile
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciOSProfile"/>. </summary>
-        /// <param name="bootType">
-        /// The boot type of the device. e.g. UEFI, Legacy etc
-        /// Serialized Name: HciOsProfile.bootType
-        /// </param>
-        /// <param name="assemblyVersion">
-        /// Version of assembly present on device
-        /// Serialized Name: HciOsProfile.assemblyVersion
-        /// </param>
+        /// <param name="bootType"> The boot type of the device. e.g. UEFI, Legacy etc. </param>
+        /// <param name="assemblyVersion"> Version of assembly present on device. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciOSProfile(string bootType, string assemblyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The boot type of the device. e.g. UEFI, Legacy etc
-        /// Serialized Name: HciOsProfile.bootType
-        /// </summary>
+        /// <summary> The boot type of the device. e.g. UEFI, Legacy etc. </summary>
         [WirePath("bootType")]
         public string BootType { get; }
-        /// <summary>
-        /// Version of assembly present on device
-        /// Serialized Name: HciOsProfile.assemblyVersion
-        /// </summary>
+        /// <summary> Version of assembly present on device. </summary>
         [WirePath("assemblyVersion")]
         public string AssemblyVersion { get; }
     }

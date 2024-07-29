@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// LogCollection job type
-    /// Serialized Name: LogCollectionJobType
-    /// </summary>
+    /// <summary> LogCollection job type. </summary>
     public readonly partial struct LogCollectionJobType : IEquatable<LogCollectionJobType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string OnDemandValue = "OnDemand";
         private const string ScheduledValue = "Scheduled";
 
-        /// <summary>
-        /// OnDemand
-        /// Serialized Name: LogCollectionJobType.OnDemand
-        /// </summary>
+        /// <summary> OnDemand. </summary>
         public static LogCollectionJobType OnDemand { get; } = new LogCollectionJobType(OnDemandValue);
-        /// <summary>
-        /// Scheduled
-        /// Serialized Name: LogCollectionJobType.Scheduled
-        /// </summary>
+        /// <summary> Scheduled. </summary>
         public static LogCollectionJobType Scheduled { get; } = new LogCollectionJobType(ScheduledValue);
         /// <summary> Determines if two <see cref="LogCollectionJobType"/> values are the same. </summary>
         public static bool operator ==(LogCollectionJobType left, LogCollectionJobType right) => left.Equals(right);

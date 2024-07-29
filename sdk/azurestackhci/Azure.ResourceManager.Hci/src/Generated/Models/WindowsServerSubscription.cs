@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Desired state of Windows Server Subscription.
-    /// Serialized Name: WindowsServerSubscription
-    /// </summary>
+    /// <summary> Desired state of Windows Server Subscription. </summary>
     public readonly partial struct WindowsServerSubscription : IEquatable<WindowsServerSubscription>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: WindowsServerSubscription.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static WindowsServerSubscription Disabled { get; } = new WindowsServerSubscription(DisabledValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: WindowsServerSubscription.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static WindowsServerSubscription Enabled { get; } = new WindowsServerSubscription(EnabledValue);
         /// <summary> Determines if two <see cref="WindowsServerSubscription"/> values are the same. </summary>
         public static bool operator ==(WindowsServerSubscription left, WindowsServerSubscription right) => left.Equals(right);

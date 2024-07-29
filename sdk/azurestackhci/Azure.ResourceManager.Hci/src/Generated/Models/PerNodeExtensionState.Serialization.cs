@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Models
             string extension = default;
             string typeHandlerVersion = default;
             NodeExtensionState? state = default;
-            HciExtensionInstanceView instanceView = default;
+            ArcExtensionInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value, options);
+                    instanceView = ArcExtensionInstanceView.DeserializeArcExtensionInstanceView(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            string arcResourceId = default;
+            ResourceIdentifier arcResourceId = default;
             string state = default;
             DateTimeOffset? createdAt = default;
             DateTimeOffset? updatedAt = default;
@@ -113,7 +113,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("arcResourceId"u8))
                 {
-                    arcResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -193,15 +197,7 @@ namespace Azure.ResourceManager.Hci.Models
                 if (Optional.IsDefined(ArcResourceId))
                 {
                     builder.Append("  arcResourceId: ");
-                    if (ArcResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ArcResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ArcResourceId}'");
-                    }
+                    builder.AppendLine($"'{ArcResourceId.ToString()}'");
                 }
             }
 

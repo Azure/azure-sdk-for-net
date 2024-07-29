@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             ArcExtensionPatch patch = new ArcExtensionPatch()
             {
-                ExtensionParameters = new ExtensionPatchContent()
+                ExtensionParameters = new ArcExtensionPatchContent()
                 {
                     TypeHandlerVersion = "1.10",
-                    EnableAutomaticUpgrade = false,
+                    IsAutomaticUpgradeEnabled = false,
                     Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                     {
                         ["workspaceId"] = "xx"
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcExtensionResource arcExtension = client.GetArcExtensionResource(arcExtensionResourceId);
 
             // invoke the operation
-            ExtensionUpgradeContent content = new ExtensionUpgradeContent()
+            ArcExtensionUpgradeContent content = new ArcExtensionUpgradeContent()
             {
                 TargetVersion = "1.0.18062.0",
             };

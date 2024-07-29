@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-    /// Serialized Name: ManagedServiceIdentityType
-    /// </summary>
+    /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
     public readonly partial struct HciManagedServiceIdentityType : IEquatable<HciManagedServiceIdentityType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Hci.Models
         private const string UserAssignedValue = "UserAssigned";
         private const string SystemAssignedUserAssignedValue = "SystemAssigned, UserAssigned";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: ManagedServiceIdentityType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static HciManagedServiceIdentityType None { get; } = new HciManagedServiceIdentityType(NoneValue);
-        /// <summary>
-        /// SystemAssigned
-        /// Serialized Name: ManagedServiceIdentityType.SystemAssigned
-        /// </summary>
+        /// <summary> SystemAssigned. </summary>
         public static HciManagedServiceIdentityType SystemAssigned { get; } = new HciManagedServiceIdentityType(SystemAssignedValue);
-        /// <summary>
-        /// UserAssigned
-        /// Serialized Name: ManagedServiceIdentityType.UserAssigned
-        /// </summary>
+        /// <summary> UserAssigned. </summary>
         public static HciManagedServiceIdentityType UserAssigned { get; } = new HciManagedServiceIdentityType(UserAssignedValue);
-        /// <summary>
-        /// SystemAssigned, UserAssigned
-        /// Serialized Name: ManagedServiceIdentityType.SystemAssigned, UserAssigned
-        /// </summary>
+        /// <summary> SystemAssigned, UserAssigned. </summary>
         public static HciManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new HciManagedServiceIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="HciManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(HciManagedServiceIdentityType left, HciManagedServiceIdentityType right) => left.Equals(right);

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IReadOnlyList<EdgeDeviceData> value = default;
+            IReadOnlyList<HciEdgeDeviceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<EdgeDeviceData> array = new List<EdgeDeviceData>();
+                    List<HciEdgeDeviceData> array = new List<HciEdgeDeviceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeDeviceData.DeserializeEdgeDeviceData(item, options));
+                        array.Add(HciEdgeDeviceData.DeserializeHciEdgeDeviceData(item, options));
                     }
                     value = array;
                     continue;

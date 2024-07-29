@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Status of Arc agent for a particular node in HCI Cluster.
-    /// Serialized Name: PerNodeState
-    /// </summary>
+    /// <summary> Status of Arc agent for a particular node in HCI Cluster. </summary>
     public partial class PerNodeArcState
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PerNodeArcState"/>. </summary>
-        /// <param name="name">
-        /// Name of the Node in HCI Cluster
-        /// Serialized Name: PerNodeState.name
-        /// </param>
-        /// <param name="arcInstance">
-        /// Fully qualified resource ID for the Arc agent of this node.
-        /// Serialized Name: PerNodeState.arcInstance
-        /// </param>
-        /// <param name="arcNodeServicePrincipalObjectId">
-        /// The service principal id of the arc for server node
-        /// Serialized Name: PerNodeState.arcNodeServicePrincipalObjectId
-        /// </param>
-        /// <param name="state">
-        /// State of Arc agent in this node.
-        /// Serialized Name: PerNodeState.state
-        /// </param>
+        /// <param name="name"> Name of the Node in HCI Cluster. </param>
+        /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
+        /// <param name="arcNodeServicePrincipalObjectId"> The service principal id of the arc for server node. </param>
+        /// <param name="state"> State of Arc agent in this node. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PerNodeArcState(string name, string arcInstance, Guid? arcNodeServicePrincipalObjectId, NodeArcState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.Hci.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the Node in HCI Cluster
-        /// Serialized Name: PerNodeState.name
-        /// </summary>
+        /// <summary> Name of the Node in HCI Cluster. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Fully qualified resource ID for the Arc agent of this node.
-        /// Serialized Name: PerNodeState.arcInstance
-        /// </summary>
+        /// <summary> Fully qualified resource ID for the Arc agent of this node. </summary>
         [WirePath("arcInstance")]
         public string ArcInstance { get; }
-        /// <summary>
-        /// The service principal id of the arc for server node
-        /// Serialized Name: PerNodeState.arcNodeServicePrincipalObjectId
-        /// </summary>
+        /// <summary> The service principal id of the arc for server node. </summary>
         [WirePath("arcNodeServicePrincipalObjectId")]
         public Guid? ArcNodeServicePrincipalObjectId { get; }
-        /// <summary>
-        /// State of Arc agent in this node.
-        /// Serialized Name: PerNodeState.state
-        /// </summary>
+        /// <summary> State of Arc agent in this node. </summary>
         [WirePath("state")]
         public NodeArcState? State { get; }
     }
