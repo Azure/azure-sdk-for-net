@@ -1,13 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using NUnit.Framework;
+using OpenAI.TestFramework.Mocks;
+using OpenAI.TestFramework.Recording;
 using OpenAI.TestFramework.Recording.Matchers;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.Proxy.Service;
 using OpenAI.TestFramework.Recording.RecordingProxy;
 using OpenAI.TestFramework.Recording.Sanitizers;
 using OpenAI.TestFramework.Recording.Transforms;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Tests
 {
@@ -202,6 +207,117 @@ namespace OpenAI.TestFramework.Tests
                 .And.Contain(value1)
                 .And.Contain(key2)
                 .And.Contain(value2));
+        }
+
+        [TestCase]
+        public async Task RecordAndPlayback()
+        {
+            using ProxyService recordingProxyService = await CreateProxyServiceAsync();
+            StartInformation startInfo = new() { RecordingFile = RecordingFile!.FullName };
+
+            using MockStringRestService mockRestService = new();
+            TestRecordingOptions recordingOptions = new()
+            {
+                SanitizersToRemove =
+                {
+                    "AZSDK3430", // $..id
+                }
+            };
+
+            string id1;
+            string id2;
+
+            // Start recording, and capture some requests
+            {
+                ProxyClientResult result = await recordingProxyService.Client.StartRecordingAsync(startInfo, Token);
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result.RecordingId, !Is.Null.Or.Empty);
+                string recordingId = result.RecordingId!;
+
+                await using TestRecording recording = new(recordingId, RecordedTestMode.Record, recordingProxyService);
+                await recording.ApplyOptions(recordingOptions, Token);
+
+                id1 = recording.Random.GetGuid().ToString();
+                id2 = recording.Random.GetGuid().ToString();
+
+                await SendRequestsAsync(recording, mockRestService.HttpEndpoint, id1, id2, Token);
+            }
+
+            // validate the service has what we expect
+            var serviceIds = mockRestService.GetAll()
+                .Select(e => e.id)
+                .ToArray();
+            Assert.That(serviceIds, Is.EquivalentTo(new[] { id1, id2 }));
+
+            mockRestService.Reset();
+
+            // Playback the recording
+            {
+                ProxyClientResult<IDictionary<string, string>> result = await recordingProxyService.Client.StartPlaybackAsync(startInfo, Token);
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result.RecordingId, !Is.Null.Or.Empty);
+                string recordingId = result.RecordingId!;
+
+                await using TestRecording playback = new(recordingId, RecordedTestMode.Playback, recordingProxyService, result.Value);
+                await playback.ApplyOptions(recordingOptions, Token);
+
+                string id = playback.Random.GetGuid().ToString();
+                Assert.That(id, Is.EqualTo(id1));
+                id = playback.Random.GetGuid().ToString();
+                Assert.That(id, Is.EqualTo(id2));
+
+                await SendRequestsAsync(playback, mockRestService.HttpEndpoint, id1, id2, Token);
+            }
+
+            // since we are playing back, the service should not have been called
+            Assert.That(mockRestService.GetAll().Count(), Is.EqualTo(0));
+
+            static async Task SendRequestsAsync(TestRecording recording, Uri restEndpoint, string id1, string id2, CancellationToken token)
+            {
+                const string value1 = "The value for the first item";
+                const string value2 = "The secondary value goes here";
+                const string id3 = "random";
+                const string value3 = "Sure why not";
+
+                ClientPipelineOptions options = new();
+                options.RetryPolicy = new TestClientRetryPolicy(0, TimeSpan.FromMilliseconds(100));
+                options.Transport = new ProxyTransport(recording.GetProxyTransportOptions());
+
+                using MockStringClient client = new(restEndpoint, options);
+
+                ClientResult add = await client.AddAsync(id1, value1, token);
+                Assert.That(add, Is.Not.Null);
+                Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
+
+                add = await client.AddAsync(id2, value2, token);
+                Assert.That(add, Is.Not.Null);
+                Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
+
+                add = await client.AddAsync(id3, value3, token);
+                Assert.That(add, Is.Not.Null);
+                Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
+
+                ClientResult<string?> get = await client.GetAsync(id2, token);
+                Assert.That(add, Is.Not.Null);
+                Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(get.Value, Is.EqualTo(value2));
+
+                get = await client.GetAsync(id3, token);
+                Assert.That(add, Is.Not.Null);
+                Assert.That(add.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(get.Value, Is.EqualTo(value3));
+
+                ClientResult<bool> remove = await client.RemoveAsync(id3, token);
+                Assert.That(remove.Value, Is.True);
+
+                remove = await client.RemoveAsync("does.not.exist", token);
+                Assert.That(remove.Value, Is.False);
+
+                get = await client.GetAsync(id3, token);
+                Assert.That(get, Is.Not.Null);
+                Assert.That(get.GetRawResponse().Status, Is.EqualTo(404));
+                Assert.That(get.Value, Is.Null);
+            }
         }
 
         #region helper methods

@@ -342,26 +342,9 @@ public abstract class RecordedClientTestBase : ClientTestBase
             throw new InvalidOperationException("Recording test proxy did not return a recording ID");
         }
 
-        await client.AddSanitizersAsync(_options.Sanitizers, recordingId, token).ConfigureAwait(false);
-        if (Mode == RecordedTestMode.Playback)
-        {
-            BaseMatcher matcher = _options.Matcher ?? new CustomMatcher()
-            {
-                CompareBodies = _options.CompareBodies,
-                ExcludedHeaders = _options.ExcludedHeaders.JoinOrNull(","),
-                IgnoredHeaders = _options.IgnoredHeaders.JoinOrNull(","),
-                IgnoredQueryParameters = _options.IgnoredQueryParameters.JoinOrNull(","),
-            };
-
-            await client.SetMatcherAsync(matcher, recordingId, token).ConfigureAwait(false);
-
-            foreach (var transform in _options.Transforms)
-            {
-                await client.AddTransformAsync(transform, recordingId, token).ConfigureAwait(false);
-            }
-        }
-
-        return new TestRecording(recordingId!, Mode, proxy, variables);
+        TestRecording recording = new TestRecording(recordingId!, Mode, proxy, variables);
+        await recording.ApplyOptions(_options, token).ConfigureAwait(false);
+        return recording;
     }
 
     /// <summary>

@@ -3,12 +3,11 @@
 
 using System.ClientModel;
 using NUnit.Framework;
-using OpenAI.TestFramework;
 using OpenAI.TestFramework.Tests.Helpers;
 
 namespace OpenAI.TestFramework.Tests;
 
-public class FrameworkTests(bool useAsync) : ClientTestBase(useAsync)
+public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
 {
     private static readonly string EX_MSG = Guid.NewGuid().ToString();
 

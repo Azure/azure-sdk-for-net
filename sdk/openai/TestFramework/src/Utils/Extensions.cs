@@ -35,7 +35,7 @@ public static class CollectionExtensions
 {
     public static string? JoinOrNull(this IEnumerable<string> values, string separator)
     {
-        if (values == null)
+        if (values == null || !values.Any())
         {
             return null;
         }
@@ -90,6 +90,33 @@ public static class FileExtensions
 
 public static class JsonExtensions
 {
+    public static void Serialize<T>(Stream stream, T data, JsonSerializerOptions? options = null)
+    {
+#if NET
+        JsonSerializer.Serialize<T>(stream, data, options);
+#else
+        using (Utf8JsonWriter writer = new(stream))
+        {
+            JsonSerializer.Serialize<T>(writer, data, options);
+            writer.Flush();
+        }
+#endif
+    }
+
+    public static T? Deserialize<T>(Stream stream, JsonSerializerOptions? options = null)
+    {
+#if NET
+        return JsonSerializer.Deserialize<T>(stream, options);
+#else
+        // For now let's keep it simple and load entire JSON bytes into memory
+        using MemoryStream buffer = new();
+        stream.CopyTo(buffer);
+
+        ReadOnlySpan<byte> jsonBytes = buffer.GetBuffer().AsSpan(0, (int)buffer.Length);
+        return JsonSerializer.Deserialize<T>(jsonBytes, options);
+#endif
+    }
+
     public static JsonSerializerOptions Clone(this JsonSerializerOptions options, Predicate<JsonConverter>? converterFilter = null)
     {
 #if NET

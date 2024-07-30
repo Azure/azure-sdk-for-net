@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using System.Security.Cryptography;
+using OpenAI.TestFramework.Recording.Matchers;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.RecordingProxy;
 using OpenAI.TestFramework.Utils;
@@ -136,6 +137,37 @@ public class TestRecording : IAsyncDisposable
             RecordingId = ID,
             RequestId = Random.GetGuid().ToString()
         };
+    }
+
+    public virtual async Task ApplyOptions(TestRecordingOptions options, CancellationToken token)
+    {
+        if (options.Sanitizers.Any())
+        {
+            await Proxy.Client.AddSanitizersAsync(options.Sanitizers, ID, token).ConfigureAwait(false);
+        }
+
+        if (options.SanitizersToRemove.Any())
+        {
+            await Proxy.Client.RemoveSanitizersAsync(options.SanitizersToRemove, ID, token).ConfigureAwait(false);
+        }
+
+        if (Mode == RecordedTestMode.Playback)
+        {
+            BaseMatcher matcher = options.Matcher ?? new CustomMatcher()
+            {
+                CompareBodies = options.CompareBodies,
+                ExcludedHeaders = options.ExcludedHeaders.JoinOrNull(","),
+                IgnoredHeaders = options.IgnoredHeaders.JoinOrNull(","),
+                IgnoredQueryParameters = options.IgnoredQueryParameters.JoinOrNull(","),
+            };
+
+            await Proxy.Client.SetMatcherAsync(matcher, ID, token).ConfigureAwait(false);
+
+            foreach (var transform in options.Transforms)
+            {
+                await Proxy.Client.AddTransformAsync(transform, ID, token).ConfigureAwait(false);
+            }
+        }
     }
 
     protected virtual void ValidateWeHaveVariables()

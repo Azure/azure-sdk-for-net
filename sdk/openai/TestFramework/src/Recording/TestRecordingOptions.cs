@@ -42,32 +42,16 @@ public class TestRecordingOptions
     /// The sanitizers to remove from the list of default sanitizers. More details about default sanitizers can be found here:
     /// https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md#removing-a-sanitizer.
     /// </summary>
+    /// <remarks>You can find the list of sanitizer IDs to remove in two ways:
+    /// <list type="bullet">
+    /// <item>Sending a GET request to http://{proxy_endpoint}/Info/Active</item>
+    /// <item>Looking at the source code for the test proxy here:
+    /// https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/Common/SanitizerDictionary.cs</item>
+    /// </list>
+    /// </remarks>
     public ISet<string> SanitizersToRemove { get; } = new HashSet<string>()
     {
-        "AZSDK2003", // Location header
-        "AZSDK2006", // x-ms-rename-source
-        "AZSDK2007", // x-ms-file-rename-source
-        "AZSDK2008", // x-ms-copy-source
-        "AZSDK2020", // x-ms-request-id
-        "AZSDK2030", // Operation-location header
-        "AZSDK3420", // $..targetResourceId
-        "AZSDK3423", // $..source
-        "AZSDK3424", // $..to
-        "AZSDK3425", // $..from
-        "AZSDK3430", // $..id
-        "AZSDK3433", // $..userId
-        "AZSDK3447", // $.key - app config key - not a secret
-        "AZSDK3448", // $.value[*].key - search key - not a secret
-        "AZSDK3451", // $..storageContainerUri - used for mixed reality - no sas token
-        "AZSDK3478", // $..accountName
-        "AZSDK3488", // $..targetResourceRegion
-        "AZSDK3490", // $..etag
-        "AZSDK3491", // $..functionUri
-        "AZSDK3493", // $..name
-        "AZSDK3494", // $..friendlyName
-        "AZSDK3495", // $..targetModelLocation
-        "AZSDK3496", // $..resourceLocation
-        "AZSDK4001", // host name regex
+        // For now, we should leave the default sanitizers in place since it is better to err on the side of caution
     };
 
     /// <summary>
@@ -82,10 +66,7 @@ public class TestRecordingOptions
     {
         "Date",
         "x-ms-date",
-        "x-ms-client-request-id",
         "User-Agent",
-        "Request-Id",
-        "traceparent",
     };
 
     /// <summary>
@@ -93,9 +74,6 @@ public class TestRecordingOptions
     /// </summary>
     public ISet<string> ExcludedHeaders { get; } = new HashSet<string>()
     {
-        "Content-Type",
-        "Content-Length",
-        "Connection",
     };
 
     /// <summary>
