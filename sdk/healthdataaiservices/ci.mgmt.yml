@@ -2,30 +2,17 @@
 
 trigger: none
 
-
 pr:
   branches:
     include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - sdk/healthdataaiservices/ci.mgmt.yml
-    - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices/
-
-
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/healthdataaiservices/ci.mgmt.yml
-    - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices/
+      - sdk/healthdataaiservices/ci.mgmt.yml
+      - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -33,5 +20,5 @@ extends:
     ServiceDirectory: healthdataaiservices
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.HealthDataAIServices
-      safeName: AzureResourceManagerHealthDataAIServices
+      - name: Azure.ResourceManager.HealthDataAIServices
+        safeName: AzureResourceManagerHealthDataAIServices
