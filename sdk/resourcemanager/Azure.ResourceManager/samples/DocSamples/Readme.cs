@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Tests.Samples
             TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions { AuthorityHost = authorityHost });
             // Create the Azure Resource Manager client
             ArmClient client = new ArmClient(credential, subscriptionId, armOptions);
-            #endregion Snippet:Readme_AuthClient
+            #endregion Snippet:Readme_AuthClient_China
         }
 
         [Test]
