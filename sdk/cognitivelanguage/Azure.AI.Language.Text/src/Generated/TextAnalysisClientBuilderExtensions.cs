@@ -6,14 +6,12 @@
 #nullable disable
 
 using System;
-using Azure;
-using Azure.AI.Language.Text;
 using Azure.Core.Extensions;
 
-namespace Microsoft.Extensions.Azure
+namespace Azure.AI.Language.Text
 {
     /// <summary> Extension methods to add <see cref="TextAnalysisClient"/> to client builder. </summary>
-    public static partial class AILanguageTextClientBuilderExtensions
+    public static partial class TextAnalysisClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="TextAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

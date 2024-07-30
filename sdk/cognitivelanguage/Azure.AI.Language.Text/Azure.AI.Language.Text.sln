@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.Text", "src\Azure.AI.Language.Text.csproj", "{1E26A793-F2E8-4A31-8DA9-91B247D55645}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.Text", "src\Azure.AI.Language.Text.csproj", "{1E26A793-F2E8-4A31-8DA9-91B247D55645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.Text.Tests", "tests\Azure.AI.Language.Text.Tests.csproj", "{03FA9AB4-74F1-4572-B348-E850CEEBC3D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.Text.Tests", "tests\Azure.AI.Language.Text.Tests.csproj", "{03FA9AB4-74F1-4572-B348-E850CEEBC3D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

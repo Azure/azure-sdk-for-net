@@ -65,7 +65,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            #region Snippet:TextAnalysisClientt_BadRequest
+            #region Snippet:TextAnalysisClient_BadRequest
             try
             {
                 string documentA =

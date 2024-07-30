@@ -20,12 +20,10 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
-
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Language.Text --prerelease
+dotnet add package Azure.AI.Language.Text
 ```
 
 ### Prerequisites
@@ -157,7 +155,7 @@ When you interact with the Cognitive Language Services Text client library using
 
 For example, if you submit a utterance to a non-existant project, a `400` error is returned indicating "Bad Request".
 
-```C# Snippet:TextAnalysisClientt_BadRequest
+```C# Snippet:TextAnalysisClient_BadRequest
 try
 {
     string documentA =

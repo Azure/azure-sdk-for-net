@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AILanguageTextModelFactory
+    public static partial class TextAnalysisModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Text.MultiLanguageInput"/>. </summary>
         /// <param name="id"> A unique, non-empty document identifier. </param>
