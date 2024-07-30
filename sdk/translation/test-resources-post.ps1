@@ -38,14 +38,16 @@ Log 'Enable Managed identity on the Translator resource'
 
 Log 'In the storage account, assign Storage-Blob-Data-Contributor role access to translator resource'
 Log 'Step 1: Get the Resource ID of the storage account'
-Log 'Executing Azure PoweShell cmd: $storageAccount = Get-AzStorageAccount -ResourceGroupName $($ResourceGroupName) -Name $($storageAccountName)'
+Log "Executing Azure PoweShell cmd: $storageAccount = Get-AzStorageAccount -ResourceGroupName $($ResourceGroupName) -Name $($storageAccountName)"
 $storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $storageAccountName
 $storageAccountId = $storageAccount.Id
-Log "Resource ID of the storage accountis $($storageAccountId)"
+Log "Resource ID of the storage account is $($storageAccountId)"
 
 Log 'Step 2: Get the objectId or the principalId of the translator resource that needs to be added'
-Log 'Executing PowerShell cmd : $identityObjectId = (Get-AzADServicePrincipal -DisplayName "$($BaseName)").Id'
+Log "Executing Azure PowerShell cmd : $identityObjectId = (Get-AzADServicePrincipal -DisplayName $($BaseName)).Id"
+Log "BaseName is $($BaseName)"
 $identityObject = Get-AzADServicePrincipal -DisplayName $BaseName
+Log "IdentityObject is $($identityObject)"
 $identityObjectId = $identityObject.Id
 Log "Object ID or the principalId is $($identityObjectId)"
 
