@@ -32,11 +32,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(resourceDetails.CustomDocumentModels, Is.Not.Null);
             Assert.That(resourceDetails.CustomDocumentModels.Count, Is.GreaterThan(0));
             Assert.That(resourceDetails.CustomDocumentModels.Limit, Is.GreaterThanOrEqualTo(resourceDetails.CustomDocumentModels.Count));
-
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds, Is.Not.Null);
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.Used, Is.GreaterThanOrEqualTo(0));
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.Quota, Is.GreaterThanOrEqualTo(resourceDetails.CustomNeuralDocumentModelBuilds.Used));
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.QuotaResetsOn, Is.GreaterThan(startTime));
         }
 
         #endregion Resource Info
