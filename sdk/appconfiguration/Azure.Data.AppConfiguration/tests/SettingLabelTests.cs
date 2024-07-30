@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
-    public class LabelTests
+    public class SettingLabelTests
     {
         [TestCaseSource(nameof(DeserializeLabelTestCases))]
         public void DeserializeLabel(string json, bool hasName)
@@ -15,7 +15,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var element = JsonDocument.Parse(json).RootElement;
 
             // Act
-            var label = Label.DeserializeLabel(element);
+            var label = SettingLabel.DeserializeLabel(element);
 
             if (hasName)
             {

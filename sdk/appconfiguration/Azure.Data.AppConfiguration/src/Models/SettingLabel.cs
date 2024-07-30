@@ -4,13 +4,11 @@
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A label used to group key-values. </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
-    public partial class Label
-#pragma warning restore AZC0012 // Avoid single word type names
+    public partial class SettingLabel
     {
-        /// <summary> Initializes a new instance of <see cref="Label"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SettingLabel"/>.</summary>
         /// <param name="name"> The name of the label. </param>
-        internal Label(string name)
+        internal SettingLabel(string name)
         {
             Name = name;
         }

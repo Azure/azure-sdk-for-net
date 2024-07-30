@@ -52,10 +52,10 @@ namespace Azure.Data.AppConfiguration.Samples
             #endregion
 
             #region Snippet:AzConfigSample2_GetLabelsAsync
-            var labelsSelector = new LabelSelector { NameFilter = "production*" };
+            var labelsSelector = new SettingLabelSelector { NameFilter = "production*" };
 
             Console.WriteLine("Labels for Production environment:");
-            await foreach (Label label in client.GetLabelsAsync(labelsSelector))
+            await foreach (SettingLabel label in client.GetLabelsAsync(labelsSelector))
             {
                 Console.WriteLine(label.Name);
             }
