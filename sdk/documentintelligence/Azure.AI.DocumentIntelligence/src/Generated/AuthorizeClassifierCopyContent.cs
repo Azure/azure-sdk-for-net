@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    /// <summary> Request body to build a new custom document classifier. </summary>
-    public partial class BuildDocumentClassifierContent
+    /// <summary> Request body to authorize document classifier copy. </summary>
+    public partial class AuthorizeClassifierCopyContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +45,32 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizeClassifierCopyContent"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="docTypes"/> is null. </exception>
-        public BuildDocumentClassifierContent(string classifierId, IDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        public AuthorizeClassifierCopyContent(string classifierId)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
-            Argument.AssertNotNull(docTypes, nameof(docTypes));
 
             ClassifierId = classifierId;
-            DocTypes = docTypes;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizeClassifierCopyContent"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
-        /// <param name="baseClassifierId"> Base classifierId on top of which to train the classifier. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
-        /// <param name="allowOverwrite"> Allow overwriting an existing classifier with the same name. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document classifier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BuildDocumentClassifierContent(string classifierId, string description, string baseClassifierId, IDictionary<string, ClassifierDocumentTypeDetails> docTypes, bool? allowOverwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthorizeClassifierCopyContent(string classifierId, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClassifierId = classifierId;
             Description = description;
-            BaseClassifierId = baseClassifierId;
-            DocTypes = docTypes;
-            AllowOverwrite = allowOverwrite;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierContent"/> for deserialization. </summary>
-        internal BuildDocumentClassifierContent()
+        /// <summary> Initializes a new instance of <see cref="AuthorizeClassifierCopyContent"/> for deserialization. </summary>
+        internal AuthorizeClassifierCopyContent()
         {
         }
 
@@ -84,11 +78,7 @@ namespace Azure.AI.DocumentIntelligence
         public string ClassifierId { get; }
         /// <summary> Document classifier description. </summary>
         public string Description { get; set; }
-        /// <summary> Base classifierId on top of which to train the classifier. </summary>
-        public string BaseClassifierId { get; set; }
-        /// <summary> List of document types to classify against. </summary>
-        public IDictionary<string, ClassifierDocumentTypeDetails> DocTypes { get; }
-        /// <summary> Allow overwriting an existing classifier with the same name. </summary>
-        public bool? AllowOverwrite { get; set; }
+        /// <summary> List of key-value tag attributes associated with the document classifier. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }
