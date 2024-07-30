@@ -7,7 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-
+- Fix 'CreateOrUpdateAsync' issue for ApplicationInsightsWorkbookResource, Issue at https://github.com/Azure/azure-sdk-for-net/issues/38780
 ### Other Changes
 
 ## 1.0.0 (2024-04-29)
