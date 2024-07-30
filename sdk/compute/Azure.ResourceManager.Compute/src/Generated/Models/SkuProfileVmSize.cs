@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The ResourceSharingProfile. </summary>
-    internal partial class ResourceSharingProfile
+    /// <summary> Specifies the VM Size. </summary>
+    public partial class SkuProfileVmSize
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +45,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
-        public ResourceSharingProfile()
+        /// <summary> Initializes a new instance of <see cref="SkuProfileVmSize"/>. </summary>
+        public SkuProfileVmSize()
         {
-            SubscriptionIds = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
-        /// <param name="subscriptionIds"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
+        /// <summary> Initializes a new instance of <see cref="SkuProfileVmSize"/>. </summary>
+        /// <param name="name"> Specifies the name of the VM Size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSharingProfile(IList<WritableSubResource> subscriptionIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SkuProfileVmSize(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SubscriptionIds = subscriptionIds;
+            Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        public IList<WritableSubResource> SubscriptionIds { get; }
+        /// <summary> Specifies the name of the VM Size. </summary>
+        public string Name { get; set; }
     }
 }

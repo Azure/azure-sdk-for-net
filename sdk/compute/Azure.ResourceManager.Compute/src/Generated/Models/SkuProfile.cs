@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The ResourceSharingProfile. </summary>
-    internal partial class ResourceSharingProfile
+    /// <summary> Specifies the sku profile for the virtual machine scale set. With this property the customer is able to specify a list of VM sizes and an allocation strategy. </summary>
+    public partial class SkuProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +45,26 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
-        public ResourceSharingProfile()
+        /// <summary> Initializes a new instance of <see cref="SkuProfile"/>. </summary>
+        public SkuProfile()
         {
-            SubscriptionIds = new ChangeTrackingList<WritableSubResource>();
+            VmSizes = new ChangeTrackingList<SkuProfileVmSize>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
-        /// <param name="subscriptionIds"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
+        /// <summary> Initializes a new instance of <see cref="SkuProfile"/>. </summary>
+        /// <param name="vmSizes"> Specifies the VM sizes for the virtual machine scale set. </param>
+        /// <param name="allocationStrategy"> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSharingProfile(IList<WritableSubResource> subscriptionIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SkuProfile(IList<SkuProfileVmSize> vmSizes, AllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SubscriptionIds = subscriptionIds;
+            VmSizes = vmSizes;
+            AllocationStrategy = allocationStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        public IList<WritableSubResource> SubscriptionIds { get; }
+        /// <summary> Specifies the VM sizes for the virtual machine scale set. </summary>
+        public IList<SkuProfileVmSize> VmSizes { get; }
+        /// <summary> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </summary>
+        public AllocationStrategy? AllocationStrategy { get; set; }
     }
 }
