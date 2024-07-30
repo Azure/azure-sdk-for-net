@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsAlertRuleActionResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsAlertRuleActionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsAlertRuleActionResource() { }
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleActionCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleActionCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -109,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsAlertRuleResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsAlertRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsAlertRuleResource() { }
@@ -123,6 +128,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource> GetSecurityInsightsAlertRuleAction(string actionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource>> GetSecurityInsightsAlertRuleActionAsync(string actionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionCollection GetSecurityInsightsAlertRuleActions() { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -150,7 +160,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsAlertRuleTemplateResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsAlertRuleTemplateResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsAlertRuleTemplateResource() { }
@@ -159,6 +169,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string alertRuleTemplateId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SecurityInsightsAutomationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleResource>, System.Collections.IEnumerable
     {
@@ -195,7 +210,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsAutomationRuleResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsAutomationRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsAutomationRuleResource() { }
@@ -206,6 +221,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -249,7 +269,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsBookmarkResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsBookmarkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsBookmarkResource() { }
@@ -260,6 +280,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -290,7 +315,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsDataConnectorResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsDataConnectorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsDataConnectorResource() { }
@@ -301,6 +326,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -370,7 +400,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsIncidentCommentResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsIncidentCommentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsIncidentCommentResource() { }
@@ -381,6 +411,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -442,7 +477,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsIncidentRelationResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsIncidentRelationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsIncidentRelationResource() { }
@@ -453,10 +488,15 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SecurityInsightsIncidentResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsIncidentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsIncidentResource() { }
@@ -479,6 +519,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationResource> GetSecurityInsightsIncidentRelation(string relationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationResource>> GetSecurityInsightsIncidentRelationAsync(string relationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationCollection GetSecurityInsightsIncidentRelations() { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -510,7 +555,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsSentinelOnboardingStateResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsSentinelOnboardingStateResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsSentinelOnboardingStateResource() { }
@@ -521,6 +566,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -551,7 +601,7 @@ namespace Azure.ResourceManager.SecurityInsights
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SecurityInsightsThreatIntelligenceIndicatorResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsThreatIntelligenceIndicatorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsThreatIntelligenceIndicatorResource() { }
@@ -564,6 +614,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligenceIndicatorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligenceIndicatorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -651,7 +706,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityInsightsWatchlistItemResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsWatchlistItemResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsWatchlistItemResource() { }
@@ -662,10 +717,15 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SecurityInsightsWatchlistResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityInsightsWatchlistResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityInsightsWatchlistResource() { }
@@ -679,6 +739,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource> GetSecurityInsightsWatchlistItem(string watchlistItemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource>> GetSecurityInsightsWatchlistItemAsync(string watchlistItemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemCollection GetSecurityInsightsWatchlistItems() { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -709,7 +774,7 @@ namespace Azure.ResourceManager.SecurityInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecurityMLAnalyticsSettingResource : Azure.ResourceManager.ArmResource
+    public partial class SecurityMLAnalyticsSettingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SecurityMLAnalyticsSettingResource() { }
@@ -720,6 +785,11 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -22,12 +22,9 @@ namespace Azure.Core.TestFramework
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
         private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
-#if NETFRAMEWORK
+
         private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 15;
-#else
-        private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 10;
-#endif
-        private const int GLOBAL_LOCAL_TEST_TIMEOUT_IN_SECONDS = 5;
+        private const int GLOBAL_LOCAL_TEST_TIMEOUT_IN_SECONDS = 10;
         public bool IsAsync { get; }
 
         public bool TestDiagnostics { get; set; } = true;

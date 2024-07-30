@@ -33,9 +33,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Annotation for the trigger attribute.
         /// </summary>
-        private readonly AuthenticationEventsTriggerAttribute triggerAttribute;
+        private readonly WebJobsAuthenticationEventsTriggerAttribute triggerAttribute;
 
-        internal ConfigurationManager(AuthenticationEventsTriggerAttribute triggerAttribute)
+        internal ConfigurationManager(WebJobsAuthenticationEventsTriggerAttribute triggerAttribute)
         {
             this.triggerAttribute = triggerAttribute;
         }

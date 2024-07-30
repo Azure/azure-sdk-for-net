@@ -27,26 +27,26 @@ namespace Azure.Search.Documents
         {
             #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The 2020_06_30 version of the Azure Cognitive Search service.
+            /// The 2020-06-30 version of the Azure Cognitive Search service.
             /// </summary>
             V2020_06_30 = 1,
 
             /// <summary>
-            /// The 2023_11_01 version of the Azure Cognitive Search service.
+            /// The 2023-11-01 version of the Azure Cognitive Search service.
             /// </summary>
             V2023_11_01 = 2,
 
             /// <summary>
-            /// The 2024_03_01_Preview version of the Azure Cognitive Search service.
+            /// The 2024-07-01 version of the Azure Cognitive Search service.
             /// </summary>
-            V2024_03_01_Preview = 3,
+            V2024_07_01 = 3,
 #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_03_01_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
@@ -200,7 +200,7 @@ namespace Azure.Search.Documents
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => version,
                 SearchClientOptions.ServiceVersion.V2023_11_01 => version,
-                SearchClientOptions.ServiceVersion.V2024_03_01_Preview => version,
+                SearchClientOptions.ServiceVersion.V2024_07_01 => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -224,7 +224,7 @@ namespace Azure.Search.Documents
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => "2020-06-30",
                 SearchClientOptions.ServiceVersion.V2023_11_01 => "2023-11-01",
-                SearchClientOptions.ServiceVersion.V2024_03_01_Preview => "2024-03-01-Preview",
+                SearchClientOptions.ServiceVersion.V2024_07_01 => "2024-07-01",
                 _ => throw CreateInvalidVersionException(version)
             };
 

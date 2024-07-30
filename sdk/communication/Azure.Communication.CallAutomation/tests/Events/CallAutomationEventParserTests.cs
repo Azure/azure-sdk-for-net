@@ -463,8 +463,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", playFailed.ServerCallId);
                 Assert.AreEqual(400, playFailed.ResultInformation?.Code);
-                Assert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, playFailed.ReasonCode);
-                Assert.AreEqual(8536, playFailed.ReasonCode.GetReasonCodeValue());
+                //Assert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, playFailed.ResultInformation);
+                Assert.AreEqual(8536, playFailed.ResultInformation?.SubCode);
             }
             else
             {
@@ -665,7 +665,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", recognizeFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
                 Assert.AreEqual(400, recognizeFailed.ResultInformation?.Code);
-                Assert.AreEqual(MediaEventReasonCode.RecognizeInitialSilenceTimedOut, recognizeFailed.ReasonCode);
+                Assert.AreEqual(MediaEventReasonCode.RecognizeInitialSilenceTimedOut.ToString(), recognizeFailed.ResultInformation?.SubCode.ToString());
             }
             else
             {
@@ -1133,6 +1133,93 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(400, holdFailed.ResultInformation?.Code);
                 Assert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, holdFailed.ReasonCode);
                 Assert.AreEqual(8536, holdFailed.ReasonCode.GetReasonCodeValue());
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void MediaStreamingStartedEventParsed_Test()
+        {
+            MediaStreamingStarted @event = CallAutomationModelFactory.MediaStreamingStarted(
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
+                mediaStreamingUpdate: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingStarted, MediaStreamingStatusDetails.SubscriptionStarted),
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.MediaStreamingStarted");
+            if (parsedEvent is MediaStreamingStarted mediaStreamingStarted)
+            {
+                Assert.AreEqual("callConnectionId", mediaStreamingStarted.CallConnectionId);
+                Assert.AreEqual("correlationId", mediaStreamingStarted.CorrelationId);
+                Assert.AreEqual("serverCallId", mediaStreamingStarted.ServerCallId);
+                Assert.AreEqual("operationContext", mediaStreamingStarted.OperationContext);
+                Assert.AreEqual(200, mediaStreamingStarted.ResultInformation?.Code);
+                Assert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingStarted.MediaStreamingUpdate.MediaStreamingStatus);
+                Assert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingStarted.MediaStreamingUpdate.MediaStreamingStatusDetails);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void MediaStreamingStoppedEventParsed_Test()
+        {
+            MediaStreamingStopped @event = CallAutomationModelFactory.MediaStreamingStopped(
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
+                mediaStreamingUpdate: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingStarted, MediaStreamingStatusDetails.SubscriptionStarted),
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.MediaStreamingStopped");
+            if (parsedEvent is MediaStreamingStopped mediaStreamingStopped)
+            {
+                Assert.AreEqual("callConnectionId", mediaStreamingStopped.CallConnectionId);
+                Assert.AreEqual("correlationId", mediaStreamingStopped.CorrelationId);
+                Assert.AreEqual("serverCallId", mediaStreamingStopped.ServerCallId);
+                Assert.AreEqual("operationContext", mediaStreamingStopped.OperationContext);
+                Assert.AreEqual(200, mediaStreamingStopped.ResultInformation?.Code);
+                Assert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingStopped.MediaStreamingUpdate.MediaStreamingStatus);
+                Assert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingStopped.MediaStreamingUpdate.MediaStreamingStatusDetails);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void MediaStreamingFailedEventParsed_Test()
+        {
+            MediaStreamingFailed @event = CallAutomationModelFactory.MediaStreamingFailed(
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
+                mediaStreamingUpdate: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingStarted, MediaStreamingStatusDetails.SubscriptionStarted),
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.MediaStreamingFailed");
+            if (parsedEvent is MediaStreamingFailed mediaStreamingFailed)
+            {
+                Assert.AreEqual("callConnectionId", mediaStreamingFailed.CallConnectionId);
+                Assert.AreEqual("correlationId", mediaStreamingFailed.CorrelationId);
+                Assert.AreEqual("serverCallId", mediaStreamingFailed.ServerCallId);
+                Assert.AreEqual("operationContext", mediaStreamingFailed.OperationContext);
+                Assert.AreEqual(200, mediaStreamingFailed.ResultInformation?.Code);
+                Assert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatus);
+                Assert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatusDetails);
             }
             else
             {

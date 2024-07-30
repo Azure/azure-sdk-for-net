@@ -127,17 +127,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixMatch), out propertyOverride);
-            if (Optional.IsCollectionDefined(PrefixMatch) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PrefixMatch.Any() || hasPropertyOverride)
+                builder.Append("  prefixMatch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrefixMatch))
                 {
-                    builder.Append("  prefixMatch: ");
-                    if (hasPropertyOverride)
+                    if (PrefixMatch.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  prefixMatch: ");
                         builder.AppendLine("[");
                         foreach (var item in PrefixMatch)
                         {
@@ -162,15 +163,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCreationTime), out propertyOverride);
-            if (Optional.IsDefined(MinCreationTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minCreationTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinCreationTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minCreationTime: ");
                     if (MinCreationTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

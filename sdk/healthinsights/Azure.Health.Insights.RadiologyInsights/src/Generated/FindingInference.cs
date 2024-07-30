@@ -20,16 +20,16 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             Argument.AssertNotNull(finding, nameof(finding));
 
-            Kind = "finding";
+            Kind = RadiologyInsightsInferenceType.Finding;
             Finding = finding;
         }
 
         /// <summary> Initializes a new instance of <see cref="FindingInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for RadiologyInsightsInference. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="finding"> Finding data : contains extensions, fields and components linked with the finding. </param>
-        internal FindingInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Observation finding) : base(kind, extension, serializedAdditionalRawData)
+        internal FindingInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Observation finding) : base(kind, extension, serializedAdditionalRawData)
         {
             Finding = finding;
         }

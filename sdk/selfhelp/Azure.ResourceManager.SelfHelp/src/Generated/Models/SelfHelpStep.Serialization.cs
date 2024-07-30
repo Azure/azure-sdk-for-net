@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string title = default;
             string description = default;
             string guidance = default;
-            ExecutionStatus? executionStatus = default;
+            TroubleshooterExecutionStatus? executionStatus = default;
             string executionStatusDescription = default;
             SelfHelpType? type = default;
             bool? isLastStep = default;
-            IReadOnlyList<StepInput> inputs = default;
+            IReadOnlyList<TroubleshooterStepInput> inputs = default;
             AutomatedCheckResult automatedCheckResults = default;
             IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             ResponseError error = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    executionStatus = new ExecutionStatus(property.Value.GetString());
+                    executionStatus = new TroubleshooterExecutionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("executionStatusDescription"u8))
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<StepInput> array = new List<StepInput>();
+                    List<TroubleshooterStepInput> array = new List<TroubleshooterStepInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StepInput.DeserializeStepInput(item, options));
+                        array.Add(TroubleshooterStepInput.DeserializeTroubleshooterStepInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 executionStatusDescription,
                 type,
                 isLastStep,
-                inputs ?? new ChangeTrackingList<StepInput>(),
+                inputs ?? new ChangeTrackingList<TroubleshooterStepInput>(),
                 automatedCheckResults,
                 insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
                 error,

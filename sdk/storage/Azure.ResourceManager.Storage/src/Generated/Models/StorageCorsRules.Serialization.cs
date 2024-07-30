@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorsRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(CorsRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CorsRules.Any() || hasPropertyOverride)
+                builder.Append("  corsRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CorsRules))
                 {
-                    builder.Append("  corsRules: ");
-                    if (hasPropertyOverride)
+                    if (CorsRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  corsRules: ");
                         builder.AppendLine("[");
                         foreach (var item in CorsRules)
                         {

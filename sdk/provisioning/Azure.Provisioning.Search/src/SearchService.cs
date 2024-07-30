@@ -19,7 +19,30 @@ namespace Azure.Provisioning.Search
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.ResourceManager.Search/src/Generated/RestOperations/ServicesRestOperations.cs#L36
         private const string DefaultVersion = "2023-11-01";
 
-        private static SearchServiceData Empty(string name) => ArmSearchModelFactory.SearchServiceData();
+        private static SearchServiceData Empty(string name) => ArmSearchModelFactory.SearchServiceData(
+            id: null,
+            name: null,
+            resourceType: default,
+            systemData: null,
+            tags: null,
+            location: default,
+            skuName: null,
+            identity: null,
+            replicaCount: null,
+            partitionCount: null,
+            hostingMode: null,
+            publicNetworkAccess: null,
+            status: null,
+            statusDetails: null,
+            provisioningState: null,
+            ipRules: null,
+            encryptionWithCmk: null,
+            isLocalAuthDisabled: null,
+            authOptions: null,
+            privateEndpointConnections: null,
+            semanticSearch: null,
+            sharedPrivateLinkResources: null
+        );
 
         /// <summary>
         /// Creates a new instance of the <see cref="SearchService"/> class.

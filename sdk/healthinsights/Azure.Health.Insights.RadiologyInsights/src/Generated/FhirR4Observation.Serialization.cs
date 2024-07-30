@@ -302,9 +302,9 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IList<FhirR4Identifier> identifier = default;
+            IReadOnlyList<FhirR4Identifier> identifier = default;
             ObservationStatusCodeType status = default;
-            IList<FhirR4CodeableConcept> category = default;
+            IReadOnlyList<FhirR4CodeableConcept> category = default;
             FhirR4CodeableConcept code = default;
             FhirR4Reference subject = default;
             FhirR4Reference encounter = default;
@@ -324,18 +324,18 @@ namespace Azure.Health.Insights.RadiologyInsights
             string valueDateTime = default;
             FhirR4Period valuePeriod = default;
             FhirR4CodeableConcept dataAbsentReason = default;
-            IList<FhirR4CodeableConcept> interpretation = default;
-            IList<FhirR4Annotation> note = default;
+            IReadOnlyList<FhirR4CodeableConcept> interpretation = default;
+            IReadOnlyList<FhirR4Annotation> note = default;
             FhirR4CodeableConcept bodySite = default;
             FhirR4CodeableConcept method = default;
-            IList<FhirR4ObservationReferenceRange> referenceRange = default;
-            IList<FhirR4Reference> hasMember = default;
-            IList<FhirR4Reference> derivedFrom = default;
-            IList<FhirR4ObservationComponent> component = default;
+            IReadOnlyList<FhirR4ObservationReferenceRange> referenceRange = default;
+            IReadOnlyList<FhirR4Reference> hasMember = default;
+            IReadOnlyList<FhirR4Reference> derivedFrom = default;
+            IReadOnlyList<FhirR4ObservationComponent> component = default;
             FhirR4Narrative text = default;
-            IList<FhirR4Resource> contained = default;
-            IList<FhirR4Extension> extension = default;
-            IList<FhirR4Extension> modifierExtension = default;
+            IReadOnlyList<FhirR4Resource> contained = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
+            IReadOnlyList<FhirR4Extension> modifierExtension = default;
             string resourceType = default;
             string id = default;
             FhirR4Meta meta = default;

@@ -250,46 +250,49 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutomatic), out propertyOverride);
-            if (Optional.IsDefined(IsAutomatic) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  automatic: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAutomatic))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  automatic: ");
                     var boolValue = IsAutomatic.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IndexingMode), out propertyOverride);
-            if (Optional.IsDefined(IndexingMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  indexingMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IndexingMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  indexingMode: ");
                     builder.AppendLine($"'{IndexingMode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedPaths), out propertyOverride);
-            if (Optional.IsCollectionDefined(IncludedPaths) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (IncludedPaths.Any() || hasPropertyOverride)
+                builder.Append("  includedPaths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IncludedPaths))
                 {
-                    builder.Append("  includedPaths: ");
-                    if (hasPropertyOverride)
+                    if (IncludedPaths.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  includedPaths: ");
                         builder.AppendLine("[");
                         foreach (var item in IncludedPaths)
                         {
@@ -301,17 +304,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedPaths), out propertyOverride);
-            if (Optional.IsCollectionDefined(ExcludedPaths) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ExcludedPaths.Any() || hasPropertyOverride)
+                builder.Append("  excludedPaths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExcludedPaths))
                 {
-                    builder.Append("  excludedPaths: ");
-                    if (hasPropertyOverride)
+                    if (ExcludedPaths.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  excludedPaths: ");
                         builder.AppendLine("[");
                         foreach (var item in ExcludedPaths)
                         {
@@ -323,17 +327,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompositeIndexes), out propertyOverride);
-            if (Optional.IsCollectionDefined(CompositeIndexes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CompositeIndexes.Any() || hasPropertyOverride)
+                builder.Append("  compositeIndexes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CompositeIndexes))
                 {
-                    builder.Append("  compositeIndexes: ");
-                    if (hasPropertyOverride)
+                    if (CompositeIndexes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  compositeIndexes: ");
                         builder.AppendLine("[");
                         foreach (var item in CompositeIndexes)
                         {
@@ -355,17 +360,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpatialIndexes), out propertyOverride);
-            if (Optional.IsCollectionDefined(SpatialIndexes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SpatialIndexes.Any() || hasPropertyOverride)
+                builder.Append("  spatialIndexes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SpatialIndexes))
                 {
-                    builder.Append("  spatialIndexes: ");
-                    if (hasPropertyOverride)
+                    if (SpatialIndexes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  spatialIndexes: ");
                         builder.AppendLine("[");
                         foreach (var item in SpatialIndexes)
                         {

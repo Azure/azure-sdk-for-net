@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.ResourceDetectors.Azure;
+using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -27,8 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
-
-        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
 
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
@@ -49,12 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-        // Note: OpenTelemetryBuilder is obsolete because users should target
-        // IOpenTelemetryBuilder for extensions but this method is valid and
-        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
                         DefaultAzureMonitorOptions>();
@@ -81,12 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-        // Note: OpenTelemetryBuilder is obsolete because users should target
-        // IOpenTelemetryBuilder for extensions but this method is valid and
-        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             if (builder.Services == null)
             {
@@ -125,51 +114,45 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 return true;
                             })
                             .AddProcessor<ProfilingSessionTraceProcessor>()
-                            .AddLiveMetrics()
                             .AddAzureMonitorTraceExporter());
+
+            builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) =>
+            {
+                var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
+                if (azureMonitorOptions.EnableLiveMetrics)
+                {
+                    var manager = sp.GetRequiredService<Manager>();
+                    builder.AddProcessor(new LiveMetricsActivityProcessor(manager));
+                }
+            });
 
             builder.WithMetrics(b => b
                             .AddHttpClientAndServerMetrics()
                             .AddAzureMonitorMetricExporter());
 
-            builder.Services.AddLogging(logging =>
-            {
-                logging.AddOpenTelemetry(builderOptions =>
-                {
-                    builderOptions.IncludeFormattedMessage = true;
-                });
-            });
-
-            // Add AzureMonitorLogExporter to AzureMonitorOptions
-            // once the service provider is available containing the final
-            // AzureMonitorOptions.
-            builder.Services.AddOptions<OpenTelemetryLoggerOptions>()
-                    .Configure<IOptionsMonitor<AzureMonitorOptions>>((loggingOptions, azureOptions) =>
+            builder.WithLogging(
+                    logging => logging.AddProcessor(sp =>
                     {
-                        var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
+                        var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().CurrentValue;
+                        var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
+                        azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
 
-                        bool enableLogSampling = false;
-                        try
+                        var exporter = new AzureMonitorLogExporter(azureMonitorExporterOptions);
+
+                        if (azureMonitorOptions.EnableLiveMetrics)
                         {
-                            var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
-                            bool.TryParse(enableLogSamplingEnvVar, out enableLogSampling);
-                        }
-                        catch (Exception ex)
-                        {
-                            AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
+                            var manager = sp.GetRequiredService<Manager>();
+
+                            return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
+                            {
+                                new LiveMetricsLogProcessor(manager),
+                                new BatchLogRecordExportProcessor(exporter)
+                            });
                         }
 
-                        if (enableLogSampling)
-                        {
-                            var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
-                            azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
-                            loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
-                        }
-                        else
-                        {
-                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
-                        }
-                    });
+                        return new BatchLogRecordExportProcessor(exporter);
+                    }),
+                    options => options.IncludeFormattedMessage = true);
 
             // Register a configuration action so that when
             // AzureMonitorExporterOptions is requested it is populated from
@@ -179,16 +162,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     .Configure<IOptionsMonitor<AzureMonitorOptions>>((exporterOptions, azureMonitorOptions) =>
                     {
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToExporterOptions(exporterOptions);
-                    });
-
-            // Register a configuration action so that when
-            // LiveMetricsExporterOptions is requested it is populated from
-            // AzureMonitorOptions.
-            builder.Services
-                    .AddOptions<LiveMetricsExporterOptions>()
-                    .Configure<IOptionsMonitor<AzureMonitorOptions>>((exporterOptions, azureMonitorOptions) =>
-                    {
-                        azureMonitorOptions.Get(Options.DefaultName).SetValueToLiveMetricsExporterOptions(exporterOptions);
                     });
 
             // Register Azure SDK log forwarder in the case it was not registered by the user application.
@@ -205,6 +178,32 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
                 return new AzureEventSourceLogForwarder(loggerFactory);
             });
+
+            // Register Manager as a singleton
+            builder.Services.AddSingleton<Manager>(sp =>
+            {
+                AzureMonitorOptions options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
+                return new Manager(options, new DefaultPlatformDistro());
+            });
+
+            builder.Services.AddOptions<AzureMonitorOptions>()
+                .Configure<IConfiguration>((options, config) =>
+                {
+                    // This is a temporary workaround for hotfix GHSA-vh2m-22xx-q94f.
+                    // https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f
+                    // We are disabling the workaround set by OpenTelemetry.Instrumentation.AspNetCore v1.8.1 and OpenTelemetry.Instrumentation.Http v1.8.1.
+                    // The OpenTelemetry Community is deciding on an official stance on this issue and we will align with that final decision.
+                    // TODO: FOLLOW UP ON: https://github.com/open-telemetry/semantic-conventions/pull/961 (2024-04-26)
+                    if (config[EnvironmentVariableConstants.ASPNETCORE_DISABLE_URL_QUERY_REDACTION] == null)
+                    {
+                        config[EnvironmentVariableConstants.ASPNETCORE_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+
+                    if (config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] == null)
+                    {
+                        config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+                });
 
             return builder;
         }

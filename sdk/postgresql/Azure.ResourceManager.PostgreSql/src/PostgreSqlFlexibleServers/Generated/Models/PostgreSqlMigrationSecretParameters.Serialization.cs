@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminCredentials), out propertyOverride);
-            if (Optional.IsDefined(AdminCredentials) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  adminCredentials: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminCredentials))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  adminCredentials: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AdminCredentials, options, 2, false, "  adminCredentials: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceServerUsername), out propertyOverride);
-            if (Optional.IsDefined(SourceServerUsername) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sourceServerUsername: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceServerUsername))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sourceServerUsername: ");
                     if (SourceServerUsername.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -156,15 +158,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServerUsername), out propertyOverride);
-            if (Optional.IsDefined(TargetServerUsername) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  targetServerUsername: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetServerUsername))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  targetServerUsername: ");
                     if (TargetServerUsername.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.Purview
             try
             {
                 var response = await _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PurviewArmOperation<PurviewKafkaConfigurationResource>(Response.FromValue(new PurviewKafkaConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PurviewArmOperation<PurviewKafkaConfigurationResource>(Response.FromValue(new PurviewKafkaConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.Purview
             try
             {
                 var response = _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, data, cancellationToken);
-                var operation = new PurviewArmOperation<PurviewKafkaConfigurationResource>(Response.FromValue(new PurviewKafkaConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PurviewArmOperation<PurviewKafkaConfigurationResource>(Response.FromValue(new PurviewKafkaConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

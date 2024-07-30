@@ -1,8 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-#nullable enable
-
 namespace OpenTelemetry.Trace;
 
 internal static class ResourceSemanticConventions
@@ -46,6 +44,7 @@ internal static class ResourceSemanticConventions
     public const string AttributeProcessUsername = "process.username";
 
     public const string AttributeCloudAccount = "cloud.account.id";
+    public const string AttributeCloudAvailabilityZone = "cloud.availability_zone";
     public const string AttributeCloudPlatform = "cloud.platform";
     public const string AttributeCloudProvider = "cloud.provider";
     public const string AttributeCloudRegion = "cloud.region";

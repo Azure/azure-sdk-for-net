@@ -7123,7 +7123,7 @@ Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
 Console.WriteLine(result[0].GetProperty("guid").ToString());
 ]]></code></example>
     </member>
-    <member name="ImportGlossaryTermsViaCsvAsync(WaitUntil,string,RequestContent,bool?,RequestContext)">
+    <member name="ImportGlossaryTermsViaCsvAsync(WaitUntil,string,RequestContent,string,bool?,RequestContext)">
       <example>
 This sample shows how to call ImportGlossaryTermsViaCsvAsync and parse the result.
 <code><![CDATA[
@@ -7132,7 +7132,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content);
+Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, "multipart/form-data");
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7145,7 +7145,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
+Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, "multipart/form-data", includeTermHierarchy: true);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7159,7 +7159,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString(
 Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
 ]]></code></example>
     </member>
-    <member name="ImportGlossaryTermsViaCsv(WaitUntil,string,RequestContent,bool?,RequestContext)">
+    <member name="ImportGlossaryTermsViaCsv(WaitUntil,string,RequestContent,string,bool?,RequestContext)">
       <example>
 This sample shows how to call ImportGlossaryTermsViaCsv and parse the result.
 <code><![CDATA[
@@ -7168,7 +7168,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content);
+Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, "multipart/form-data");
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7181,7 +7181,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
+Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, "multipart/form-data", includeTermHierarchy: true);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7195,7 +7195,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString(
 Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
 ]]></code></example>
     </member>
-    <member name="ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil,string,RequestContent,bool?,RequestContext)">
+    <member name="ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil,string,RequestContent,string,bool?,RequestContext)">
       <example>
 This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync and parse the result.
 <code><![CDATA[
@@ -7204,7 +7204,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content);
+Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, "multipart/form-data");
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7217,7 +7217,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
+Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, "multipart/form-data", includeTermHierarchy: true);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7231,7 +7231,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString(
 Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
 ]]></code></example>
     </member>
-    <member name="ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil,string,RequestContent,bool?,RequestContext)">
+    <member name="ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil,string,RequestContent,string,bool?,RequestContext)">
       <example>
 This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName and parse the result.
 <code><![CDATA[
@@ -7240,7 +7240,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content);
+Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, "multipart/form-data");
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7253,7 +7253,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
+Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, "multipart/form-data", includeTermHierarchy: true);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

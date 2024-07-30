@@ -113,29 +113,31 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Actions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Actions, options, 2, false, "  actions: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Filters), out propertyOverride);
-            if (Optional.IsDefined(Filters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  filters: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Filters))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  filters: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Filters, options, 2, false, "  filters: ");
                 }
             }

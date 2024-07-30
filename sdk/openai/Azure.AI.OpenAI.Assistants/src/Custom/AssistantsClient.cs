@@ -22,7 +22,6 @@ public partial class AssistantsClient
      */
 
     private static readonly string s_openAIEndpoint = "https://api.openai.com/v1";
-    private static readonly string s_aoaiNotYetSupportedMessage = "Azure OpenAI does not yet support Assistants.";
 
     private readonly string _apiVersion;
     private bool _isConfiguredForAzure;
@@ -35,9 +34,6 @@ public partial class AssistantsClient
     /// <param name="options"> Additional options for customizing the behavior of the client. </param>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null.
-    /// </exception>
-    /// <exception cref="NotSupportedException">
-    ///     Always thrown until Azure OpenAI support for /assistants is available.
     /// </exception>
     public AssistantsClient(Uri endpoint, AzureKeyCredential keyCredential, AssistantsClientOptions options)
     {
@@ -68,9 +64,6 @@ public partial class AssistantsClient
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null.
     /// </exception>
-    /// <exception cref="NotSupportedException">
-    ///     Always thrown until Azure OpenAI support for /assistants is available.
-    /// </exception>
     public AssistantsClient(Uri endpoint, AzureKeyCredential keyCredential)
         : this(endpoint, keyCredential, new AssistantsClientOptions())
     {
@@ -84,9 +77,6 @@ public partial class AssistantsClient
     /// <param name="options"> Additional options for customizing the behavior of the client. </param>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.
-    /// </exception>
-    /// <exception cref="NotSupportedException">
-    ///     Always thrown until Azure OpenAI support for /assistants is available.
     /// </exception>
     public AssistantsClient(Uri endpoint, TokenCredential tokenCredential, AssistantsClientOptions options)
     {
@@ -106,8 +96,6 @@ public partial class AssistantsClient
             new ResponseClassifier());
         _endpoint = endpoint;
         _apiVersion = options.Version;
-
-        throw new NotSupportedException(s_aoaiNotYetSupportedMessage);
     }
 
     /// <summary>
@@ -117,9 +105,6 @@ public partial class AssistantsClient
     /// <param name="tokenCredential"> The authentication information for the Azure OpenAI resource. </param>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="endpoint"/> is null.
-    /// </exception>
-    /// <exception cref="NotSupportedException">
-    ///     Always thrown until Azure OpenAI support for /assistants is available.
     /// </exception>
     public AssistantsClient(Uri endpoint, TokenCredential tokenCredential)
         : this(endpoint, tokenCredential, new AssistantsClientOptions())
@@ -745,10 +730,10 @@ public partial class AssistantsClient
     internal HttpMessage CreateInternalListFilesRequest(string purpose, RequestContext context)
         => CreateRequestMessage("/files", content: null, context, RequestMethod.Get, ("purpose", purpose));
 
-    internal HttpMessage CreateUploadFileRequest(RequestContent content, RequestContext context)
+    internal HttpMessage CreateUploadFileRequest(RequestContent content, string contentType,RequestContext context)
     {
         HttpMessage message = CreateRequestMessage("/files", content, context, RequestMethod.Post);
-        (content as Azure.Core.MultipartFormDataContent).ApplyToRequest(message.Request);
+        message.Request.Headers.SetValue(HttpHeader.Names.ContentType, contentType);
         return message;
     }
 

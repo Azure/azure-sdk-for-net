@@ -76,22 +76,31 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Number of security patches available for installation. </summary>
+        [WirePath("security")]
         public int? Security { get; }
         /// <summary> Number of critical patches available for installation. </summary>
+        [WirePath("critical")]
         public int? Critical { get; }
         /// <summary> Number of definition patches available for installation. </summary>
+        [WirePath("definition")]
         public int? Definition { get; }
         /// <summary> Number of update Rollup patches available for installation. </summary>
+        [WirePath("updateRollup")]
         public int? UpdateRollup { get; }
         /// <summary> Number of feature pack patches available for installation. </summary>
+        [WirePath("featurePack")]
         public int? FeaturePack { get; }
         /// <summary> Number of service pack patches available for installation. </summary>
+        [WirePath("servicePack")]
         public int? ServicePack { get; }
         /// <summary> Number of tools patches available for installation. </summary>
+        [WirePath("tools")]
         public int? Tools { get; }
         /// <summary> Number of updates category patches available for installation. </summary>
+        [WirePath("updates")]
         public int? Updates { get; }
         /// <summary> Number of other patches available for installation. </summary>
+        [WirePath("other")]
         public int? Other { get; }
     }
 }

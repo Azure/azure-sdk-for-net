@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.ScVmm
             try
             {
                 var response = await _scVmmInventoryItemInventoryItemsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ScVmmArmOperation<ScVmmInventoryItemResource>(Response.FromValue(new ScVmmInventoryItemResource(Client, response), response.GetRawResponse()));
+                var uri = _scVmmInventoryItemInventoryItemsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ScVmmArmOperation<ScVmmInventoryItemResource>(Response.FromValue(new ScVmmInventoryItemResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.ScVmm
             try
             {
                 var response = _scVmmInventoryItemInventoryItemsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, data, cancellationToken);
-                var operation = new ScVmmArmOperation<ScVmmInventoryItemResource>(Response.FromValue(new ScVmmInventoryItemResource(Client, response), response.GetRawResponse()));
+                var uri = _scVmmInventoryItemInventoryItemsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ScVmmArmOperation<ScVmmInventoryItemResource>(Response.FromValue(new ScVmmInventoryItemResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -248,7 +252,7 @@ namespace Azure.ResourceManager.ScVmm
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InventoryItems_ListByVMMServer</description>
+        /// <description>InventoryItems_ListByVmmServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +282,7 @@ namespace Azure.ResourceManager.ScVmm
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InventoryItems_ListByVMMServer</description>
+        /// <description>InventoryItems_ListByVmmServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

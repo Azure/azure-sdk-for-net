@@ -36,6 +36,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(clusterRp, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterResourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/", false);
+            uri.AppendPath(fluxConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName)
         {
             var message = _pipeline.CreateMessage();
@@ -136,6 +156,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, KubernetesFluxConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(clusterRp, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterResourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/", false);
+            uri.AppendPath(fluxConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, KubernetesFluxConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -230,6 +270,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, KubernetesFluxConfigurationPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(clusterRp, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterResourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/", false);
+            uri.AppendPath(fluxConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, KubernetesFluxConfigurationPatch patch)
@@ -328,6 +388,30 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, bool? forceDelete)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(clusterRp, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterResourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/", false);
+            uri.AppendPath(fluxConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (forceDelete != null)
+            {
+                uri.AppendQuery("forceDelete", forceDelete.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, bool? forceDelete)
         {
             var message = _pipeline.CreateMessage();
@@ -424,6 +508,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(clusterRp, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterResourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/providers/Microsoft.KubernetesConfiguration/fluxConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
@@ -513,6 +616,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName)

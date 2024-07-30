@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
-            if (Optional.IsDefined(AppId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  appId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  appId: ");
                     if (AppId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(AppSecretSettingName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  appSecretSettingName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppSecretSettingName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  appSecretSettingName: ");
                     if (AppSecretSettingName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

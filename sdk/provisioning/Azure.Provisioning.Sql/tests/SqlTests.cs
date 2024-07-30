@@ -25,8 +25,8 @@ namespace Azure.Provisioning.Sql.Tests
             var sqlServer = new SqlServer(
                 infrastructure,
                 "sqlserver",
-                administratorLogin: new Parameter("adminLogin", "SQL Server administrator login"),
-                administratorPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true));
+                administratorLogin: new Parameter("adminLogin", description: "SQL Server administrator login"),
+                administratorPassword: new Parameter("adminPassword", description: "SQL Server administrator password", isSecure: true));
             _ = new SqlDatabase(infrastructure, sqlServer);
             infrastructure.Build(GetOutputPath());
 
@@ -52,8 +52,8 @@ namespace Azure.Provisioning.Sql.Tests
                 "sqlserver",
                 administrator: admin);
 
-            sqlServer.AssignProperty(data => data.Administrators.Login, new Parameter("adminLogin", "SQL Server administrator login"));
-            sqlServer.AssignProperty(data => data.Administrators.Sid, new Parameter("adminObjectId", "SQL Server administrator Object ID"));
+            sqlServer.AssignProperty(data => data.Administrators.Login, new Parameter("adminLogin", description: "SQL Server administrator login"));
+            sqlServer.AssignProperty(data => data.Administrators.Sid, new Parameter("adminObjectId", description: "SQL Server administrator Object ID"));
 
             _ = new SqlDatabase(infrastructure, sqlServer);
             infrastructure.Build(GetOutputPath());
@@ -78,11 +78,11 @@ namespace Azure.Provisioning.Sql.Tests
             var sqlServer = new SqlServer(
                 infrastructure,
                 "sqlserver",
-                administratorLogin: new Parameter("adminLogin", "SQL Server administrator login"),
-                administratorPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true),
+                administratorLogin: new Parameter("adminLogin", description: "SQL Server administrator login"),
+                administratorPassword: new Parameter("adminPassword", description: "SQL Server administrator password", isSecure: true),
                 administrator: admin);
-            sqlServer.AssignProperty(data => data.Administrators.Login, new Parameter("adminIdentityLogin", "SQL Server administrator login"));
-            sqlServer.AssignProperty(data => data.Administrators.Sid, new Parameter("adminObjectId", "SQL Server administrator Object ID"));
+            sqlServer.AssignProperty(data => data.Administrators.Login, new Parameter("adminIdentityLogin", description: "SQL Server administrator login"));
+            sqlServer.AssignProperty(data => data.Administrators.Sid, new Parameter("adminObjectId", description: "SQL Server administrator Object ID"));
 
             _ = new SqlDatabase(infrastructure, sqlServer);
             _ = new SqlFirewallRule(infrastructure, sqlServer);
@@ -111,8 +111,8 @@ namespace Azure.Provisioning.Sql.Tests
 
             var admin = new SqlServerAdministrator(infrastructure, sqlServer);
             admin.Properties.AdministratorType = "ActiveDirectory";
-            admin.AssignProperty(data => data.Login, new Parameter("adminLogin", "SQL Server administrator login"));
-            admin.AssignProperty(data => data.Sid, new Parameter("adminObjectId", "SQL Server administrator Object ID"));
+            admin.AssignProperty(data => data.Login, new Parameter("adminLogin", description: "SQL Server administrator login"));
+            admin.AssignProperty(data => data.Sid, new Parameter("adminObjectId", description: "SQL Server administrator Object ID"));
 
             _ = new SqlDatabase(infrastructure, sqlServer);
             _ = new SqlFirewallRule(infrastructure, sqlServer);

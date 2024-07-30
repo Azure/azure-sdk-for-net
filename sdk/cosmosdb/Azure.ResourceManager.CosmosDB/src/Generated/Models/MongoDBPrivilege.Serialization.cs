@@ -131,31 +131,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resource), out propertyOverride);
-            if (Optional.IsDefined(Resource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Resource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resource: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Resource, options, 2, false, "  resource: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Actions.Any() || hasPropertyOverride)
+                builder.Append("  actions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Actions))
                 {
-                    builder.Append("  actions: ");
-                    if (hasPropertyOverride)
+                    if (Actions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  actions: ");
                         builder.AppendLine("[");
                         foreach (var item in Actions)
                         {

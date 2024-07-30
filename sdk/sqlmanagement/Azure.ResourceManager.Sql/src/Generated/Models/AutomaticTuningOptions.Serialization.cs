@@ -150,57 +150,61 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DesiredState), out propertyOverride);
-            if (Optional.IsDefined(DesiredState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  desiredState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DesiredState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  desiredState: ");
                     builder.AppendLine($"'{DesiredState.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActualState), out propertyOverride);
-            if (Optional.IsDefined(ActualState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actualState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActualState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actualState: ");
                     builder.AppendLine($"'{ActualState.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
-            if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reasonCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReasonCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reasonCode: ");
                     builder.AppendLine($"{ReasonCode.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonDesc), out propertyOverride);
-            if (Optional.IsDefined(ReasonDesc) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reasonDesc: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReasonDesc))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reasonDesc: ");
                     builder.AppendLine($"'{ReasonDesc.Value.ToSerialString()}'");
                 }
             }

@@ -55,7 +55,7 @@ namespace Azure.AI.Translation.Text.Tests
             }
             else if (token != null)
             {
-                return InstrumentClient(new TextTranslationClient(token, endpoint, InstrumentClientOptions(options)));
+                return InstrumentClient(new TextTranslationClient(token, endpoint, options: InstrumentClientOptions(options)));
             }
             else
             {

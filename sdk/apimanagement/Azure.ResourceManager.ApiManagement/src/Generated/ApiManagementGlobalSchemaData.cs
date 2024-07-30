@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Schema Type. Immutable. </summary>
+        [WirePath("properties.schemaType")]
         public ApiSchemaType? SchemaType { get; set; }
         /// <summary> Free-form schema entity description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// Json-encoded string for non json-based schema.
@@ -109,6 +111,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.value")]
         public BinaryData Value { get; set; }
         /// <summary>
         /// Global Schema document object for json-based schema formats(e.g. json schema).
@@ -140,6 +143,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.document")]
         public BinaryData Document { get; set; }
     }
 }

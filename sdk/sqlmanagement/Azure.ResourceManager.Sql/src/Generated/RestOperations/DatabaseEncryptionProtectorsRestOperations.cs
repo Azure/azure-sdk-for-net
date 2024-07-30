@@ -35,6 +35,25 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateRevalidateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, EncryptionProtectorName encryptionProtectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/encryptionProtector/", false);
+            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath("/revalidate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRevalidateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, EncryptionProtectorName encryptionProtectorName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +132,25 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRevertRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, EncryptionProtectorName encryptionProtectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/encryptionProtector/", false);
+            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath("/revert", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRevertRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, EncryptionProtectorName encryptionProtectorName)

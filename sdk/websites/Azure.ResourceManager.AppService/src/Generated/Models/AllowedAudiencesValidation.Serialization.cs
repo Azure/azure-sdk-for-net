@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedAudiences), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedAudiences) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedAudiences.Any() || hasPropertyOverride)
+                builder.Append("  allowedAudiences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedAudiences))
                 {
-                    builder.Append("  allowedAudiences: ");
-                    if (hasPropertyOverride)
+                    if (AllowedAudiences.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedAudiences: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedAudiences)
                         {

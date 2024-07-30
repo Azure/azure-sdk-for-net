@@ -1,5 +1,12 @@
 # Release History
 
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added support for listing labels.
+- Added support for filtering by tags.
+
 ## 1.4.1 (2024-04-17)
 
 ### Bugs Fixed
@@ -30,7 +37,7 @@
 ### Breaking Changes
 
 - Renamed `key` tag reported on `ConfigurationClient` activities to `az.appconfiguration.key` following OpenTelemetry attribute naming conventions.
-  
+
 ### Bugs Fixed
 
 ### Other Changes

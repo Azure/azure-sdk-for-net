@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Sets options that control the availability of semantic ranking. This configuration is only possible for certain search SKUs in certain locations. </summary>
+    /// <summary> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </summary>
     public readonly partial struct SearchSemanticSearch : IEquatable<SearchSemanticSearch>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Search.Models
         private const string FreeValue = "free";
         private const string StandardValue = "standard";
 
-        /// <summary> Indicates that semantic ranking is disabled for the search service. </summary>
+        /// <summary> Indicates that semantic reranker is disabled for the search service. This is the default. </summary>
         public static SearchSemanticSearch Disabled { get; } = new SearchSemanticSearch(DisabledValue);
-        /// <summary> Enables semantic ranking on a search service and indicates that it is to be used within the limits of the free tier. This would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. </summary>
+        /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. </summary>
         public static SearchSemanticSearch Free { get; } = new SearchSemanticSearch(FreeValue);
-        /// <summary> Enables semantic ranking on a search service as a billable feature, with higher throughput and volume of semantic ranking requests. </summary>
+        /// <summary> Enables semantic reranker on a search service as a billable feature, with higher throughput and volume of semantically reranked queries. </summary>
         public static SearchSemanticSearch Standard { get; } = new SearchSemanticSearch(StandardValue);
         /// <summary> Determines if two <see cref="SearchSemanticSearch"/> values are the same. </summary>
         public static bool operator ==(SearchSemanticSearch left, SearchSemanticSearch right) => left.Equals(right);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

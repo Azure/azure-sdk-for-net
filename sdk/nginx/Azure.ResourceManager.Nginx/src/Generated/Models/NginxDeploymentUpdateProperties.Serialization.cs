@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile, options);
             }
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                writer.WritePropertyName("autoUpgradeProfile"u8);
+                writer.WriteObjectValue(AutoUpgradeProfile, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.Nginx.Models
             NginxLogging logging = default;
             NginxDeploymentScalingProperties scalingProperties = default;
             NginxDeploymentUserProfile userProfile = default;
+            AutoUpgradeProfile autoUpgradeProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,13 +134,28 @@ namespace Azure.ResourceManager.Nginx.Models
                     userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("autoUpgradeProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeProfile = AutoUpgradeProfile.DeserializeAutoUpgradeProfile(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NginxDeploymentUpdateProperties(enableDiagnosticsSupport, logging, scalingProperties, userProfile, serializedAdditionalRawData);
+            return new NginxDeploymentUpdateProperties(
+                enableDiagnosticsSupport,
+                logging,
+                scalingProperties,
+                userProfile,
+                autoUpgradeProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentUpdateProperties>.Write(ModelReaderWriterOptions options)

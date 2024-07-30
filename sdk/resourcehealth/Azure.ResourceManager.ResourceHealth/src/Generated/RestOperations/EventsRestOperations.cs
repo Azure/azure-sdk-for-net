@@ -36,6 +36,25 @@ namespace Azure.ResourceManager.ResourceHealth
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionIdRequestUri(string subscriptionId, string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (queryStartTime != null)
+            {
+                uri.AppendQuery("queryStartTime", queryStartTime, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionIdRequest(string subscriptionId, string filter, string queryStartTime)
         {
             var message = _pipeline.CreateMessage();
@@ -115,6 +134,23 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
+        internal RequestUriBuilder CreateListByTenantIdRequestUri(string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (queryStartTime != null)
+            {
+                uri.AppendQuery("queryStartTime", queryStartTime, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByTenantIdRequest(string filter, string queryStartTime)
         {
             var message = _pipeline.CreateMessage();
@@ -180,6 +216,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySingleResourceRequestUri(string resourceUri, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySingleResourceRequest(string resourceUri, string filter)
@@ -251,6 +302,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionIdNextPageRequestUri(string nextLink, string subscriptionId, string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionIdNextPageRequest(string nextLink, string subscriptionId, string filter, string queryStartTime)
@@ -325,6 +384,14 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
+        internal RequestUriBuilder CreateListByTenantIdNextPageRequestUri(string nextLink, string filter, string queryStartTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByTenantIdNextPageRequest(string nextLink, string filter, string queryStartTime)
         {
             var message = _pipeline.CreateMessage();
@@ -389,6 +456,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySingleResourceNextPageRequestUri(string nextLink, string resourceUri, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySingleResourceNextPageRequest(string nextLink, string resourceUri, string filter)

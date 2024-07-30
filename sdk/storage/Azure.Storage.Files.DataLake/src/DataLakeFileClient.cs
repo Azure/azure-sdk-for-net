@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -140,6 +140,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeClientOptions options)
             : base(connectionString, fileSystemName, filePath, options)
         {
+            Argument.AssertNotNullOrWhiteSpace(filePath, nameof(filePath));
         }
 
         /// <summary>

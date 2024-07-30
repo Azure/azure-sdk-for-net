@@ -1,0 +1,29 @@
+trigger: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: extension-wcf
+    BuildInParallel: true
+    TimeoutInMinutes: 180
+    Location: canadacentral
+    CloudConfig:
+      Preview:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+      PrivatePreview:
+        SubscriptionConfiguration: $(sub-config-storage-test-resources)
+    Clouds: Preview
+    SupportedClouds: Preview, PrivatePreview
+    MatrixReplace:
+      # Use dedicated storage pool in canadacentral with higher memory capacity
+      - Pool=.*LINUXPOOL.*/azsdk-pool-mms-ubuntu-2004-storage
+      - Pool=.*WINDOWSPOOL.*/azsdk-pool-mms-win-2022-general
+    EnvVars:
+      DYLD_LIBRARY_PATH: /usr/local/opt/openssl@3/lib
+      ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
+        AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml
+    - bash: brew install openssl@3
+      displayName: (MacOS) Install OpenSSL
+      condition: contains(variables['OSVmImage'], 'mac')

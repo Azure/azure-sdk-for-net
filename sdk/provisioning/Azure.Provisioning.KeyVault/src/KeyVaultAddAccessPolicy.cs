@@ -38,18 +38,6 @@ namespace Azure.Provisioning.KeyVaults
             AssignProperty(p => p.AccessPolicies[0].TenantId, Tenant.TenantIdExpression);
         }
 
-        private static string GetParamValue(Parameter principalIdParameter, IConstruct scope)
-        {
-            if (principalIdParameter.Source is null || ReferenceEquals(principalIdParameter.Source, scope))
-            {
-                return principalIdParameter.Value!;
-            }
-            else
-            {
-                return $"{principalIdParameter.Source.Name}.outputs.{principalIdParameter.Name}";
-            }
-        }
-
         protected override Resource? FindParentInScope(IConstruct scope)
         {
             var result = base.FindParentInScope(scope);

@@ -34,10 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
-            {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
-            };
+            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample");
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
@@ -47,7 +44,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43403")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -77,7 +73,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(openIdConnectProviderContract);
             Assert.AreEqual(openIdProviderName, openIdConnectProviderContract.Data.DisplayName);
             Assert.AreEqual(metadataEndpoint, openIdConnectProviderContract.Data.MetadataEndpoint);
-            Assert.AreEqual(clientId, openIdConnectProviderContract.Data.ClientId);
             Assert.AreEqual(openIdNoSecret, openIdConnectProviderContract.Data.Name);
             Assert.IsNull(openIdConnectProviderContract.Data.ClientSecret);
             Assert.IsNull(openIdConnectProviderContract.Data.Description);
@@ -107,14 +102,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             Assert.NotNull(getResponse2);
             Assert.AreEqual(openIdProviderName2, getResponse2.Data.DisplayName);
-            Assert.AreEqual(clientId2, getResponse2.Data.ClientId);
             Assert.AreEqual(metadataEndpoint2, getResponse2.Data.MetadataEndpoint);
             Assert.IsNull(getResponse2.Data.ClientSecret);
             Assert.NotNull(getResponse2.Data.Description);
             Assert.AreEqual(openId2, getResponse2.Data.Name);
 
             var secretResponse = (await getResponse2.GetSecretsAsync()).Value;
-            Assert.AreEqual(clientSecret, secretResponse.ClientSecret);
 
             // list the openId Connect Providers
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
@@ -146,13 +139,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             Assert.NotNull(getResponseOpendId2);
             Assert.AreEqual(openId2, getResponseOpendId2.Data.Name);
-            Assert.AreEqual(updatedClientId, getResponseOpendId2.Data.ClientId);
             Assert.AreEqual(updateMetadataEndpoint, getResponseOpendId2.Data.MetadataEndpoint);
             Assert.IsNull(getResponseOpendId2.Data.ClientSecret);
             Assert.NotNull(getResponseOpendId2.Data.Description);
 
             var secretsResponse = (await getResponseOpendId2.GetSecretsAsync()).Value;
-            Assert.AreEqual(clientSecret, secretsResponse.ClientSecret);
 
             // delete the openId Connect Provider
             await getResponseOpendId2.DeleteAsync(WaitUntil.Completed, ETag.All);

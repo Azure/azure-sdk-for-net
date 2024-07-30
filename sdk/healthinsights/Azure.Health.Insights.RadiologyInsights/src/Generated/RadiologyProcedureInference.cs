@@ -23,20 +23,20 @@ namespace Azure.Health.Insights.RadiologyInsights
             Argument.AssertNotNull(imagingProcedures, nameof(imagingProcedures));
             Argument.AssertNotNull(orderedProcedure, nameof(orderedProcedure));
 
-            Kind = "radiologyProcedure";
+            Kind = RadiologyInsightsInferenceType.RadiologyProcedure;
             ProcedureCodes = new ChangeTrackingList<FhirR4CodeableConcept>();
             ImagingProcedures = imagingProcedures.ToList();
             OrderedProcedure = orderedProcedure;
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyProcedureInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for RadiologyInsightsInference. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="procedureCodes"> LOINC codes for the procedure. </param>
         /// <param name="imagingProcedures"> Imaging procedures. </param>
         /// <param name="orderedProcedure"> Ordered procedure information from the document information or text. </param>
-        internal RadiologyProcedureInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FhirR4CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures, OrderedProcedure orderedProcedure) : base(kind, extension, serializedAdditionalRawData)
+        internal RadiologyProcedureInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FhirR4CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures, OrderedProcedure orderedProcedure) : base(kind, extension, serializedAdditionalRawData)
         {
             ProcedureCodes = procedureCodes;
             ImagingProcedures = imagingProcedures;

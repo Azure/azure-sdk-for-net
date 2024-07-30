@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile, options);
             }
+            if (Optional.IsDefined(ScheduledEventsPolicy))
+            {
+                writer.WritePropertyName("scheduledEventsPolicy"u8);
+                writer.WriteObjectValue(ScheduledEventsPolicy, options);
+            }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
@@ -292,6 +297,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             VirtualMachineHardwareProfile hardwareProfile = default;
+            ScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
             VirtualMachineOSProfile osProfile = default;
@@ -445,6 +451,15 @@ namespace Azure.ResourceManager.Compute
                                 continue;
                             }
                             hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("scheduledEventsPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -676,6 +691,7 @@ namespace Azure.ResourceManager.Compute
                 managedBy,
                 etag,
                 hardwareProfile,
+                scheduledEventsPolicy,
                 storageProfile,
                 additionalCapabilities,
                 osProfile,

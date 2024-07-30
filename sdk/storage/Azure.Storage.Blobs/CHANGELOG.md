@@ -1,6 +1,6 @@
 # Release History
 
-## 12.20.0-beta.3 (Unreleased)
+## 12.22.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.21.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
+## 12.21.0 (2024-07-16)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1.
+
+### Bugs Fixed
+- Fixed bug where storage clients when constructed with URLs with '#' character would truncate the blob name at the '#'.
+
+## 12.21.0-beta.1 (2024-06-11)
+- Added support for service version 2024-08-04.
+- Added BlobContainerClient.GetAccountInfo(), .GetAccountInfoAsync(), BlobBaseClient.GetAccountInfo(), and .GetAccountInfoAsync() APIs.
+- Added more detailed messaging for authorization failure cases.
+
+## 12.20.0 (2024-05-13)
+- Includes all features from 12.20.0-beta.1 and 12.20.0-beta.2.
+- Fixed bug where `BlobContainerClient` and `BlobBaseClient` did not throw an exception on empty/null container names and blob names, respectively, when constructing a client. 
 
 ## 12.20.0-beta.2 (2024-04-15)
 - Added support for service version 2024-05-04.

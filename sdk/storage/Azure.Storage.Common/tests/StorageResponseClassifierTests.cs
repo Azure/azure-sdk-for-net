@@ -70,6 +70,32 @@ namespace Azure.Storage.Tests
             Assert.IsTrue(classifier.IsRetriableResponse(message));
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
+        [Test]
+        [TestCase(Constants.ErrorCodes.ServerBusy)]
+        [TestCase(Constants.ErrorCodes.InternalError)]
+        [TestCase(Constants.ErrorCodes.OperationTimedOut)]
+        public void IsRetriableResponse_CopySourceErrors(string errorCode)
+        {
+            var response = new MockResponse(Constants.HttpStatusCode.NotFound);
+            response.AddHeader(new HttpHeader(Constants.HeaderNames.CopySourceErrorCode, errorCode));
+            HttpMessage message = BuildMessage(response);
+            Assert.IsTrue(classifier.IsRetriableResponse(message));
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
+        [Test]
+        [TestCase(Constants.ErrorCodes.ServerBusy)]
+        [TestCase(Constants.ErrorCodes.InternalError)]
+        [TestCase(Constants.ErrorCodes.OperationTimedOut)]
+        public void IsRetriableResponse_CopySourceErrors_SecondaryUri(string errorCode)
+        {
+            var response = new MockResponse(Constants.HttpStatusCode.NotFound);
+            response.AddHeader(new HttpHeader(Constants.HeaderNames.CopySourceErrorCode, errorCode));
+            HttpMessage message = BuildMessage(response, MockSecondaryUri);
+            Assert.IsTrue(classifier.IsRetriableResponse(message));
+        }
+
         [TestCase("ContainerAlreadyExists", "If-Match", false)]
         [TestCase("ContainerAlreadyExists","If-None-Match", false)]
         [TestCase("ContainerAlreadyExists","If-Unmodified-Since", false)]

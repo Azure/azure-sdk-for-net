@@ -32,8 +32,24 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/vpnConnections/", false);
+            uri.AppendPath(connectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName)
@@ -124,6 +140,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, VpnConnectionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/vpnConnections/", false);
+            uri.AppendPath(connectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, VpnConnectionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -208,6 +240,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/vpnConnections/", false);
+            uri.AppendPath(connectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -284,6 +332,23 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartPacketCaptureRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/vpnConnections/", false);
+            uri.AppendPath(vpnConnectionName, true);
+            uri.AppendPath("/startpacketcapture", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartPacketCaptureRequest(string subscriptionId, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartContent content)
@@ -372,6 +437,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateStopPacketCaptureRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/vpnConnections/", false);
+            uri.AppendPath(vpnConnectionName, true);
+            uri.AppendPath("/stoppacketcapture", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStopPacketCaptureRequest(string subscriptionId, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -458,6 +540,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateListByVpnGatewayRequestUri(string subscriptionId, string resourceGroupName, string gatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/vpnConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByVpnGatewayRequest(string subscriptionId, string resourceGroupName, string gatewayName)
         {
             var message = _pipeline.CreateMessage();
@@ -535,6 +632,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVpnGatewayNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByVpnGatewayNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName)

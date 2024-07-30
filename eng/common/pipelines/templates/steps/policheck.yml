@@ -5,7 +5,7 @@ parameters:
   ExclusionFilePath: "$(Build.SourcesDirectory)/eng/guardian-tools/policheck/PolicheckExclusions.xml"
 
 steps:
- - task: AzurePowerShell@5
+  - task: AzurePowerShell@5
     displayName: 'Download Policheck Exclusion Database'
     inputs:
       azureSubscription: 'Azure SDK Artifacts'
@@ -14,7 +14,7 @@ steps:
       pwsh: true
       Inline: |
         azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/${{ parameters.ExclusionDataBaseFileName }}.mdb" "$(Build.BinariesDirectory)"
-    env: 
+    env:
       AZCOPY_AUTO_LOGIN_TYPE: 'PSCRED'
 
   - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2

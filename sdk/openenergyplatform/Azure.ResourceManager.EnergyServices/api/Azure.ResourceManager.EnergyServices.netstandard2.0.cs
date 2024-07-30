@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EnergyServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EnergyServiceResource : Azure.ResourceManager.ArmResource
+    public partial class EnergyServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EnergyServiceResource() { }
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.EnergyServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EnergyServices.EnergyServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.EnergyServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource> Update(Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> UpdateAsync(Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

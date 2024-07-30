@@ -32,6 +32,13 @@ namespace Azure.Storage.DataMovement.Blobs
         public override string ProviderId => "blob";
 
         /// <summary>
+        /// For mocking.
+        /// </summary>
+        protected BlobStorageResourceContainer()
+        {
+        }
+
+        /// <summary>
         /// The constructor to create an instance of the BlobStorageResourceContainer.
         /// </summary>
         /// <param name="blobContainerClient">
@@ -57,8 +64,49 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
         /// <param name="path">The path to the storage resource, relative to the directory prefix if any.</param>
-        protected override StorageResourceItem GetStorageResourceReference(string path)
-            => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? BlobType.Block);
+        /// <param name="resourceId">Defines the resource id type.</param>
+        protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
+        {
+            BlobType type = BlobType.Block;
+            if (_options?.BlobType?.Preserve ?? true)
+            {
+                type = ToBlobType(resourceId);
+            }
+            else
+            {
+                // If the user has set the blob type in the options, use that instead of the resourceId
+                type = _options?.BlobType?.Value ?? BlobType.Block;
+            }
+            return GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: type);
+        }
+
+        private BlobType ToBlobType(string resourceId)
+        {
+            if (string.IsNullOrEmpty(resourceId))
+            {
+                return BlobType.Block;
+            }
+
+            if (DataMovementBlobConstants.ResourceId.BlockBlob.Equals(resourceId))
+            {
+                return BlobType.Block;
+            }
+            else if (DataMovementBlobConstants.ResourceId.PageBlob.Equals(resourceId))
+            {
+                return BlobType.Page;
+            }
+            else if (DataMovementBlobConstants.ResourceId.AppendBlob.Equals(resourceId))
+            {
+                return BlobType.Append;
+            }
+            else
+            {
+                // By default, return BlockBlob for other resource types (e.g. ShareFile, local file)
+                // when we call GetStorageResourceReference we will check the options bag if they manually
+                // set the blob type.
+                return BlobType.Block;
+            }
+        }
 
         /// <summary>
         /// Retrieves a single blob resource based on this respective resource.
@@ -109,6 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <returns>List of the child resources in the storage container.</returns>
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             // Suffix the backwards slash when searching if there's a prefix specified,
@@ -166,13 +215,12 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             // Source blob type does not matter for container
-            return new BlobSourceCheckpointData(BlobType.Block);
+            return new BlobSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
-        {
-            return new BlobDestinationCheckpointData(
-                blobType: _options?.BlobType ?? BlobType.Block,
+            => new BlobDestinationCheckpointData(
+                blobType: _options?.BlobType,
                 contentType: _options?.BlobOptions?.ContentType,
                 contentEncoding: _options?.BlobOptions?.ContentEncoding,
                 contentLanguage: _options?.BlobOptions?.ContentLanguage,
@@ -181,7 +229,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 accessTier: _options?.BlobOptions?.AccessTier,
                 metadata: _options?.BlobOptions?.Metadata,
                 tags: default);
-        }
 
         private string ApplyOptionalPrefix(string path)
             => IsDirectory

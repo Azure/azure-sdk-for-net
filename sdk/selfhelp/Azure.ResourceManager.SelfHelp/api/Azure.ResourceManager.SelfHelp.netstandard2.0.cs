@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SelfHelpDiagnosticResource : Azure.ResourceManager.ArmResource
+    public partial class SelfHelpDiagnosticResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SelfHelpDiagnosticResource() { }
@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.SelfHelp
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string diagnosticsResourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -42,97 +47,174 @@ namespace Azure.ResourceManager.SelfHelp
     {
         public static Azure.Response<Azure.ResourceManager.SelfHelp.Models.SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.SelfHelp.Models.SelfHelpNameAvailabilityContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.Models.SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.SelfHelp.Models.SelfHelpNameAvailabilityContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> DiscoverSolutions(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> DiscoverSolutionsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata> DiscoverSolutionsNlp(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata> DiscoverSolutionsNlp(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata> DiscoverSolutionsNlpAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata> DiscoverSolutionsNlpAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource> GetSelfHelpDiagnostic(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string diagnosticsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string diagnosticsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.SolutionResource GetSolutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SelfHelp.SolutionResource> GetSolutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SolutionResource>> GetSolutionResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.SolutionResourceCollection GetSolutionResources(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.TroubleshooterResource GetTroubleshooterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SelfHelp.TroubleshooterResource> GetTroubleshooterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.TroubleshooterResource>> GetTroubleshooterResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.TroubleshooterResourceCollection GetTroubleshooterResources(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> GetSelfHelpSimplifiedSolution(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> GetSelfHelpSimplifiedSolutionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource GetSelfHelpSimplifiedSolutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionCollection GetSelfHelpSimplifiedSolutions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource> GetSelfHelpSolution(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource>> GetSelfHelpSolutionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult> GetSelfHelpSolutionById(this Azure.ResourceManager.Resources.TenantResource tenantResource, string solutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>> GetSelfHelpSolutionByIdAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string solutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource GetSelfHelpSolutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpSolutionCollection GetSelfHelpSolutions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource> GetSelfHelpTroubleshooter(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource>> GetSelfHelpTroubleshooterAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource GetSelfHelpTroubleshooterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterCollection GetSelfHelpTroubleshooters(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
     }
-    public partial class SolutionResource : Azure.ResourceManager.ArmResource
+    public partial class SelfHelpSimplifiedSolutionCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected SelfHelpSimplifiedSolutionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string simplifiedSolutionsResourceName, Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string simplifiedSolutionsResourceName, Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> Get(string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> GetAsync(string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> GetIfExists(string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> GetIfExistsAsync(string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SelfHelpSimplifiedSolutionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>
+    {
+        public SelfHelpSimplifiedSolutionData() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Appendix { get { throw null; } }
+        public string Content { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? ProvisioningState { get { throw null; } }
+        public string SolutionId { get { throw null; } set { } }
+        public string Title { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SelfHelpSimplifiedSolutionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected SolutionResource() { }
-        public virtual Azure.ResourceManager.SelfHelp.SolutionResourceData Data { get { throw null; } }
+        protected SelfHelpSimplifiedSolutionResource() { }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string solutionResourceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SolutionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SolutionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SolutionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SolutionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string simplifiedSolutionsResourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SolutionResourceCollection : Azure.ResourceManager.ArmCollection
+    public partial class SelfHelpSolutionCollection : Azure.ResourceManager.ArmCollection
     {
-        protected SolutionResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SolutionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string solutionResourceName, Azure.ResourceManager.SelfHelp.SolutionResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SolutionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string solutionResourceName, Azure.ResourceManager.SelfHelp.SolutionResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected SelfHelpSolutionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string solutionResourceName, Azure.ResourceManager.SelfHelp.SelfHelpSolutionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string solutionResourceName, Azure.ResourceManager.SelfHelp.SelfHelpSolutionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SolutionResource> Get(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SolutionResource>> GetAsync(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.SelfHelp.SolutionResource> GetIfExists(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SelfHelp.SolutionResource>> GetIfExistsAsync(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource> Get(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource>> GetAsync(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource> GetIfExists(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource>> GetIfExistsAsync(string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SolutionResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SolutionResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SolutionResourceData>
+    public partial class SelfHelpSolutionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>
     {
-        public SolutionResourceData() { }
-        public Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties Properties { get { throw null; } set { } }
-        Azure.ResourceManager.SelfHelp.SolutionResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SolutionResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SolutionResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.SolutionResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SolutionResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SolutionResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SolutionResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public SelfHelpSolutionData() { }
+        public string Content { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps ReplacementMaps { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection> Sections { get { throw null; } }
+        public string SolutionId { get { throw null; } }
+        public string Title { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion> TriggerCriteria { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.SelfHelpSolutionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.SelfHelpSolutionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TroubleshooterResource : Azure.ResourceManager.ArmResource
+    public partial class SelfHelpSolutionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected TroubleshooterResource() { }
-        public virtual Azure.ResourceManager.SelfHelp.TroubleshooterResourceData Data { get { throw null; } }
+        protected SelfHelpSolutionResource() { }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpSolutionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response Continue(Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody continueRequestBody = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ContinueAsync(Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody continueRequestBody = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string troubleshooterName) { throw null; }
-        public virtual Azure.Response End(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> EndAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.TroubleshooterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.TroubleshooterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult> Restart(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult>> RestartAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.TroubleshooterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.TroubleshooterResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.TroubleshooterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.TroubleshooterResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string solutionResourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SelfHelp.SelfHelpSolutionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.SelfHelpSolutionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpSolutionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response WarmUp(Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> WarmUpAsync(Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TroubleshooterResourceCollection : Azure.ResourceManager.ArmCollection
+    public partial class SelfHelpTroubleshooterCollection : Azure.ResourceManager.ArmCollection
     {
-        protected TroubleshooterResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.TroubleshooterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string troubleshooterName, Azure.ResourceManager.SelfHelp.TroubleshooterResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.TroubleshooterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string troubleshooterName, Azure.ResourceManager.SelfHelp.TroubleshooterResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected SelfHelpTroubleshooterCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string troubleshooterName, Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string troubleshooterName, Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.TroubleshooterResource> Get(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.TroubleshooterResource>> GetAsync(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.SelfHelp.TroubleshooterResource> GetIfExists(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SelfHelp.TroubleshooterResource>> GetIfExistsAsync(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource> Get(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource>> GetAsync(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource> GetIfExists(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource>> GetIfExistsAsync(string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TroubleshooterResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.TroubleshooterResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.TroubleshooterResourceData>
+    public partial class SelfHelpTroubleshooterData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>
     {
-        public TroubleshooterResourceData() { }
+        public SelfHelpTroubleshooterData() { }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState? ProvisioningState { get { throw null; } }
         public string SolutionId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpStep> Steps { get { throw null; } }
-        Azure.ResourceManager.SelfHelp.TroubleshooterResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.TroubleshooterResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.TroubleshooterResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.TroubleshooterResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.TroubleshooterResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.TroubleshooterResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.TroubleshooterResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SelfHelpTroubleshooterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SelfHelpTroubleshooterResource() { }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response Continue(Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ContinueAsync(Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string troubleshooterName) { throw null; }
+        public virtual Azure.Response End(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> EndAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult> Restart(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult>> RestartAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SelfHelp.Mocking
@@ -146,46 +228,53 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(Azure.Core.ResourceIdentifier scope, string diagnosticsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(Azure.Core.ResourceIdentifier scope) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(Azure.Core.ResourceIdentifier scope, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SelfHelp.SolutionResource GetSolutionResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SolutionResource> GetSolutionResource(Azure.Core.ResourceIdentifier scope, string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SolutionResource>> GetSolutionResourceAsync(Azure.Core.ResourceIdentifier scope, string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SelfHelp.SolutionResourceCollection GetSolutionResources(Azure.Core.ResourceIdentifier scope) { throw null; }
-        public virtual Azure.ResourceManager.SelfHelp.TroubleshooterResource GetTroubleshooterResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.TroubleshooterResource> GetTroubleshooterResource(Azure.Core.ResourceIdentifier scope, string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.TroubleshooterResource>> GetTroubleshooterResourceAsync(Azure.Core.ResourceIdentifier scope, string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SelfHelp.TroubleshooterResourceCollection GetTroubleshooterResources(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource> GetSelfHelpSimplifiedSolution(Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource>> GetSelfHelpSimplifiedSolutionAsync(Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionResource GetSelfHelpSimplifiedSolutionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionCollection GetSelfHelpSimplifiedSolutions(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource> GetSelfHelpSolution(Azure.Core.ResourceIdentifier scope, string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource>> GetSelfHelpSolutionAsync(Azure.Core.ResourceIdentifier scope, string solutionResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource GetSelfHelpSolutionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpSolutionCollection GetSelfHelpSolutions(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource> GetSelfHelpTroubleshooter(Azure.Core.ResourceIdentifier scope, string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource>> GetSelfHelpTroubleshooterAsync(Azure.Core.ResourceIdentifier scope, string troubleshooterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource GetSelfHelpTroubleshooterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterCollection GetSelfHelpTroubleshooters(Azure.Core.ResourceIdentifier scope) { throw null; }
+    }
+    public partial class MockableSelfHelpSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSelfHelpSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata> DiscoverSolutionsNlp(Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata> DiscoverSolutionsNlpAsync(Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableSelfHelpTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSelfHelpTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> DiscoverSolutions(string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> DiscoverSolutionsAsync(string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata> DiscoverSolutionsNlp(Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata> DiscoverSolutionsNlpAsync(Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult> GetSelfHelpSolutionById(string solutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>> GetSelfHelpSolutionByIdAsync(string solutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AggregationType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.AggregationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AggregationType(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.AggregationType Avg { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.AggregationType Count { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.AggregationType Max { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.AggregationType Min { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.AggregationType Sum { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.AggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.AggregationType left, Azure.ResourceManager.SelfHelp.Models.AggregationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.AggregationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.AggregationType left, Azure.ResourceManager.SelfHelp.Models.AggregationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmSelfHelpModelFactory
     {
-        public static Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult AutomatedCheckResult(string result = null, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType? resultType = default(Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType?)) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult AutomatedCheckResult(string version = null, string status = null, string result = null, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType? resultType = default(Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType?)) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.ClassificationService ClassificationService(Azure.Core.ResourceIdentifier serviceId = null, string displayName = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent DiscoveryNlpContent(string issueSummary = null, string resourceId = null, string serviceId = null, string additionalContext = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.KBSearchResult KBSearchResult(string solutionId = null, string content = null, string title = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence? confidence = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence?), string source = null, Azure.ResourceManager.SelfHelp.Models.KBSearchResultType? resultType = default(Azure.ResourceManager.SelfHelp.Models.KBSearchResultType?), int? rank = default(int?), string link = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.KBWebResult KBWebResult(string replacementKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.KBSearchResult> searchResults = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart MetricsBasedChart(string name = null, Azure.ResourceManager.SelfHelp.Models.ChartAggregationType? aggregationType = default(Azure.ResourceManager.SelfHelp.Models.ChartAggregationType?), System.TimeSpan? timeSpanDuration = default(System.TimeSpan?), string title = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter> filter = null, string replacementKey = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult ReplacementMapsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.KBWebResult> webResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> videos = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> videoGroups = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.ResponseConfig ResponseConfig(string key = null, string value = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties ResponseValidationProperties(string regex = null, bool? isRequired = default(bool?), string validationErrorMessage = null, long? maxLength = default(long?)) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties ResponseValidationProperties(string regex = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope? validationScope = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope?), bool? isRequired = default(bool?), string validationErrorMessage = null, long? maxLength = default(long?)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticData SelfHelpDiagnosticData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> globalParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInvocation> insights = null, System.DateTimeOffset? acceptedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInfo> diagnostics = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInfo SelfHelpDiagnosticInfo(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus? status = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpError error = null) { throw null; }
@@ -193,21 +282,36 @@ namespace Azure.ResourceManager.SelfHelp.Models
         [System.ObsoleteAttribute("This function is obsolete and will be removed in a future release.", false)]
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = null, string title = null, string results = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel? insightImportanceLevel = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel?)) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpError SelfHelpError(string code = null, string errorType = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpError> details = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter SelfHelpFilter(string name = null, string values = null, string @operator = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSection SelfHelpSection(string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps replacementMaps = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpSimplifiedSolutionData SelfHelpSimplifiedSolutionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, System.Collections.Generic.IDictionary<string, string> parameters = null, string title = null, System.Collections.Generic.IReadOnlyDictionary<string, string> appendix = null, string content = null, Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpSolutionData SelfHelpSolutionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion> triggerCriteria = null, System.Collections.Generic.IDictionary<string, string> parameters = null, string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState?), string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps replacementMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection> sections = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata SelfHelpSolutionMetadata(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> solutions = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata SelfHelpSolutionMetadata(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredParameterSets) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpStep SelfHelpStep(string id = null, string title = null, string description = null, string guidance = null, Azure.ResourceManager.SelfHelp.Models.ExecutionStatus? executionStatus = default(Azure.ResourceManager.SelfHelp.Models.ExecutionStatus?), string executionStatusDescription = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpType? stepType = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpType?), bool? isLastStep = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.StepInput> inputs = null, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult automatedCheckResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null, Azure.ResponseError error = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SolutionType? solutionType = default(Azure.ResourceManager.SelfHelp.Models.SolutionType?), string description = null, System.Collections.Generic.IEnumerable<string> requiredInputs = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.SolutionResourceData SolutionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.StepInput StepInput(string questionId = null, string questionType = null, string questionContent = null, Azure.ResourceManager.SelfHelp.Models.QuestionContentType? questionContentType = default(Azure.ResourceManager.SelfHelp.Models.QuestionContentType?), string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties responseValidationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.ResponseConfig> responseOptions = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.TroubleshooterResourceData TroubleshooterResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpStep> steps = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch SelfHelpSolutionPatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion> triggerCriteria = null, System.Collections.Generic.IDictionary<string, string> parameters = null, string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState?), string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps replacementMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection> sections = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult SelfHelpSolutionResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult replacementMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionSection> sections = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpStep SelfHelpStep(string id = null, string title = null, string description = null, string guidance = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus? executionStatus = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus?), string executionStatusDescription = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpType? stepType = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpType?), bool? isLastStep = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput> inputs = null, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult automatedCheckResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData SelfHelpTroubleshooterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpStep> steps = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo SelfHelpVideo(string src = null, string title = null, string replacementKey = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType? solutionType = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType?), string description = null, System.Collections.Generic.IEnumerable<string> requiredInputs = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata SolutionNlpMetadata(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string problemTitle = null, string problemDescription = null, string serviceId = null, string problemClassificationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> solutions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.ClassificationService> relatedServices = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps SolutionReplacementMaps(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.KBWebResult> webResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic> diagnostics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters> troubleshooters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart> metricsBasedCharts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> videos = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> videoGroups = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic SolutionsDiagnostic(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus? status = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus?), string statusDetails = null, string replacementKey = null, string estimatedCompletionTime = null, System.Collections.Generic.IEnumerable<string> requiredParameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionSection SolutionSection(string title = null, string content = null, Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult replacementMaps = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters SolutionsTroubleshooters(string solutionId = null, string title = null, string summary = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput TroubleshooterStepInput(string questionId = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType? questionType = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType?), string questionTitle = null, string questionContent = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType? questionContentType = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType?), string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties responseValidationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.ResponseConfig> responseOptions = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail VideoGroupDetail(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo> videos = null, string replacementKey = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo VideoGroupVideo(string src = null, string title = null) { throw null; }
     }
     public partial class AutomatedCheckResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult>
     {
         internal AutomatedCheckResult() { }
         public string Result { get { throw null; } }
         public Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType? ResultType { get { throw null; } }
+        public string Status { get { throw null; } }
+        public string Version { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -234,105 +338,124 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType left, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ContinueRequestBody : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody>
-    {
-        public ContinueRequestBody() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult> Responses { get { throw null; } }
-        public string StepId { get { throw null; } set { } }
-        Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ContinueRequestBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExecutionStatus : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.ExecutionStatus>
+    public readonly partial struct ChartAggregationType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.ChartAggregationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ExecutionStatus(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.ExecutionStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.ExecutionStatus Running { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.ExecutionStatus Success { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.ExecutionStatus Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.ExecutionStatus other) { throw null; }
+        public ChartAggregationType(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.ChartAggregationType Avg { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.ChartAggregationType Count { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.ChartAggregationType Max { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.ChartAggregationType Min { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.ChartAggregationType Sum { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.ChartAggregationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.ExecutionStatus left, Azure.ResourceManager.SelfHelp.Models.ExecutionStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.ExecutionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.ExecutionStatus left, Azure.ResourceManager.SelfHelp.Models.ExecutionStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.ChartAggregationType left, Azure.ResourceManager.SelfHelp.Models.ChartAggregationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.ChartAggregationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.ChartAggregationType left, Azure.ResourceManager.SelfHelp.Models.ChartAggregationType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ClassificationService : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ClassificationService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ClassificationService>
+    {
+        public ClassificationService() { }
+        public string DisplayName { get { throw null; } }
+        public System.Collections.Generic.IList<string> ResourceTypes { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ServiceId { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.ClassificationService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ClassificationService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ClassificationService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.ClassificationService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ClassificationService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ClassificationService>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ClassificationService>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryNlpContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent>
+    {
+        public DiscoveryNlpContent(string issueSummary) { }
+        public string AdditionalContext { get { throw null; } set { } }
+        public string IssueSummary { get { throw null; } }
+        public string ResourceId { get { throw null; } set { } }
+        public string ServiceId { get { throw null; } set { } }
+        Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KBSearchResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.KBSearchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.KBSearchResult>
+    {
+        internal KBSearchResult() { }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence? Confidence { get { throw null; } }
+        public string Content { get { throw null; } }
+        public string Link { get { throw null; } }
+        public int? Rank { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.KBSearchResultType? ResultType { get { throw null; } }
+        public string SolutionId { get { throw null; } }
+        public string Source { get { throw null; } }
+        public string Title { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.KBSearchResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.KBSearchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.KBSearchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.KBSearchResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.KBSearchResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.KBSearchResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.KBSearchResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KBSearchResultType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.KBSearchResultType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KBSearchResultType(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.KBSearchResultType Community { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.KBSearchResultType Documentation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.KBSearchResultType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.KBSearchResultType left, Azure.ResourceManager.SelfHelp.Models.KBSearchResultType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.KBSearchResultType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.KBSearchResultType left, Azure.ResourceManager.SelfHelp.Models.KBSearchResultType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class KBWebResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.KBWebResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.KBWebResult>
+    {
+        internal KBWebResult() { }
+        public string ReplacementKey { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.KBSearchResult> SearchResults { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.KBWebResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.KBWebResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.KBWebResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.KBWebResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.KBWebResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.KBWebResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.KBWebResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MetricsBasedChart : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart>
     {
-        public MetricsBasedChart() { }
-        public Azure.ResourceManager.SelfHelp.Models.AggregationType? AggregationType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter> Filter { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public string ReplacementKey { get { throw null; } set { } }
-        public System.TimeSpan? TimeSpanDuration { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
+        internal MetricsBasedChart() { }
+        public Azure.ResourceManager.SelfHelp.Models.ChartAggregationType? AggregationType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter> Filter { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string ReplacementKey { get { throw null; } }
+        public System.TimeSpan? TimeSpanDuration { get { throw null; } }
+        public string Title { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct QuestionContentType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.QuestionContentType>
+    public partial class ReplacementMapsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public QuestionContentType(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.QuestionContentType Html { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.QuestionContentType Markdown { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.QuestionContentType Text { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.QuestionContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.QuestionContentType left, Azure.ResourceManager.SelfHelp.Models.QuestionContentType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.QuestionContentType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.QuestionContentType left, Azure.ResourceManager.SelfHelp.Models.QuestionContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct QuestionType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.QuestionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public QuestionType(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.QuestionType Dropdown { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.QuestionType MultiLineInfoBox { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.QuestionType RadioButton { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.QuestionType TextInput { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.QuestionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.QuestionType left, Azure.ResourceManager.SelfHelp.Models.QuestionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.QuestionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.QuestionType left, Azure.ResourceManager.SelfHelp.Models.QuestionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ReplacementMaps : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMaps>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMaps>
-    {
-        public ReplacementMaps() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic> Diagnostics { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart> MetricsBasedCharts { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters> Troubleshooters { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.VideoGroup> VideoGroups { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> Videos { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.WebResult> WebResults { get { throw null; } }
-        Azure.ResourceManager.SelfHelp.Models.ReplacementMaps System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMaps>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMaps>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.ReplacementMaps System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMaps>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMaps>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMaps>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal ReplacementMapsResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> VideoGroups { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> Videos { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.KBWebResult> WebResults { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResponseConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ResponseConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ResponseConfig>
     {
@@ -352,6 +475,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public long? MaxLength { get { throw null; } }
         public string Regex { get { throw null; } }
         public string ValidationErrorMessage { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope? ValidationScope { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -367,41 +491,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.RestartTroubleshooterResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResultType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.ResultType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResultType(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.ResultType Community { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.ResultType Documentation { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.ResultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.ResultType left, Azure.ResourceManager.SelfHelp.Models.ResultType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.ResultType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.ResultType left, Azure.ResourceManager.SelfHelp.Models.ResultType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SearchResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SearchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SearchResult>
-    {
-        public SearchResult() { }
-        public Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence? Confidence { get { throw null; } set { } }
-        public string Content { get { throw null; } set { } }
-        public string Link { get { throw null; } set { } }
-        public int? Rank { get { throw null; } set { } }
-        public Azure.ResourceManager.SelfHelp.Models.ResultType? ResultType { get { throw null; } set { } }
-        public string SolutionId { get { throw null; } set { } }
-        public string Source { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
-        Azure.ResourceManager.SelfHelp.Models.SearchResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SearchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SearchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.SearchResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SearchResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SearchResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SearchResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SelfHelpConfidence : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence>
@@ -437,11 +526,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
     }
     public partial class SelfHelpDiagnosticInsight : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight>
     {
-        public SelfHelpDiagnosticInsight() { }
-        public string Id { get { throw null; } set { } }
-        public Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel? InsightImportanceLevel { get { throw null; } set { } }
-        public string Results { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
+        internal SelfHelpDiagnosticInsight() { }
+        public string Id { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel? InsightImportanceLevel { get { throw null; } }
+        public string Results { get { throw null; } }
+        public string Title { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -495,10 +584,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
     }
     public partial class SelfHelpFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter>
     {
-        public SelfHelpFilter() { }
-        public string Name { get { throw null; } set { } }
-        public string Operator { get { throw null; } set { } }
-        public string Values { get { throw null; } set { } }
+        internal SelfHelpFilter() { }
+        public string Name { get { throw null; } }
+        public string Operator { get { throw null; } }
+        public string Values { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -575,6 +664,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState PartialComplete { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -588,10 +678,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
     }
     public partial class SelfHelpSection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection>
     {
-        public SelfHelpSection() { }
-        public string Content { get { throw null; } set { } }
-        public Azure.ResourceManager.SelfHelp.Models.ReplacementMaps ReplacementMaps { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
+        internal SelfHelpSection() { }
+        public string Content { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps ReplacementMaps { get { throw null; } }
+        public string Title { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpSection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpSection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -616,17 +706,68 @@ namespace Azure.ResourceManager.SelfHelp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SelfHelpSolutionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch>
+    {
+        public SelfHelpSolutionPatch() { }
+        public string Content { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps ReplacementMaps { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection> Sections { get { throw null; } }
+        public string SolutionId { get { throw null; } }
+        public string Title { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion> TriggerCriteria { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SelfHelpSolutionResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>
+    {
+        public SelfHelpSolutionResult() { }
+        public string Content { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult ReplacementMaps { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SolutionSection> Sections { get { throw null; } }
+        public string SolutionId { get { throw null; } }
+        public string Title { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SelfHelpSolutionType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SelfHelpSolutionType(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType Diagnostics { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType SelfHelp { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType Solutions { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType Troubleshooters { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType left, Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType left, Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SelfHelpStep : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpStep>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpStep>
     {
         internal SelfHelpStep() { }
         public Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult AutomatedCheckResults { get { throw null; } }
         public string Description { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
-        public Azure.ResourceManager.SelfHelp.Models.ExecutionStatus? ExecutionStatus { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus? ExecutionStatus { get { throw null; } }
         public string ExecutionStatusDescription { get { throw null; } }
         public string Guidance { get { throw null; } }
         public string Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.StepInput> Inputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput> Inputs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
         public bool? IsLastStep { get { throw null; } }
         public Azure.ResourceManager.SelfHelp.Models.SelfHelpType? StepType { get { throw null; } }
@@ -645,6 +786,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public SelfHelpType(string value) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType AutomatedCheck { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Decision { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Input { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Insight { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Solution { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpType other) { throw null; }
@@ -659,8 +801,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
     }
     public partial class SelfHelpVideo : Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo>
     {
-        public SelfHelpVideo() { }
-        public string ReplacementKey { get { throw null; } set { } }
+        internal SelfHelpVideo() { }
+        public string ReplacementKey { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -673,12 +815,27 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public string Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredInputs { get { throw null; } }
         public string SolutionId { get { throw null; } set { } }
-        public Azure.ResourceManager.SelfHelp.Models.SolutionType? SolutionType { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionType? SolutionType { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SolutionNlpMetadata : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata>
+    {
+        public SolutionNlpMetadata() { }
+        public string ProblemClassificationId { get { throw null; } set { } }
+        public string ProblemDescription { get { throw null; } set { } }
+        public string ProblemTitle { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.ClassificationService> RelatedServices { get { throw null; } }
+        public string ServiceId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> Solutions { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionNlpMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SolutionProvisioningState : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState>
@@ -688,6 +845,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public SolutionProvisioningState(string value) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState PartialComplete { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -699,106 +858,112 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState left, Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SolutionResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch>
+    public partial class SolutionReplacementMaps : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>
     {
-        public SolutionResourcePatch() { }
-        public Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties Properties { get { throw null; } set { } }
-        Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SolutionResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties>
-    {
-        public SolutionResourceProperties() { }
-        public string Content { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
-        public Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? ProvisioningState { get { throw null; } set { } }
-        public Azure.ResourceManager.SelfHelp.Models.ReplacementMaps ReplacementMaps { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection> Sections { get { throw null; } }
-        public string SolutionId { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion> TriggerCriteria { get { throw null; } }
-        Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal SolutionReplacementMaps() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic> Diagnostics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart> MetricsBasedCharts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters> Troubleshooters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail> VideoGroups { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> Videos { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.KBWebResult> WebResults { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionReplacementMaps>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SolutionsDiagnostic : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic>
     {
-        public SolutionsDiagnostic() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
-        public string ReplacementKey { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> RequiredParameters { get { throw null; } }
-        public string SolutionId { get { throw null; } set { } }
-        public Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus? Status { get { throw null; } set { } }
-        public string StatusDetails { get { throw null; } set { } }
+        internal SolutionsDiagnostic() { }
+        public string EstimatedCompletionTime { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
+        public string ReplacementKey { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredParameters { get { throw null; } }
+        public string SolutionId { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticStatus? Status { get { throw null; } }
+        public string StatusDetails { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionsDiagnostic>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SolutionSection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionSection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionSection>
+    {
+        internal SolutionSection() { }
+        public string Content { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.ReplacementMapsResult ReplacementMaps { get { throw null; } }
+        public string Title { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.SolutionSection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionSection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionSection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.SolutionSection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionSection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionSection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionSection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SolutionsTroubleshooters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters>
     {
-        public SolutionsTroubleshooters() { }
-        public string SolutionId { get { throw null; } set { } }
-        public string Summary { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
+        internal SolutionsTroubleshooters() { }
+        public string SolutionId { get { throw null; } }
+        public string Summary { get { throw null; } }
+        public string Title { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SolutionTriggerCriterion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion>
+    {
+        public SolutionTriggerCriterion() { }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpName? Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionTriggerCriterion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SolutionWarmUpContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent>
+    {
+        public SolutionWarmUpContent() { }
+        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.SolutionWarmUpContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TroubleshooterContinueContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent>
+    {
+        public TroubleshooterContinueContent() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult> Responses { get { throw null; } }
+        public string StepId { get { throw null; } set { } }
+        Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterContinueContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SolutionType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SolutionType>
+    public readonly partial struct TroubleshooterExecutionStatus : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SolutionType(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.SolutionType Diagnostics { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.SolutionType Solutions { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.SolutionType other) { throw null; }
+        public TroubleshooterExecutionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus Success { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SolutionType left, Azure.ResourceManager.SelfHelp.Models.SolutionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.SolutionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SolutionType left, Azure.ResourceManager.SelfHelp.Models.SolutionType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterExecutionStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class StepInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.StepInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.StepInput>
-    {
-        internal StepInput() { }
-        public string QuestionContent { get { throw null; } }
-        public Azure.ResourceManager.SelfHelp.Models.QuestionContentType? QuestionContentType { get { throw null; } }
-        public string QuestionId { get { throw null; } }
-        public string QuestionType { get { throw null; } }
-        public string RecommendedOption { get { throw null; } }
-        public string ResponseHint { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.ResponseConfig> ResponseOptions { get { throw null; } }
-        public Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties ResponseValidationProperties { get { throw null; } }
-        public string SelectedOptionValue { get { throw null; } }
-        Azure.ResourceManager.SelfHelp.Models.StepInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.StepInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.StepInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.StepInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.StepInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.StepInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.StepInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class TriggerCriterion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion>
-    {
-        public TriggerCriterion() { }
-        public Azure.ResourceManager.SelfHelp.Models.SelfHelpName? Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-        Azure.ResourceManager.SelfHelp.Models.TriggerCriterion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.TriggerCriterion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TroubleshooterProvisioningState : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState>
@@ -821,11 +986,52 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TroubleshooterQuestionContentType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TroubleshooterQuestionContentType(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType Html { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType Markdown { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType Text { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TroubleshooterQuestionType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TroubleshooterQuestionType(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType DateTimePicker { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType Dropdown { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType MultiLineInfoBox { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType MultiSelect { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType RadioButton { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType TextInput { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class TroubleshooterResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult>
     {
         public TroubleshooterResult() { }
         public string QuestionId { get { throw null; } set { } }
-        public Azure.ResourceManager.SelfHelp.Models.QuestionType? QuestionType { get { throw null; } set { } }
+        public Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType? QuestionType { get { throw null; } set { } }
         public string Response { get { throw null; } set { } }
         Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -833,37 +1039,66 @@ namespace Azure.ResourceManager.SelfHelp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VideoGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroup>
+    public partial class TroubleshooterStepInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput>
     {
-        public VideoGroup() { }
-        public string ReplacementKey { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo> Videos { get { throw null; } }
-        Azure.ResourceManager.SelfHelp.Models.VideoGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.VideoGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal TroubleshooterStepInput() { }
+        public string QuestionContent { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionContentType? QuestionContentType { get { throw null; } }
+        public string QuestionId { get { throw null; } }
+        public string QuestionTitle { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.TroubleshooterQuestionType? QuestionType { get { throw null; } }
+        public string RecommendedOption { get { throw null; } }
+        public string ResponseHint { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.ResponseConfig> ResponseOptions { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties ResponseValidationProperties { get { throw null; } }
+        public string SelectedOptionValue { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.TroubleshooterStepInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TroubleshooterValidationScope : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TroubleshooterValidationScope(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope GuidFormat { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope IPAddressFormat { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope None { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope NumberOnlyFormat { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope UrlFormat { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope left, Azure.ResourceManager.SelfHelp.Models.TroubleshooterValidationScope right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class VideoGroupDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail>
+    {
+        internal VideoGroupDetail() { }
+        public string ReplacementKey { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo> Videos { get { throw null; } }
+        Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VideoGroupVideo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo>
     {
-        public VideoGroupVideo() { }
-        public string Src { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
+        internal VideoGroupVideo() { }
+        public string Src { get { throw null; } }
+        public string Title { get { throw null; } }
         Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class WebResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.WebResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.WebResult>
-    {
-        public WebResult() { }
-        public string ReplacementKey { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SearchResult> SearchResults { get { throw null; } }
-        Azure.ResourceManager.SelfHelp.Models.WebResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.WebResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SelfHelp.Models.WebResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SelfHelp.Models.WebResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.WebResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.WebResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SelfHelp.Models.WebResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

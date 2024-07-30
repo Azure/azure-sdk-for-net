@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerVersion), out propertyOverride);
-            if (Optional.IsDefined(ServerVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serverVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serverVersion: ");
                     builder.AppendLine($"'{ServerVersion.Value.ToString()}'");
                 }
             }

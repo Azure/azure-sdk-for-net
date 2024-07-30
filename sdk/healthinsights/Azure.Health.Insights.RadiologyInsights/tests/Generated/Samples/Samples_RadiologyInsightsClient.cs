@@ -79,11 +79,11 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -95,11 +95,11 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -270,8 +270,8 @@ new Dictionary<string, object>
 ["id"] = "<id>",
 ["period"] = new
 {
-start = "2022-05-10T14:57:31.2311892-04:00",
-end = "2022-05-10T14:57:31.2311892-04:00",
+start = "2022-05-10T18:57:31.2311892Z",
+end = "2022-05-10T18:57:31.2311892Z",
 },
 ["class"] = "inpatient"
 }
@@ -284,7 +284,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 authors = new object[]
 {
 new
@@ -598,8 +598,8 @@ new Dictionary<string, object>
 ["id"] = "<id>",
 ["period"] = new
 {
-start = "2022-05-10T14:57:31.2311892-04:00",
-end = "2022-05-10T14:57:31.2311892-04:00",
+start = "2022-05-10T18:57:31.2311892Z",
+end = "2022-05-10T18:57:31.2311892Z",
 },
 ["class"] = "inpatient"
 }
@@ -612,7 +612,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 authors = new object[]
 {
 new
@@ -767,7 +767,7 @@ value = "<value>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -790,6 +790,83 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
+Id = "<id>",
+Extension = {new FhirR4Extension("<url>")
+{
+ValueQuantity = new FhirR4Quantity
+{
+Value = 123.45,
+Comparator = "<comparator>",
+Unit = "<unit>",
+System = "<system>",
+Code = "<code>",
+Id = "<id>",
+Extension = {default},
+},
+ValueCodeableConcept = new FhirR4CodeableConcept
+{
+Coding = {default},
+Text = "<text>",
+Id = "<id>",
+Extension = {default},
+},
+ValueString = "<valueString>",
+ValueBoolean = true,
+ValueInteger = 1234,
+ValueRange = new FhirR4Range
+{
+Low = default,
+High = default,
+Id = "<id>",
+Extension = {default},
+},
+ValueRatio = new FhirR4Ratio
+{
+Numerator = default,
+Denominator = default,
+Id = "<id>",
+Extension = {default},
+},
+ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+{
+Factor = 123.45,
+LowerLimit = 123.45,
+UpperLimit = 123.45,
+Data = "<data>",
+Id = "<id>",
+Extension = {default},
+},
+ValueTime = TimeSpan.Parse("01:23:45"),
+ValueDateTime = "<valueDateTime>",
+ValuePeriod = new FhirR4Period
+{
+Start = "<start>",
+End = "<end>",
+Id = "<id>",
+Extension = {default},
+},
+ValueReference = new FhirR4Reference
+{
+Reference = "<reference>",
+Type = "<type>",
+Identifier = new FhirR4Identifier
+{
+Use = "<use>",
+Type = default,
+System = "<system>",
+Value = "<value>",
+Period = default,
+Assigner = default,
+Id = "<id>",
+Extension = {default},
+},
+Display = "<display>",
+Id = "<id>",
+Extension = {default},
+},
+Id = "<id>",
+Extension = {default},
+}},
 }},
 Tag = {default},
 },
@@ -801,8 +878,8 @@ Encounters = {new Encounter("<id>")
 {
 Period = new TimePeriod
 {
-Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+Start = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 },
 Class = EncounterClass.InPatient,
 }},
@@ -810,7 +887,7 @@ PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentC
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 Authors = {new DocumentAuthor
 {
 Id = "<id>",
@@ -852,7 +929,7 @@ EncounterId = "<encounterId>",
                     Locale = "<locale>",
                 },
             };
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -864,7 +941,7 @@ EncounterId = "<encounterId>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -887,6 +964,83 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
+Id = "<id>",
+Extension = {new FhirR4Extension("<url>")
+{
+ValueQuantity = new FhirR4Quantity
+{
+Value = 123.45,
+Comparator = "<comparator>",
+Unit = "<unit>",
+System = "<system>",
+Code = "<code>",
+Id = "<id>",
+Extension = {default},
+},
+ValueCodeableConcept = new FhirR4CodeableConcept
+{
+Coding = {default},
+Text = "<text>",
+Id = "<id>",
+Extension = {default},
+},
+ValueString = "<valueString>",
+ValueBoolean = true,
+ValueInteger = 1234,
+ValueRange = new FhirR4Range
+{
+Low = default,
+High = default,
+Id = "<id>",
+Extension = {default},
+},
+ValueRatio = new FhirR4Ratio
+{
+Numerator = default,
+Denominator = default,
+Id = "<id>",
+Extension = {default},
+},
+ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+{
+Factor = 123.45,
+LowerLimit = 123.45,
+UpperLimit = 123.45,
+Data = "<data>",
+Id = "<id>",
+Extension = {default},
+},
+ValueTime = TimeSpan.Parse("01:23:45"),
+ValueDateTime = "<valueDateTime>",
+ValuePeriod = new FhirR4Period
+{
+Start = "<start>",
+End = "<end>",
+Id = "<id>",
+Extension = {default},
+},
+ValueReference = new FhirR4Reference
+{
+Reference = "<reference>",
+Type = "<type>",
+Identifier = new FhirR4Identifier
+{
+Use = "<use>",
+Type = default,
+System = "<system>",
+Value = "<value>",
+Period = default,
+Assigner = default,
+Id = "<id>",
+Extension = {default},
+},
+Display = "<display>",
+Id = "<id>",
+Extension = {default},
+},
+Id = "<id>",
+Extension = {default},
+}},
 }},
 Tag = {default},
 },
@@ -898,8 +1052,8 @@ Encounters = {new Encounter("<id>")
 {
 Period = new TimePeriod
 {
-Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+Start = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 },
 Class = EncounterClass.InPatient,
 }},
@@ -907,7 +1061,7 @@ PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentC
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 Authors = {new DocumentAuthor
 {
 Id = "<id>",
@@ -949,7 +1103,7 @@ EncounterId = "<encounterId>",
                     Locale = "<locale>",
                 },
             };
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
     }

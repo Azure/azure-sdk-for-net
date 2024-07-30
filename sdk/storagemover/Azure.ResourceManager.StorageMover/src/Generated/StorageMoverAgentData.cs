@@ -79,10 +79,12 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
         /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
         /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
+        /// <param name="timeZone"> The agent's local time zone represented in Windows format. </param>
+        /// <param name="uploadLimitSchedule"> The WAN-link upload limit schedule that applies to any Job Run the agent executes. Data plane operations (migrating files) are affected. Control plane operations ensure seamless migration functionality and are not limited by this schedule. The schedule is interpreted with the agent's local time. </param>
         /// <param name="errorDetails"></param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, string timeZone, UploadLimitSchedule uploadLimitSchedule, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AgentVersion = agentVersion;
@@ -94,6 +96,8 @@ namespace Azure.ResourceManager.StorageMover
             MemoryInMB = memoryInMB;
             NumberOfCores = numberOfCores;
             UptimeInSeconds = uptimeInSeconds;
+            TimeZone = timeZone;
+            UploadLimitSchedule = uploadLimitSchedule;
             ErrorDetails = errorDetails;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -124,6 +128,21 @@ namespace Azure.ResourceManager.StorageMover
         public long? NumberOfCores { get; }
         /// <summary> Uptime of the Agent in seconds. </summary>
         public long? UptimeInSeconds { get; }
+        /// <summary> The agent's local time zone represented in Windows format. </summary>
+        public string TimeZone { get; }
+        /// <summary> The WAN-link upload limit schedule that applies to any Job Run the agent executes. Data plane operations (migrating files) are affected. Control plane operations ensure seamless migration functionality and are not limited by this schedule. The schedule is interpreted with the agent's local time. </summary>
+        internal UploadLimitSchedule UploadLimitSchedule { get; set; }
+        /// <summary> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </summary>
+        public IList<UploadLimitWeeklyRecurrence> UploadLimitScheduleWeeklyRecurrences
+        {
+            get
+            {
+                if (UploadLimitSchedule is null)
+                    UploadLimitSchedule = new UploadLimitSchedule();
+                return UploadLimitSchedule.WeeklyRecurrences;
+            }
+        }
+
         /// <summary> Gets the error details. </summary>
         public StorageMoverAgentPropertiesErrorDetails ErrorDetails { get; }
         /// <summary> The provisioning state of this resource. </summary>

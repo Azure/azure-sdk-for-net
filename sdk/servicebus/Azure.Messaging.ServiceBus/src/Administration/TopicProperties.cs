@@ -45,6 +45,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Status = options.Status;
             EnableBatchedOperations = options.EnableBatchedOperations;
             EnablePartitioning = options.EnablePartitioning;
+            SupportOrdering = options.SupportOrdering;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;

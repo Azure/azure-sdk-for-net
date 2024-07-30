@@ -8,6 +8,8 @@ using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 #elif LIVE_METRICS_EXPORTER
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+#elif ASP_NET_CORE_DISTRO
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 #endif
 
 // This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
@@ -54,6 +56,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 AzureMonitorExporterEventSource.Log.FailedToParseConnectionString(ex);
 #elif LIVE_METRICS_EXPORTER
                 LiveMetricsExporterEventSource.Log.FailedToParseConnectionString(ex);
+#elif ASP_NET_CORE_DISTRO
+                AzureMonitorAspNetCoreEventSource.Log.FailedToParseConnectionString(ex);
 #endif
                 throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }

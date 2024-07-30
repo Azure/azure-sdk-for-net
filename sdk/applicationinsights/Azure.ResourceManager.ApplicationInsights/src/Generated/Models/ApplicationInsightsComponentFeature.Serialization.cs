@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string featureName = default;
             string meterId = default;
             string meterRateFrequency = default;
-            string resouceId = default;
+            ResourceIdentifier resouceId = default;
             bool? isHidden = default;
             IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities = default;
             string title = default;
@@ -146,7 +146,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (property.NameEquals("ResouceId"u8))
                 {
-                    resouceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resouceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("IsHidden"u8))
@@ -222,15 +226,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureName), out propertyOverride);
-            if (Optional.IsDefined(FeatureName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  FeatureName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FeatureName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  FeatureName: ");
                     if (FeatureName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -244,15 +249,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MeterId), out propertyOverride);
-            if (Optional.IsDefined(MeterId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  MeterId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MeterId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  MeterId: ");
                     if (MeterId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -266,15 +272,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MeterRateFrequency), out propertyOverride);
-            if (Optional.IsDefined(MeterRateFrequency) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  MeterRateFrequency: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MeterRateFrequency))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  MeterRateFrequency: ");
                     if (MeterRateFrequency.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -288,54 +295,49 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (Optional.IsDefined(ResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ResouceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceId}'");
-                    }
+                    builder.Append("  ResouceId: ");
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
-            if (Optional.IsDefined(IsHidden) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  IsHidden: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHidden))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  IsHidden: ");
                     var boolValue = IsHidden.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
-            if (Optional.IsCollectionDefined(Capabilities) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Capabilities.Any() || hasPropertyOverride)
+                builder.Append("  Capabilities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Capabilities))
                 {
-                    builder.Append("  Capabilities: ");
-                    if (hasPropertyOverride)
+                    if (Capabilities.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  Capabilities: ");
                         builder.AppendLine("[");
                         foreach (var item in Capabilities)
                         {
@@ -347,15 +349,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
-            if (Optional.IsDefined(Title) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Title: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Title))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Title: ");
                     if (Title.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -369,30 +372,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMainFeature), out propertyOverride);
-            if (Optional.IsDefined(IsMainFeature) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  IsMainFeature: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsMainFeature))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  IsMainFeature: ");
                     var boolValue = IsMainFeature.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedAddonFeatures), out propertyOverride);
-            if (Optional.IsDefined(SupportedAddonFeatures) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  SupportedAddonFeatures: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedAddonFeatures))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  SupportedAddonFeatures: ");
                     if (SupportedAddonFeatures.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Template), out propertyOverride);
-            if (Optional.IsDefined(Template) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  template: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Template))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  template: ");
                     builder.AppendLine($"'{Template.ToString()}'");
                 }
             }

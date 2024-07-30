@@ -1,13 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Functions.Worker.Extensions.WebPubSub</PackageId>
     <PackageTags>Azure, WebPubSub</PackageTags>
     <Description>Azure Web PubSub Service extensions for .NET isolated functions</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>annotations</Nullable>
-    <!--Version information-->
-    <VersionPrefix>1.7.0-beta.1</VersionPrefix>
-    <NoWarn>$(NoWarn);AZC0001;CA2227</NoWarn>
+    <Version>1.8.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.7.0</ApiCompatVersion>
+    <NoWarn>$(NoWarn);CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
   <ItemGroup>

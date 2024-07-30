@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("not supported yet in 2021-11-01")]
+        [Ignore("RequestFailedException: the supported api-versions are '2018-01-01-preview'")]
         public async Task GetAvailableClusterRegions()
         {
             await foreach (var _ in DefaultSubscription.GetAvailableClusterRegionClustersAsync())

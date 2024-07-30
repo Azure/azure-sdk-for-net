@@ -36,6 +36,26 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/autoscalesettings/", false);
+            uri.AppendPath(autoscaleSettingName, true);
+            uri.AppendPath("/predictiveMetrics", false);
+            uri.AppendQuery("timespan", timespan, true);
+            uri.AppendQuery("interval", interval, "P", true);
+            uri.AppendQuery("metricNamespace", metricNamespace, true);
+            uri.AppendQuery("metricName", metricName, true);
+            uri.AppendQuery("aggregation", aggregation, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation)
         {
             var message = _pipeline.CreateMessage();

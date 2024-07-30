@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
 
-        protected override string ResourceId => "BlockBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.BlockBlob;
 
         public override Uri Uri => BlobClient.Uri;
 
@@ -55,6 +55,14 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
+
+        /// <summary>
+        /// For mocking.
+        /// </summary>
+        internal BlockBlobStorageResource()
+        {
+            _blocks = new ConcurrentDictionary<long, string>();
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -354,13 +362,13 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData(BlobType.Block);
+            return new BlobSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                blobType: BlobType.Block,
+                blobType: new(BlobType.Block),
                 contentType: _options?.ContentType,
                 contentEncoding: _options?.ContentEncoding,
                 contentLanguage: _options?.ContentLanguage,
@@ -370,5 +378,18 @@ namespace Azure.Storage.DataMovement.Blobs
                 metadata: _options?.Metadata,
                 tags: default);
         }
+
+        // no-op for get permissions
+        protected override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

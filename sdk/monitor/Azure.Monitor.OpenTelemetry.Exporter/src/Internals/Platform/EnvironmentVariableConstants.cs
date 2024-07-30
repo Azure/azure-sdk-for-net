@@ -1,10 +1,33 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
     internal static class EnvironmentVariableConstants
     {
+        /// <summary>
+        /// All environment variables are read at SDK initialization.
+        /// A unit test exists to ensure all environment variables are added to this HashSet.
+        /// </summary>
+        public static readonly HashSet<string> HashSetDefinedEnvironmentVariables = new()
+        {
+            APPLICATIONINSIGHTS_CONNECTION_STRING,
+            APPLICATIONINSIGHTS_STATSBEAT_DISABLED,
+            FUNCTIONS_WORKER_RUNTIME,
+            LOCALAPPDATA,
+            TEMP,
+            TMPDIR,
+            WEBSITE_HOME_STAMPNAME,
+            WEBSITE_HOSTNAME,
+            WEBSITE_SITE_NAME,
+            AKS_ARM_NAMESPACE_ID,
+            EXPORT_RESOURCE_METRIC,
+            ASPNETCORE_DISABLE_URL_QUERY_REDACTION,
+            HTTPCLIENT_DISABLE_URL_QUERY_REDACTION,
+        };
+
         /// <summary>
         /// Available for users to set their Connection String.
         /// </summary>
@@ -52,9 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         public const string WEBSITE_HOSTNAME = "WEBSITE_HOSTNAME";
 
         /// <summary>
-        /// INTERNAL ONLY.
-        /// Used by Statsbeat to get the App Service Website Name.
-        /// Used by LiveMetrics to detect if an application is running in Azure App Service.
+        /// INTERNAL ONLY. Used by Statsbeat to get the App Service Website Name.
         /// </summary>
         public const string WEBSITE_SITE_NAME = "WEBSITE_SITE_NAME";
 
@@ -67,5 +88,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// When set to true, exporter will emit resources as metric telemetry.
         /// </summary>
         public const string EXPORT_RESOURCE_METRIC = "OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS";
+
+        /// <summary>
+        /// By default, OpenTelemetry.Instrumenation.AspNetCore v1.8.1 will redact query strings values from URLs.
+        /// This environment variable can be set to true to disable this behavior.
+        /// </summary>
+        /// <remarks>
+        /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/CHANGELOG.md#181"/>.
+        /// </remarks>
+        public const string ASPNETCORE_DISABLE_URL_QUERY_REDACTION = "OTEL_DOTNET_EXPERIMENTAL_ASPNETCORE_DISABLE_URL_QUERY_REDACTION";
+
+        /// <summary>
+        /// By default, OpenTelemetry.Instrumenation.Http v1.8.1 will redact query string values from URLs.
+        /// This environment variable can be set to true to disable this behavior.
+        /// </summary>
+        /// <remarks>
+        /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/CHANGELOG.md#181"/>.
+        /// </remarks>
+        public const string HTTPCLIENT_DISABLE_URL_QUERY_REDACTION = "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION";
     }
 }

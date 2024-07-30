@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<AuthorizationPolicyResourceFormatResource>(Response.FromValue(new AuthorizationPolicyResourceFormatResource(Client, response), response.GetRawResponse()));
+                var uri = _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CustomerInsightsArmOperation<AuthorizationPolicyResourceFormatResource>(Response.FromValue(new AuthorizationPolicyResourceFormatResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationPolicyName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<AuthorizationPolicyResourceFormatResource>(Response.FromValue(new AuthorizationPolicyResourceFormatResource(Client, response), response.GetRawResponse()));
+                var uri = _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CustomerInsightsArmOperation<AuthorizationPolicyResourceFormatResource>(Response.FromValue(new AuthorizationPolicyResourceFormatResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

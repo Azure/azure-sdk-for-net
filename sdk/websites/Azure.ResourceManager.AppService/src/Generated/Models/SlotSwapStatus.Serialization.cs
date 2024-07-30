@@ -127,30 +127,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimestampUtc), out propertyOverride);
-            if (Optional.IsDefined(TimestampUtc) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timestampUtc: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimestampUtc))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timestampUtc: ");
                     var formattedDateTimeString = TypeFormatters.ToString(TimestampUtc.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceSlotName), out propertyOverride);
-            if (Optional.IsDefined(SourceSlotName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sourceSlotName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceSlotName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sourceSlotName: ");
                     if (SourceSlotName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -164,15 +166,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationSlotName), out propertyOverride);
-            if (Optional.IsDefined(DestinationSlotName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  destinationSlotName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationSlotName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  destinationSlotName: ");
                     if (DestinationSlotName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

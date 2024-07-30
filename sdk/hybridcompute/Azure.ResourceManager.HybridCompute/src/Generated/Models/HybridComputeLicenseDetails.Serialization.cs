@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -61,6 +63,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("immutableId"u8);
                 writer.WriteStringValue(ImmutableId);
             }
+            if (Optional.IsCollectionDefined(VolumeLicenseDetails))
+            {
+                writer.WritePropertyName("volumeLicenseDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in VolumeLicenseDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,6 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             int? processors = default;
             int? assignedLicenses = default;
             string immutableId = default;
+            IList<VolumeLicenseDetails> volumeLicenseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,6 +182,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     immutableId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("volumeLicenseDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VolumeLicenseDetails> array = new List<VolumeLicenseDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.VolumeLicenseDetails.DeserializeVolumeLicenseDetails(item, options));
+                    }
+                    volumeLicenseDetails = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -183,7 +210,159 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 processors,
                 assignedLicenses,
                 immutableId,
+                volumeLicenseDetails ?? new ChangeTrackingList<VolumeLicenseDetails>(),
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  target: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Target))
+                {
+                    builder.Append("  target: ");
+                    builder.AppendLine($"'{Target.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Edition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  edition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Edition))
+                {
+                    builder.Append("  edition: ");
+                    builder.AppendLine($"'{Edition.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseCoreType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LicenseCoreType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{LicenseCoreType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Processors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  processors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Processors))
+                {
+                    builder.Append("  processors: ");
+                    builder.AppendLine($"{Processors.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignedLicenses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  assignedLicenses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssignedLicenses))
+                {
+                    builder.Append("  assignedLicenses: ");
+                    builder.AppendLine($"{AssignedLicenses.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImmutableId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  immutableId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImmutableId))
+                {
+                    builder.Append("  immutableId: ");
+                    if (ImmutableId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ImmutableId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ImmutableId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VolumeLicenseDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  volumeLicenseDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(VolumeLicenseDetails))
+                {
+                    if (VolumeLicenseDetails.Any())
+                    {
+                        builder.Append("  volumeLicenseDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in VolumeLicenseDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  volumeLicenseDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<HybridComputeLicenseDetails>.Write(ModelReaderWriterOptions options)
@@ -194,6 +373,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support writing '{options.Format}' format.");
             }

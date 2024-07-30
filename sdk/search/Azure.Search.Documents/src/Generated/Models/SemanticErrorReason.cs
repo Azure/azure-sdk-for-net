@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
         private const string CapacityOverloadedValue = "capacityOverloaded";
         private const string TransientValue = "transient";
 
-        /// <summary> If 'semanticMaxWaitInMilliseconds' was set and the semantic processing duration exceeded that value. Only the base results were returned. </summary>
+        /// <summary> If `semanticMaxWaitInMilliseconds` was set and the semantic processing duration exceeded that value. Only the base results were returned. </summary>
         public static SemanticErrorReason MaxWaitExceeded { get; } = new SemanticErrorReason(MaxWaitExceededValue);
         /// <summary> The request was throttled. Only the base results were returned. </summary>
         public static SemanticErrorReason CapacityOverloaded { get; } = new SemanticErrorReason(CapacityOverloadedValue);
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

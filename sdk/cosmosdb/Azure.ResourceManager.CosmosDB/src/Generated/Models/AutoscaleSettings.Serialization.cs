@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxThroughput), out propertyOverride);
-            if (Optional.IsDefined(MaxThroughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxThroughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxThroughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxThroughput: ");
                     builder.AppendLine($"{MaxThroughput.Value}");
                 }
             }

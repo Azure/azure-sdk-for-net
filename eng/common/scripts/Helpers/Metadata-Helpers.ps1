@@ -17,9 +17,9 @@ function Generate-AadToken ($TenantId, $ClientId, $ClientSecret)
     return $resp.access_token
 }
 
-function GetAllGithubUsers ([string]$TenantId, [string]$ClientId, [string]$ClientSecret)
+function GetAllGithubUsers ([string]$TenantId, [string]$ClientId, [string]$ClientSecret, [string]$Token)
 {
-    # API documentation (out of date): https://github.com/microsoft/opensource-management-portal/blob/main/docs/api.md
+    # API documentation: https://github.com/1ES-microsoft/opensource-management-portal/blob/trunk/docs/microsoft.api.md
     $OpensourceAPIBaseURI = "https://repos.opensource.microsoft.com/api/people/links"
 
     $Headers = @{
@@ -28,8 +28,10 @@ function GetAllGithubUsers ([string]$TenantId, [string]$ClientId, [string]$Clien
     }
 
     try {
-        $opsAuthToken = Generate-AadToken -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret
-        $Headers["Authorization"] = "Bearer $opsAuthToken"
+        if (!$Token) {
+          $Token = Generate-AadToken -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret
+        }
+        $Headers["Authorization"] = "Bearer $Token"
         Write-Host "Fetching all github alias links"
         $resp = Invoke-RestMethod $OpensourceAPIBaseURI -Method 'GET' -Headers $Headers -MaximumRetryCount 3
     } catch {

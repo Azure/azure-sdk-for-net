@@ -138,15 +138,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Text), out propertyOverride);
-            if (Optional.IsDefined(Text) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  text: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Text))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  text: ");
                     if (Text.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -160,17 +161,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Links), out propertyOverride);
-            if (Optional.IsCollectionDefined(Links) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Links.Any() || hasPropertyOverride)
+                builder.Append("  links: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Links))
                 {
-                    builder.Append("  links: ");
-                    if (hasPropertyOverride)
+                    if (Links.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  links: ");
                         builder.AppendLine("[");
                         foreach (var item in Links)
                         {
@@ -195,15 +197,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Qid), out propertyOverride);
-            if (Optional.IsDefined(Qid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  qid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Qid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  qid: ");
                     if (Qid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

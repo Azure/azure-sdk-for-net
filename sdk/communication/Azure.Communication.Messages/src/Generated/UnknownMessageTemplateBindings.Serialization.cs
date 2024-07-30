@@ -128,7 +128,7 @@ namespace Azure.Communication.Messages
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<MessageTemplateBindings>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -17,6 +17,7 @@ namespace Azure.Developer.DevCenter.Tests
     {
         private const string EnvName = "DevTestEnv";
         private const string EnvDefinitionName = "Sandbox";
+        private const int EnvDefinitionCount = 8;
         private DeploymentEnvironmentsClient _environmentsClient;
 
         internal DeploymentEnvironmentsClient GetEnvironmentsClient() =>
@@ -108,7 +109,7 @@ namespace Azure.Developer.DevCenter.Tests
             List<EnvironmentDefinition> envDefinitions = await _environmentsClient.GetEnvironmentDefinitionsAsync(
                 TestEnvironment.ProjectName).ToEnumerableAsync();
 
-            Assert.AreEqual(3, envDefinitions.Count);
+            Assert.AreEqual(EnvDefinitionCount, envDefinitions.Count);
 
             foreach (var envDefinition in envDefinitions)
             {
@@ -129,7 +130,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.ProjectName,
                 TestEnvironment.CatalogName).ToEnumerableAsync();
 
-            Assert.AreEqual(3, envDefinitions.Count);
+            Assert.AreEqual(EnvDefinitionCount, envDefinitions.Count);
 
             foreach (var envDefinition in envDefinitions)
             {

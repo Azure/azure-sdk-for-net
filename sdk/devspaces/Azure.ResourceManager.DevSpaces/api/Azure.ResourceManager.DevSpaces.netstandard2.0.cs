@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevSpaces
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevSpaces.ControllerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevSpaces.ControllerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ControllerResource : Azure.ResourceManager.ArmResource
+    public partial class ControllerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevSpaces.ControllerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevSpaces.ControllerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ControllerResource() { }
@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DevSpaces
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DevSpaces.ControllerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevSpaces.ControllerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevSpaces.ControllerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevSpaces.ControllerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevSpaces.ControllerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevSpaces.ControllerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevSpaces.ControllerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource> Update(Azure.ResourceManager.DevSpaces.Models.ControllerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource>> UpdateAsync(Azure.ResourceManager.DevSpaces.Models.ControllerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

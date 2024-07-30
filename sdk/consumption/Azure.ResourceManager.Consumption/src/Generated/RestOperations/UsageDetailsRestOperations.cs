@@ -36,6 +36,37 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope, string expand, string filter, string skipToken, int? top, ConsumptionMetricType? metric)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/usageDetails", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metric != null)
+            {
+                uri.AppendQuery("metric", metric.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope, string expand, string filter, string skipToken, int? top, ConsumptionMetricType? metric)
         {
             var message = _pipeline.CreateMessage();
@@ -133,6 +164,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, string expand, string filter, string skipToken, int? top, ConsumptionMetricType? metric)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string expand, string filter, string skipToken, int? top, ConsumptionMetricType? metric)

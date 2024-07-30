@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="low"> Low limit. </param>
         /// <param name="high"> High limit. </param>
-        internal FhirR4Range(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Quantity low, FhirR4Quantity high) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Range(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Quantity low, FhirR4Quantity high) : base(id, extension, serializedAdditionalRawData)
         {
             Low = low;
             High = high;

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-require: https://github.com/Azure/azure-rest-api-specs/blob/f6278b35fb38d62aadb7a4327a876544d5d7e1e4/specification/hybridcompute/resource-manager/readme.md
-#tag: package-preview-2023-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/b48d5d72073a296514d3d4db77887d8711526ccc/specification/hybridcompute/resource-manager/readme.md
+#tag: package-preview-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,6 +21,7 @@ modelerfour:
   # Mitigate the duplication schema named 'ErrorDetail'
   lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -55,6 +56,20 @@ prepend-rp-prefix:
   - ServiceStatus
   - ServiceStatuses
   - WindowsParameters
+  - AccessMode
+  - ResourceAssociation
+  - AccessRule
+  - AccessRuleDirection
+  - ProgramYear
+  - ProvisioningIssue
+  - ProvisioningIssueSeverity
+  - ProvisioningIssueType
+  - Gateway
+  - GatewayUpdate
+  - GatewayType
+
+list-exception: 
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}
 
 rename-mapping:
   AgentUpgrade.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
@@ -88,6 +103,13 @@ rename-mapping:
   RunCommandManagedIdentity.objectId: -|uuid
   StatusLevelTypes: HybridComputeStatusLevelType
   StatusTypes: HybridComputeStatusType
+  OSProfileWindowsConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
+  PatchSettingsStatus: HybridComputePatchSettingsStatus
+  Settings: HybridComputeTargetResourceSettings
+  OSProfileLinuxConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
+
+override-operation-name:
+  Settings_Update: UpdateTargetResourceSetting
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -233,44 +255,18 @@ directive:
         }
       }
 
-  # remove cmdlets
-  - where:
-      subject: NetworkProfile
-    remove: true
-  - where:
-      subject: MachineRunCommand
-      verb: Set
-    remove: true
-
-  # remove operations
-  - remove-operation: Machines_CreateOrUpdate
-  - remove-operation: MachineRunCommands_Update
+  # we don't want user to interact with them / we don't support some operations
+  - remove-operation: MachineRunCommands_Update #PATCH
+  # internal operations
   - remove-operation: AgentVersion_List
   - remove-operation: AgentVersion_Get
+  # we don't use them, pending to remove in the future
   - remove-operation: HybridIdentityMetadata_Get
   - remove-operation: HybridIdentityMetadata_ListByMachines
-
-  # add back when swagger change is checked in
-  - remove-operation: Licenses_Get
-  - remove-operation: Licenses_ValidateLicense
-  - remove-operation: Licenses_ListBySubscription
-  - remove-operation: Licenses_ListByResourceGroup
-  - remove-operation: Licenses_Delete
-  - remove-operation: Licenses_Update
-  - remove-operation: Licenses_CreateOrUpdate
-
-  - remove-operation: LicenseProfiles_Get
-  - remove-operation: LicenseProfiles_Delete
-  - remove-operation: LicenseProfiles_Update
-  - remove-operation: LicenseProfiles_List
-  - remove-operation: LicenseProfiles_CreateOrUpdate
-
-  - remove-operation: NetworkConfigurations_Get
-  - remove-operation: NetworkConfigurations_Update
-  - remove-operation: NetworkConfigurations_CreateOrUpdate
-
-  - remove-operation: NetworkSecurityPerimeterConfigurations_GetByPrivateLinkScope
-  - remove-operation: NetworkSecurityPerimeterConfigurations_ListByPrivateLinkScope
-  - remove-operation: NetworkSecurityPerimeterConfigurations_ReconcileForPrivateLinkScope
+  # we don't want user to interact with them
+  - remove-operation: Settings_Get
+  - remove-operation: Settings_Patch
+  # adding it will remove HybridComputeLicenseData resource and create HybridComputeLicensePatch resouce and cause other ESU commands to fail  
+  - remove-operation: Licenses_Update #PATCH
 
 ```

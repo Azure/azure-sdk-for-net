@@ -7,7 +7,7 @@ This sample shows how to call GetPlantingDataAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = await client.GetPlantingDataAsync("<partyId>", "<plantingDataId>", null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetPlantingDataAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = await client.GetPlantingDataAsync("<partyId>", "<plantingDataId>", null);
 
@@ -63,7 +63,7 @@ This sample shows how to call GetPlantingData and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = client.GetPlantingData("<partyId>", "<plantingDataId>", null);
 
@@ -74,7 +74,7 @@ This sample shows how to call GetPlantingData with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = client.GetPlantingData("<partyId>", "<plantingDataId>", null);
 
@@ -119,7 +119,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantingDataId>", content);
@@ -131,7 +131,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -203,7 +203,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<plantingDataId>", content);
@@ -215,7 +215,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -287,7 +287,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
 
@@ -297,7 +297,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
 
@@ -310,7 +310,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = client.Delete("<partyId>", "<plantingDataId>");
 
@@ -320,7 +320,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = client.Delete("<partyId>", "<plantingDataId>");
 
@@ -333,7 +333,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -346,7 +346,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -371,7 +371,7 @@ This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -384,7 +384,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -409,7 +409,7 @@ This sample shows how to call GetAllPlantingDataByPartyIdAsync and parse the res
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -421,7 +421,7 @@ This sample shows how to call GetAllPlantingDataByPartyIdAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -467,7 +467,7 @@ This sample shows how to call GetAllPlantingDataByPartyId and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -479,7 +479,7 @@ This sample shows how to call GetAllPlantingDataByPartyId with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -525,7 +525,7 @@ This sample shows how to call GetAllPlantingDataAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 await foreach (BinaryData item in client.GetAllPlantingDataAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -537,7 +537,7 @@ This sample shows how to call GetAllPlantingDataAsync with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 await foreach (BinaryData item in client.GetAllPlantingDataAsync(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<plantingDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -583,7 +583,7 @@ This sample shows how to call GetAllPlantingData and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 foreach (BinaryData item in client.GetAllPlantingData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -595,7 +595,7 @@ This sample shows how to call GetAllPlantingData with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 foreach (BinaryData item in client.GetAllPlantingData(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<plantingDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -641,7 +641,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>", null);
 BinaryData responseData = operation.Value;
@@ -655,7 +655,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>", null);
 BinaryData responseData = operation.Value;
@@ -681,7 +681,7 @@ This sample shows how to call CreateCascadeDeleteJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>", null);
 BinaryData responseData = operation.Value;
@@ -695,7 +695,7 @@ This sample shows how to call CreateCascadeDeleteJob with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
+PlantingData client = new FarmBeatsClient(endpoint, credential).GetPlantingDataClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>", null);
 BinaryData responseData = operation.Value;

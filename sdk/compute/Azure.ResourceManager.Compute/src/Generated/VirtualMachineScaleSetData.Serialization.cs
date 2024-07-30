@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy, options);
             }
+            if (Optional.IsDefined(ScheduledEventsPolicy))
+            {
+                writer.WritePropertyName("scheduledEventsPolicy"u8);
+                writer.WriteObjectValue(ScheduledEventsPolicy, options);
+            }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
                 writer.WritePropertyName("automaticRepairsPolicy"u8);
@@ -251,6 +256,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
+            ScheduledEventsPolicy scheduledEventsPolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
             VirtualMachineScaleSetVmProfile virtualMachineProfile = default;
             string provisioningState = default;
@@ -388,6 +394,15 @@ namespace Azure.ResourceManager.Compute
                                 continue;
                             }
                             upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("scheduledEventsPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("automaticRepairsPolicy"u8))
@@ -576,6 +591,7 @@ namespace Azure.ResourceManager.Compute
                 extendedLocation,
                 etag,
                 upgradePolicy,
+                scheduledEventsPolicy,
                 automaticRepairsPolicy,
                 virtualMachineProfile,
                 provisioningState,

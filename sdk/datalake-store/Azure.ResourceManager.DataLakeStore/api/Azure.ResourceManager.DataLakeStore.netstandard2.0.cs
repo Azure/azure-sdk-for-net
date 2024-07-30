@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataLakeStore
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeStoreAccountResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeStoreAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeStoreAccountResource() { }
@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.DataLakeStore
         public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource> GetDataLakeStoreVirtualNetworkRule(string virtualNetworkRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource>> GetDataLakeStoreVirtualNetworkRuleAsync(string virtualNetworkRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleCollection GetDataLakeStoreVirtualNetworkRules() { throw null; }
+        Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -122,7 +127,7 @@ namespace Azure.ResourceManager.DataLakeStore
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeStoreFirewallRuleResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeStoreFirewallRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeStoreFirewallRuleResource() { }
@@ -133,6 +138,11 @@ namespace Azure.ResourceManager.DataLakeStore
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleResource> Update(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleResource>> UpdateAsync(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -163,7 +173,7 @@ namespace Azure.ResourceManager.DataLakeStore
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeStoreTrustedIdProviderResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeStoreTrustedIdProviderResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeStoreTrustedIdProviderResource() { }
@@ -174,6 +184,11 @@ namespace Azure.ResourceManager.DataLakeStore
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderResource> Update(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderResource>> UpdateAsync(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -204,7 +219,7 @@ namespace Azure.ResourceManager.DataLakeStore
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeStoreVirtualNetworkRuleResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeStoreVirtualNetworkRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeStoreVirtualNetworkRuleResource() { }
@@ -215,6 +230,11 @@ namespace Azure.ResourceManager.DataLakeStore
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource> Update(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource>> UpdateAsync(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

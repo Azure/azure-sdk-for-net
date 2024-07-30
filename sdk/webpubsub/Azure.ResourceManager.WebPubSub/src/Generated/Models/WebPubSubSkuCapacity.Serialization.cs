@@ -182,59 +182,63 @@ namespace Azure.ResourceManager.WebPubSub.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
-            if (Optional.IsDefined(Minimum) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minimum: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Minimum))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minimum: ");
                     builder.AppendLine($"{Minimum.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
-            if (Optional.IsDefined(Maximum) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maximum: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Maximum))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maximum: ");
                     builder.AppendLine($"{Maximum.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
-            if (Optional.IsDefined(Default) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  default: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Default))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  default: ");
                     builder.AppendLine($"{Default.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedValues), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedValues) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedValues.Any() || hasPropertyOverride)
+                builder.Append("  allowedValues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedValues))
                 {
-                    builder.Append("  allowedValues: ");
-                    if (hasPropertyOverride)
+                    if (AllowedValues.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedValues: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedValues)
                         {
@@ -246,15 +250,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleType), out propertyOverride);
-            if (Optional.IsDefined(ScaleType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scaleType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scaleType: ");
                     builder.AppendLine($"'{ScaleType.Value.ToString()}'");
                 }
             }

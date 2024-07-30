@@ -22,8 +22,8 @@ namespace Azure.Storage.Queues.Test
 {
     public class QueueClientTests : QueueTestBase
     {
-        public QueueClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public QueueClientTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Storage.Queues.Test
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(Tenants.TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -181,7 +181,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueClient aadQueue = InstrumentClient(new QueueClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -205,7 +205,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueClient aadQueue = InstrumentClient(new QueueClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -229,7 +229,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueClient aadQueue = InstrumentClient(new QueueClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -310,7 +310,35 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             var queueName = GetNewQueueName();
-            QueueServiceClient service = QueuesClientBuilder.GetServiceClient_OAuth();
+            QueueServiceClient service = GetServiceClient_OAuth();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            try
+            {
+                // Act
+                Response result = await queue.CreateAsync();
+
+                // Assert
+                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+            }
+            finally
+            {
+                await queue.DeleteIfExistsAsync();
+            }
+        }
+
+        // Not possible to record
+        [LiveOnly]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task CreateAsync_WithOauthBearerChallenge()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueClientOptions options = new QueueClientOptions
+            {
+                Audience = QueueAudience.CreateQueueServiceAccountAudience("account"),
+            };
+            QueueServiceClient service = GetServiceClient_OAuth(options);
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try
@@ -463,7 +491,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -512,7 +540,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -558,7 +586,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -1940,13 +1968,14 @@ namespace Azure.Storage.Queues.Test
         [RecordedTest]
         public void CanMockClientConstructors()
         {
+            TokenCredential mockTokenCredential = new Mock<TokenCredential>().Object;
             // One has to call .Object to trigger constructor. It's lazy.
             var mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename", new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename").Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
-            mock = new Mock<QueueClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
         }
     }
 }

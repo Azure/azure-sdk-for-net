@@ -37,6 +37,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("oversampling"u8);
                 writer.WriteNumberValue(Oversampling.Value);
             }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
             writer.WriteEndObject();
         }
 

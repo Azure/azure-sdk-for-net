@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -64,6 +65,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk, options);
+            }
+            if (Optional.IsDefined(SourceResource))
+            {
+                writer.WritePropertyName("sourceResource"u8);
+                JsonSerializer.Serialize(writer, SourceResource);
             }
             if (Optional.IsDefined(ToBeDetached))
             {
@@ -137,6 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
             VirtualMachineManagedDisk managedDisk = default;
+            WritableSubResource sourceResource = default;
             bool? toBeDetached = default;
             long? diskIOPSReadWrite = default;
             long? diskMBpsReadWrite = default;
@@ -215,6 +222,15 @@ namespace Azure.ResourceManager.Compute.Models
                     managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("sourceResource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("toBeDetached"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -276,6 +292,7 @@ namespace Azure.ResourceManager.Compute.Models
                 createOption,
                 diskSizeGB,
                 managedDisk,
+                sourceResource,
                 toBeDetached,
                 diskIOPSReadWrite,
                 diskMBpsReadWrite,

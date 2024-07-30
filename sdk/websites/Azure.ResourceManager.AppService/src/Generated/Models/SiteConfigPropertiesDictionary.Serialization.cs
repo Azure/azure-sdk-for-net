@@ -138,30 +138,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Use32BitWorkerProcess), out propertyOverride);
-            if (Optional.IsDefined(Use32BitWorkerProcess) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  use32BitWorkerProcess: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Use32BitWorkerProcess))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  use32BitWorkerProcess: ");
                     var boolValue = Use32BitWorkerProcess.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxFxVersion), out propertyOverride);
-            if (Optional.IsDefined(LinuxFxVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  linuxFxVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinuxFxVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  linuxFxVersion: ");
                     if (LinuxFxVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -175,15 +177,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JavaVersion), out propertyOverride);
-            if (Optional.IsDefined(JavaVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  javaVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JavaVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  javaVersion: ");
                     if (JavaVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -197,15 +200,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PowerShellVersion), out propertyOverride);
-            if (Optional.IsDefined(PowerShellVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  powerShellVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PowerShellVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  powerShellVersion: ");
                     if (PowerShellVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

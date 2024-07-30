@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="EsuKey"/>. </summary>
         /// <param name="sku"> SKU number. </param>
-        /// <param name="licenseStatus"> The current status of the license profile key. </param>
+        /// <param name="licenseStatus"> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EsuKey(string sku, string licenseStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EsuKey(string sku, int? licenseStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             LicenseStatus = licenseStatus;
@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> SKU number. </summary>
+        [WirePath("sku")]
         public string Sku { get; }
-        /// <summary> The current status of the license profile key. </summary>
-        public string LicenseStatus { get; }
+        /// <summary> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </summary>
+        [WirePath("licenseStatus")]
+        public int? LicenseStatus { get; }
     }
 }

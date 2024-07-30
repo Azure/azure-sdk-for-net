@@ -1,5 +1,21 @@
 # Release History
 
+## 1.8.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.7.4 (2024-06-13)
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.11.4`.
+
 ## 1.7.3 (2024-04-16)
 
 ### Other Changes

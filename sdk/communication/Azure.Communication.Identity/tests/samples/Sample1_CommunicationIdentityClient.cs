@@ -192,7 +192,7 @@ namespace Azure.Communication.Identity.Samples
             #region Snippet:CreateCommunicationIdentityFromToken
             var endpoint = new Uri("https://my-resource.communication.azure.com");
             /*@@*/ endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-            TokenCredential tokenCredential = new DefaultAzureCredential();
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             var client = new CommunicationIdentityClient(endpoint, tokenCredential);
             #endregion Snippet:CreateCommunicationIdentityFromToken
 

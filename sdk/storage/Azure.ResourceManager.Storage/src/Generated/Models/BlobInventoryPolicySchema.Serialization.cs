@@ -136,27 +136,29 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            builder.Append("  enabled: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  enabled: ");
                 var boolValue = IsEnabled == true ? "true" : "false";
                 builder.AppendLine($"{boolValue}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
-            if (Optional.IsDefined(Destination) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  destination: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Destination))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  destination: ");
                     if (Destination.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -170,28 +172,30 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleType), out propertyOverride);
-            builder.Append("  type: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  type: ");
                 builder.AppendLine($"'{RuleType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rules), out propertyOverride);
-            if (Optional.IsCollectionDefined(Rules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Rules.Any() || hasPropertyOverride)
+                builder.Append("  rules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Rules))
                 {
-                    builder.Append("  rules: ");
-                    if (hasPropertyOverride)
+                    if (Rules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  rules: ");
                         builder.AppendLine("[");
                         foreach (var item in Rules)
                         {

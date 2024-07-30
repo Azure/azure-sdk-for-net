@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAlias), out propertyOverride);
-            if (Optional.IsDefined(FunctionAlias) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  functionAlias: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FunctionAlias))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  functionAlias: ");
                     if (FunctionAlias.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

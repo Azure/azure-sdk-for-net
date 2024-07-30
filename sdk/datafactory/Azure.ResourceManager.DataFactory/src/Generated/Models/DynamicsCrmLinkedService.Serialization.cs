@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("authenticationType"u8);
             JsonSerializer.Serialize(writer, AuthenticationType);
+            if (Optional.IsDefined(Domain))
+            {
+                writer.WritePropertyName("domain"u8);
+                JsonSerializer.Serialize(writer, Domain);
+            }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
@@ -122,6 +127,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("servicePrincipalCredential"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalCredential);
+            }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -175,11 +185,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> serviceUri = default;
             DataFactoryElement<string> organizationName = default;
             DataFactoryElement<string> authenticationType = default;
+            DataFactoryElement<string> domain = default;
             DataFactoryElement<string> username = default;
             DataFactorySecret password = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
             DataFactorySecret servicePrincipalCredential = default;
+            DataFactoryCredentialReference credential = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -294,6 +306,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             authenticationType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("domain"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            domain = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("username"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -339,6 +360,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             encryptedCredential = property0.Value.GetString();
@@ -363,11 +393,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 serviceUri,
                 organizationName,
                 authenticationType,
+                domain,
                 username,
                 password,
                 servicePrincipalId,
                 servicePrincipalCredentialType,
                 servicePrincipalCredential,
+                credential,
                 encryptedCredential);
         }
 

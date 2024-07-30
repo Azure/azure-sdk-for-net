@@ -62,6 +62,8 @@ namespace Azure.Storage.DataMovement
         internal const int LongSizeInBytes = 8;
         internal const int IntSizeInBytes = 4;
         internal const int GuidSizeInBytes = 16;
+        internal const string StringTypeStr = "string";
+        internal const string StringArrayTypeStr = "string[]";
 
         /// <summary>
         /// Constants used for job plan files.
@@ -148,6 +150,7 @@ namespace Azure.Storage.DataMovement
             internal const string AccessTier = "AccessTier";
             internal const string BlobType = "BlobType";
             internal const string CreationTime = "CreationTime";
+            internal const string ChangedOnTime = "ChangedOnTime";
             internal const string ContentType = "ContentType";
             internal const string ContentHash = "ContentHash";
             internal const string ContentEncoding = "ContentEncoding";
@@ -156,7 +159,12 @@ namespace Azure.Storage.DataMovement
             internal const string CacheControl = "CacheControl";
             internal const string ETag = "ETag";
             internal const string LastModified = "LastModified";
+            internal const string LastWrittenOn = "LastWrittenOn";
             internal const string Metadata = "Metadata";
+            internal const string FileAttributes = "FileAttributes";
+            internal const string FilePermissions = "FilePermissions";
+            internal const string SourceFilePermissionKey = "SourceFilePermissionKey";
+            internal const string DestinationFilePermissionKey = "DestinationFilePermissionKey";
         }
     }
 }

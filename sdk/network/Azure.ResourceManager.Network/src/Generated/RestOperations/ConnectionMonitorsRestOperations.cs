@@ -32,8 +32,28 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/connectionMonitors/", false);
+            uri.AppendPath(connectionMonitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (migrate != null)
+            {
+                uri.AppendQuery("migrate", migrate, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate)
@@ -126,6 +146,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/connectionMonitors/", false);
+            uri.AppendPath(connectionMonitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -214,6 +250,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/connectionMonitors/", false);
+            uri.AppendPath(connectionMonitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -288,6 +340,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateTagsRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, NetworkTagsObject networkTagsObject)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/connectionMonitors/", false);
+            uri.AppendPath(connectionMonitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, NetworkTagsObject networkTagsObject)
@@ -382,6 +450,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/connectionMonitors/", false);
+            uri.AppendPath(connectionMonitorName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -457,6 +542,23 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/connectionMonitors/", false);
+            uri.AppendPath(connectionMonitorName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
@@ -536,6 +638,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateQueryRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/connectionMonitors/", false);
+            uri.AppendPath(connectionMonitorName, true);
+            uri.AppendPath("/query", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateQueryRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -611,6 +730,21 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/connectionMonitors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkWatcherName)

@@ -11,7 +11,6 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_03_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
     public partial class VectorSearchUsingVectorizableTextQuery : SearchTestBase
     {
         public VectorSearchUsingVectorizableTextQuery(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -264,7 +263,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizableTextQuery
             string vectorSearchProfileName = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
-            string modelName = "text-embedding-ada-002";
+            string deploymentName = "text-embedding-ada-002";
             int modelDimensions = 1536;
 
             string indexName = "hotel";
@@ -288,7 +287,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
                         {
-                            Vectorizer = "openai"
+                            VectorizerName = "openai"
                         }
                     },
                     Algorithms =
@@ -299,11 +298,12 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         new AzureOpenAIVectorizer("openai")
                         {
-                            AzureOpenAIParameters  = new AzureOpenAIParameters()
+                            Parameters  = new AzureOpenAIVectorizerParameters()
                             {
                                 ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                                 ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                                DeploymentId = modelName,
+                                DeploymentName = deploymentName,
+                                ModelName = AzureOpenAIModelName.TextEmbeddingAda002
                             }
                         }
                     }

@@ -10,9 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -20,10 +18,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     {
         internal static Dictionary<string, Type> _actionMapping = new Dictionary<string, Type>()
         {
-            {"microsoft.graph.tokenissuancestart.provideclaimsfortoken", typeof(ProvideClaimsForToken) }
+            {"microsoft.graph.tokenissuancestart.provideclaimsfortoken", typeof(WebJobsProvideClaimsForToken) }
         };
 
-        internal static EventDefinition GetEventDefintionFromPayload(string payload)
+        internal static WebJobsAuthenticationEventDefinition GetEventDefintionFromPayload(string payload)
         {
             try
             {
@@ -34,9 +32,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     comparable = jPayload.GetPropertyValue("type");
                 }
 
-                foreach (EventDefinition eventDefinition in Enum.GetValues(typeof(EventDefinition)))
+                foreach (WebJobsAuthenticationEventDefinition eventDefinition in Enum.GetValues(typeof(WebJobsAuthenticationEventDefinition)))
                 {
-                    AuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<AuthenticationEventMetadataAttribute>();
+                    WebJobsAuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<WebJobsAuthenticationEventMetadataAttribute>();
                     if (eventMetadata.EventIdentifier.Equals(comparable, StringComparison.OrdinalIgnoreCase))
                     {
                         return eventDefinition;
@@ -63,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             };
 
             // Set the metrics on header
-            EventTriggerMetrics.Instance.SetMetricHeaders(response);
+            WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(response);
 
             return response;
         }
@@ -128,10 +126,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             using var _ = JsonDocument.Parse(input);
         }
 
-        internal static AuthenticationEventAction GetEventActionForActionType(string actionType)
+        internal static WebJobsAuthenticationEventsAction GetEventActionForActionType(string actionType)
         {
             return actionType != null && _actionMapping.ContainsKey(actionType.ToLower(CultureInfo.CurrentCulture))
-                 ? (AuthenticationEventAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
+                 ? (WebJobsAuthenticationEventsAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
                  : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Invalid_Action, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
         }
 

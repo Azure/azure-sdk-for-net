@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("thresholdSeconds"u8);
-            WriteThresholdSeconds(writer);
+            WriteThresholdSeconds(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

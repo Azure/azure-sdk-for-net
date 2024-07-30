@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,7 +115,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, data, cancellationToken);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +256,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +285,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +314,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +357,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,7 +400,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -441,7 +445,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

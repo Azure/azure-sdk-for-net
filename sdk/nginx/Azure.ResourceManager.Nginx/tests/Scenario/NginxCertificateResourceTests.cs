@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            string nginxCertificateName = Recording.GenerateAssetName("testCertificate-");
+            string nginxCertificateName = Recording.GenerateAssetName("testcertificate-");
             string certificateVirtualPath = "/etc/nginx/nginx.cert";
             string keyVirtualPath = "/etc/nginx/nginx.key";
             NginxCertificateResource nginxCertificate = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsTrue(nginxCertificate.HasData);
             Assert.NotNull(nginxCertificate.Data);
             Assert.IsTrue(nginxCertificate.Data.Name.Equals(nginxCertificateName));
-            Assert.IsTrue(nginxCertificate.Data.Location.Equals(Location));
             Assert.IsNotNull(nginxCertificate.Data.Properties.ProvisioningState);
             Assert.IsTrue(nginxCertificate.Data.Properties.CertificateVirtualPath.Equals(certificateVirtualPath));
             Assert.IsTrue(nginxCertificate.Data.Properties.KeyVirtualPath.Equals(keyVirtualPath));

@@ -119,9 +119,9 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             FhirR4Narrative text = default;
-            IList<FhirR4Resource> contained = default;
-            IList<FhirR4Extension> extension = default;
-            IList<FhirR4Extension> modifierExtension = default;
+            IReadOnlyList<FhirR4Resource> contained = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
+            IReadOnlyList<FhirR4Extension> modifierExtension = default;
             string resourceType = "Unknown";
             string id = default;
             FhirR4Meta meta = default;
@@ -270,7 +270,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<FhirR4DomainResource>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

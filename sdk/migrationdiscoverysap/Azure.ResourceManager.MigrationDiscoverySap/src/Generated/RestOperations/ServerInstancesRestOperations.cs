@@ -36,6 +36,23 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySapInstanceRequestUri(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapDiscoverySites/", false);
+            uri.AppendPath(sapDiscoverySiteName, true);
+            uri.AppendPath("/sapInstances/", false);
+            uri.AppendPath(sapInstanceName, true);
+            uri.AppendPath("/serverInstances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySapInstanceRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +136,24 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, string serverInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapDiscoverySites/", false);
+            uri.AppendPath(sapDiscoverySiteName, true);
+            uri.AppendPath("/sapInstances/", false);
+            uri.AppendPath(sapInstanceName, true);
+            uri.AppendPath("/serverInstances/", false);
+            uri.AppendPath(serverInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, string serverInstanceName)
@@ -215,6 +250,24 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, string serverInstanceName, SapDiscoveryServerInstanceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapDiscoverySites/", false);
+            uri.AppendPath(sapDiscoverySiteName, true);
+            uri.AppendPath("/sapInstances/", false);
+            uri.AppendPath(sapInstanceName, true);
+            uri.AppendPath("/serverInstances/", false);
+            uri.AppendPath(serverInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, string serverInstanceName, SapDiscoveryServerInstanceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -303,6 +356,24 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, string serverInstanceName, SapDiscoveryServerInstancePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapDiscoverySites/", false);
+            uri.AppendPath(sapDiscoverySiteName, true);
+            uri.AppendPath("/sapInstances/", false);
+            uri.AppendPath(sapInstanceName, true);
+            uri.AppendPath("/serverInstances/", false);
+            uri.AppendPath(serverInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, string serverInstanceName, SapDiscoveryServerInstancePatch patch)
@@ -403,6 +474,24 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, string serverInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapDiscoverySites/", false);
+            uri.AppendPath(sapDiscoverySiteName, true);
+            uri.AppendPath("/sapInstances/", false);
+            uri.AppendPath(sapInstanceName, true);
+            uri.AppendPath("/serverInstances/", false);
+            uri.AppendPath(serverInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName, string serverInstanceName)
         {
             var message = _pipeline.CreateMessage();
@@ -485,6 +574,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySapInstanceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySapInstanceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sapDiscoverySiteName, string sapInstanceName)

@@ -17,12 +17,16 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         /// <param name="message"></param>
-        internal StorageError(string message)
+        /// <param name="authenticationErrorDetail"></param>
+        internal StorageError(string message, string authenticationErrorDetail)
         {
             Message = message;
+            AuthenticationErrorDetail = authenticationErrorDetail;
         }
 
         /// <summary> Gets the message. </summary>
         public string Message { get; }
+        /// <summary> Gets the authentication error detail. </summary>
+        public string AuthenticationErrorDetail { get; }
     }
 }
