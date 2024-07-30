@@ -1978,7 +1978,7 @@ namespace Azure.Storage.Queues.Test
             mock = new Mock<QueueClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
         }
 
-        [RecordedTest]
+        [Test]
         [TestCase("")]
         [TestCase("ra")]
         [TestCase("raup")]
