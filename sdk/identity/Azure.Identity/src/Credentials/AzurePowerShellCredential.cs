@@ -253,9 +253,11 @@ if (! $m) {{
     exit
 }}
 $tenantId = '{tenantIdArg}'
-$params = @{{ ResourceUrl = '{resource}', 'WarningAction' = 'Ignore' }}
+$params = @{{
+    ResourceUrl = '{resource}'
+    WarningAction = 'Ignore' }}
 
-if ($tenantId.Length ge 0) {{
+if ($tenantId.Length -gt 0) {{
     $params['TenantId'] = '{tenantId}'
 }}
 
