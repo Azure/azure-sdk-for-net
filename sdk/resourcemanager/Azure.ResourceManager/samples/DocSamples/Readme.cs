@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Tests.Samples
             string clientSecret = "your-client-secret";
             string subscriptionId = "your-subscription-id";
             //ArmClientOptions to set the Azure China environment
-            var armOptions = new ArmClientOptions { Environment = ArmEnvironment.AzureChina };
+            ArmClientOptions armOptions = new ArmClientOptions { Environment = ArmEnvironment.AzureChina };
             // AzureAuthorityHosts to set the Azure China environment
-            var authorityHost = AzureAuthorityHosts.AzureChina;
+            Uri authorityHost = AzureAuthorityHosts.AzureChina;
             // Create ClientSecretCredential for authentication
-            var credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions { AuthorityHost = authorityHost });
+            TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions { AuthorityHost = authorityHost });
             // Create the Azure Resource Manager client
             ArmClient client = new ArmClient(credential, subscriptionId, armOptions);
             #endregion Snippet:Readme_AuthClient
