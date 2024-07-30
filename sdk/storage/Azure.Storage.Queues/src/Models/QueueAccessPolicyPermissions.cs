@@ -78,6 +78,8 @@ namespace Azure.Storage.Queues.Models
         /// <returns>A permissions enum.</returns>
         internal static QueueAccessPolicyPermissions ToPermissionsEnum(this string permissionsString)
         {
+            if (string.IsNullOrEmpty(permissionsString)) return QueueAccessPolicyPermissions.None; // may remove this
+
             QueueAccessPolicyPermissions permissionsEnum = QueueAccessPolicyPermissions.None;
             foreach (char permission in permissionsString)
             {

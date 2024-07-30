@@ -17,6 +17,8 @@ using Azure.Storage.Queues.Specialized;
 using Moq.Protected;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using NUnit.Framework.Internal;
+using BenchmarkDotNet.Disassemblers;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -1978,18 +1980,37 @@ namespace Azure.Storage.Queues.Test
             mock = new Mock<QueueClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("")]
         [TestCase("u")]
         [TestCase("ra")]
         [TestCase("raup")]
         [TestCase("paru")]
-        public void QueueClientPolicyPermissions_checkIfSetCorrectly(string permissions)
+        public async Task QueueClientPolicyPermissions_checkIfSetCorrectly(string permissions)
         {
-            QueueAccessPolicy qap = new QueueAccessPolicy
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            QueueSignedIdentifier[] signedIdentifiers = new[]
             {
-                Permissions = permissions
+                new QueueSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy =
+                        new QueueAccessPolicy
+                        {
+                            StartsOn =  Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = permissions
+                        }
+                }
             };
+            Response setResult = await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
+
+            Response<IEnumerable<Models.QueueSignedIdentifier>> getResult = await test.Queue.GetAccessPolicyAsync();
+            Models.QueueSignedIdentifier acl = getResult.Value.First();
+
+            string actualPermissionsStr = acl.AccessPolicy.Permissions;
+            QueueAccessPolicyPermissions actualPermissionsEnum = acl.AccessPolicy.QueueAccessPolicyPermissions;
 
             string expectedPermissionsStr = "";
             QueueAccessPolicyPermissions expectedPermissionsEnum = QueueAccessPolicyPermissions.None;
@@ -2018,8 +2039,8 @@ namespace Azure.Storage.Queues.Test
                     break;
             }
 
-            Assert.AreEqual(qap.Permissions, expectedPermissionsStr);
-            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), expectedPermissionsEnum.ToPermissionsString());
+            Assert.AreEqual(actualPermissionsStr, expectedPermissionsStr);
+            Assert.AreEqual(actualPermissionsEnum.ToPermissionsString(), expectedPermissionsEnum.ToPermissionsString());
         }
     }
 }
