@@ -104,30 +104,43 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The source of the run command script. </summary>
+        [WirePath("properties.source")]
         public MachineRunCommandScriptSource Source { get; set; }
         /// <summary> The parameters used by the script. </summary>
+        [WirePath("properties.parameters")]
         public IList<RunCommandInputParameter> Parameters { get; }
         /// <summary> The parameters used by the script. </summary>
+        [WirePath("properties.protectedParameters")]
         public IList<RunCommandInputParameter> ProtectedParameters { get; }
         /// <summary> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </summary>
+        [WirePath("properties.asyncExecution")]
         public bool? AsyncExecution { get; set; }
         /// <summary> Specifies the user account on the machine when executing the run command. </summary>
+        [WirePath("properties.runAsUser")]
         public string RunAsUser { get; set; }
         /// <summary> Specifies the user account password on the machine when executing the run command. </summary>
+        [WirePath("properties.runAsPassword")]
         public string RunAsPassword { get; set; }
         /// <summary> The timeout in seconds to execute the run command. </summary>
+        [WirePath("properties.timeoutInSeconds")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </summary>
+        [WirePath("properties.outputBlobUri")]
         public Uri OutputBlobUri { get; set; }
         /// <summary> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </summary>
+        [WirePath("properties.errorBlobUri")]
         public Uri ErrorBlobUri { get; set; }
         /// <summary> User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </summary>
+        [WirePath("properties.outputBlobManagedIdentity")]
         public RunCommandManagedIdentity OutputBlobManagedIdentity { get; set; }
         /// <summary> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </summary>
+        [WirePath("properties.errorBlobManagedIdentity")]
         public RunCommandManagedIdentity ErrorBlobManagedIdentity { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> The machine run command instance view. </summary>
+        [WirePath("properties.instanceView")]
         public MachineRunCommandInstanceView InstanceView { get; }
     }
 }

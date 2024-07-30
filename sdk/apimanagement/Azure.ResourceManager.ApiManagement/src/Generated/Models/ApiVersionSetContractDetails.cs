@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identifier for existing API Version Set. Omit this value to create a new Version Set. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> The display Name of the API Version Set. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Description of API Version Set. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
+        [WirePath("versioningScheme")]
         public VersioningScheme? VersioningScheme { get; set; }
         /// <summary> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </summary>
+        [WirePath("versionQueryName")]
         public string VersionQueryName { get; set; }
         /// <summary> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </summary>
+        [WirePath("versionHeaderName")]
         public string VersionHeaderName { get; set; }
     }
 }

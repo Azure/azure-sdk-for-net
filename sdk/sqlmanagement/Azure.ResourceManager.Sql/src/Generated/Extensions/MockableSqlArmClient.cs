@@ -1163,18 +1163,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource"/> object. </returns>
-        public virtual SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(ResourceIdentifier id)
-        {
-            SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
-            return new SqlServerDatabaseReplicationLinkResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ManagedInstanceDtcResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagedInstanceDtcResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDtcResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -1544,6 +1532,18 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             SqlServerResource.ValidateResourceId(id);
             return new SqlServerResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource"/> object. </returns>
+        public virtual SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(ResourceIdentifier id)
+        {
+            SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
+            return new SqlServerDatabaseReplicationLinkResource(Client, id);
         }
     }
 }

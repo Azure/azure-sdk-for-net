@@ -117,7 +117,7 @@ while (moreResultsAvailable)
     continuationToken = page.ContinuationToken;
 
     IReadOnlyList<TableEntity> pageResults = page.Values;
-    moreResultsAvailable = pageResults.Any() && continuationToken != null;
+    moreResultsAvailable = continuationToken != null;
 
     // Print out the results for this page.
     foreach (TableEntity result in pageResults)

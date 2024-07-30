@@ -114,8 +114,11 @@ jobs:
         parameters:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
-          EnvVars: ${{ parameters.EnvVars }}
-          SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+          ${{ if parameters.UseFederatedAuth }}:
+            SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+          EnvVars:
+            Pool: $(Pool)
+            ${{ insert }}: ${{ parameters.EnvVars }}
 
       - pwsh: |
           $project = "${{ parameters.Project }}"
