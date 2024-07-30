@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: HealthDataAIServices
 namespace: Azure.ResourceManager.HealthDataAIServices
-require: C:\Users\gthomas\sdk-repos\azure-rest-api-specs\specification\healthdataaiservices\resource-manager\readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/96ae0c1ebccddb14587b61843da5efb7a13da9cc/specification/healthdataaiservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

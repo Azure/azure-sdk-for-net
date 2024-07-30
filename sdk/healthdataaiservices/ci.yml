@@ -9,7 +9,6 @@ trigger:
       - release/*
   paths:
     include:
-      - sdk/healthdataaiservices
       - sdk/healthdataaiservices/test-resources.bicep
       - sdk/healthdataaiservices/test-resources-post.ps1
       - sdk/healthdataaiservices/ci.yml
@@ -24,7 +23,6 @@ pr:
       - release/*
   paths:
     include:
-      - sdk/healthdataaiservices
       - sdk/healthdataaiservices/test-resources.bicep
       - sdk/healthdataaiservices/test-resources-post.ps1
       - sdk/healthdataaiservices/ci.yml
