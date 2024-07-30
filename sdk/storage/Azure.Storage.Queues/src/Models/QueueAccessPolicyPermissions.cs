@@ -53,22 +53,24 @@ namespace Azure.Storage.Queues.Models
     internal static partial class QueueExtensions
     {
         /// <returns>A permissions string.</returns>
-        internal static string ToPermissionsString(this QueueAccessPolicyPermissions permissions)
+        internal static string ToPermissionsString(this QueueAccessPolicyPermissions? permissionsEnum)
         {
+            if (permissionsEnum == null) return null;
+
             var sb = new StringBuilder();
-            if ((permissions & QueueAccessPolicyPermissions.Read) == QueueAccessPolicyPermissions.Read)
+            if ((permissionsEnum & QueueAccessPolicyPermissions.Read) == QueueAccessPolicyPermissions.Read)
             {
                 sb.Append(Constants.Queue.Permissions.Read);
             }
-            if ((permissions & QueueAccessPolicyPermissions.Add) == QueueAccessPolicyPermissions.Add)
+            if ((permissionsEnum & QueueAccessPolicyPermissions.Add) == QueueAccessPolicyPermissions.Add)
             {
                 sb.Append(Constants.Queue.Permissions.Add);
             }
-            if ((permissions & QueueAccessPolicyPermissions.Update) == QueueAccessPolicyPermissions.Update)
+            if ((permissionsEnum & QueueAccessPolicyPermissions.Update) == QueueAccessPolicyPermissions.Update)
             {
                 sb.Append(Constants.Queue.Permissions.Update);
             }
-            if ((permissions & QueueAccessPolicyPermissions.Process) == QueueAccessPolicyPermissions.Process)
+            if ((permissionsEnum & QueueAccessPolicyPermissions.Process) == QueueAccessPolicyPermissions.Process)
             {
                 sb.Append(Constants.Queue.Permissions.Process);
             }
@@ -76,9 +78,9 @@ namespace Azure.Storage.Queues.Models
         }
 
         /// <returns>A permissions enum.</returns>
-        internal static QueueAccessPolicyPermissions ToPermissionsEnum(this string permissionsString)
+        internal static QueueAccessPolicyPermissions? ToPermissionsEnum(this string permissionsString)
         {
-            if (string.IsNullOrEmpty(permissionsString)) return QueueAccessPolicyPermissions.None; // may remove this
+            if (permissionsString == null) return null;
 
             QueueAccessPolicyPermissions permissionsEnum = QueueAccessPolicyPermissions.None;
             foreach (char permission in permissionsString)

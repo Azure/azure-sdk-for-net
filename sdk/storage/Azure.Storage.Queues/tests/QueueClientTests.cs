@@ -2010,16 +2010,16 @@ namespace Azure.Storage.Queues.Test
             Models.QueueSignedIdentifier acl = getResult.Value.First();
 
             string actualPermissionsStr = acl.AccessPolicy.Permissions;
-            QueueAccessPolicyPermissions actualPermissionsEnum = acl.AccessPolicy.QueueAccessPolicyPermissions;
+            QueueAccessPolicyPermissions? actualPermissionsEnum = acl.AccessPolicy.QueueAccessPolicyPermissions;
 
-            string expectedPermissionsStr = "";
-            QueueAccessPolicyPermissions expectedPermissionsEnum = QueueAccessPolicyPermissions.None;
+            string expectedPermissionsStr = null;
+            QueueAccessPolicyPermissions? expectedPermissionsEnum = null;
 
             switch (permissions)
             {
                 case "":
-                    expectedPermissionsStr = "";
-                    expectedPermissionsEnum = QueueAccessPolicyPermissions.None;
+                    expectedPermissionsStr = null;
+                    expectedPermissionsEnum = null;
                     break;
                 case "u":
                     expectedPermissionsStr = "u";
