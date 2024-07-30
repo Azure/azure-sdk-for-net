@@ -54,7 +54,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 ```
 
 Note: if you want to authenticate with the azure in China, you can use the following code:
-```C# Snippet:Readme_AuthClient_China
+```C# Snippet:Readme_AuthClientChina
 // Please replace the following placeholders with your Azure information
 string tenantId = "your-tenant-id";
 string clientId = "your-client-id";
