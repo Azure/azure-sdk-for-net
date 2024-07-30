@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The type of caching to be enabled for the data disks. The default value for caching is readwrite. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/. </summary>
+        [WirePath("caching")]
         public CachingType? Caching { get; set; }
         /// <summary> The initial disk size in gigabytes. </summary>
+        [WirePath("diskSizeGiB")]
         public int? DiskSizeGiB { get; set; }
         /// <summary> The storage Account type to be used for the data disk. If omitted, the default is "standard_lrs". </summary>
+        [WirePath("storageAccountType")]
         public StorageAccountType? StorageAccountType { get; set; }
         /// <summary> The drive letter for the empty data disk. If not specified, it will be the first available letter. </summary>
+        [WirePath("driveLetter")]
         public string DriveLetter { get; set; }
     }
 }

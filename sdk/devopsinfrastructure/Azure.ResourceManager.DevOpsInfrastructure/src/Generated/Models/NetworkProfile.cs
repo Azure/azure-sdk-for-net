@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The subnet id on which to put all machines created in the pool. </summary>
+        [WirePath("subnetId")]
         public string SubnetId { get; set; }
     }
 }

@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> The Azure SKU of the machines in the pool. </summary>
         internal DevOpsAzureSku Sku { get; set; }
         /// <summary> The Azure SKU name of the machines in the pool. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -61,14 +62,18 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The VM images of the machines in the pool. </summary>
+        [WirePath("images")]
         public IList<PoolImage> Images { get; }
         /// <summary> The OS profile of the machines in the pool. </summary>
+        [WirePath("osProfile")]
         public OSProfile OSProfile { get; set; }
         /// <summary> The storage profile of the machines in the pool. </summary>
+        [WirePath("storageProfile")]
         public StorageProfile StorageProfile { get; set; }
         /// <summary> The network profile of the machines in the pool. </summary>
         internal NetworkProfile NetworkProfile { get; set; }
         /// <summary> The subnet id on which to put all machines created in the pool. </summary>
+        [WirePath("networkProfile.subnetId")]
         public string NetworkSubnetId
         {
             get => NetworkProfile is null ? default : NetworkProfile.SubnetId;

@@ -97,6 +97,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("resourcePredictions")]
         public BinaryData ResourcePredictions { get; set; }
     }
 }

@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> How long should stateful machines be kept around. The maximum is one week. </summary>
+        [WirePath("maxAgentLifetime")]
         public string MaxAgentLifetime { get; set; }
     }
 }

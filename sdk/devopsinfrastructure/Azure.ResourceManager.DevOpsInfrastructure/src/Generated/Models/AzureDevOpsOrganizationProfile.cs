@@ -43,8 +43,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The list of Azure DevOps organizations the pool should be present in. </summary>
+        [WirePath("organizations")]
         public IList<Organization> Organizations { get; }
         /// <summary> The type of permission which determines which accounts are admins on the Azure DevOps pool. </summary>
+        [WirePath("permissionProfile")]
         public AzureDevOpsPermissionProfile PermissionProfile { get; set; }
     }
 }

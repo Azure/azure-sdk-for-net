@@ -1,6 +1,6 @@
-# Microsoft Azure DevOpsInfrastructure management client library for .NET
+# Microsoft Azure DevOps Infrastructure management client library for .NET
 
-**[Describe the service briefly first.]**
+Managed DevOps Pools empowers development teams to quickly and easily spin up Azure DevOps Pools that are tailored to a team's specific needs. It implements security best practices, provides knobs to balance cost and performance, lays paved paths for the most common scenarios and significant reduces time spent in creating and maintaining custom pools.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure DevOpsInfrastructure management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure DevOps Infrastructure management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.DevOpsInfrastructure --prerelease

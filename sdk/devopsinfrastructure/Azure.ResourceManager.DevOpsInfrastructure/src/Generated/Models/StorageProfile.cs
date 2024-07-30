@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The Azure SKU name of the machines in the pool. </summary>
+        [WirePath("osDiskStorageAccountType")]
         public OSDiskStorageAccountType? OSDiskStorageAccountType { get; set; }
         /// <summary> A list of empty data disks to attach. </summary>
+        [WirePath("dataDisks")]
         public IList<DataDisk> DataDisks { get; }
     }
 }

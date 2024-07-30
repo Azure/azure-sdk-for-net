@@ -88,32 +88,40 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The status of the current operation. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; set; }
         /// <summary> Defines how many resources can there be created at any given time. </summary>
+        [WirePath("properties.maximumConcurrency")]
         public int? MaximumConcurrency { get; set; }
         /// <summary>
         /// Defines the organization in which the pool will be used.
         /// Please note <see cref="Models.OrganizationProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureDevOpsOrganizationProfile"/> and <see cref="GitHubOrganizationProfile"/>.
         /// </summary>
+        [WirePath("properties.organizationProfile")]
         public OrganizationProfile OrganizationProfile { get; set; }
         /// <summary>
         /// Defines how the machine will be handled once it executed a job.
         /// Please note <see cref="Models.AgentProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Stateful"/> and <see cref="StatelessAgentProfile"/>.
         /// </summary>
+        [WirePath("properties.agentProfile")]
         public AgentProfile AgentProfile { get; set; }
         /// <summary>
         /// Defines the type of fabric the agent will run on.
         /// Please note <see cref="Models.FabricProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VmssFabricProfile"/>.
         /// </summary>
+        [WirePath("properties.fabricProfile")]
         public FabricProfile FabricProfile { get; set; }
         /// <summary> The resource id of the DevCenter Project the pool belongs to. </summary>
+        [WirePath("properties.devCenterProjectResourceId")]
         public string DevCenterProjectResourceId { get; set; }
     }
 }

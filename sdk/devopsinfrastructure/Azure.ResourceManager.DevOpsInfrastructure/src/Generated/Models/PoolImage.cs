@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The resource id of the image. </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; set; }
         /// <summary> The image to use from a well-known set of images made available to customers. </summary>
+        [WirePath("wellKnownImageName")]
         public string WellKnownImageName { get; set; }
         /// <summary> List of aliases to reference the image by. </summary>
+        [WirePath("aliases")]
         public IList<string> Aliases { get; }
         /// <summary> The percentage of the buffer to be allocated to this image. </summary>
+        [WirePath("buffer")]
         public string Buffer { get; set; }
     }
 }

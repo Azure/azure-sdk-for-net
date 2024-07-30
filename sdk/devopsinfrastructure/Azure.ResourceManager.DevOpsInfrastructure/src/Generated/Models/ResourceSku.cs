@@ -82,18 +82,25 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The tier of virtual machines in a scale set. </summary>
+        [WirePath("properties.tier")]
         public string Tier { get; set; }
         /// <summary> The size of the SKU. </summary>
+        [WirePath("properties.size")]
         public string Size { get; set; }
         /// <summary> The family of the SKU. </summary>
+        [WirePath("properties.family")]
         public string Family { get; set; }
         /// <summary> The set of locations that the SKU is available. </summary>
+        [WirePath("properties.locations")]
         public IList<string> Locations { get; }
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
+        [WirePath("properties.locationInfo")]
         public IList<ResourceSkuLocationInfo> LocationInfo { get; }
         /// <summary> Name value pairs to describe the capability. </summary>
+        [WirePath("properties.capabilities")]
         public IList<ResourceSkuCapabilities> Capabilities { get; }
         /// <summary> The restrictions of the SKU. </summary>
+        [WirePath("properties.restrictions")]
         public IList<ResourceSkuRestrictions> Restrictions { get; }
     }
 }

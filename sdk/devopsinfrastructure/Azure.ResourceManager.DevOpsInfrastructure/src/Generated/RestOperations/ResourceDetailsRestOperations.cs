@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByPoolRequestUri(string subscriptionId, string resourceGroupName, string poolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevOpsInfrastructure/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/resources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByPoolRequest(string subscriptionId, string resourceGroupName, string poolName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +128,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPoolNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string poolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPoolNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string poolName)

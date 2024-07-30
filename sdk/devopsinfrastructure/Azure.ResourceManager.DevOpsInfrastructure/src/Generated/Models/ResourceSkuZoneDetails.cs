@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Gets the set of zones that the SKU is available in with the specified capabilities. </summary>
+        [WirePath("name")]
         public IList<string> Name { get; }
         /// <summary> A list of capabilities that are available for the SKU in the specified list of zones. </summary>
+        [WirePath("capabilities")]
         public IList<ResourceSkuCapabilities> Capabilities { get; }
     }
 }

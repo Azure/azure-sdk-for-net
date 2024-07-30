@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The secret management settings of the machines in the pool. </summary>
+        [WirePath("secretsManagementSettings")]
         public SecretsManagementSettings SecretsManagementSettings { get; set; }
         /// <summary> Determines how the service should be run. By default, this will be set to Service. </summary>
+        [WirePath("logonType")]
         public LogonType? LogonType { get; set; }
     }
 }

@@ -77,10 +77,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Where to store certificates on the machine. </summary>
+        [WirePath("certificateStoreLocation")]
         public string CertificateStoreLocation { get; set; }
         /// <summary> The list of certificates to install on all machines in the pool. </summary>
+        [WirePath("observedCertificates")]
         public IList<Uri> ObservedCertificates { get; }
         /// <summary> Defines if the key of the certificates should be exportable. </summary>
+        [WirePath("keyExportable")]
         public bool KeyExportable { get; set; }
     }
 }

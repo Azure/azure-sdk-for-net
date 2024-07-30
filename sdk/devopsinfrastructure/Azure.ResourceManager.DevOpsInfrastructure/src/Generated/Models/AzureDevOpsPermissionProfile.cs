@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Determines who has admin permissions to the Azure DevOps pool. </summary>
+        [WirePath("kind")]
         public AzureDevOpsPermissionType Kind { get; set; }
         /// <summary> User email addresses. </summary>
+        [WirePath("users")]
         public IList<string> Users { get; }
         /// <summary> Group email addresses. </summary>
+        [WirePath("groups")]
         public IList<string> Groups { get; }
     }
 }

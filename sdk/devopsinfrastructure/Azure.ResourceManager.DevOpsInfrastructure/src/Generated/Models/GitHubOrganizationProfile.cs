@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The list of GitHub organizations/repositories the pool should be present in. </summary>
+        [WirePath("organizations")]
         public IList<GitHubOrganization> Organizations { get; }
     }
 }

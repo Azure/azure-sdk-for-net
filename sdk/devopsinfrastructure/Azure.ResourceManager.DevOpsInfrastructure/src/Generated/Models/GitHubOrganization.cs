@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The GitHub organization URL in which the pool should be created. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
         /// <summary> Optional list of repositories in which the pool should be created. </summary>
+        [WirePath("repositories")]
         public IList<string> Repositories { get; }
     }
 }

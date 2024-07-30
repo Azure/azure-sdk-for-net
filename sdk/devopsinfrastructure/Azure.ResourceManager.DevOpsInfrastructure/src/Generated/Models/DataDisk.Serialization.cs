@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -133,6 +134,89 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             return new DataDisk(caching, diskSizeGiB, storageAccountType, driveLetter, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Caching), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  caching: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Caching))
+                {
+                    builder.Append("  caching: ");
+                    builder.AppendLine($"'{Caching.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskSizeGiB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diskSizeGiB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskSizeGiB))
+                {
+                    builder.Append("  diskSizeGiB: ");
+                    builder.AppendLine($"{DiskSizeGiB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageAccountType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountType))
+                {
+                    builder.Append("  storageAccountType: ");
+                    builder.AppendLine($"'{StorageAccountType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DriveLetter), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  driveLetter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DriveLetter))
+                {
+                    builder.Append("  driveLetter: ");
+                    if (DriveLetter.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DriveLetter}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DriveLetter}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DataDisk>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataDisk>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +225,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataDisk)} does not support writing '{options.Format}' format.");
             }

@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Locations where the SKU is restricted. </summary>
+        [WirePath("locations")]
         public IList<string> Locations { get; }
         /// <summary> List of availability zones where the SKU is restricted. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
     }
 }

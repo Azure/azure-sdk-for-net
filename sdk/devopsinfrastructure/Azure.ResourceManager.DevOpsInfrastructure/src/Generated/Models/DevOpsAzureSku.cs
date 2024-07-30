@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The Azure SKU name of the machines in the pool. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -107,6 +108,51 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             return new OSProfile(secretsManagementSettings, logonType, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretsManagementSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secretsManagementSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecretsManagementSettings))
+                {
+                    builder.Append("  secretsManagementSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SecretsManagementSettings, options, 2, false, "  secretsManagementSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogonType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logonType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogonType))
+                {
+                    builder.Append("  logonType: ");
+                    builder.AppendLine($"'{LogonType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OSProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OSProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +161,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OSProfile)} does not support writing '{options.Format}' format.");
             }

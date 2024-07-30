@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The status of the resource. </summary>
+        [WirePath("properties.status")]
         public ResourceStatus? Status { get; set; }
         /// <summary> The image name of the resource. </summary>
+        [WirePath("properties.image")]
         public string Image { get; set; }
         /// <summary> The version of the image running on the resource. </summary>
+        [WirePath("properties.imageVersion")]
         public string ImageVersion { get; set; }
     }
 }

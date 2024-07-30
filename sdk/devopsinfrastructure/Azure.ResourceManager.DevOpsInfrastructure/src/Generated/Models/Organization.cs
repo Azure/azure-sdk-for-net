@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The Azure DevOps organization URL in which the pool should be created. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
         /// <summary> Optional list of projects in which the pool should be created. </summary>
+        [WirePath("projects")]
         public IList<string> Projects { get; }
         /// <summary> How many machines can be created at maximum in this organization out of the maximumConcurrency of the pool. </summary>
+        [WirePath("parallelism")]
         public int? Parallelism { get; set; }
     }
 }
