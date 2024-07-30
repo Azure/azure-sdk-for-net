@@ -85,8 +85,9 @@ By setting `UnsafeAllowUnencryptedStorage` to `true`, the credential will encryp
 If platform data protection is unavailable, it will write and read the persisted token data to an unencrypted local file ACL'd to the current account.
 If `UnsafeAllowUnencryptedStorage` is `false` (the default), a `CredentialUnavailableException` will be raised in the case no data protection is available.
 
-### Silently authenticating a user with AuthenticationRecord and TokenCachePersistenceOptions
-When authenticating a user via `InteractiveBrowserCredential`, `DeviceCodeCredential`, or `UsernamePasswordCredential`, an `AuthenticationRecord` can be persisted as well. The authentication record is:
+### Silently authenticate a user with AuthenticationRecord and TokenCachePersistenceOptions
+
+When authenticating a user via `InteractiveBrowserCredential`, `DeviceCodeCredential`, or `UsernamePasswordCredential`, an [AuthenticationRecord](https://learn.microsoft.com/dotnet/api/azure.identity.authenticationrecord?view=azure-dotnet) can be persisted as well. The authentication record is:
 
 - Returned from the `Authenticate` API and contains data identifying an authenticated account.
 - Needed to identify the appropriate entry in the persisted token cache to silently authenticate on subsequent executions.
