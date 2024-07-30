@@ -96,7 +96,6 @@
     <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cose" Version="7.0.0" />
-    <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageReference Update="System.Threading.Channels" Version="4.7.1" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageReference Update="System.Text.Json" Version="4.7.2" />
@@ -357,6 +356,7 @@
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.5.2" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
+    <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />

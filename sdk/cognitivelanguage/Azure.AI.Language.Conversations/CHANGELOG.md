@@ -1,10 +1,15 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
+
+- Added support for service version 2024-05-01.
+- Added support for service version 2024-05-15-preview.
 
 ### Features Added
+- Added classes to represent all the models in the service definition.
 
 ### Breaking Changes
+- Deprecated `ConversationAuthoringClient`.
 
 ### Bugs Fixed
 

@@ -175,10 +175,10 @@
 # ServiceOwners:                                                   @sgellock
 
 # PRLabel: %Cognitive - Language
-/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao
+/sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c
 
 # ServiceLabel: %Cognitive - Language
-# ServiceOwners:                                                   @quentinRobinson @wangyuantao
+# ServiceOwners:                                                   @quentinRobinson @bidisha-c
 
 # PRLabel: %Cognitive - Content Safety
 /sdk/contentsafety/                                                @bowgong @mengaims @JieZhou000
@@ -249,10 +249,10 @@
 # ServiceOwners:                                                   @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga
+/sdk/textanalytics/                                                @quentinRobinson @joseharriaga @bidisha-c
 
 # ServiceLabel: %Cognitive - Text Analytics
-# ServiceOwners:                                                   @assafi @quentinRobinson @wangyuantao
+# ServiceOwners:                                                   @quentinRobinson @bidisha-c
 
 # PRLabel: %Cognitive - Translator
 /sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
@@ -644,6 +644,9 @@
 # PRLabel: %Monitor - Distro
 /sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
+# PRLabel: %Monitor - Distro
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+
 # ServiceLabel: %Monitor - Distro
 # ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
@@ -861,7 +864,7 @@
 # ServiceOwners:                                                   @xgithubtriage
 
 # ServiceLabel: %Storsimple
-# ServiceOwners:                                                   @anoobbacker @ganzee @manuaery @patelkunal
+# ServiceOwners:                                                   @anoobbacker @ganzee @manuaery
 
 # ServiceLabel: %Stream Analytics
 # ServiceOwners:                                                   @atpham256
