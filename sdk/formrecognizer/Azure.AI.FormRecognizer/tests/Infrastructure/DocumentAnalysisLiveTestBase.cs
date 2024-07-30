@@ -61,6 +61,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentAnalysisClientOptions(_serviceVersion));
+            switch (TestEnvironment.AuthorityHostUrl)
+            {
+                case "https://login.microsoftonline.com/":
+                    options.Audience = DocumentAnalysisAudience.AzurePublicCloud;
+                    break;
+                case "https://login.microsoftonline.us/":
+                    options.Audience = DocumentAnalysisAudience.AzureGovernment;
+                    break;
+                case "https://login.chinacloudapi.cn/":
+                    options.Audience = DocumentAnalysisAudience.AzureChina;
+                    break;
+                default:
+                    options.Audience = DocumentAnalysisAudience.AzurePublicCloud;
+                    break;
+            }
 
             if (useTokenCredential)
             {
@@ -96,6 +111,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentAnalysisClientOptions(_serviceVersion));
+            switch (TestEnvironment.AuthorityHostUrl)
+            {
+                case "https://login.microsoftonline.com/":
+                    options.Audience = DocumentAnalysisAudience.AzurePublicCloud;
+                    break;
+                case "https://login.microsoftonline.us/":
+                    options.Audience = DocumentAnalysisAudience.AzureGovernment;
+                    break;
+                case "https://login.chinacloudapi.cn/":
+                    options.Audience = DocumentAnalysisAudience.AzureChina;
+                    break;
+                default:
+                    options.Audience = DocumentAnalysisAudience.AzurePublicCloud;
+                    break;
+            }
 
             if (useTokenCredential)
             {
