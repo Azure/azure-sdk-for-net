@@ -1979,54 +1979,47 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        public void QueueClientPolicyPermissions_checkIfSetCorrectly()
+        [TestCase("")]
+        [TestCase("ra")]
+        [TestCase("raup")]
+        [TestCase("paru")]
+        [TestCase("zaxpqr")]
+        public void QueueClientPolicyPermissions_checkIfSetCorrectly(string permissions)
         {
-            // Test #1
-            string permissionsStr1 = "ra";
-            QueueAccessPolicyPermissions permissionsEnum1 = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add;
-
             QueueAccessPolicy qap = new QueueAccessPolicy
             {
-                Permissions = permissionsStr1
+                Permissions = permissions
             };
 
-            Assert.AreEqual(qap.Permissions, permissionsStr1);
-            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum1.ToPermissionsString());
+            string permissionsStr = "";
+            QueueAccessPolicyPermissions permissionsEnum = QueueAccessPolicyPermissions.None;
 
-            // Test #2
-            string input2 = "paru";
-            string permissionsStr2 = "raup";
-            QueueAccessPolicyPermissions permissionsEnum2 = QueueAccessPolicyPermissions.All;
+            switch (permissions)
+            {
+                case "":
+                    permissionsStr = "";
+                    permissionsEnum = QueueAccessPolicyPermissions.None;
+                    break;
+                case "ra":
+                    permissionsStr = "ra";
+                    permissionsEnum = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add;
+                    break;
+                case "raup":
+                    permissionsStr = "raup";
+                    permissionsEnum = QueueAccessPolicyPermissions.All;
+                    break;
+                case "paru":
+                    permissionsStr = "raup";
+                    permissionsEnum = QueueAccessPolicyPermissions.All;
+                    break;
+                case "zaxpqr":
+                    permissionsStr = "rap";
+                    permissionsEnum = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process;
+                    break;
+            }
 
-            qap.Permissions = input2;
-
-            Assert.AreNotEqual(qap.Permissions, permissionsStr1);
-            Assert.AreNotEqual(qap.Permissions, input2);
-            Assert.AreEqual(qap.Permissions, permissionsStr2);
-            Assert.AreNotEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum1.ToPermissionsString());
-            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum2.ToPermissionsString());
-
-            // Test #3
-            QueueAccessPolicyPermissions permissionsEnum3 = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process;
-            string permissionsStr3 = "rap";
-
-            qap.QueueAccessPolicyPermissions = permissionsEnum3;
-
-            Assert.AreNotEqual(qap.Permissions, permissionsStr2);
-            Assert.AreEqual(qap.Permissions, permissionsStr3);
-            Assert.AreNotEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum2.ToPermissionsString());
-            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum3.ToPermissionsString());
-
-            // Test #4
-            QueueAccessPolicyPermissions permissionsEnum4 = QueueAccessPolicyPermissions.None;
-            string permissionsStr4 = "";
-
-            qap.QueueAccessPolicyPermissions = permissionsEnum4;
-
-            Assert.AreNotEqual(qap.Permissions, permissionsStr3);
-            Assert.AreEqual(qap.Permissions, permissionsStr4);
-            Assert.AreNotEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum3.ToPermissionsString());
-            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum4.ToPermissionsString());
+            Assert.AreEqual(qap.Permissions, permissionsStr);
+            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum.ToPermissionsString());
         }
     }
 }
