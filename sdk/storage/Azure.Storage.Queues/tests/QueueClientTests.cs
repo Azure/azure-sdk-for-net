@@ -1980,10 +1980,10 @@ namespace Azure.Storage.Queues.Test
 
         [Test]
         [TestCase("")]
+        [TestCase("u")]
         [TestCase("ra")]
         [TestCase("raup")]
         [TestCase("paru")]
-        [TestCase("zaxpqr")]
         public void QueueClientPolicyPermissions_checkIfSetCorrectly(string permissions)
         {
             QueueAccessPolicy qap = new QueueAccessPolicy
@@ -1991,35 +1991,35 @@ namespace Azure.Storage.Queues.Test
                 Permissions = permissions
             };
 
-            string permissionsStr = "";
-            QueueAccessPolicyPermissions permissionsEnum = QueueAccessPolicyPermissions.None;
+            string expectedPermissionsStr = "";
+            QueueAccessPolicyPermissions expectedPermissionsEnum = QueueAccessPolicyPermissions.None;
 
             switch (permissions)
             {
                 case "":
-                    permissionsStr = "";
-                    permissionsEnum = QueueAccessPolicyPermissions.None;
+                    expectedPermissionsStr = "";
+                    expectedPermissionsEnum = QueueAccessPolicyPermissions.None;
+                    break;
+                case "u":
+                    expectedPermissionsStr = "u";
+                    expectedPermissionsEnum = QueueAccessPolicyPermissions.Update;
                     break;
                 case "ra":
-                    permissionsStr = "ra";
-                    permissionsEnum = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add;
+                    expectedPermissionsStr = "ra";
+                    expectedPermissionsEnum = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add;
                     break;
                 case "raup":
-                    permissionsStr = "raup";
-                    permissionsEnum = QueueAccessPolicyPermissions.All;
+                    expectedPermissionsStr = "raup";
+                    expectedPermissionsEnum = QueueAccessPolicyPermissions.All;
                     break;
                 case "paru":
-                    permissionsStr = "raup";
-                    permissionsEnum = QueueAccessPolicyPermissions.All;
-                    break;
-                case "zaxpqr":
-                    permissionsStr = "rap";
-                    permissionsEnum = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process;
+                    expectedPermissionsStr = "raup";
+                    expectedPermissionsEnum = QueueAccessPolicyPermissions.All;
                     break;
             }
 
-            Assert.AreEqual(qap.Permissions, permissionsStr);
-            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), permissionsEnum.ToPermissionsString());
+            Assert.AreEqual(qap.Permissions, expectedPermissionsStr);
+            Assert.AreEqual(qap.QueueAccessPolicyPermissions.ToPermissionsString(), expectedPermissionsEnum.ToPermissionsString());
         }
     }
 }
