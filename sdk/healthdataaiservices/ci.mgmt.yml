@@ -1,6 +1,17 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - sdk/healthdataaiservices/ci.mgmt.yml
+      - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices/
+
 pr:
   branches:
     include:
