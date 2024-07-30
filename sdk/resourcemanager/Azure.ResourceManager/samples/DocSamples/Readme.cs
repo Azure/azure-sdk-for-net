@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Tests.Samples
         }
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void ClientAuth_China()
+        public void ClientAuthChina()
         {
             #region Snippet:Readme_AuthClientChina
             // Please replace the following placeholders with your Azure information
