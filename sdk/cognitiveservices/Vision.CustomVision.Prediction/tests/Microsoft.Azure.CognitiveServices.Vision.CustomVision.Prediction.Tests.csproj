@@ -8,8 +8,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
-    <ProjectReference Include="..\src\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj" />
-    <ProjectReference Include="..\..\Vision.CustomVision.Training\src\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
@@ -27,5 +25,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\PredictionTests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Vision.CustomVision.Training\src\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj" />
   </ItemGroup>
 </Project>

@@ -53,17 +53,29 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="HybridComputeLinuxConfiguration"/>. </summary>
         /// <param name="assessmentMode"> Specifies the assessment mode. </param>
         /// <param name="patchMode"> Specifies the patch mode. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, bool? isHotpatchingEnabled, HybridComputePatchSettingsStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssessmentMode = assessmentMode;
             PatchMode = patchMode;
+            IsHotpatchingEnabled = isHotpatchingEnabled;
+            Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the assessment mode. </summary>
+        [WirePath("patchSettings.assessmentMode")]
         public AssessmentModeType? AssessmentMode { get; set; }
         /// <summary> Specifies the patch mode. </summary>
+        [WirePath("patchSettings.patchMode")]
         public PatchModeType? PatchMode { get; set; }
+        /// <summary> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </summary>
+        [WirePath("patchSettings.enableHotpatching")]
+        public bool? IsHotpatchingEnabled { get; set; }
+        /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
+        [WirePath("patchSettings.status")]
+        public HybridComputePatchSettingsStatus Status { get; }
     }
 }

@@ -14,6 +14,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.AI.OpenAI.Tests.Utils.Pipeline;
 using Azure.Core.TestFramework;
 using OpenAI.Batch;
@@ -37,7 +38,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
     public async Task SimpleBatchCompletionsTest()
     {
         BatchClient batchClient = GetTestClient(new TestClientOptions(AzureOpenAIClientOptions.ServiceVersion.V2024_06_01));
-        await using BatchOperations ops = new(TestConfig);
+        await using BatchOperations ops = new(this, batchClient);
 
         // Create the batch operations to send and upload them
         ops.ChatClient.CompleteChat([new SystemChatMessage("You are a saccharine AI"), new UserChatMessage("Tell me about yourself")]);
@@ -124,7 +125,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
         private string? _uploadId;
         private FileClient _fileClient;
 
-        public BatchOperations(TestConfig config)
+        public BatchOperations(AoaiTestBase<BatchClient> testBase, BatchClient batchClient)
         {
             _pipeline = new MockPipeline(MockPipeline.ReturnEmptyJson);
             _pipeline.OnRequest += HandleRequest;
@@ -132,23 +133,16 @@ public class BatchTests : AoaiTestBase<BatchClient>
 
             BatchFileName = "batch-" + Guid.NewGuid().ToString("D") + ".json";
 
-            var options = new TestClientOptions(AzureOpenAIClientOptions.ServiceVersion.V2024_06_01);
-
-            // get real file client
-            _fileClient = new AzureOpenAIClient(
-                config.GetEndpointFor<FileClient>(),
-                config.GetApiKeyFor<FileClient>(),
-                options)
-                .GetFileClient();
+            _fileClient = testBase.GetTestClientFrom<FileClient>(batchClient);
 
             // Generate the fake pipeline to capture requests and save them to a file later
             AzureOpenAIClient fakeTopLevel = new AzureOpenAIClient(
                 new Uri("https://not.a.real.endpoint.fake"),
-                new System.ClientModel.ApiKeyCredential("not.a.real.key"),
+                new ApiKeyCredential("not.a.real.key"),
                 new() { Transport = _pipeline.Transport });
 
-            ChatClient = fakeTopLevel.GetChatClient(config.GetDeploymentNameFor<ChatClient>());
-            EmbeddingClient = fakeTopLevel.GetEmbeddingClient(config.GetDeploymentNameFor<EmbeddingClient>());
+            ChatClient = fakeTopLevel.GetChatClient(testBase.TestConfig.GetConfig<ChatClient>().DeploymentOrThrow("chat client"));
+            EmbeddingClient = fakeTopLevel.GetEmbeddingClient(testBase.TestConfig.GetConfig<EmbeddingClient>().DeploymentOrThrow("embedding client"));
         }
 
         public string BatchFileName { get; }

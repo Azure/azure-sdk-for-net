@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Properties for the specified Extension to Upgrade. </summary>
+        [WirePath("targetVersion")]
         public string TargetVersion { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        [LiveOnly(Reason = "path validation fails in playback mode")]
+        [Ignore("path validation fails in playback mode")]
         public async Task ValidateSystemAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))
@@ -45,7 +45,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public void ValidateUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))

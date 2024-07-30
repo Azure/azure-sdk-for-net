@@ -11,6 +11,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
     <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'net47'" />
 
     <!--Temporary solution to pin the version of generator here to workaround the issue in our pipelines that gets conflicts in git push -->

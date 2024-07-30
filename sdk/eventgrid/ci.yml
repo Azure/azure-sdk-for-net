@@ -47,5 +47,10 @@ extends:
       safeName: AzureMessagingEventGridNamespaces
     - name: Azure.Messaging.EventGrid.SystemEvents
       safeName: AzureMessagingEventGridSystemEvents
+      # MSDocs are being temporarily disabled because of an issue with MSDocs generation.
+      # The following issue is being used to track reenabling MSDocs publishing when
+      # the MSDocs issue is fixed.
+      # https://github.com/Azure/azure-sdk-for-net/issues/45032
+      skipPublishDocMs: true
 
 

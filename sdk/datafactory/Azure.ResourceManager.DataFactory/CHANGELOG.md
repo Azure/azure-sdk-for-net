@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2024-07-26)
+
+### Features Added
+- Security enhancement feature snowflake support storage integration.
+- Support 'domain' Property In Dynamics Family.
+- Enable UAMI auth for Data Factory Sql Server connector.
+- Support managed identity for Data Factory Azure Table connector.
+
+### Bugs Fixed
+- Added missing continuation settings for execute dataflow activity.
 
 ## 1.1.0 (2024-05-31)
 

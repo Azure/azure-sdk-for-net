@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Determines whether direct access is enabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsDirectAccessEnabled { get; set; }
     }
 }
