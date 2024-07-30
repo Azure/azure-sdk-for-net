@@ -22,7 +22,7 @@ AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
 {
     TextInput = new MultiLanguageTextInput
     {
-        Documents = {new MultiLanguageInput("<id>", "<text>")
+        MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
         {
             Language = "<language>",
         }},
@@ -58,7 +58,7 @@ AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
 {
     TextInput = new MultiLanguageTextInput
     {
-        Documents = {new MultiLanguageInput("<id>", "<text>")
+        MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
         {
             Language = "<language>",
         }},
@@ -357,7 +357,7 @@ TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 MultiLanguageTextInput textInput = new MultiLanguageTextInput
 {
-    Documents = {new MultiLanguageInput("<id>", "<text>")
+    MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
     {
         Language = "<language>",
     }},
@@ -398,7 +398,7 @@ TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 MultiLanguageTextInput textInput = new MultiLanguageTextInput
 {
-    Documents = {new MultiLanguageInput("<id>", "<text>")
+    MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
     {
         Language = "<language>",
     }},

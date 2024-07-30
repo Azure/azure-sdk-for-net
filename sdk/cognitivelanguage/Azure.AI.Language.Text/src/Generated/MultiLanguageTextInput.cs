@@ -48,19 +48,19 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="MultiLanguageTextInput"/>. </summary>
         public MultiLanguageTextInput()
         {
-            Documents = new ChangeTrackingList<MultiLanguageInput>();
+            MultiLanguageInputs = new ChangeTrackingList<MultiLanguageInput>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiLanguageTextInput"/>. </summary>
-        /// <param name="documents"> The input documents to be analyzed. </param>
+        /// <param name="multiLanguageInputs"> The input documents to be analyzed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MultiLanguageTextInput(IList<MultiLanguageInput> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MultiLanguageTextInput(IList<MultiLanguageInput> multiLanguageInputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Documents = documents;
+            MultiLanguageInputs = multiLanguageInputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The input documents to be analyzed. </summary>
-        public IList<MultiLanguageInput> Documents { get; }
+        public IList<MultiLanguageInput> MultiLanguageInputs { get; }
     }
 }

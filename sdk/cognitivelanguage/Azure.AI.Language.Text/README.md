@@ -169,7 +169,7 @@ try
     {
         TextInput = new MultiLanguageTextInput()
         {
-            Documents =
+            MultiLanguageInputs =
             {
                 new MultiLanguageInput("D", documentA),
             }

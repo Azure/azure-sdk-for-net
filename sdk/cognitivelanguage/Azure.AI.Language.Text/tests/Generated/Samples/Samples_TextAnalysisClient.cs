@@ -168,7 +168,7 @@ language = "<language>",
             {
                 TextInput = new MultiLanguageTextInput
                 {
-                    Documents = {new MultiLanguageInput("<id>", "<text>")
+                    MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
 {
 Language = "<language>",
 }},
@@ -195,7 +195,7 @@ Language = "<language>",
             {
                 TextInput = new MultiLanguageTextInput
                 {
-                    Documents = {new MultiLanguageInput("<id>", "<text>")
+                    MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
 {
 Language = "<language>",
 }},
@@ -544,7 +544,7 @@ taskName = "<taskName>",
 
             MultiLanguageTextInput textInput = new MultiLanguageTextInput
             {
-                Documents = {new MultiLanguageInput("<id>", "<text>")
+                MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
 {
 Language = "<language>",
 }},
@@ -573,7 +573,7 @@ Name = "<taskName>",
 
             MultiLanguageTextInput textInput = new MultiLanguageTextInput
             {
-                Documents = {new MultiLanguageInput("<id>", "<text>")
+                MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
 {
 Language = "<language>",
 }},

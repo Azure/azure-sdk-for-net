@@ -62,7 +62,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             // perform the same operation on all of them simultaneously.
             MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
             {
-                Documents =
+                MultiLanguageInputs =
                 {
                     new MultiLanguageInput("A", documentA) { Language = "en" },
                 }

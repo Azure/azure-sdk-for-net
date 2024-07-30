@@ -26,11 +26,11 @@ namespace Azure.AI.Language.Text
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Documents))
+            if (Optional.IsCollectionDefined(MultiLanguageInputs))
             {
                 writer.WritePropertyName("documents"u8);
                 writer.WriteStartArray();
-                foreach (var item in Documents)
+                foreach (var item in MultiLanguageInputs)
                 {
                     writer.WriteObjectValue(item, options);
                 }

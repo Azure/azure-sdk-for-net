@@ -4,6 +4,29 @@ This guide is intended to assist in the migration to the new Text Analytics clie
 
 Familiarity with the `Azure.AI.TextAnalytics` library is assumed. For those new to the Text Analytics client library for .NET, please refer to the [`Azure.AI.Language.Text` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/README.md) and [`Azure.AI.Language.Text` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples) for the `Azure.AI.Language.Text` library rather than this guide.
 
+## Table of contents
+
+- [Migrate from Azure.AI.TextAnalytics to Azure.AI.Language.Text](#migrate-from-azureaitextanalytics-to-azureailanguagetext)
+  - [Table of contents](#table-of-contents)
+  - [Migration benefits](#migration-benefits)
+  - [General changes](#general-changes)
+    - [Package and namespaces](#package-and-namespaces)
+    - [Runtime Client](#runtime-client)
+      - [Authenticating runtime client](#authenticating-runtime-client)
+      - [Detecting language](#detecting-language)
+      - [Analyze Sentiment](#analyze-sentiment)
+      - [Extract Key Phrases](#extract-key-phrases)
+      - [Recognize Named Entities](#recognize-named-entities)
+      - [Recognize PII Entities](#recognize-pii-entities)
+      - [Recognize Linked Entities](#recognize-linked-entities)
+      - [Analyze healthcare entities](#analyze-healthcare-entities)
+      - [Perform custom named entity recognition (NER)](#perform-custom-named-entity-recognition-ner)
+      - [Perform custom single-label classification](#perform-custom-single-label-classification)
+      - [Perform custom multi-label classification](#perform-custom-multi-label-classification)
+      - [Summarize documents with extractive summarization](#summarize-documents-with-extractive-summarization)
+      - [Summarize documents with abstractive summarization](#summarize-documents-with-abstractive-summarization)
+      - [Perform multiple text analysis actions](#perform-multiple-text-analysis-actions)
+
 ## Migration benefits
 
 A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
@@ -1368,7 +1391,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
 }
 ```
 
-##### Perform custom multi-label classification
+#### Perform custom multi-label classification
 
 Previously in `Azure.AI.TextAnalytics`, you would call the `MultiLabelClassifyAsync` method on the `TextAnalyticsClient`:
 

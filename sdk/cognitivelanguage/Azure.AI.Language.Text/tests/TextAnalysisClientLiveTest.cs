@@ -32,10 +32,10 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 TextInput = new LanguageDetectionTextInput()
                 {
-                    Documents =
-                        {
-                            new LanguageInput("A", documentA),
-                        }
+                    LanguageInputs =
+                    {
+                        new LanguageInput("A", documentA),
+                    }
                 }
             };
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 TextInput = new MultiLanguageTextInput()
                 {
-                    Documents =
+                    MultiLanguageInputs =
                     {
                         new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
@@ -124,7 +124,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 TextInput = new MultiLanguageTextInput()
                 {
-                    Documents =
+                    MultiLanguageInputs =
                     {
                         new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
@@ -169,7 +169,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 TextInput = new MultiLanguageTextInput()
                 {
-                    Documents =
+                    MultiLanguageInputs =
                     {
                         new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
@@ -217,7 +217,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 TextInput = new MultiLanguageTextInput()
                 {
-                    Documents =
+                    MultiLanguageInputs =
                     {
                         new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
@@ -261,7 +261,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 TextInput = new MultiLanguageTextInput()
                 {
-                    Documents =
+                    MultiLanguageInputs =
                     {
                         new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
@@ -310,7 +310,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
             {
-                Documents =
+                MultiLanguageInputs =
                 {
                     new MultiLanguageInput("A", documentA) { Language = "en" },
                 }
@@ -392,7 +392,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
             {
-                Documents =
+                MultiLanguageInputs =
                 {
                     new MultiLanguageInput("A", documentA) { Language = "en" },
                 }
@@ -457,7 +457,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
             {
-                Documents =
+                MultiLanguageInputs =
                 {
                     new MultiLanguageInput("A", documentA) { Language = "en" },
                 }
@@ -518,7 +518,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
             {
-                Documents =
+                MultiLanguageInputs =
         {
             new MultiLanguageInput("A", documentA) { Language = "en" },
         }
@@ -613,7 +613,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
             {
-                Documents =
+                MultiLanguageInputs =
                 {
                     new MultiLanguageInput("A", documentA)
                     {
@@ -706,7 +706,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
             {
-                Documents =
+                MultiLanguageInputs =
                 {
                     new MultiLanguageInput("A", documentA)
                     {

@@ -44,7 +44,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     TextInput = new MultiLanguageTextInput()
                     {
-                        Documents =
+                        MultiLanguageInputs =
                         {
                             new MultiLanguageInput("A", documentA) { Language = "en" },
                             new MultiLanguageInput("B", documentB) { Language = "es" },
@@ -120,7 +120,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 TextInput = new MultiLanguageTextInput()
                 {
-                    Documents =
+                    MultiLanguageInputs =
                     {
                         new MultiLanguageInput("A", reviewA) { Language = "en" },
                         new MultiLanguageInput("B", reviewB) { Language = "en" },

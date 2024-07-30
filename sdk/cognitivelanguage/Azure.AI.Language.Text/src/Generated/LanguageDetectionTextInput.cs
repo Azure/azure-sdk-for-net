@@ -48,19 +48,19 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="LanguageDetectionTextInput"/>. </summary>
         public LanguageDetectionTextInput()
         {
-            Documents = new ChangeTrackingList<LanguageInput>();
+            LanguageInputs = new ChangeTrackingList<LanguageInput>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LanguageDetectionTextInput"/>. </summary>
-        /// <param name="documents"> List of documents to be analyzed. </param>
+        /// <param name="languageInputs"> List of documents to be analyzed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LanguageDetectionTextInput(IList<LanguageInput> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LanguageDetectionTextInput(IList<LanguageInput> languageInputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Documents = documents;
+            LanguageInputs = languageInputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of documents to be analyzed. </summary>
-        public IList<LanguageInput> Documents { get; }
+        public IList<LanguageInput> LanguageInputs { get; }
     }
 }

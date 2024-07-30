@@ -50,7 +50,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     TextInput = new LanguageDetectionTextInput()
                     {
-                        Documents =
+                            LanguageInputs =
                         {
                             new LanguageInput("A", documentA),
                             new LanguageInput("B", documentB),
@@ -113,7 +113,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     TextInput = new LanguageDetectionTextInput()
                     {
-                        Documents =
+                        LanguageInputs =
                         {
                             new LanguageInput("A", documentA) { CountryHint = "es" },
                             new LanguageInput("B", documentB) { CountryHint = "us" },
