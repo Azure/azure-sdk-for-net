@@ -121,10 +121,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 {
                     // Ignore exceptions
                 }
-
-                WaitForActivityExport(activities);
-                WaitForActivityExport(telemetryItems, x => x.Name == "Request");
             }
+
+            // SHUTDOWN
+            var tracerProvider = _factory.Factories.Last().Services.GetRequiredService<TracerProvider>();
+            tracerProvider.ForceFlush();
+
+            WaitForActivityExport(activities);
+            WaitForActivityExport(telemetryItems, x => x.Name == "Request");
 
             // ASSERT
             _telemetryOutput.Write(telemetryItems);
