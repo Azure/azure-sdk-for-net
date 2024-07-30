@@ -1,4 +1,4 @@
-repo: bidisha-c/azure-rest-api-specs
-commit: 4a8f668755d695c16cd26f48209105c55e3b6da9
+repo: azure/azure-rest-api-specs
+commit: 7660d4c099f530a350811cc1eff31128cd502f5d
 directory: specification/cognitiveservices/Language.AnalyzeText
 
