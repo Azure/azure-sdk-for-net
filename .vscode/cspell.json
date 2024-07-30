@@ -812,6 +812,14 @@
       ]
     },
     {
+      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "words": [
+        "Posix",
+        "posix",
+        "POSIX"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
