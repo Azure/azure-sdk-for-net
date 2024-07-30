@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<KeyVaultBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackupAsync)}");
             scope.Start();
             try
             {
@@ -164,7 +164,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the operation.</returns>
         public virtual KeyVaultBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackup)}");
             scope.Start();
             try
             {
