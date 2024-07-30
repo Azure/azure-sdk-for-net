@@ -56,7 +56,7 @@ namespace Azure.Storage.Queues.Test
             var result = new Span<byte>(new byte[encryptedDataLength]);
 
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-            using var gcm = new AesGcm(key);
+            using var gcm = new AesGcm(key, V2.TagSize);
 #else
             using var gcm = new Azure.Storage.Shared.AesGcm.AesGcmWindows(key);
 #endif
