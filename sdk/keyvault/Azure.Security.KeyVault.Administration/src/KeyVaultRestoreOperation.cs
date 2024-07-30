@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     public class KeyVaultRestoreOperation : Operation<KeyVaultRestoreResult>
     {
         internal readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal> _operationInternal;
+        internal readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal> _preOperationInternal;
 
         /// <summary>
         /// Creates an instance of a KeyVaultRestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
@@ -41,6 +42,19 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="KeyVaultRestoreOperation"/> class.
+        /// </summary>
+        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartPreRestore"/> or <see cref="KeyVaultBackupClient.StartPreRestoreAsync"/>.</param>
+        internal KeyVaultRestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders> response)
+        {
+            var operation = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(client, response);
+            _preOperationInternal = operation;
+
+            // _operationInternal = (RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>)(object)operation;
+        }
+
+        /// <summary>
         /// Initializes a new instance of a KeyVaultRestoreOperation for mocking purposes.
         /// </summary>
         /// <param name="value">The <see cref="RestoreDetailsInternal" /> that will be used to populate various properties.</param>
@@ -58,41 +72,39 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>
-        public DateTimeOffset? StartTime => _operationInternal.StartTime;
+        public DateTimeOffset? StartTime => _operationInternal.StartTime ?? _preOperationInternal.StartTime;
 
         /// <summary>
         /// The end time of the restore operation.
         /// </summary>
-        public DateTimeOffset? EndTime => _operationInternal.EndTime;
+        public DateTimeOffset? EndTime => _operationInternal.EndTime ?? _preOperationInternal.EndTime;
 
         /// <inheritdoc/>
-        public override string Id => _operationInternal.Id;
+        public override string Id => _operationInternal.Id ?? _preOperationInternal.Id;
+        /// <inheritdoc/>
+        public override KeyVaultRestoreResult Value => _operationInternal.Value?? _preOperationInternal.Value;
 
         /// <inheritdoc/>
-        public override KeyVaultRestoreResult Value => _operationInternal.Value;
+        public override bool HasCompleted => _operationInternal is null? _preOperationInternal.HasCompleted: _operationInternal.HasCompleted;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _operationInternal.HasCompleted;
+        public override bool HasValue => _operationInternal is null? _preOperationInternal.HasValue: _operationInternal.HasValue;
 
         /// <inheritdoc/>
-        public override bool HasValue => _operationInternal.HasValue;
+        public override Response GetRawResponse() => _operationInternal is null? _preOperationInternal.GetRawResponse(): _operationInternal.GetRawResponse();
 
         /// <inheritdoc/>
-        public override Response GetRawResponse() => _operationInternal.GetRawResponse();
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operationInternal is null? _preOperationInternal.UpdateStatus(cancellationToken): _operationInternal.UpdateStatus(cancellationToken);
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operationInternal.UpdateStatus(cancellationToken);
-
-        /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
-            await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operationInternal is null? await _preOperationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false): await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
         public override ValueTask<Response<KeyVaultRestoreResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            _operationInternal.WaitForCompletionAsync(cancellationToken);
+            _operationInternal is null? _preOperationInternal.WaitForCompletionAsync(cancellationToken): _operationInternal.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
         public override ValueTask<Response<KeyVaultRestoreResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken);
+            _operationInternal is null? _preOperationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken): _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }
