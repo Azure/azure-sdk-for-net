@@ -610,19 +610,25 @@ namespace Azure.Storage.Files.Shares.Tests
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string clientStringToSign = null;
+            string sasBuilderStringToSign = null;
+
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
                 permissions: permissions,
                 expiresOn: expiresOn,
-                resourceTypes: resourceTypes);
+                resourceTypes: resourceTypes,
+                out clientStringToSign);
 
             // Assert
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Files, resourceTypes);
             ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
             {
-                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential, out sasBuilderStringToSign)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(clientStringToSign);
+            Assert.IsNotNull(sasBuilderStringToSign);
         }
 
         [RecordedTest]
@@ -642,8 +648,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder, out stringToSign);
 
             // Assert
             AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
@@ -652,6 +660,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

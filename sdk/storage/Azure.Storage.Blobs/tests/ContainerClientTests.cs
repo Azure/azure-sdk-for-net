@@ -3515,8 +3515,10 @@ namespace Azure.Storage.Blobs.Test
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string stringToSign = null;
+
             //Act
-            Uri sasUri = containerClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = containerClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
@@ -3529,6 +3531,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -3554,8 +3557,10 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = containerClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             BlobSasBuilder sasBuilder2 = new BlobSasBuilder(permissions, expiresOn)
@@ -3568,6 +3573,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
