@@ -193,6 +193,25 @@ namespace Azure.Storage.Sas
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-common")]
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
+            => ToSasQueryParameters(sharedKeyCredential, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SasQueryParameters"/> used for authenticating
+        /// requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-common")]
+        public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential, out string stringToSign)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/Constructing-an-Account-SAS
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -202,7 +221,7 @@ namespace Azure.Storage.Sas
                 throw Errors.AccountSasMissingData();
             }
 
-            string stringToSign = ToStringToSign(sharedKeyCredential);
+            stringToSign = ToStringToSign(sharedKeyCredential);
 
             string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             SasQueryParameters p = SasQueryParametersInternals.Create(
@@ -232,7 +251,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The string to sign that will be used to generate the signature for the SAS URL.
         /// </returns>
-        public string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        private string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
         {
             Version = SasQueryParametersInternals.DefaultSasVersionInternal;
 
