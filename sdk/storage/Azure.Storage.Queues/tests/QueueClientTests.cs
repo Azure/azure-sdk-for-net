@@ -1981,12 +1981,12 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        [TestCase("")]
-        [TestCase("u")]
-        [TestCase("au")]
-        [TestCase("rap")]
-        [TestCase("raup")]
-        public async Task QueueClientPolicyPermissions_checkIfSetCorrectly(string permissions)
+        [TestCase("", null)]
+        [TestCase("u", QueueAccessPolicyPermissions.Update)]
+        [TestCase("au", QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Update)]
+        [TestCase("rap", QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process)]
+        [TestCase("raup", QueueAccessPolicyPermissions.All)]
+        public async Task QueueClientPolicyPermissions_CheckIfSetCorrectly(string expectedPermissionsStr, QueueAccessPolicyPermissions? expectedPermissionsEnum)
         {
             await using DisposingQueue test = await GetTestQueueAsync();
 
@@ -2000,11 +2000,11 @@ namespace Azure.Storage.Queues.Test
                         {
                             StartsOn =  Recording.UtcNow.AddHours(-1),
                             ExpiresOn =  Recording.UtcNow.AddHours(1),
-                            Permissions = permissions
+                            Permissions = expectedPermissionsStr
                         }
                 }
             };
-            Response setResult = await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
+            await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
 
             Response<IEnumerable<Models.QueueSignedIdentifier>> getResult = await test.Queue.GetAccessPolicyAsync();
             Models.QueueSignedIdentifier acl = getResult.Value.First();
@@ -2012,32 +2012,7 @@ namespace Azure.Storage.Queues.Test
             string actualPermissionsStr = acl.AccessPolicy.Permissions;
             QueueAccessPolicyPermissions? actualPermissionsEnum = acl.AccessPolicy.QueueAccessPolicyPermissions;
 
-            string expectedPermissionsStr = null;
-            QueueAccessPolicyPermissions? expectedPermissionsEnum = null;
-
-            switch (permissions)
-            {
-                case "":
-                    expectedPermissionsStr = null;
-                    expectedPermissionsEnum = null;
-                    break;
-                case "u":
-                    expectedPermissionsStr = "u";
-                    expectedPermissionsEnum = QueueAccessPolicyPermissions.Update;
-                    break;
-                case "au":
-                    expectedPermissionsStr = "au";
-                    expectedPermissionsEnum = QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Update;
-                    break;
-                case "rap":
-                    expectedPermissionsStr = "rap";
-                    expectedPermissionsEnum = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process;
-                    break;
-                case "raup":
-                    expectedPermissionsStr = "raup";
-                    expectedPermissionsEnum = QueueAccessPolicyPermissions.All;
-                    break;
-            }
+            if (string.IsNullOrEmpty(expectedPermissionsStr)) expectedPermissionsStr = null;
 
             Assert.AreEqual(expectedPermissionsStr, actualPermissionsStr);
             Assert.AreEqual(expectedPermissionsEnum.ToPermissionsString(), actualPermissionsEnum.ToPermissionsString());
