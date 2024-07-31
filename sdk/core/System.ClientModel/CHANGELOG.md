@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `OperationResult` and `ReturnWhen` types to support long-running operations.
+
 ### Breaking Changes
 
 ### Bugs Fixed

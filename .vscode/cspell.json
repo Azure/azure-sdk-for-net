@@ -573,6 +573,17 @@
       ]
     },
     {
+      "filename": "**/sdk/hdinsightcontainers/**/*.cs",
+      "words": [
+        "trino",
+        "flink",
+        "llap",
+        "SSDLRS",
+        "SSDZRS",
+        "HDDLRS"
+      ]
+    },
+    {
       "filename": "**/sdk/healthcareapis/**/*.cs",
       "words": [
         "dicom",
@@ -798,6 +809,14 @@
         "mbps",
         "gshut",
         "dscp"
+      ]
+    },
+    {
+      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "words": [
+        "Posix",
+        "posix",
+        "POSIX"
       ]
     },
     {

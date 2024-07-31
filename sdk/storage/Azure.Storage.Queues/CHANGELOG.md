@@ -3,6 +3,9 @@
 ## 12.20.0-beta.1 (Unreleased)
 
 ### Features Added
+- Add Queue Permissions enum to represent QueueAccessPolicy.Permissions #37653
+
+### Bugs Fixed
 
 ### Breaking Changes
 
