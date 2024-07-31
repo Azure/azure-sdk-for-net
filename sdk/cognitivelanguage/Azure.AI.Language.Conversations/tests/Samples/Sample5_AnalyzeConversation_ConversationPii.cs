@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
                 if (operationResult is ConversationPiiOperationResult piiOperationResult)
                 {
-                    foreach (ConversationalPiiResultWithResultBase conversation in piiOperationResult.Results.Conversations)
+                    foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
                     {
                         Console.WriteLine($"Conversation: #{conversation.Id}");
                         Console.WriteLine("Detected Entities:");
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
                 if (operationResult is ConversationPiiOperationResult piiOperationResult)
                 {
-                    foreach (ConversationalPiiResultWithResultBase conversation in piiOperationResult.Results.Conversations)
+                    foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
                     {
                         Console.WriteLine($"Conversation: #{conversation.Id}");
                         Console.WriteLine("Detected Entities:");

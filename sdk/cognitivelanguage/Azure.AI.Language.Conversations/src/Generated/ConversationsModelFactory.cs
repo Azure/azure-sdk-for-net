@@ -641,10 +641,10 @@ namespace Azure.AI.Language.Conversations
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
         /// <returns> A new <see cref="Models.ConversationPiiResults"/> instance for mocking. </returns>
-        public static ConversationPiiResults ConversationPiiResults(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<ConversationalPiiResultWithResultBase> conversations = null)
+        public static ConversationPiiResults ConversationPiiResults(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<ConversationalPiiResult> conversations = null)
         {
             errors ??= new List<DocumentError>();
-            conversations ??= new List<ConversationalPiiResultWithResultBase>();
+            conversations ??= new List<ConversationalPiiResult>();
 
             return new ConversationPiiResults(errors?.ToList(), statistics, modelVersion, conversations?.ToList(), serializedAdditionalRawData: null);
         }
@@ -669,18 +669,18 @@ namespace Azure.AI.Language.Conversations
             return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalPiiResultWithResultBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationalPiiResult"/>. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="conversationItems"> List of conversationItems. </param>
-        /// <returns> A new <see cref="Models.ConversationalPiiResultWithResultBase"/> instance for mocking. </returns>
-        public static ConversationalPiiResultWithResultBase ConversationalPiiResultWithResultBase(string id = null, IEnumerable<InputWarning> warnings = null, ConversationStatistics statistics = null, IEnumerable<ConversationPiiItemResult> conversationItems = null)
+        /// <returns> A new <see cref="Models.ConversationalPiiResult"/> instance for mocking. </returns>
+        public static ConversationalPiiResult ConversationalPiiResult(string id = null, IEnumerable<InputWarning> warnings = null, ConversationStatistics statistics = null, IEnumerable<ConversationPiiItemResult> conversationItems = null)
         {
             warnings ??= new List<InputWarning>();
             conversationItems ??= new List<ConversationPiiItemResult>();
 
-            return new ConversationalPiiResultWithResultBase(id, warnings?.ToList(), statistics, conversationItems?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationalPiiResult(id, warnings?.ToList(), statistics, conversationItems?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InputWarning"/>. </summary>

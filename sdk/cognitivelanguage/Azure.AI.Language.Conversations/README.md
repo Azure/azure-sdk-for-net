@@ -122,7 +122,7 @@ The Azure.AI.Language.Conversations client library provides both synchronous and
 
 The following examples show common scenarios using the `client` [created above](#create-a-conversationanalysisclient).
 
-### Extracting intents and entities from a conversation (Conversation Language Understanding)
+### Extract intents and entities from a conversation (Conversation Language Understanding)
 
 To analyze a conversation, you can call the `AnalyzeConversation()` method:
 
@@ -204,7 +204,7 @@ AnalyzeConversationInput data = new ConversationalInput(
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
-#### Extracting intents and entities from a conversation in a different language (Conversation Language Understanding)
+#### Extract intents and entities from a conversation in a different language (Conversation Language Understanding)
 
 The `language` property can be set to specify the language of the conversation:
 
@@ -232,7 +232,7 @@ AnalyzeConversationInput data =
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
-### Analyze a conversation using an orchestration project (Conversation Orchestration)
+### Orchestrate a conversation between various conversation apps like Question Answering app, CLU app
 
 To analyze a conversation using an orchestration project, you can call the `AnalyzeConversations()` method just like the conversation project.
 
@@ -279,7 +279,7 @@ if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringT
 
 #### CLU prediction
 
-If your conversation was analyzed by CLU, it will include an intent:
+If your conversation was analyzed by a CLU application, it will include an intent and entities:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
 string respondingProjectName = orchestrationPrediction.TopIntent;
@@ -303,7 +303,7 @@ if (targetIntentResult is ConversationTargetIntentResult conversationTargetInten
 
 ### Summarize a conversation
 
-To summarize a conversation, you can use the `AnalyzeConversationsAsync` method overload that returns an `Response<AnalyzeConversationJobState>`:
+To summarize a conversation, you can use the `AnalyzeConversationsAsync` method overload that returns an `Response<AnalyzeConversationOperationState>`:
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
 MultiLanguageConversationInput input = new MultiLanguageConversationInput(
@@ -380,7 +380,7 @@ foreach (var operationResult in operationState.Actions.Items)
 
 ### Extract PII from a conversation
 
-To detect and redact PII in a conversation, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction`:
+To detect and redact PII in a conversation, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` that  returns an `Response<AnalyzeConversationOperationState>`::
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
 MultiLanguageConversationInput input = new MultiLanguageConversationInput(
@@ -413,7 +413,7 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 
     if (operationResult is ConversationPiiOperationResult piiOperationResult)
     {
-        foreach (ConversationalPiiResultWithResultBase conversation in piiOperationResult.Results.Conversations)
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
         {
             Console.WriteLine($"Conversation: #{conversation.Id}");
             Console.WriteLine("Detected Entities:");
