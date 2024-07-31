@@ -178,7 +178,7 @@ public class ProxyClient
         }
 
         variables ??= new Dictionary<string, string>();
-        PipelineMessage message = CreateJsonRequest(HttpMethod.Post, "record/stop", variables, token);
+        PipelineMessage message = CreateJsonRequest(HttpMethod.Post, "record/stop", variables, token, additionalHeaders);
         return SendSyncOrAsync(false, message, token).GetAwaiter().GetResult();
     }
 

@@ -15,7 +15,6 @@ public class TestRecording : IAsyncDisposable
     public const string RandomSeedVariableKey = "RandomSeed";
 
     private SortedDictionary<string, string> _variables;
-    private TestRandom? _random;
 
     public TestRecording(string id, RecordedTestMode mode, ProxyService proxy, IDictionary<string, string>? variables = null)
     {
@@ -30,51 +29,42 @@ public class TestRecording : IAsyncDisposable
         {
             throw new InvalidOperationException("Recording test proxy did not have a client defined");
         }
+
+        int seed;
+        switch (Mode)
+        {
+            case RecordedTestMode.Live:
+                Random = new TestRandom(Mode, GetRandomSeed());
+                break;
+
+            case RecordedTestMode.Record:
+                seed = GetRandomSeed();
+                Variables[RandomSeedVariableKey] = seed.ToString(CultureInfo.InvariantCulture);
+                Random = new TestRandom(Mode, seed);
+                break;
+
+            case RecordedTestMode.Playback:
+                if (Variables.TryGetValue(RandomSeedVariableKey, out string? seedString)
+                    && int.TryParse(seedString, NumberStyles.Integer, CultureInfo.InvariantCulture, out seed))
+                {
+                    Random = new TestRandom(Mode, seed);
+                }
+                else
+                {
+                    throw new InvalidOperationException("No random seed was set during recording");
+                }
+                break;
+
+            default:
+                throw new NotSupportedException("Unsupported recording mode: " + Mode);
+        }
     }
 
     public string ID { get; }
 
     public RecordedTestMode Mode { get; }
 
-    public TestRandom Random
-    {
-        get
-        {
-            if (_random != null)
-            {
-                return _random;
-            }
-
-            int seed;
-            switch (Mode)
-            {
-                case RecordedTestMode.Live:
-                    _random = new TestRandom(Mode, GetRandomSeed());
-                    break;
-
-                case RecordedTestMode.Record:
-                    seed = GetRandomSeed();
-                    Variables[RandomSeedVariableKey] = seed.ToString(CultureInfo.InvariantCulture);
-                    _random = new TestRandom(Mode, seed);
-                    break;
-
-                case RecordedTestMode.Playback:
-                    ValidateWeHaveVariables();
-                    if (Variables.TryGetValue(RandomSeedVariableKey, out string? seedString)
-                        && int.TryParse(seedString, NumberStyles.Integer, CultureInfo.InvariantCulture, out seed))
-                    {
-                        _random = new TestRandom(Mode, seed);
-                    }
-
-                    throw new InvalidOperationException("No random seed was set during recording");
-
-                default:
-                    throw new NotSupportedException("Unsupported recording mode: " + Mode);
-            }
-
-            return _random;
-        }
-    }
+    public TestRandom Random { get; }
 
     protected internal ProxyService Proxy { get; }
 
@@ -106,7 +96,6 @@ public class TestRecording : IAsyncDisposable
 
     public virtual string? GetVariable(string name)
     {
-        ValidateWeHaveVariables();
         return Variables.GetValueOrDefault(name);
     }
 
@@ -167,14 +156,6 @@ public class TestRecording : IAsyncDisposable
             {
                 await Proxy.Client.AddTransformAsync(transform, ID, token).ConfigureAwait(false);
             }
-        }
-    }
-
-    protected virtual void ValidateWeHaveVariables()
-    {
-        if (Mode == RecordedTestMode.Playback && Variables.Count == 0)
-        {
-            throw new TestRecordingMismatchException("The record session does not exist or is missing the Variables section.");
         }
     }
 
