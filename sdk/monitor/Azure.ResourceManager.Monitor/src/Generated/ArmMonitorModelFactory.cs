@@ -1591,13 +1591,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
         /// <param name="provisioningState"> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </param>
         /// <returns> A new <see cref="Monitor.PipelineGroupData"/> instance for mocking. </returns>
-        public static PipelineGroupData PipelineGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, int? replicas = null, IEnumerable<Receiver> receivers = null, IEnumerable<Processor> processors = null, IEnumerable<Exporter> exporters = null, Service service = null, IEnumerable<NetworkingConfiguration> networkingConfigurations = null, MonitorProvisioningState? provisioningState = null)
+        public static PipelineGroupData PipelineGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, int? replicas = null, IEnumerable<PipelineGroupReceiver> receivers = null, IEnumerable<PipelineGroupProcessor> processors = null, IEnumerable<PipelineGroupExporter> exporters = null, PipelineGroupService service = null, IEnumerable<PipelineGroupNetworkingConfiguration> networkingConfigurations = null, MonitorProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
-            receivers ??= new List<Receiver>();
-            processors ??= new List<Processor>();
-            exporters ??= new List<Exporter>();
-            networkingConfigurations ??= new List<NetworkingConfiguration>();
+            receivers ??= new List<PipelineGroupReceiver>();
+            processors ??= new List<PipelineGroupProcessor>();
+            exporters ??= new List<PipelineGroupExporter>();
+            networkingConfigurations ??= new List<PipelineGroupNetworkingConfiguration>();
 
             return new PipelineGroupData(
                 id,

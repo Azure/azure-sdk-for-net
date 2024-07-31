@@ -314,6 +314,17 @@ rename-mapping:
   SingleMetricBaseline: MonitorSingleMetricBaseline
   TimeSeriesBaseline: MonitorTimeSeriesBaseline
   Unit: MonitorMetricUnit
+  CacheConfiguration: MonitorWorkspaceLogsExporterCacheConfiguration
+  ConcurrencyConfiguration: MonitorWorkspaceLogsExporterConcurrencyConfiguration
+  Receiver: PipelineGroupReceiver
+  Processor: PipelineGroupProcessor
+  Exporter: PipelineGroupExporter
+  ExporterType: PipelineGroupExporterType
+  Service: PipelineGroupService
+  PersistenceConfigurations: PipelineGroupServicePersistenceConfigurations
+  NetworkingConfiguration: PipelineGroupNetworkingConfiguration
+  NetworkingRoute: PipelineGroupNetworkingRoute
+  ExternalNetworkingMode: PipelineGroupExternalNetworkingMode
 
 suppress-abstract-base-class:
 - MetricAlertCriteria

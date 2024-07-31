@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public PipelineGroupData(AzureLocation location) : base(location)
         {
-            Receivers = new ChangeTrackingList<Receiver>();
-            Processors = new ChangeTrackingList<Processor>();
-            Exporters = new ChangeTrackingList<Exporter>();
-            NetworkingConfigurations = new ChangeTrackingList<NetworkingConfiguration>();
+            Receivers = new ChangeTrackingList<PipelineGroupReceiver>();
+            Processors = new ChangeTrackingList<PipelineGroupProcessor>();
+            Exporters = new ChangeTrackingList<PipelineGroupExporter>();
+            NetworkingConfigurations = new ChangeTrackingList<PipelineGroupNetworkingConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineGroupData"/>. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
         /// <param name="provisioningState"> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, int? replicas, IList<Receiver> receivers, IList<Processor> processors, IList<Exporter> exporters, Service service, IList<NetworkingConfiguration> networkingConfigurations, MonitorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PipelineGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, int? replicas, IList<PipelineGroupReceiver> receivers, IList<PipelineGroupProcessor> processors, IList<PipelineGroupExporter> exporters, PipelineGroupService service, IList<PipelineGroupNetworkingConfiguration> networkingConfigurations, MonitorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Replicas = replicas;
@@ -100,15 +100,15 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Defines the amount of replicas of the pipeline group instance. </summary>
         public int? Replicas { get; set; }
         /// <summary> The receivers specified for a pipeline group instance. </summary>
-        public IList<Receiver> Receivers { get; }
+        public IList<PipelineGroupReceiver> Receivers { get; }
         /// <summary> The processors specified for a pipeline group instance. </summary>
-        public IList<Processor> Processors { get; }
+        public IList<PipelineGroupProcessor> Processors { get; }
         /// <summary> The exporters specified for a pipeline group instance. </summary>
-        public IList<Exporter> Exporters { get; }
+        public IList<PipelineGroupExporter> Exporters { get; }
         /// <summary> The service section for a given pipeline group instance. </summary>
-        public Service Service { get; set; }
+        public PipelineGroupService Service { get; set; }
         /// <summary> Networking configurations for the pipeline group instance. </summary>
-        public IList<NetworkingConfiguration> NetworkingConfigurations { get; }
+        public IList<PipelineGroupNetworkingConfiguration> NetworkingConfigurations { get; }
         /// <summary> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </summary>
         public MonitorProvisioningState? ProvisioningState { get; }
     }

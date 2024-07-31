@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Persistence options to all pipelines in the instance. </summary>
-    internal partial class PersistenceConfigurations
+    /// <summary> Service Info. </summary>
+    public partial class PipelineGroupService
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +46,41 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PersistenceConfigurations"/>. </summary>
-        /// <param name="persistentVolumeName"> The name of the mounted persistent volume. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="persistentVolumeName"/> is null. </exception>
-        public PersistenceConfigurations(string persistentVolumeName)
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupService"/>. </summary>
+        /// <param name="pipelines"> Pipelines belonging to a given pipeline group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelines"/> is null. </exception>
+        public PipelineGroupService(IEnumerable<Pipeline> pipelines)
         {
-            Argument.AssertNotNull(persistentVolumeName, nameof(persistentVolumeName));
+            Argument.AssertNotNull(pipelines, nameof(pipelines));
 
-            PersistentVolumeName = persistentVolumeName;
+            Pipelines = pipelines.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistenceConfigurations"/>. </summary>
-        /// <param name="persistentVolumeName"> The name of the mounted persistent volume. </param>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupService"/>. </summary>
+        /// <param name="pipelines"> Pipelines belonging to a given pipeline group. </param>
+        /// <param name="persistence"> Persistence options to all pipelines in the instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PersistenceConfigurations(string persistentVolumeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupService(IList<Pipeline> pipelines, PipelineGroupServicePersistenceConfigurations persistence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PersistentVolumeName = persistentVolumeName;
+            Pipelines = pipelines;
+            Persistence = persistence;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistenceConfigurations"/> for deserialization. </summary>
-        internal PersistenceConfigurations()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupService"/> for deserialization. </summary>
+        internal PipelineGroupService()
         {
         }
 
+        /// <summary> Pipelines belonging to a given pipeline group. </summary>
+        public IList<Pipeline> Pipelines { get; }
+        /// <summary> Persistence options to all pipelines in the instance. </summary>
+        internal PipelineGroupServicePersistenceConfigurations Persistence { get; set; }
         /// <summary> The name of the mounted persistent volume. </summary>
-        public string PersistentVolumeName { get; set; }
+        public string PersistencePersistentVolumeName
+        {
+            get => Persistence is null ? default : Persistence.PersistentVolumeName;
+            set => Persistence = new PipelineGroupServicePersistenceConfigurations(value);
+        }
     }
 }

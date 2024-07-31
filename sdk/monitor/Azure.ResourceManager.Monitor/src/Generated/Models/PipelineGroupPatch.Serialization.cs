@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             IDictionary<string, string> tags = default;
             int? replicas = default;
-            IList<Receiver> receivers = default;
-            IList<Processor> processors = default;
-            IList<Exporter> exporters = default;
+            IList<PipelineGroupReceiver> receivers = default;
+            IList<PipelineGroupProcessor> processors = default;
+            IList<PipelineGroupExporter> exporters = default;
             ServiceUpdate service = default;
-            IList<NetworkingConfiguration> networkingConfigurations = default;
+            IList<PipelineGroupNetworkingConfiguration> networkingConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            List<Receiver> array = new List<Receiver>();
+                            List<PipelineGroupReceiver> array = new List<PipelineGroupReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Receiver.DeserializeReceiver(item, options));
+                                array.Add(PipelineGroupReceiver.DeserializePipelineGroupReceiver(item, options));
                             }
                             receivers = array;
                             continue;
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            List<Processor> array = new List<Processor>();
+                            List<PipelineGroupProcessor> array = new List<PipelineGroupProcessor>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Processor.DeserializeProcessor(item, options));
+                                array.Add(PipelineGroupProcessor.DeserializePipelineGroupProcessor(item, options));
                             }
                             processors = array;
                             continue;
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            List<Exporter> array = new List<Exporter>();
+                            List<PipelineGroupExporter> array = new List<PipelineGroupExporter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Exporter.DeserializeExporter(item, options));
+                                array.Add(PipelineGroupExporter.DeserializePipelineGroupExporter(item, options));
                             }
                             exporters = array;
                             continue;
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            List<NetworkingConfiguration> array = new List<NetworkingConfiguration>();
+                            List<PipelineGroupNetworkingConfiguration> array = new List<PipelineGroupNetworkingConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkingConfiguration.DeserializeNetworkingConfiguration(item, options));
+                                array.Add(PipelineGroupNetworkingConfiguration.DeserializePipelineGroupNetworkingConfiguration(item, options));
                             }
                             networkingConfigurations = array;
                             continue;
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.Monitor.Models
             return new PipelineGroupPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 replicas,
-                receivers ?? new ChangeTrackingList<Receiver>(),
-                processors ?? new ChangeTrackingList<Processor>(),
-                exporters ?? new ChangeTrackingList<Exporter>(),
+                receivers ?? new ChangeTrackingList<PipelineGroupReceiver>(),
+                processors ?? new ChangeTrackingList<PipelineGroupProcessor>(),
+                exporters ?? new ChangeTrackingList<PipelineGroupExporter>(),
                 service,
-                networkingConfigurations ?? new ChangeTrackingList<NetworkingConfiguration>(),
+                networkingConfigurations ?? new ChangeTrackingList<PipelineGroupNetworkingConfiguration>(),
                 serializedAdditionalRawData);
         }
 

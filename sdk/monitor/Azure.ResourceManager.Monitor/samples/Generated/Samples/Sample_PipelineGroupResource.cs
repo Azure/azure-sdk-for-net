@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Samples
                 Replicas = 3,
                 Receivers =
 {
-new Receiver(ReceiverType.Syslog,"syslog-receiver1")
+new PipelineGroupReceiver(ReceiverType.Syslog,"syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
 }
@@ -121,14 +121,14 @@ Syslog = new SyslogReceiver("0.0.0.0:514"),
 },
                 Exporters =
 {
-new Exporter(ExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new AzureMonitorWorkspaceLogsExporter(new AzureMonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new SchemaMap(new RecordMap[]
 {
 new RecordMap("body","Body"),new RecordMap("severity_text","SeverityText"),new RecordMap("time_unix_nano","TimeGenerated")
 })))
 {
-Concurrency = new ConcurrencyConfiguration()
+Concurrency = new MonitorWorkspaceLogsExporterConcurrencyConfiguration()
 {
 WorkerCount = 4,
 BatchQueueSize = 100,

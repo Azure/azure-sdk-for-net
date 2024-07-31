@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Receiver : IUtf8JsonSerializable, IJsonModel<Receiver>
+    public partial class PipelineGroupReceiver : IUtf8JsonSerializable, IJsonModel<PipelineGroupReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Receiver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineGroupReceiver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Receiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PipelineGroupReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Receiver>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Receiver)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupReceiver)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        Receiver IJsonModel<Receiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PipelineGroupReceiver IJsonModel<PipelineGroupReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Receiver>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Receiver)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupReceiver)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReceiver(document.RootElement, options);
+            return DeserializePipelineGroupReceiver(document.RootElement, options);
         }
 
-        internal static Receiver DeserializeReceiver(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PipelineGroupReceiver DeserializePipelineGroupReceiver(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Receiver(
+            return new PipelineGroupReceiver(
                 type,
                 name,
                 syslog,
@@ -144,35 +144,35 @@ namespace Azure.ResourceManager.Monitor.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Receiver>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PipelineGroupReceiver>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Receiver>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupReceiver>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Receiver)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Receiver IPersistableModel<Receiver>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PipelineGroupReceiver IPersistableModel<PipelineGroupReceiver>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Receiver>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupReceiver>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReceiver(document.RootElement, options);
+                        return DeserializePipelineGroupReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Receiver)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Receiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PipelineGroupReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

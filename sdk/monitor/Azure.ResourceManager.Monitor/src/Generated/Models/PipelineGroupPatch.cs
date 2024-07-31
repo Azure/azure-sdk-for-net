@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Monitor.Models
         public PipelineGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Receivers = new ChangeTrackingList<Receiver>();
-            Processors = new ChangeTrackingList<Processor>();
-            Exporters = new ChangeTrackingList<Exporter>();
-            NetworkingConfigurations = new ChangeTrackingList<NetworkingConfiguration>();
+            Receivers = new ChangeTrackingList<PipelineGroupReceiver>();
+            Processors = new ChangeTrackingList<PipelineGroupProcessor>();
+            Exporters = new ChangeTrackingList<PipelineGroupExporter>();
+            NetworkingConfigurations = new ChangeTrackingList<PipelineGroupNetworkingConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineGroupPatch"/>. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="service"> The service section for a given pipeline group instance. </param>
         /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupPatch(IDictionary<string, string> tags, int? replicas, IList<Receiver> receivers, IList<Processor> processors, IList<Exporter> exporters, ServiceUpdate service, IList<NetworkingConfiguration> networkingConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupPatch(IDictionary<string, string> tags, int? replicas, IList<PipelineGroupReceiver> receivers, IList<PipelineGroupProcessor> processors, IList<PipelineGroupExporter> exporters, ServiceUpdate service, IList<PipelineGroupNetworkingConfiguration> networkingConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Replicas = replicas;
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Defines the amount of replicas of the pipeline group instance. </summary>
         public int? Replicas { get; set; }
         /// <summary> The receivers specified for a pipeline group instance. </summary>
-        public IList<Receiver> Receivers { get; }
+        public IList<PipelineGroupReceiver> Receivers { get; }
         /// <summary> The processors specified for a pipeline group instance. </summary>
-        public IList<Processor> Processors { get; }
+        public IList<PipelineGroupProcessor> Processors { get; }
         /// <summary> The exporters specified for a pipeline group instance. </summary>
-        public IList<Exporter> Exporters { get; }
+        public IList<PipelineGroupExporter> Exporters { get; }
         /// <summary> The service section for a given pipeline group instance. </summary>
         public ServiceUpdate Service { get; set; }
         /// <summary> Networking configurations for the pipeline group instance. </summary>
-        public IList<NetworkingConfiguration> NetworkingConfigurations { get; }
+        public IList<PipelineGroupNetworkingConfiguration> NetworkingConfigurations { get; }
     }
 }

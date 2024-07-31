@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="concurrency"> Concurrency configuration for the exporter. </param>
         /// <param name="cache"> Cache configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorWorkspaceLogsExporter(AzureMonitorWorkspaceLogsApiConfig api, ConcurrencyConfiguration concurrency, CacheConfiguration cache, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureMonitorWorkspaceLogsExporter(AzureMonitorWorkspaceLogsApiConfig api, MonitorWorkspaceLogsExporterConcurrencyConfiguration concurrency, MonitorWorkspaceLogsExporterCacheConfiguration cache, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Api = api;
             Concurrency = concurrency;
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> API configurations for Azure Monitor workspace exporter. </summary>
         public AzureMonitorWorkspaceLogsApiConfig Api { get; set; }
         /// <summary> Concurrency configuration for the exporter. </summary>
-        public ConcurrencyConfiguration Concurrency { get; set; }
+        public MonitorWorkspaceLogsExporterConcurrencyConfiguration Concurrency { get; set; }
         /// <summary> Cache configurations. </summary>
-        public CacheConfiguration Cache { get; set; }
+        public MonitorWorkspaceLogsExporterCacheConfiguration Cache { get; set; }
     }
 }

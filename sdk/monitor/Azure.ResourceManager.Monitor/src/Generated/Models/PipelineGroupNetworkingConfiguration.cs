@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Networking configuration for the pipeline group instance. </summary>
-    public partial class NetworkingConfiguration
+    public partial class PipelineGroupNetworkingConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupNetworkingConfiguration"/>. </summary>
         /// <param name="externalNetworkingMode"> External networking mode. </param>
         /// <param name="routes"> Networking routes configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routes"/> is null. </exception>
-        public NetworkingConfiguration(ExternalNetworkingMode externalNetworkingMode, IEnumerable<NetworkingRoute> routes)
+        public PipelineGroupNetworkingConfiguration(PipelineGroupExternalNetworkingMode externalNetworkingMode, IEnumerable<PipelineGroupNetworkingRoute> routes)
         {
             Argument.AssertNotNull(routes, nameof(routes));
 
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Routes = routes.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupNetworkingConfiguration"/>. </summary>
         /// <param name="externalNetworkingMode"> External networking mode. </param>
         /// <param name="host"> The address exposed on the cluster. Example: azuremonitorpipeline.contoso.com. </param>
         /// <param name="routes"> Networking routes configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkingConfiguration(ExternalNetworkingMode externalNetworkingMode, string host, IList<NetworkingRoute> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupNetworkingConfiguration(PipelineGroupExternalNetworkingMode externalNetworkingMode, string host, IList<PipelineGroupNetworkingRoute> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExternalNetworkingMode = externalNetworkingMode;
             Host = host;
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkingConfiguration"/> for deserialization. </summary>
-        internal NetworkingConfiguration()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupNetworkingConfiguration"/> for deserialization. </summary>
+        internal PipelineGroupNetworkingConfiguration()
         {
         }
 
         /// <summary> External networking mode. </summary>
-        public ExternalNetworkingMode ExternalNetworkingMode { get; set; }
+        public PipelineGroupExternalNetworkingMode ExternalNetworkingMode { get; set; }
         /// <summary> The address exposed on the cluster. Example: azuremonitorpipeline.contoso.com. </summary>
         public string Host { get; set; }
         /// <summary> Networking routes configuration. </summary>
-        public IList<NetworkingRoute> Routes { get; }
+        public IList<PipelineGroupNetworkingRoute> Routes { get; }
     }
 }

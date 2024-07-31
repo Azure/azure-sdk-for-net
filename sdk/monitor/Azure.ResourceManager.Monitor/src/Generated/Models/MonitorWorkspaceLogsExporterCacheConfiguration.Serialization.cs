@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class CacheConfiguration : IUtf8JsonSerializable, IJsonModel<CacheConfiguration>
+    public partial class MonitorWorkspaceLogsExporterCacheConfiguration : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceLogsExporterCacheConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CacheConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceLogsExporterCacheConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CacheConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorWorkspaceLogsExporterCacheConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporterCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporterCacheConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        CacheConfiguration IJsonModel<CacheConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MonitorWorkspaceLogsExporterCacheConfiguration IJsonModel<MonitorWorkspaceLogsExporterCacheConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporterCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporterCacheConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCacheConfiguration(document.RootElement, options);
+            return DeserializeMonitorWorkspaceLogsExporterCacheConfiguration(document.RootElement, options);
         }
 
-        internal static CacheConfiguration DeserializeCacheConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MonitorWorkspaceLogsExporterCacheConfiguration DeserializeMonitorWorkspaceLogsExporterCacheConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CacheConfiguration(maxStorageUsage, retentionPeriod, serializedAdditionalRawData);
+            return new MonitorWorkspaceLogsExporterCacheConfiguration(maxStorageUsage, retentionPeriod, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CacheConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MonitorWorkspaceLogsExporterCacheConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporterCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CacheConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporterCacheConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CacheConfiguration IPersistableModel<CacheConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MonitorWorkspaceLogsExporterCacheConfiguration IPersistableModel<MonitorWorkspaceLogsExporterCacheConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporterCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCacheConfiguration(document.RootElement, options);
+                        return DeserializeMonitorWorkspaceLogsExporterCacheConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CacheConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporterCacheConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CacheConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorWorkspaceLogsExporterCacheConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
