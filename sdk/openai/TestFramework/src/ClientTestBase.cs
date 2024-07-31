@@ -5,6 +5,7 @@ using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using OpenAI.TestFramework.Mocks.Client;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework;
 

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace OpenAI.TestFramework.Mocks.Client;
+namespace OpenAI.TestFramework.Utils;
 
 /// <summary>
 /// An interface that serves as a way to identify a proxied class, as well as get the original un-proxied

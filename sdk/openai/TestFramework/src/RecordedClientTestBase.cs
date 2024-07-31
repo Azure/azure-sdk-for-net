@@ -6,7 +6,6 @@ using System.Net;
 using System.Text;
 using NUnit.Framework;
 using OpenAI.TestFramework.Recording;
-using OpenAI.TestFramework.Recording.Matchers;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.Proxy.Service;
 using OpenAI.TestFramework.Recording.RecordingProxy;
@@ -24,6 +23,8 @@ namespace OpenAI.TestFramework;
 [NonParallelizable]
 public abstract class RecordedClientTestBase : ClientTestBase
 {
+    private CancellationTokenSource _cts = new();
+
     /// <summary>
     /// Invalid characters that will be removed from test names when creating recordings.
     /// </summary>
@@ -86,6 +87,31 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// to wait for configuring a recording session, and then saving it or closing it.
     /// </summary>
     public virtual TimeSpan TestProxyWaitTime => Default.TestProxyWaitTime;
+
+    /// <summary>
+    /// Gets the test timeout.
+    /// </summary>
+    public virtual TimeSpan TestTimeout
+    {
+        get
+        {
+            switch (Mode)
+            {
+                default:
+                case RecordedTestMode.Record:
+                case RecordedTestMode.Live:
+                    return TimeSpan.FromSeconds(60);
+
+                case RecordedTestMode.Playback:
+                    return TimeSpan.FromSeconds(15);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets the cancellation token to use
+    /// </summary>
+    public virtual CancellationToken Token => _cts.Token;
 
     /// <summary>
     /// Determines whether or not to use Fiddler. If this is true, then the recording transport will be updated to use Fiddler
@@ -182,6 +208,8 @@ public abstract class RecordedClientTestBase : ClientTestBase
     [SetUp]
     public virtual async Task StartTestRecordingAsync()
     {
+        _cts = new CancellationTokenSource(TestTimeout);
+
         if (Proxy == null)
         {
             throw new InvalidOperationException("The proxy service was not set and/or started");
@@ -282,7 +310,7 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// and append "Async" when running the asynchronous versions of tests.
     /// </summary>
     /// <returns>The name of the test to use.</returns>
-    protected virtual StringBuilder GetRecordedTestName()
+    protected virtual string GetRecordedTestName()
     {
         const string c_asyncSuffix = "Async";
         TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
@@ -298,7 +326,7 @@ public abstract class RecordedClientTestBase : ClientTestBase
             builder.Append(c_asyncSuffix);
         }
 
-        return builder;
+        return builder.ToString();
     }
 
     /// <summary>

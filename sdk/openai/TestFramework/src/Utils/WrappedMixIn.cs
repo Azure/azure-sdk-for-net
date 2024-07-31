@@ -5,6 +5,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenAI.TestFramework.Utils;
+
 namespace OpenAI.TestFramework.Mocks.Client;
 
 /// <summary>

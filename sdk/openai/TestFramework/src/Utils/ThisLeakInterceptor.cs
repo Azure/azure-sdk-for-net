@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using Castle.DynamicProxy;
 
-namespace OpenAI.TestFramework.Mocks.Client;
+namespace OpenAI.TestFramework.Utils;
 
 /// <summary>
 /// A basic interceptor that prevents the leaking of the original un-proxied this instance as a return value.
@@ -12,7 +12,7 @@ namespace OpenAI.TestFramework.Mocks.Client;
 public class ThisLeakInterceptor : IInterceptor
 {
     /// <inheritdoc />
-    [DebuggerStepperBoundary]
+    [DebuggerStepThrough]
     public void Intercept(IInvocation invocation)
     {
         invocation.Proceed();
