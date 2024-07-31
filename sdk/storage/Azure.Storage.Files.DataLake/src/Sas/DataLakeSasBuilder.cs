@@ -368,7 +368,7 @@ namespace Azure.Storage.Sas
         /// The storage account's <see cref="StorageSharedKeyCredential"/>.
         /// </param>
         /// <param name="stringToSign">
-        /// For debugging purposes only.  The string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// For debugging purposes only.  The string to sign that was used to generate the <see cref="DataLakeSasQueryParameters"/>.
         /// </param>
         /// <returns>
         /// The <see cref="DataLakeSasQueryParameters"/> used for authenticating
@@ -471,7 +471,7 @@ namespace Azure.Storage.Sas
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <param name="stringToSign">
-        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="DataLakeSasQueryParameters"/>.
         /// </param>
         /// <returns>
         /// The <see cref="DataLakeSasQueryParameters"/> used for authenticating requests.

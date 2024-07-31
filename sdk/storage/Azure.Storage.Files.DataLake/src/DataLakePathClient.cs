@@ -3867,7 +3867,7 @@ namespace Azure.Storage.Files.DataLake
         /// must be omitted if it has been specified in an associated stored access policy.
         /// </param>
         /// <param name="stringToSign">
-        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3928,7 +3928,7 @@ namespace Azure.Storage.Files.DataLake
         /// Used to generate a Shared Access Signature (SAS).
         /// </param>
         /// <param name="stringToSign">
-        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.

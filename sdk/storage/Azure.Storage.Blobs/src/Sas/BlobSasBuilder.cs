@@ -351,7 +351,7 @@ namespace Azure.Storage.Sas
         /// The storage account's <see cref="StorageSharedKeyCredential"/>.
         /// </param>
         /// <param name="stringToSign">
-        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="BlobSasQueryParameters"/>.
         /// </param>
         /// <returns>
         /// The <see cref="BlobSasQueryParameters"/> used for authenticating
@@ -454,7 +454,7 @@ namespace Azure.Storage.Sas
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
         /// <param name="stringToSign">
-        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="BlobSasQueryParameters"/>.
         /// </param>
         /// The <see cref="BlobSasQueryParameters"/> used for authenticating requests.
         /// </returns>
