@@ -1983,9 +1983,9 @@ namespace Azure.Storage.Queues.Test
         [RecordedTest]
         [TestCase("")]
         [TestCase("u")]
-        [TestCase("ra")]
+        [TestCase("au")]
+        [TestCase("rap")]
         [TestCase("raup")]
-        [TestCase("paru")]
         public async Task QueueClientPolicyPermissions_checkIfSetCorrectly(string permissions)
         {
             await using DisposingQueue test = await GetTestQueueAsync();
@@ -2025,15 +2025,15 @@ namespace Azure.Storage.Queues.Test
                     expectedPermissionsStr = "u";
                     expectedPermissionsEnum = QueueAccessPolicyPermissions.Update;
                     break;
-                case "ra":
-                    expectedPermissionsStr = "ra";
-                    expectedPermissionsEnum = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add;
+                case "au":
+                    expectedPermissionsStr = "au";
+                    expectedPermissionsEnum = QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Update;
+                    break;
+                case "rap":
+                    expectedPermissionsStr = "rap";
+                    expectedPermissionsEnum = QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process;
                     break;
                 case "raup":
-                    expectedPermissionsStr = "raup";
-                    expectedPermissionsEnum = QueueAccessPolicyPermissions.All;
-                    break;
-                case "paru":
                     expectedPermissionsStr = "raup";
                     expectedPermissionsEnum = QueueAccessPolicyPermissions.All;
                     break;
