@@ -8,6 +8,7 @@ using System;
 namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PlaywrightServiceSettingsTest
 {
     [Test]
