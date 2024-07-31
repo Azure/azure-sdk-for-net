@@ -12,7 +12,7 @@ namespace Azure
     public class TokenRequestContextTests
     {
         [Test]
-        public void PopTokenRequestContextCtor()
+        public void TokenRequestContextCtor()
         {
             var scopes = new string[] { "scope1", "scope2" };
             var parentRequestId = Guid.NewGuid().ToString();
@@ -21,8 +21,10 @@ namespace Azure
             var isCaeEnabled = true;
             var isProofOfPossessionEnabled = true;
             var proofOfPossessionNonce = Guid.NewGuid().ToString();
-            var request = new MockRequest();
-            request.Method = RequestMethod.Get;
+            var request = new MockRequest
+            {
+                Method = RequestMethod.Get
+            };
             request.Uri.Reset(new Uri("http://example.com"));
 
             var context = new TokenRequestContext(scopes, parentRequestId, claims, tenantId, isCaeEnabled, isProofOfPossessionEnabled, proofOfPossessionNonce, request);
