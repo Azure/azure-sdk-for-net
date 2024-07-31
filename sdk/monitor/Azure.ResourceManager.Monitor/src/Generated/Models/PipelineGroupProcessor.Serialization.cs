@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            ProcessorType type = default;
+            PipelineGroupProcessorType type = default;
             string name = default;
             BatchProcessor batch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ProcessorType(property.Value.GetString());
+                    type = new PipelineGroupProcessorType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

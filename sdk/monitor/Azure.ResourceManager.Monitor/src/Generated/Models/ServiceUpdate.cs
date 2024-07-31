@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="ServiceUpdate"/>. </summary>
         public ServiceUpdate()
         {
-            Pipelines = new ChangeTrackingList<Pipeline>();
+            Pipelines = new ChangeTrackingList<PipelineGroupServicePipeline>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceUpdate"/>. </summary>
         /// <param name="pipelines"> Pipelines belonging to a given pipeline group. </param>
         /// <param name="persistence"> Persistence options to all pipelines in the instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceUpdate(IList<Pipeline> pipelines, PersistenceConfigurationsUpdate persistence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceUpdate(IList<PipelineGroupServicePipeline> pipelines, PersistenceConfigurationsUpdate persistence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Pipelines = pipelines;
             Persistence = persistence;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Pipelines belonging to a given pipeline group. </summary>
-        public IList<Pipeline> Pipelines { get; }
+        public IList<PipelineGroupServicePipeline> Pipelines { get; }
         /// <summary> Persistence options to all pipelines in the instance. </summary>
         internal PersistenceConfigurationsUpdate Persistence { get; set; }
         /// <summary> The name of the mounted persistent volume. </summary>

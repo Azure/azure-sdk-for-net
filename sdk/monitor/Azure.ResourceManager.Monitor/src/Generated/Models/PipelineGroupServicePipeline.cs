@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Pipeline Info. </summary>
-    public partial class Pipeline
+    public partial class PipelineGroupServicePipeline
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Pipeline"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupServicePipeline"/>. </summary>
         /// <param name="name"> Name of the pipeline. </param>
         /// <param name="pipelineType"> The type of pipeline. </param>
         /// <param name="receivers"> Reference to receivers configured for the pipeline. </param>
         /// <param name="exporters"> Reference to exporters configured for the pipeline. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="receivers"/> or <paramref name="exporters"/> is null. </exception>
-        public Pipeline(string name, PipelineType pipelineType, IEnumerable<string> receivers, IEnumerable<string> exporters)
+        public PipelineGroupServicePipeline(string name, PipelineGroupServicePipelineType pipelineType, IEnumerable<string> receivers, IEnumerable<string> exporters)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(receivers, nameof(receivers));
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Monitor.Models
             Exporters = exporters.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Pipeline"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupServicePipeline"/>. </summary>
         /// <param name="name"> Name of the pipeline. </param>
         /// <param name="pipelineType"> The type of pipeline. </param>
         /// <param name="receivers"> Reference to receivers configured for the pipeline. </param>
         /// <param name="processors"> Reference to processors configured for the pipeline. </param>
         /// <param name="exporters"> Reference to exporters configured for the pipeline. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Pipeline(string name, PipelineType pipelineType, IList<string> receivers, IList<string> processors, IList<string> exporters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupServicePipeline(string name, PipelineGroupServicePipelineType pipelineType, IList<string> receivers, IList<string> processors, IList<string> exporters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PipelineType = pipelineType;
@@ -82,15 +82,15 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Pipeline"/> for deserialization. </summary>
-        internal Pipeline()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupServicePipeline"/> for deserialization. </summary>
+        internal PipelineGroupServicePipeline()
         {
         }
 
         /// <summary> Name of the pipeline. </summary>
         public string Name { get; set; }
         /// <summary> The type of pipeline. </summary>
-        public PipelineType PipelineType { get; set; }
+        public PipelineGroupServicePipelineType PipelineType { get; set; }
         /// <summary> Reference to receivers configured for the pipeline. </summary>
         public IList<string> Receivers { get; }
         /// <summary> Reference to processors configured for the pipeline. </summary>

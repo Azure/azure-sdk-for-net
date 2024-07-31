@@ -1648,10 +1648,10 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class AzureMonitorWorkspaceLogsApiConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>
     {
-        public AzureMonitorWorkspaceLogsApiConfig(System.Uri dataCollectionEndpointUri, string stream, string dataCollectionRule, Azure.ResourceManager.Monitor.Models.SchemaMap schema) { }
+        public AzureMonitorWorkspaceLogsApiConfig(System.Uri dataCollectionEndpointUri, string stream, string dataCollectionRule, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap schema) { }
         public System.Uri DataCollectionEndpointUri { get { throw null; } set { } }
         public string DataCollectionRule { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.SchemaMap Schema { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap Schema { get { throw null; } set { } }
         public string Stream { get { throw null; } set { } }
         Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceLogsApiConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3525,6 +3525,51 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporterConcurrencyConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsExporterConcurrencyConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MonitorWorkspaceLogsRecordMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap>
+    {
+        public MonitorWorkspaceLogsRecordMap(string from, string to) { }
+        public string From { get { throw null; } set { } }
+        public string To { get { throw null; } set { } }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MonitorWorkspaceLogsResourceMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap>
+    {
+        public MonitorWorkspaceLogsResourceMap(string from, string to) { }
+        public string From { get { throw null; } set { } }
+        public string To { get { throw null; } set { } }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MonitorWorkspaceLogsSchemaMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap>
+    {
+        public MonitorWorkspaceLogsSchemaMap(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap> recordMap) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsRecordMap> RecordMap { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsResourceMap> ResourceMap { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap> ScopeMap { get { throw null; } }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsSchemaMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MonitorWorkspaceLogsScopeMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap>
+    {
+        public MonitorWorkspaceLogsScopeMap(string from, string to) { }
+        public string From { get { throw null; } set { } }
+        public string To { get { throw null; } set { } }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceLogsScopeMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MonitorWorkspaceMetricProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>
     {
         public MonitorWorkspaceMetricProperties() { }
@@ -3714,20 +3759,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream left, Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Pipeline : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.Pipeline>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.Pipeline>
-    {
-        public Pipeline(string name, Azure.ResourceManager.Monitor.Models.PipelineType pipelineType, System.Collections.Generic.IEnumerable<string> receivers, System.Collections.Generic.IEnumerable<string> exporters) { }
-        public System.Collections.Generic.IList<string> Exporters { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.PipelineType PipelineType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Processors { get { throw null; } }
-        public System.Collections.Generic.IList<string> Receivers { get { throw null; } }
-        Azure.ResourceManager.Monitor.Models.Pipeline System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.Pipeline>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.Pipeline>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.Pipeline System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.Pipeline>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.Pipeline>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.Pipeline>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class PipelineGroupExporter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupExporter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupExporter>
     {
         public PipelineGroupExporter(Azure.ResourceManager.Monitor.Models.PipelineGroupExporterType exporterType, string name) { }
@@ -3819,22 +3850,39 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class PipelineGroupProcessor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor>
     {
-        public PipelineGroupProcessor(Azure.ResourceManager.Monitor.Models.ProcessorType processorType, string name) { }
+        public PipelineGroupProcessor(Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType processorType, string name) { }
         public Azure.ResourceManager.Monitor.Models.BatchProcessor Batch { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.ProcessorType ProcessorType { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType ProcessorType { get { throw null; } set { } }
         Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupProcessor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PipelineGroupProcessorType : System.IEquatable<Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PipelineGroupProcessorType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType Batch { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType left, Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType left, Azure.ResourceManager.Monitor.Models.PipelineGroupProcessorType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PipelineGroupReceiver : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupReceiver>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupReceiver>
     {
-        public PipelineGroupReceiver(Azure.ResourceManager.Monitor.Models.ReceiverType receiverType, string name) { }
+        public PipelineGroupReceiver(Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType receiverType, string name) { }
         public string Name { get { throw null; } set { } }
         public string OtlpEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.ReceiverType ReceiverType { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType ReceiverType { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.SyslogReceiver Syslog { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.UdpReceiver Udp { get { throw null; } set { } }
         Azure.ResourceManager.Monitor.Models.PipelineGroupReceiver System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupReceiver>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3843,32 +3891,67 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupReceiver>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupReceiver>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PipelineGroupReceiverType : System.IEquatable<Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PipelineGroupReceiverType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType Ama { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType Otlp { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType PipelineGroup { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType Syslog { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType UDP { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType left, Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType left, Azure.ResourceManager.Monitor.Models.PipelineGroupReceiverType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PipelineGroupService : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupService>
     {
-        public PipelineGroupService(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.Pipeline> pipelines) { }
+        public PipelineGroupService(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline> pipelines) { }
         public string PersistencePersistentVolumeName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.Pipeline> Pipelines { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline> Pipelines { get { throw null; } }
         Azure.ResourceManager.Monitor.Models.PipelineGroupService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.PipelineGroupService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupService>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupService>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class PipelineGroupServicePipeline : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline>
+    {
+        public PipelineGroupServicePipeline(string name, Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType pipelineType, System.Collections.Generic.IEnumerable<string> receivers, System.Collections.Generic.IEnumerable<string> exporters) { }
+        public System.Collections.Generic.IList<string> Exporters { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType PipelineType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Processors { get { throw null; } }
+        public System.Collections.Generic.IList<string> Receivers { get { throw null; } }
+        Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PipelineType : System.IEquatable<Azure.ResourceManager.Monitor.Models.PipelineType>
+    public readonly partial struct PipelineGroupServicePipelineType : System.IEquatable<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PipelineType(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.PipelineType Logs { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineType other) { throw null; }
+        public PipelineGroupServicePipelineType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType Logs { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineType left, Azure.ResourceManager.Monitor.Models.PipelineType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.PipelineType left, Azure.ResourceManager.Monitor.Models.PipelineType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType left, Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType left, Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipelineType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PlatformTelemetryDataSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PlatformTelemetryDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PlatformTelemetryDataSource>
@@ -3910,23 +3993,6 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PredictiveValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PredictiveValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProcessorType : System.IEquatable<Azure.ResourceManager.Monitor.Models.ProcessorType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProcessorType(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.ProcessorType Batch { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.ProcessorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.ProcessorType left, Azure.ResourceManager.Monitor.Models.ProcessorType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.ProcessorType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.ProcessorType left, Azure.ResourceManager.Monitor.Models.ProcessorType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PrometheusForwarderDataSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>
     {
         public PrometheusForwarderDataSource() { }
@@ -3938,38 +4004,6 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReceiverType : System.IEquatable<Azure.ResourceManager.Monitor.Models.ReceiverType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ReceiverType(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.ReceiverType Ama { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.ReceiverType Otlp { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.ReceiverType PipelineGroup { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.ReceiverType Syslog { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.ReceiverType UDP { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.ReceiverType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.ReceiverType left, Azure.ResourceManager.Monitor.Models.ReceiverType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.ReceiverType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.ReceiverType left, Azure.ResourceManager.Monitor.Models.ReceiverType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RecordMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RecordMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecordMap>
-    {
-        public RecordMap(string from, string to) { }
-        public string From { get { throw null; } set { } }
-        public string To { get { throw null; } set { } }
-        Azure.ResourceManager.Monitor.Models.RecordMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RecordMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RecordMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.RecordMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecordMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecordMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecordMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum RecurrenceFrequency
     {
@@ -4005,17 +4039,6 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.ResourceForUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceForUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceForUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceForUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ResourceMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResourceMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceMap>
-    {
-        public ResourceMap(string from, string to) { }
-        public string From { get { throw null; } set { } }
-        public string To { get { throw null; } set { } }
-        Azure.ResourceManager.Monitor.Models.ResourceMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResourceMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResourceMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.ResourceMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RetentionPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RetentionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RetentionPolicy>
     {
@@ -4205,29 +4228,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SchemaMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SchemaMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SchemaMap>
-    {
-        public SchemaMap(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.RecordMap> recordMap) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.RecordMap> RecordMap { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ResourceMap> ResourceMap { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ScopeMap> ScopeMap { get { throw null; } }
-        Azure.ResourceManager.Monitor.Models.SchemaMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SchemaMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SchemaMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.SchemaMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SchemaMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SchemaMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SchemaMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ScopeMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ScopeMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ScopeMap>
-    {
-        public ScopeMap(string from, string to) { }
-        public string From { get { throw null; } set { } }
-        public string To { get { throw null; } set { } }
-        Azure.ResourceManager.Monitor.Models.ScopeMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ScopeMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ScopeMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.ScopeMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ScopeMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ScopeMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ScopeMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class SenderAuthorization : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>
     {
         internal SenderAuthorization() { }
@@ -4244,7 +4244,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public ServiceUpdate() { }
         public string PersistencePersistentVolumeName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.Pipeline> Pipelines { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.PipelineGroupServicePipeline> Pipelines { get { throw null; } }
         Azure.ResourceManager.Monitor.Models.ServiceUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ServiceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ServiceUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.ServiceUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ServiceUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

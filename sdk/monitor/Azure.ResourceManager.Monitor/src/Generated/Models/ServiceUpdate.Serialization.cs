@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<Pipeline> pipelines = default;
+            IList<PipelineGroupServicePipeline> pipelines = default;
             PersistenceConfigurationsUpdate persistence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<Pipeline> array = new List<Pipeline>();
+                    List<PipelineGroupServicePipeline> array = new List<PipelineGroupServicePipeline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Pipeline.DeserializePipeline(item, options));
+                        array.Add(PipelineGroupServicePipeline.DeserializePipelineGroupServicePipeline(item, options));
                     }
                     pipelines = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceUpdate(pipelines ?? new ChangeTrackingList<Pipeline>(), persistence, serializedAdditionalRawData);
+            return new ServiceUpdate(pipelines ?? new ChangeTrackingList<PipelineGroupServicePipeline>(), persistence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceUpdate>.Write(ModelReaderWriterOptions options)

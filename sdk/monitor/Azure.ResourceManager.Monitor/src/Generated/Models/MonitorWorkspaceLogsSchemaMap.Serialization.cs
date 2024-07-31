@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class SchemaMap : IUtf8JsonSerializable, IJsonModel<SchemaMap>
+    public partial class MonitorWorkspaceLogsSchemaMap : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceLogsSchemaMap>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchemaMap>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceLogsSchemaMap>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SchemaMap>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorWorkspaceLogsSchemaMap>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchemaMap>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsSchemaMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaMap)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceLogsSchemaMap)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        SchemaMap IJsonModel<SchemaMap>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MonitorWorkspaceLogsSchemaMap IJsonModel<MonitorWorkspaceLogsSchemaMap>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchemaMap>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsSchemaMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaMap)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceLogsSchemaMap)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSchemaMap(document.RootElement, options);
+            return DeserializeMonitorWorkspaceLogsSchemaMap(document.RootElement, options);
         }
 
-        internal static SchemaMap DeserializeSchemaMap(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MonitorWorkspaceLogsSchemaMap DeserializeMonitorWorkspaceLogsSchemaMap(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<RecordMap> recordMap = default;
-            IList<ResourceMap> resourceMap = default;
-            IList<ScopeMap> scopeMap = default;
+            IList<MonitorWorkspaceLogsRecordMap> recordMap = default;
+            IList<MonitorWorkspaceLogsResourceMap> resourceMap = default;
+            IList<MonitorWorkspaceLogsScopeMap> scopeMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordMap"u8))
                 {
-                    List<RecordMap> array = new List<RecordMap>();
+                    List<MonitorWorkspaceLogsRecordMap> array = new List<MonitorWorkspaceLogsRecordMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RecordMap.DeserializeRecordMap(item, options));
+                        array.Add(MonitorWorkspaceLogsRecordMap.DeserializeMonitorWorkspaceLogsRecordMap(item, options));
                     }
                     recordMap = array;
                     continue;
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<ResourceMap> array = new List<ResourceMap>();
+                    List<MonitorWorkspaceLogsResourceMap> array = new List<MonitorWorkspaceLogsResourceMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceMap.DeserializeResourceMap(item, options));
+                        array.Add(MonitorWorkspaceLogsResourceMap.DeserializeMonitorWorkspaceLogsResourceMap(item, options));
                     }
                     resourceMap = array;
                     continue;
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<ScopeMap> array = new List<ScopeMap>();
+                    List<MonitorWorkspaceLogsScopeMap> array = new List<MonitorWorkspaceLogsScopeMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ScopeMap.DeserializeScopeMap(item, options));
+                        array.Add(MonitorWorkspaceLogsScopeMap.DeserializeMonitorWorkspaceLogsScopeMap(item, options));
                     }
                     scopeMap = array;
                     continue;
@@ -142,38 +142,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SchemaMap(recordMap, resourceMap ?? new ChangeTrackingList<ResourceMap>(), scopeMap ?? new ChangeTrackingList<ScopeMap>(), serializedAdditionalRawData);
+            return new MonitorWorkspaceLogsSchemaMap(recordMap, resourceMap ?? new ChangeTrackingList<MonitorWorkspaceLogsResourceMap>(), scopeMap ?? new ChangeTrackingList<MonitorWorkspaceLogsScopeMap>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SchemaMap>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MonitorWorkspaceLogsSchemaMap>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchemaMap>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsSchemaMap>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SchemaMap)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceLogsSchemaMap)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SchemaMap IPersistableModel<SchemaMap>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MonitorWorkspaceLogsSchemaMap IPersistableModel<MonitorWorkspaceLogsSchemaMap>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchemaMap>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsSchemaMap>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSchemaMap(document.RootElement, options);
+                        return DeserializeMonitorWorkspaceLogsSchemaMap(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchemaMap)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceLogsSchemaMap)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SchemaMap>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorWorkspaceLogsSchemaMap>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

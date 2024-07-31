@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Uri dataCollectionEndpointUrl = default;
             string stream = default;
             string dataCollectionRule = default;
-            SchemaMap schema = default;
+            MonitorWorkspaceLogsSchemaMap schema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("schema"u8))
                 {
-                    schema = SchemaMap.DeserializeSchemaMap(property.Value, options);
+                    schema = MonitorWorkspaceLogsSchemaMap.DeserializeMonitorWorkspaceLogsSchemaMap(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

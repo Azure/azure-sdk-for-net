@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Record map for schema in azure monitor. </summary>
-    public partial class RecordMap
+    public partial class MonitorWorkspaceLogsRecordMap
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RecordMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsRecordMap"/>. </summary>
         /// <param name="from"> Record Map Key. </param>
         /// <param name="to"> Record Map Value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="to"/> is null. </exception>
-        public RecordMap(string @from, string to)
+        public MonitorWorkspaceLogsRecordMap(string @from, string to)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Monitor.Models
             To = to;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecordMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsRecordMap"/>. </summary>
         /// <param name="from"> Record Map Key. </param>
         /// <param name="to"> Record Map Value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecordMap(string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceLogsRecordMap(string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             From = @from;
             To = to;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecordMap"/> for deserialization. </summary>
-        internal RecordMap()
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsRecordMap"/> for deserialization. </summary>
+        internal MonitorWorkspaceLogsRecordMap()
         {
         }
 
