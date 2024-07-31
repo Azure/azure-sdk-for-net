@@ -60,24 +60,16 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="privateEndpointId"> The private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <returns> A new <see cref="Models.HealthDataAIServicesPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static HealthDataAIServicesPrivateEndpointConnection HealthDataAIServicesPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, HealthDataAIServicesPrivateLinkServiceConnectionState connectionState = null, HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static HealthDataAIServicesPrivateEndpointConnection HealthDataAIServicesPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
-            groupIds ??= new List<string>();
-
             return new HealthDataAIServicesPrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
                 systemData,
-                groupIds?.ToList(),
-                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
-                connectionState,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData: null);
         }
 
@@ -94,16 +86,16 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             return new PrivateEndpointConnectionProperties(groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthDataAIServices.PrivateEndpointConnectionResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServices.HealthDataAIServicePrivateEndpointConnectionResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HealthDataAIServices.PrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionResourceData PrivateEndpointConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
+        /// <returns> A new <see cref="HealthDataAIServices.HealthDataAIServicePrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
+        public static HealthDataAIServicePrivateEndpointConnectionResourceData HealthDataAIServicePrivateEndpointConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
-            return new PrivateEndpointConnectionResourceData(
+            return new HealthDataAIServicePrivateEndpointConnectionResourceData(
                 id,
                 name,
                 resourceType,

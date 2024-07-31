@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the DeidService. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionResourceCollection GetPrivateEndpointConnectionResources()
+        /// <summary> Gets a collection of HealthDataAIServicePrivateEndpointConnectionResources in the DeidService. </summary>
+        /// <returns> An object representing collection of HealthDataAIServicePrivateEndpointConnectionResources and their operations over a HealthDataAIServicePrivateEndpointConnectionResource. </returns>
+        public virtual HealthDataAIServicePrivateEndpointConnectionResourceCollection GetHealthDataAIServicePrivateEndpointConnectionResources()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionResourceCollection(client, Id));
+            return GetCachedClient(client => new HealthDataAIServicePrivateEndpointConnectionResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthDataAIServicePrivateEndpointConnectionResource>> GetHealthDataAIServicePrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnectionResources().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthDataAIServicePrivateEndpointConnectionResources().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnectionResource(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthDataAIServicePrivateEndpointConnectionResource> GetHealthDataAIServicePrivateEndpointConnectionResource(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
+            return GetHealthDataAIServicePrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary>

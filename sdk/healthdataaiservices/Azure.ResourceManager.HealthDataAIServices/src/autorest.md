@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: HealthDataAIServices
 namespace: Azure.ResourceManager.HealthDataAIServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/96ae0c1ebccddb14587b61843da5efb7a13da9cc/specification/healthdataaiservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2ba531c681a30df892eea30f2dc9e06ed21d4a95/specification/healthdataaiservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -16,6 +16,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: false
 use-model-reader-writer: true
 
 #mgmt-debug:
@@ -55,4 +56,5 @@ acronym-mapping:
 
 rename-mapping:
   PrivateLinkResource: HealthDataAIServicePrivateLinkResourceData
+  PrivateEndpointConnectionResource: HealthDataAIServicePrivateEndpointConnectionResource
 ```
