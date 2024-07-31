@@ -3612,6 +3612,50 @@ namespace Azure.Storage.Files.Shares
         /// <param name="directoryName">T
         /// The name of the directory to create.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DirectoryClient}"/> referencing the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareDirectoryClient> CreateDirectory(
+            string directoryName,
+           ShareDirectoryCreateOptions options = default,
+           CancellationToken cancellationToken = default)
+        {
+            ShareDirectoryClient directory = GetDirectoryClient(directoryName);
+            Response<ShareDirectoryInfo> response = directory.CreateInternal(
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                async: false,
+                cancellationToken,
+                operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
+                .EnsureCompleted();
+            return Response.FromValue(directory, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateDirectory"/> operation creates a new
+        /// directory in this share.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
+        /// </summary>
+        /// <param name="directoryName">T
+        /// The name of the directory to create.
+        /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for the directory.
         /// </param>
@@ -3633,22 +3677,70 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareDirectoryClient> CreateDirectory(
-           string directoryName,
-           IDictionary<string, string> metadata = default,
-           FileSmbProperties smbProperties = default,
-           string filePermission = default,
-           CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string directoryName,
+           IDictionary<string, string> metadata,
+           FileSmbProperties smbProperties,
+           string filePermission,
+           CancellationToken cancellationToken)
         {
             ShareDirectoryClient directory = GetDirectoryClient(directoryName);
             Response<ShareDirectoryInfo> response = directory.CreateInternal(
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: null,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
                 .EnsureCompleted();
+            return Response.FromValue(directory, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateDirectoryAsync"/> operation creates a new
+        /// directory in this share.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
+        /// </summary>
+        /// <param name="directoryName">T
+        /// The name of the directory to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DirectoryClient}"/> referencing the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareDirectoryClient>> CreateDirectoryAsync(
+           string directoryName,
+           ShareDirectoryCreateOptions options = default,
+           CancellationToken cancellationToken = default)
+        {
+            ShareDirectoryClient directory = GetDirectoryClient(directoryName);
+            Response<ShareDirectoryInfo> response = await directory.CreateInternal(
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                async: true,
+                cancellationToken,
+                operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
+                .ConfigureAwait(false);
             return Response.FromValue(directory, response.GetRawResponse());
         }
 
@@ -3684,18 +3776,22 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareDirectoryClient>> CreateDirectoryAsync(
-           string directoryName,
-           IDictionary<string, string> metadata = default,
-           FileSmbProperties smbProperties = default,
-           string filePermission = default,
-           CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string directoryName,
+           IDictionary<string, string> metadata,
+           FileSmbProperties smbProperties,
+           string filePermission,
+           CancellationToken cancellationToken)
         {
             ShareDirectoryClient directory = GetDirectoryClient(directoryName);
             Response<ShareDirectoryInfo> response = await directory.CreateInternal(
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: null,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
