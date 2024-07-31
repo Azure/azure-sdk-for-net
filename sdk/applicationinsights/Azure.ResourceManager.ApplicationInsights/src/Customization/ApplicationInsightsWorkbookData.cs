@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
             catch (Exception)
             {
-                // tyep always is null, https://github.com/Azure/azure-sdk-for-net/issues/38780, so we need to handle the exception
+                // type always is null, https://github.com/Azure/azure-sdk-for-net/issues/38780, so we need to handle the exception
                 type = default;
             }
         }
