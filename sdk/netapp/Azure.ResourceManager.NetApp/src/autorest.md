@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/c54a97d08c5afd7dc04f87a5df65d9dc84c96159/specification/netapp/resource-manager/readme.md
-tag: package-netapp-2023-11-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/aa23ddc02b2b1c5a34c56a49d83b77c0a1aaa614/specification/netapp/resource-manager/readme.md
+tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -55,6 +55,7 @@ acronym-mapping:
   SAP: Sap
   TLS: Tls
   ZRS: Zrs
+
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}: NetAppAccountBackup
@@ -238,7 +239,9 @@ rename-mapping:
   GetGroupIdListForLdapUserResponse: GetGroupIdListForLdapUserResult
   BackupsMigrationRequest: BackupsMigrationContent
   Backup.properties.volumeResourceId: -|arm-id
-
+  Backup.properties.backupPolicyResourceId: BackupPolicyArmResourceId
+  KeyVaultProperties.keyVaultResourceId: keyVaultArmResourceId
+  
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
