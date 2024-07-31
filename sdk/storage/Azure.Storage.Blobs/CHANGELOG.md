@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed \[BUG\] Fixed BlobContainerClient constructor to set clientSideEncryptionOptions #44623
 
 ### Other Changes
 
