@@ -22,7 +22,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             #region Snippet:Sample10_AnalyzeTextOperationAsync_CustomMultiLabelClassificationOperationAction
-            string documentA =
+            string textA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
                 + " add it to my playlist.";
 
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 MultiLanguageInputs =
                 {
-                    new MultiLanguageInput("A", documentA)
+                    new MultiLanguageInput("A", textA)
                     {
                         Language = "en"
                     },

@@ -28,25 +28,25 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To perform multiple actions on one or more text documents, call `AnalyzeTextOperationAsync` on the `TextAnalysisClient` client by passing the documents as a `MultiLanguageTextInput` parameter with the actions you want to take (in this example the actions are `EntitiesOperationAction` and `KeyPhraseOperationAction`). This returns an `Response<AnalyzeTextOperationState>` which you can extract the results of the actions you chose for you input (in this example the actions are `EntityRecognitionOperationResult` and `KeyPhraseExtractionOperationResult`).
 
 ```C# Snippet:Sample13_AnalyzeTextOperationAsync_MultipleActions
-string documentA =
+string textA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
     + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
     + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
     + " offers services for childcare in case you want that.";
 
-string documentB =
+string textB =
     "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
     + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
     + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-string documentC =
+string textC =
     "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
     + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
     + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
     + " great. We will definitely come back.";
 
-string documentD = string.Empty;
+string textD = string.Empty;
 
 // Prepare the input of the text analysis operation. You can add multiple documents to this list and
 // perform the same operation on all of them simultaneously.
@@ -54,10 +54,10 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
-        new MultiLanguageInput("B", documentB) { Language = "es" },
-        new MultiLanguageInput("C", documentC) { Language = "en" },
-        new MultiLanguageInput("D", documentD),
+        new MultiLanguageInput("A", textA) { Language = "en" },
+        new MultiLanguageInput("B", textB) { Language = "es" },
+        new MultiLanguageInput("C", textC) { Language = "en" },
+        new MultiLanguageInput("D", textD),
     }
 };
 

@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [RecordedTest]
         public async Task AnalyzeText_LanguageDetection()
         {
-            string documentA =
+            string textA =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
                 + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."
                 + " También muestra cómo acceder a la información retornada por el servicio. Esta funcionalidad es"
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     LanguageInputs =
                     {
-                        new LanguageInput("A", documentA),
+                        new LanguageInput("A", textA),
                     }
                 }
             };
@@ -61,7 +61,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [RecordedTest]
         public async Task AnalyzeText_Sentiment()
         {
-            string documentA =
+            string textA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
                 + " quality of the food and the process to get room service they refunded the money we spent at the"
                 + " restaurant and gave us a voucher for nearby restaurants.";
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     MultiLanguageInputs =
                     {
-                        new MultiLanguageInput("A", documentA) { Language = "en" },
+                        new MultiLanguageInput("A", textA) { Language = "en" },
                     }
                 }
             };
@@ -113,7 +113,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [RecordedTest]
         public async Task AnalyzeText_ExtractKeyPhrases()
         {
-            string documentA =
+            string textA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
                 + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
                 + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
@@ -126,7 +126,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     MultiLanguageInputs =
                     {
-                        new MultiLanguageInput("A", documentA) { Language = "en" },
+                        new MultiLanguageInput("A", textA) { Language = "en" },
                     }
                 },
                 ActionContent = new KeyPhraseActionContent()
@@ -158,7 +158,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [RecordedTest]
         public async Task AnalyzeText_RecognizeEntities()
         {
-            string documentA =
+            string textA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
                 + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
                 + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
@@ -171,7 +171,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     MultiLanguageInputs =
                     {
-                        new MultiLanguageInput("A", documentA) { Language = "en" },
+                        new MultiLanguageInput("A", textA) { Language = "en" },
                     }
                 },
                 ActionContent = new EntitiesActionContent()
@@ -208,7 +208,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [Test]
         public async Task AnalyzeText_RecognizePii()
         {
-            string documentA =
+            string textA =
                 "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
                 + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"
                 + " 998.214.865-68.";
@@ -219,7 +219,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     MultiLanguageInputs =
                     {
-                        new MultiLanguageInput("A", documentA) { Language = "en" },
+                        new MultiLanguageInput("A", textA) { Language = "en" },
                     }
                 }
             };
@@ -251,7 +251,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [Test]
         public async Task AnalyzeText_RecognizeLinkedEntities()
         {
-            string documentA =
+            string textA =
                 "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
                 + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
                 + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
@@ -263,7 +263,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     MultiLanguageInputs =
                     {
-                        new MultiLanguageInput("A", documentA) { Language = "en" },
+                        new MultiLanguageInput("A", textA) { Language = "en" },
                     }
                 },
                 ActionContent = new EntityLinkingActionContent()
@@ -306,13 +306,13 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [Test]
         public async Task AnalyzeText_HealthcareLROTask()
         {
-            string documentA = "Prescribed 100mg ibuprofen, taken twice daily.";
+            string textA = "Prescribed 100mg ibuprofen, taken twice daily.";
 
             MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
             {
                 MultiLanguageInputs =
                 {
-                    new MultiLanguageInput("A", documentA) { Language = "en" },
+                    new MultiLanguageInput("A", textA) { Language = "en" },
                 }
             };
 
@@ -384,7 +384,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [Test]
         public async Task AnalyzeText_CustomEntitiesLROTask()
         {
-            string documentA =
+            string textA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
                 + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
                 + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
@@ -394,7 +394,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 MultiLanguageInputs =
                 {
-                    new MultiLanguageInput("A", documentA) { Language = "en" },
+                    new MultiLanguageInput("A", textA) { Language = "en" },
                 }
             };
 
@@ -451,7 +451,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [Test]
         public async Task AnalyzeText_CustomSingleLabelClassificationLROTask()
         {
-            string documentA =
+            string textA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
                 + " add it to my playlist.";
 
@@ -459,7 +459,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 MultiLanguageInputs =
                 {
-                    new MultiLanguageInput("A", documentA) { Language = "en" },
+                    new MultiLanguageInput("A", textA) { Language = "en" },
                 }
             };
 
@@ -512,7 +512,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [Test]
         public async Task AnalyzeText_CustomMultiLabelClassificationLROTask()
         {
-            string documentA =
+            string textA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
                 + " add it to my playlist.";
 
@@ -520,7 +520,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 MultiLanguageInputs =
         {
-            new MultiLanguageInput("A", documentA) { Language = "en" },
+            new MultiLanguageInput("A", textA) { Language = "en" },
         }
             };
 
@@ -574,7 +574,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeText_ExtractiveSummarizationLROTaskAsync()
         {
-            string documentA =
+            string textA =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
                 + " solutions to support employees suddenly forced to work from home, but “what really put the"
                 + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
@@ -615,7 +615,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 MultiLanguageInputs =
                 {
-                    new MultiLanguageInput("A", documentA)
+                    new MultiLanguageInput("A", textA)
                     {
                         Language = "en"
                     },
@@ -667,7 +667,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeText_AbstractiveSummarizationLROTaskAsync()
         {
-            string documentA =
+            string textA =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
                 + " solutions to support employees suddenly forced to work from home, but “what really put the"
                 + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
@@ -708,7 +708,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 MultiLanguageInputs =
                 {
-                    new MultiLanguageInput("A", documentA)
+                    new MultiLanguageInput("A", textA)
                     {
                         Language = "en"
                     },

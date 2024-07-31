@@ -19,7 +19,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To perform custom single-label classification one or more text documents, call `AnalyzeTextOperationAsync` on the `TextAnalysisClient` by passing the documents as `MultiLanguageTextInput` parameter and a `AnalyzeTextOperationAction` with a `CustomSingleLabelClassificationOperationAction` action. This returns a `Response<AnalyzeTextOperationState>` which you can extract the `CustomSingleLabelClassificationOperationResult`.
 
 ```C# Snippet:Sample9_AnalyzeTextOperation_CustomSingleLabelClassificationOperationAction
-string documentA =
+string textA =
     "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
     + " add it to my playlist.";
 
@@ -29,7 +29,7 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
+        new MultiLanguageInput("A", textA) { Language = "en" },
     }
 };
 

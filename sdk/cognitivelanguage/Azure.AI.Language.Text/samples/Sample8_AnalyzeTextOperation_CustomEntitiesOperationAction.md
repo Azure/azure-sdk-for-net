@@ -19,13 +19,13 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To perform custom NER on one or more text documents, call `AnalyzeTextOperation` on the `TextAnalysisClient` by passing the documents as `MultiLanguageTextInput` parameter and a `AnalyzeTextOperationAction` with a `CustomEntitiesOperationAction` action. This returns a `Response<AnalyzeTextOperationState>` which you can extract the `CustomEntityRecognitionOperationResult`.
 
 ```C# Snippet:Sample8_AnalyzeTextOperation_CustomEntitiesOperationAction
-string documentA =
+string textA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
     + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
     + " athletic among us.";
 
-string documentB =
+string textB =
     "Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about our anniversary"
     + " so they helped me organize a little surprise for my partner. The room was clean and with the"
     + " decoration I requested. It was perfect!";
@@ -36,8 +36,8 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
-        new MultiLanguageInput("B", documentB) { Language = "en" },
+        new MultiLanguageInput("A", textA) { Language = "en" },
+        new MultiLanguageInput("B", textB) { Language = "en" },
     }
 };
 

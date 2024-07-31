@@ -21,17 +21,17 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             #region Snippet:Sample5_AnalyzeText_RecognizePii
-            string documentA =
+            string textA =
                 "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
                 + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"
                 + " 998.214.865-68.";
 
-            string documentB =
+            string textB =
                 "Yesterday, Dan Doe was asking where they could find the ABA number. I explained that it is the first"
                 + " 9 digits in the lower left hand corner of their personal check. After looking at their account"
                 + " they confirmed the number was 111000025.";
 
-            string documentC = string.Empty;
+            string textC = string.Empty;
 
             AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
             {
@@ -39,9 +39,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     MultiLanguageInputs =
                     {
-                        new MultiLanguageInput("A", documentA) { Language = "en" },
-                        new MultiLanguageInput("B", documentB) { Language = "es" },
-                        new MultiLanguageInput("C", documentC),
+                        new MultiLanguageInput("A", textA) { Language = "en" },
+                        new MultiLanguageInput("B", textB) { Language = "es" },
+                        new MultiLanguageInput("C", textC),
                     }
                 },
                 ActionContent = new PiiActionContent()

@@ -132,7 +132,7 @@ foreach (DetectLanguageResult documentResult in documentsLanguage)
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextAsync` with `TextLanguageDetectionInput` as the input:
 
 ```C# Snippet:Sample1_AnalyzeTextAsync_LanguageDetection
-string documentA =
+string textA =
     "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
     + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."
     + " También muestra cómo acceder a la información retornada por el servicio. Esta funcionalidad es"
@@ -140,14 +140,14 @@ string documentA =
     + " antemano. Puede usarse para detectar una amplia gama de lenguajes, variantes, dialectos y"
     + " algunos idiomas regionales o culturales.";
 
-string documentB =
+string textB =
     "This document is written in English. Its objective is to demonstrate how to call the language"
     + " detection method of the Text Analytics service in Microsoft Azure. It also shows how to access the"
     + " information returned by the service. This functionality is useful for applications that collect"
     + " arbitrary text where the language is not known beforehand. It can be used to detect a wide range"
     + " of languages, variants, dialects, and some regional or cultural languages.";
 
-string documentC =
+string textC =
     "Ce document est rédigé dans une langue autre que l'anglais. Son objectif est de montrer comment"
     + " appeler la méthode de détection de langue du service Text Analytics dans Microsoft Azure. Il"
     + " montre également comment accéder aux informations renvoyées par le service. Cette fonctionnalité"
@@ -163,9 +163,9 @@ try
         {
             LanguageInputs =
             {
-                new LanguageInput("A", documentA),
-                new LanguageInput("B", documentB),
-                new LanguageInput("C", documentC),
+                new LanguageInput("A", textA),
+                new LanguageInput("B", textB),
+                new LanguageInput("C", textC),
             }
         }
     };
@@ -260,17 +260,17 @@ foreach (AnalyzeSentimentResult documentResult in sentimentPerDocuments)
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextAsync` with `TextSentimentAnalysisInput` as the input:
 
 ```C# Snippet:Sample2_AnalyzeTextAsync_Sentiment
-string documentA =
+string textA =
     "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
     + " quality of the food and the process to get room service they refunded the money we spent at the"
     + " restaurant and gave us a voucher for nearby restaurants.";
 
-string documentB =
+string textB =
     "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sab�a de nuestra"
     + " celebraci�n y me ayudaron a tenerle una sorpresa a mi pareja. La habitaci�n estaba limpia y"
     + " decorada como yo hab�a pedido. Una gran experiencia. El pr�ximo a�o volveremos.";
 
-string documentC =
+string textC =
     "The rooms were beautiful. The AC was good and quiet, which was key for us as outside it was 100F and"
     + " our baby was getting uncomfortable because of the heat. The breakfast was good too with good"
     + " options and good servicing times. The thing we didn't like was that the toilet in our bathroom was"
@@ -284,9 +284,9 @@ try
         {
             MultiLanguageInputs =
             {
-                new MultiLanguageInput("A", documentA) { Language = "en" },
-                new MultiLanguageInput("B", documentB) { Language = "es" },
-                new MultiLanguageInput("C", documentC) { Language = "en" },
+                new MultiLanguageInput("A", textA) { Language = "en" },
+                new MultiLanguageInput("B", textB) { Language = "es" },
+                new MultiLanguageInput("C", textC) { Language = "en" },
             }
         }
     };
@@ -386,25 +386,25 @@ foreach (ExtractKeyPhrasesResult documentResult in keyPhrasesInDocuments)
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextAsync` with `TextKeyPhraseExtractionInput` as the input:
 
 ```C# Snippet:Sample3_AnalyzeTextAsync_ExtractKeyPhrases
-string documentA =
+string textA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
     + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
     + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
     + " offers services for childcare in case you want that.";
 
-string documentB =
+string textB =
 "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
     + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
     + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-string documentC =
+string textC =
     "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
     + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
     + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
     + " great. We will definitely come back.";
 
-string documentD = string.Empty;
+string textD = string.Empty;
 
 AnalyzeTextInput body = new TextKeyPhraseExtractionInput()
 {
@@ -412,10 +412,10 @@ AnalyzeTextInput body = new TextKeyPhraseExtractionInput()
     {
         MultiLanguageInputs =
         {
-            new MultiLanguageInput("A", documentA) { Language = "en" },
-            new MultiLanguageInput("B", documentB) { Language = "es" },
-            new MultiLanguageInput("C", documentC) { Language = "en" },
-            new MultiLanguageInput("D", documentD),
+            new MultiLanguageInput("A", textA) { Language = "en" },
+            new MultiLanguageInput("B", textB) { Language = "es" },
+            new MultiLanguageInput("C", textC) { Language = "en" },
+            new MultiLanguageInput("D", textD),
         }
     },
     ActionContent = new KeyPhraseActionContent()
@@ -523,25 +523,25 @@ foreach (RecognizeEntitiesResult documentResult in entititesPerDocuments)
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextAsync` with `TextEntityRecognitionInput` as the input:
 
 ```C# Snippet:Sample4_AnalyzeTextAsync_RecognizeEntities
-string documentA =
+string textA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
     + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
     + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
     + " offers services for childcare in case you want that.";
 
-string documentB =
+string textB =
     "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
     + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
     + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-string documentC =
+string textC =
     "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
     + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
     + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
     + " great. We will definitely come back.";
 
-string documentD = string.Empty;
+string textD = string.Empty;
 
 AnalyzeTextInput body = new TextEntityRecognitionInput()
 {
@@ -549,10 +549,10 @@ AnalyzeTextInput body = new TextEntityRecognitionInput()
     {
         MultiLanguageInputs =
         {
-            new MultiLanguageInput("A", documentA) { Language = "en" },
-            new MultiLanguageInput("B", documentB) { Language = "es" },
-            new MultiLanguageInput("C", documentC) { Language = "en" },
-            new MultiLanguageInput("D", documentD),
+            new MultiLanguageInput("A", textA) { Language = "en" },
+            new MultiLanguageInput("B", textB) { Language = "es" },
+            new MultiLanguageInput("C", textC) { Language = "en" },
+            new MultiLanguageInput("D", textD),
         }
     },
     ActionContent = new EntitiesActionContent()
@@ -659,17 +659,17 @@ foreach (RecognizePiiEntitiesResult documentResult in entititesPerDocuments)
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextAsync` with `TextPiiEntitiesRecognitionInput` as the input:
 
 ```C# Snippet:Sample5_AnalyzeTextAsync_RecognizePii
-string documentA =
+string textA =
     "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
     + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"
     + " 998.214.865-68.";
 
-string documentB =
+string textB =
     "Yesterday, Dan Doe was asking where they could find the ABA number. I explained that it is the first"
     + " 9 digits in the lower left hand corner of their personal check. After looking at their account"
     + " they confirmed the number was 111000025.";
 
-string documentC = string.Empty;
+string textC = string.Empty;
 
 AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
 {
@@ -677,9 +677,9 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
     {
         MultiLanguageInputs =
         {
-            new MultiLanguageInput("A", documentA) { Language = "en" },
-            new MultiLanguageInput("B", documentB) { Language = "es" },
-            new MultiLanguageInput("C", documentC),
+            new MultiLanguageInput("A", textA) { Language = "en" },
+            new MultiLanguageInput("B", textB) { Language = "es" },
+            new MultiLanguageInput("C", textC),
         }
     },
     ActionContent = new PiiActionContent()
@@ -793,23 +793,23 @@ foreach (RecognizeLinkedEntitiesResult documentResult in entitiesInDocuments)
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextAsync` with `TextEntityLinkingInput` as the input:
 
 ```C# Snippet:Sample6_AnalyzeTextAsync_RecognizeLinkedEntities
-string documentA =
+string textA =
     "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
     + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
     + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
     + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond";
 
-string documentB =
+string textB =
     "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC"
     + " interpreters for the Altair 8800. During his career at Microsoft, Gates held the positions of"
     + " chairman chief executive officer, president and chief software architect while also being the"
     + " largest individual shareholder until May 2014.";
 
-string documentC =
+string textC =
     "El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él empezó como"
     + " Ingeniero de Software en el año 1992.";
 
-string documentD = string.Empty;
+string textD = string.Empty;
 
 AnalyzeTextInput body = new TextEntityLinkingInput()
 {
@@ -817,10 +817,10 @@ AnalyzeTextInput body = new TextEntityLinkingInput()
     {
         MultiLanguageInputs =
         {
-            new MultiLanguageInput("A", documentA) { Language = "en" },
-            new MultiLanguageInput("B", documentB) { Language = "en" },
-            new MultiLanguageInput("C", documentC) { Language = "es" },
-            new MultiLanguageInput("D", documentD),
+            new MultiLanguageInput("A", textA) { Language = "en" },
+            new MultiLanguageInput("B", textB) { Language = "en" },
+            new MultiLanguageInput("C", textC) { Language = "es" },
+            new MultiLanguageInput("D", textD),
         }
     },
     ActionContent = new EntityLinkingActionContent()
@@ -991,7 +991,7 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in oper
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextOperationAsync` with `HealthcareOperationAction` as one of the `AnalyzeTextOperationAction` as input:
 
 ```C# Snippet:Sample7_AnalyzeTextOperationAsync_HealthcareOperationAction
-string documentA =
+string textA =
     "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
     + " CORONARY ARTERY DISEASE | Signed | DIS |"
     + Environment.NewLine
@@ -1009,7 +1009,7 @@ string documentA =
     + " to the patient'sincreased symptoms and family history and history left main disease with total"
     + " occasional of his RCA was referred for revascularization with open heart surgery.";
 
-string documentB = "Prescribed 100mg ibuprofen, taken twice daily.";
+string textB = "Prescribed 100mg ibuprofen, taken twice daily.";
 
 // Prepare the input of the text analysis operation. You can add multiple documents to this list and
 // perform the same operation on all of them simultaneously.
@@ -1017,8 +1017,8 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
-        new MultiLanguageInput("B", documentB) { Language = "en" },
+        new MultiLanguageInput("A", textA) { Language = "en" },
+        new MultiLanguageInput("B", textB) { Language = "en" },
     }
 };
 
@@ -1193,13 +1193,13 @@ await foreach (RecognizeCustomEntitiesResultCollection documentsInPage in operat
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextOperationAsync` with `CustomEntitiesOperationAction` as one of the `AnalyzeTextOperationAction` as input:
 
 ```C# Snippet:Sample8_AnalyzeTextOperationAsync_CustomEntitiesOperationAction
-string documentA =
+string textA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
     + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
     + " athletic among us.";
 
-string documentB =
+string textB =
     "Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about our anniversary"
     + " so they helped me organize a little surprise for my partner. The room was clean and with the"
     + " decoration I requested. It was perfect!";
@@ -1210,8 +1210,8 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
-        new MultiLanguageInput("B", documentB) { Language = "en" },
+        new MultiLanguageInput("A", textA) { Language = "en" },
+        new MultiLanguageInput("B", textB) { Language = "en" },
     }
 };
 
@@ -1324,7 +1324,7 @@ await foreach (ClassifyDocumentResultCollection documentsInPage in operation.Val
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextOperationAsync` with `CustomSingleLabelClassificationOperationAction` as one of the `AnalyzeTextOperationAction` as input:
 
 ```C# Snippet:Sample9_AnalyzeTextOperationAsync_CustomSingleLabelClassificationOperationAction
-string documentA =
+string textA =
     "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
     + " add it to my playlist.";
 
@@ -1334,7 +1334,7 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA)
+        new MultiLanguageInput("A", textA)
         {
             Language = "en"
         },
@@ -1444,7 +1444,7 @@ await foreach (ClassifyDocumentResultCollection documentsInPage in operation.Val
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextOperationAsync` with `CustomMultiLabelClassificationOperationAction` as one of the `AnalyzeTextOperationAction` as input:
 
 ```C# Snippet:Sample10_AnalyzeTextOperationAsync_CustomMultiLabelClassificationOperationAction
-string documentA =
+string textA =
     "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
     + " add it to my playlist.";
 
@@ -1454,7 +1454,7 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA)
+        new MultiLanguageInput("A", textA)
         {
             Language = "en"
         },
@@ -1597,7 +1597,7 @@ await foreach (ExtractiveSummarizeResultCollection documentsInPage in operation.
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextOperationAsync` with `ExtractiveSummarizationOperationAction` as one of the `AnalyzeTextOperationAction` as input:
 
 ```C# Snippet:Sample11_AnalyzeTextOperationAsync_ExtractiveSummarizationOperationAction
-string documentA =
+string textA =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
     + " solutions to support employees suddenly forced to work from home, but “what really put the"
     + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
@@ -1640,7 +1640,7 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
+        new MultiLanguageInput("A", textA) { Language = "en" },
     }
 };
 
@@ -1780,7 +1780,7 @@ await foreach (AbstractiveSummarizeResultCollection documentsInPage in operation
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextOperationAsync` with `AbstractiveSummarizationOperationAction` as one of the `AnalyzeTextOperationAction` as input:
 
 ```C# Snippet:Sample12_AnalyzeTextOperationAsync_AbstractiveSummarizationOperationAction
-string documentA =
+string textA =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
     + " solutions to support employees suddenly forced to work from home, but “what really put the"
     + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
@@ -1823,7 +1823,7 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
+        new MultiLanguageInput("A", textA) { Language = "en" },
     }
 };
 
@@ -1986,25 +1986,25 @@ Previously in `Azure.AI.TextAnalytics`, you would call the `AnalyzeActionsAsync`
 Now in `Azure.AI.Language.Text` you use `client.AnalyzeTextOperationAsync` with the actions you want to run (the below example uses `EntitiesOperationAction` and `KeyPhraseOperationAction`) as the `AnalyzeTextOperationAction` as input:
 
 ```C# Snippet:Sample13_AnalyzeTextOperationAsync_MultipleActions
-string documentA =
+string textA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
     + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
     + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
     + " offers services for childcare in case you want that.";
 
-string documentB =
+string textB =
     "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
     + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
     + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-string documentC =
+string textC =
     "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
     + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
     + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
     + " great. We will definitely come back.";
 
-string documentD = string.Empty;
+string textD = string.Empty;
 
 // Prepare the input of the text analysis operation. You can add multiple documents to this list and
 // perform the same operation on all of them simultaneously.
@@ -2012,10 +2012,10 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
-        new MultiLanguageInput("B", documentB) { Language = "es" },
-        new MultiLanguageInput("C", documentC) { Language = "en" },
-        new MultiLanguageInput("D", documentD),
+        new MultiLanguageInput("A", textA) { Language = "en" },
+        new MultiLanguageInput("B", textB) { Language = "es" },
+        new MultiLanguageInput("C", textC) { Language = "en" },
+        new MultiLanguageInput("D", textD),
     }
 };
 

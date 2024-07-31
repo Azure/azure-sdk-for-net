@@ -158,7 +158,7 @@ For example, if you submit a utterance to a non-existant project, a `400` error 
 ```C# Snippet:TextAnalysisClient_BadRequest
 try
 {
-    string documentA =
+    string textA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
     + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
@@ -171,7 +171,7 @@ try
         {
             MultiLanguageInputs =
             {
-                new MultiLanguageInput("D", documentA),
+                new MultiLanguageInput("D", textA),
             }
         },
         ActionContent = new EntitiesActionContent()

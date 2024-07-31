@@ -19,7 +19,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To detect the language of a document, call `AnalyzeText` on the `TextAnalysisClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
 
 ```C# Snippet:Sample1_AnalyzeText_LanguageDetection
-string documentA =
+string textA =
     "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
     + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."
     + " También muestra cómo acceder a la información retornada por el servicio. Esta funcionalidad es"
@@ -27,14 +27,14 @@ string documentA =
     + " antemano. Puede usarse para detectar una amplia gama de lenguajes, variantes, dialectos y"
     + " algunos idiomas regionales o culturales.";
 
-string documentB =
+string textB =
     "This document is written in English. Its objective is to demonstrate how to call the language"
     + " detection method of the Text Analytics service in Microsoft Azure. It also shows how to access the"
     + " information returned by the service. This functionality is useful for applications that collect"
     + " arbitrary text where the language is not known beforehand. It can be used to detect a wide range"
     + " of languages, variants, dialects, and some regional or cultural languages.";
 
-string documentC =
+string textC =
     "Ce document est rédigé dans une langue autre que l'anglais. Son objectif est de montrer comment"
     + " appeler la méthode de détection de langue du service Text Analytics dans Microsoft Azure. Il"
     + " montre également comment accéder aux informations renvoyées par le service. Cette fonctionnalité"
@@ -50,9 +50,9 @@ try
         {
             LanguageInputs =
             {
-                new LanguageInput("A", documentA),
-                new LanguageInput("B", documentB),
-                new LanguageInput("C", documentC),
+                new LanguageInput("A", textA),
+                new LanguageInput("B", textB),
+                new LanguageInput("C", textC),
             }
         }
     };
@@ -77,7 +77,7 @@ To detect the language of a document, call `AnalyzeText` on the `TextAnalysisCli
 If the country where a document originates from is known, you can aid the language detection model if you call `AnalyzeText` on the `TextAnalysisClient` while passing the documents as an `IEnumerable<LanguageInput>` parameter, having set the `CountryHint` property on each `LanguageInput` object accordingly.
 
 ```C# Snippet:Sample1_AnalyzeText_LanguageDetection_CountryHint
-string documentA =
+string textA =
     "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
     + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."
     + " También muestra cómo acceder a la información retornada por el servicio. Esta funcionalidad es"
@@ -85,14 +85,14 @@ string documentA =
     + " antemano. Puede usarse para detectar una amplia gama de lenguajes, variantes, dialectos y"
     + " algunos idiomas regionales o culturales.";
 
-string documentB =
+string textB =
     "This document is written in English. Its objective is to demonstrate how to call the language"
     + " detection method of the Text Analytics service in Microsoft Azure. It also shows how to access the"
     + " information returned by the service. This functionality is useful for applications that collect"
     + " arbitrary text where the language is not known beforehand. It can be used to detect a wide range"
     + " of languages, variants, dialects, and some regional or cultural languages.";
 
-string documentC =
+string textC =
     "Ce document est rédigé dans une langue autre que l'anglais. Son objectif est de montrer comment"
     + " appeler la méthode de détection de langue du service Text Analytics dans Microsoft Azure. Il"
     + " montre également comment accéder aux informations renvoyées par le service. Cette fonctionnalité"
@@ -108,9 +108,9 @@ try
         {
             LanguageInputs =
             {
-                new LanguageInput("A", documentA) { CountryHint = "es" },
-                new LanguageInput("B", documentB) { CountryHint = "us" },
-                new LanguageInput("C", documentC) { CountryHint = "fr" },
+                new LanguageInput("A", textA) { CountryHint = "es" },
+                new LanguageInput("B", textB) { CountryHint = "us" },
+                new LanguageInput("C", textC) { CountryHint = "fr" },
             }
         }
     };

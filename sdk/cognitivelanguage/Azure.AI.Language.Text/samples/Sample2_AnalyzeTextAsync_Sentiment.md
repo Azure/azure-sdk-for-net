@@ -19,17 +19,17 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To analyze the sentiment of a document, use the `AnalyzeText` method.  The returned `AnalyzeTextSentimentResult` describes the sentiment of the document, as well as a collection of `Sentences` indicating the sentiment of each individual sentence.
 
 ```C# Snippet:Sample2_AnalyzeTextAsync_Sentiment
-string documentA =
+string textA =
     "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
     + " quality of the food and the process to get room service they refunded the money we spent at the"
     + " restaurant and gave us a voucher for nearby restaurants.";
 
-string documentB =
+string textB =
     "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sab�a de nuestra"
     + " celebraci�n y me ayudaron a tenerle una sorpresa a mi pareja. La habitaci�n estaba limpia y"
     + " decorada como yo hab�a pedido. Una gran experiencia. El pr�ximo a�o volveremos.";
 
-string documentC =
+string textC =
     "The rooms were beautiful. The AC was good and quiet, which was key for us as outside it was 100F and"
     + " our baby was getting uncomfortable because of the heat. The breakfast was good too with good"
     + " options and good servicing times. The thing we didn't like was that the toilet in our bathroom was"
@@ -43,9 +43,9 @@ try
         {
             MultiLanguageInputs =
             {
-                new MultiLanguageInput("A", documentA) { Language = "en" },
-                new MultiLanguageInput("B", documentB) { Language = "es" },
-                new MultiLanguageInput("C", documentC) { Language = "en" },
+                new MultiLanguageInput("A", textA) { Language = "en" },
+                new MultiLanguageInput("B", textB) { Language = "es" },
+                new MultiLanguageInput("C", textC) { Language = "en" },
             }
         }
     };

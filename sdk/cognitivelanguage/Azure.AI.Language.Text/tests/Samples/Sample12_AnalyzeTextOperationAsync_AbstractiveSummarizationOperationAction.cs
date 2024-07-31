@@ -21,7 +21,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             #region Snippet:Sample12_AnalyzeTextOperationAsync_AbstractiveSummarizationOperationAction
-            string documentA =
+            string textA =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
                 + " solutions to support employees suddenly forced to work from home, but “what really put the"
                 + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 MultiLanguageInputs =
                 {
-                    new MultiLanguageInput("A", documentA) { Language = "en" },
+                    new MultiLanguageInput("A", textA) { Language = "en" },
                 }
             };
 

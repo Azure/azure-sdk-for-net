@@ -68,7 +68,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:TextAnalysisClient_BadRequest
             try
             {
-                string documentA =
+                string textA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
                 + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
                 + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     {
                         MultiLanguageInputs =
                         {
-                            new MultiLanguageInput("D", documentA),
+                            new MultiLanguageInput("D", textA),
                         }
                     },
                     ActionContent = new EntitiesActionContent()

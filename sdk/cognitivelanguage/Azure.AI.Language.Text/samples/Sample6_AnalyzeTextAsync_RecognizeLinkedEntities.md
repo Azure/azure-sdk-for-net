@@ -19,23 +19,23 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To recognize linked entities in multiple documents, call `AnalyzeText` on an TextEntityLinkingInput.  The results are returned as a `AnalyzeTextEntityLinkingResult`.
 
 ```C# Snippet:Sample6_AnalyzeTextAsync_RecognizeLinkedEntities
-string documentA =
+string textA =
     "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
     + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
     + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
     + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond";
 
-string documentB =
+string textB =
     "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC"
     + " interpreters for the Altair 8800. During his career at Microsoft, Gates held the positions of"
     + " chairman chief executive officer, president and chief software architect while also being the"
     + " largest individual shareholder until May 2014.";
 
-string documentC =
+string textC =
     "El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él empezó como"
     + " Ingeniero de Software en el año 1992.";
 
-string documentD = string.Empty;
+string textD = string.Empty;
 
 AnalyzeTextInput body = new TextEntityLinkingInput()
 {
@@ -43,10 +43,10 @@ AnalyzeTextInput body = new TextEntityLinkingInput()
     {
         MultiLanguageInputs =
         {
-            new MultiLanguageInput("A", documentA) { Language = "en" },
-            new MultiLanguageInput("B", documentB) { Language = "en" },
-            new MultiLanguageInput("C", documentC) { Language = "es" },
-            new MultiLanguageInput("D", documentD),
+            new MultiLanguageInput("A", textA) { Language = "en" },
+            new MultiLanguageInput("B", textB) { Language = "en" },
+            new MultiLanguageInput("C", textC) { Language = "es" },
+            new MultiLanguageInput("D", textD),
         }
     },
     ActionContent = new EntityLinkingActionContent()

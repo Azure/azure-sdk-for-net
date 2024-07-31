@@ -19,7 +19,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To summarize one or more text documents using extractive summarization, call `AnalyzeTextOperationAsync` on the `TextAnalysisClient` by passing the documents as `MultiLanguageTextInput` parameter and a `AnalyzeTextOperationAction` with a `ExtractiveSummarizationOperationAction` action. This returns a `Response<AnalyzeTextOperationState>` which you can extract the `ExtractiveSummarizationOperationResult`.
 
 ```C# Snippet:Sample11_AnalyzeTextOperationAsync_ExtractiveSummarizationOperationAction
-string documentA =
+string textA =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
     + " solutions to support employees suddenly forced to work from home, but “what really put the"
     + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
@@ -62,7 +62,7 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     MultiLanguageInputs =
     {
-        new MultiLanguageInput("A", documentA) { Language = "en" },
+        new MultiLanguageInput("A", textA) { Language = "en" },
     }
 };
 

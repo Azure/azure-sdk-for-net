@@ -22,7 +22,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             #region Snippet:Sample7_AnalyzeTextOperationAsync_HealthcareOperationAction
-            string documentA =
+            string textA =
                 "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
                 + " CORONARY ARTERY DISEASE | Signed | DIS |"
                 + Environment.NewLine
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 + " to the patient'sincreased symptoms and family history and history left main disease with total"
                 + " occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            string documentB = "Prescribed 100mg ibuprofen, taken twice daily.";
+            string textB = "Prescribed 100mg ibuprofen, taken twice daily.";
 
             // Prepare the input of the text analysis operation. You can add multiple documents to this list and
             // perform the same operation on all of them simultaneously.
@@ -48,8 +48,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 MultiLanguageInputs =
                 {
-                    new MultiLanguageInput("A", documentA) { Language = "en" },
-                    new MultiLanguageInput("B", documentB) { Language = "en" },
+                    new MultiLanguageInput("A", textA) { Language = "en" },
+                    new MultiLanguageInput("B", textB) { Language = "en" },
                 }
             };
 
