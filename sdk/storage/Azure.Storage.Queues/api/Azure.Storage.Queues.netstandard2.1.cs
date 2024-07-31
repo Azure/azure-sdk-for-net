@@ -179,7 +179,7 @@ namespace Azure.Storage.Queues.Models
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Permissions { get { throw null; } set { } }
-        public Azure.Storage.Queues.Models.QueueAccessPolicyPermissions QueueAccessPolicyPermissions { get { throw null; } set { } }
+        public Azure.Storage.Queues.Models.QueueAccessPolicyPermissions? QueueAccessPolicyPermissions { get { throw null; } set { } }
         public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
