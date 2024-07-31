@@ -3715,35 +3715,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
-        {
-            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-
-            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
-            builder = ShareSasBuilder.DeepCopy(builder);
-
-            // Assign builder's ShareName and Path, if they are null.
-            builder.ShareName ??= Name;
-
-            if (!builder.ShareName.Equals(Name, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.ShareName),
-                    nameof(ShareSasBuilder),
-                    nameof(Name));
-            }
-            if (!string.IsNullOrEmpty(builder.FilePath))
-            {
-                throw Errors.SasBuilderEmptyParam(
-                    nameof(builder),
-                    nameof(builder.FilePath),
-                    nameof(Constants.File.Share.Name));
-            }
-            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
-            {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
-            };
-            return sasUri.ToUri();
-        }
+            => GenerateSasUri(builder, out _);
 
         /// <summary>
         /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a <see cref="Uri"/>

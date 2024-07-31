@@ -389,17 +389,6 @@ namespace Azure.Storage.Sas
             return p;
         }
 
-        /// <summary>
-        /// For debugging purposes only.
-        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
-        /// If you use this method, call it immediately before <see cref="ToSasQueryParameters(StorageSharedKeyCredential)"/>.
-        /// </summary>
-        /// <param name="sharedKeyCredential">
-        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
-        /// </param>
-        /// <returns>
-        /// The string to sign that will be used to generate the signature for the SAS URL.
-        /// </returns>
         private string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
         {
             string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
@@ -498,19 +487,6 @@ namespace Azure.Storage.Sas
             return p;
         }
 
-        /// <summary>
-        /// For debugging purposes only.
-        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
-        /// If you use this method, call it immediately before <see cref="ToSasQueryParameters(UserDelegationKey, string)"/>.
-        /// </summary>
-        /// <param name="userDelegationKey">
-        /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="BlobServiceClient.GetUserDelegationKeyAsync"/>.
-        /// </param>
-        /// <param name="accountName">The name of the storage account.</param>
-        /// <returns>
-        /// The string to sign that will be used to generate the signature for the SAS URL.
-        /// </returns>
         private string ToStringToSign(UserDelegationKey userDelegationKey, string accountName)
         {
             string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);

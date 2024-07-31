@@ -6682,14 +6682,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
-            GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
-            {
-                BlobContainerName = BlobContainerName,
-                BlobName = Name,
-                Snapshot = _snapshot,
-                BlobVersionId = _blobVersionId,
-                EncryptionScope = _clientConfiguration.EncryptionScope
-            });
+            GenerateSasUri(permissions, expiresOn, out _);
 
         /// <summary>
         /// The <see cref="GenerateSasUri(BlobSasPermissions, DateTimeOffset)"/>

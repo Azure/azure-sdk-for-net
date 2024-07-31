@@ -1090,6 +1090,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="Exception"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public Uri GenerateAccountSasUri(AccountSasBuilder builder, out string stringToSign)
         {

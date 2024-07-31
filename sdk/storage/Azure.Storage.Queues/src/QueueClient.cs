@@ -3135,7 +3135,7 @@ namespace Azure.Storage.Queues
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
-            => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
+            => GenerateSasUri(permissions, expiresOn, out _);
 
         /// <summary>
         /// The <see cref="GenerateSasUri(QueueSasPermissions, DateTimeOffset)"/>
