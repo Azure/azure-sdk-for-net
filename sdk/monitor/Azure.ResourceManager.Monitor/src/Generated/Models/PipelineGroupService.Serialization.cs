@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Service : IUtf8JsonSerializable, IJsonModel<Service>
+    public partial class PipelineGroupService : IUtf8JsonSerializable, IJsonModel<PipelineGroupService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Service>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineGroupService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Service>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PipelineGroupService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Service>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Service)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        Service IJsonModel<Service>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PipelineGroupService IJsonModel<PipelineGroupService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Service>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Service)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeService(document.RootElement, options);
+            return DeserializePipelineGroupService(document.RootElement, options);
         }
 
-        internal static Service DeserializeService(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PipelineGroupService DeserializePipelineGroupService(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<Pipeline> pipelines = default;
-            PersistenceConfigurations persistence = default;
+            PipelineGroupServicePersistenceConfigurations persistence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    persistence = PersistenceConfigurations.DeserializePersistenceConfigurations(property.Value, options);
+                    persistence = PipelineGroupServicePersistenceConfigurations.DeserializePipelineGroupServicePersistenceConfigurations(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Service(pipelines, persistence, serializedAdditionalRawData);
+            return new PipelineGroupService(pipelines, persistence, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Service>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PipelineGroupService>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Service>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupService>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Service)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupService)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Service IPersistableModel<Service>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PipelineGroupService IPersistableModel<PipelineGroupService>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Service>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupService>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeService(document.RootElement, options);
+                        return DeserializePipelineGroupService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Service)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupService)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Service>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PipelineGroupService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

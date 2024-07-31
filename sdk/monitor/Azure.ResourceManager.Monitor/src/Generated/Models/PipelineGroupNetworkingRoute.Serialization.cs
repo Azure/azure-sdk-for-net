@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NetworkingRoute : IUtf8JsonSerializable, IJsonModel<NetworkingRoute>
+    public partial class PipelineGroupNetworkingRoute : IUtf8JsonSerializable, IJsonModel<PipelineGroupNetworkingRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkingRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineGroupNetworkingRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkingRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PipelineGroupNetworkingRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupNetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkingRoute)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupNetworkingRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        NetworkingRoute IJsonModel<NetworkingRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PipelineGroupNetworkingRoute IJsonModel<PipelineGroupNetworkingRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupNetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkingRoute)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupNetworkingRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkingRoute(document.RootElement, options);
+            return DeserializePipelineGroupNetworkingRoute(document.RootElement, options);
         }
 
-        internal static NetworkingRoute DeserializeNetworkingRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PipelineGroupNetworkingRoute DeserializePipelineGroupNetworkingRoute(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,38 +119,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkingRoute(receiver, port, path, subdomain, serializedAdditionalRawData);
+            return new PipelineGroupNetworkingRoute(receiver, port, path, subdomain, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetworkingRoute>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PipelineGroupNetworkingRoute>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupNetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkingRoute)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupNetworkingRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkingRoute IPersistableModel<NetworkingRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PipelineGroupNetworkingRoute IPersistableModel<PipelineGroupNetworkingRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupNetworkingRoute>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNetworkingRoute(document.RootElement, options);
+                        return DeserializePipelineGroupNetworkingRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkingRoute)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupNetworkingRoute)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkingRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PipelineGroupNetworkingRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor.Samples
                 ExtendedLocation = new ExtendedLocation(ExtendedLocationType.CustomLocation, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation"),
                 Receivers =
 {
-new Receiver(ReceiverType.UDP,"udp-receiver1")
+new PipelineGroupReceiver(ReceiverType.UDP,"udp-receiver1")
 {
 Udp = new UdpReceiver("0.0.0.0:518")
 {
@@ -201,14 +201,14 @@ Encoding = StreamEncodingType.Utf8,
 },
                 Exporters =
 {
-new Exporter(ExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new AzureMonitorWorkspaceLogsExporter(new AzureMonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new SchemaMap(new RecordMap[]
 {
 new RecordMap("body","Body"),new RecordMap("severity_text","SeverityText"),new RecordMap("time_unix_nano","TimeGenerated")
 })))
 {
-Concurrency = new ConcurrencyConfiguration()
+Concurrency = new MonitorWorkspaceLogsExporterConcurrencyConfiguration()
 {
 WorkerCount = 4,
 BatchQueueSize = 100,
@@ -216,7 +216,7 @@ BatchQueueSize = 100,
 },
 }
 },
-                Service = new Service(new Pipeline[]
+                Service = new PipelineGroupService(new Pipeline[]
             {
 new Pipeline("MyPipelineForLogs1",PipelineType.Logs,new string[]
 {
@@ -277,25 +277,25 @@ Processors =
                 ExtendedLocation = new ExtendedLocation(ExtendedLocationType.CustomLocation, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation"),
                 Receivers =
 {
-new Receiver(ReceiverType.Syslog,"syslog-receiver1")
+new PipelineGroupReceiver(ReceiverType.Syslog,"syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
 }
 },
                 Processors =
 {
-new Processor(ProcessorType.Batch,"batch-processor1")
+new PipelineGroupProcessor(ProcessorType.Batch,"batch-processor1")
 },
                 Exporters =
 {
-new Exporter(ExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new AzureMonitorWorkspaceLogsExporter(new AzureMonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new SchemaMap(new RecordMap[]
 {
 new RecordMap("body","Body"),new RecordMap("severity_text","SeverityText"),new RecordMap("time_unix_nano","TimeGenerated")
 })))
 {
-Concurrency = new ConcurrencyConfiguration()
+Concurrency = new MonitorWorkspaceLogsExporterConcurrencyConfiguration()
 {
 WorkerCount = 4,
 BatchQueueSize = 100,
@@ -303,7 +303,7 @@ BatchQueueSize = 100,
 },
 }
 },
-                Service = new Service(new Pipeline[]
+                Service = new PipelineGroupService(new Pipeline[]
             {
 new Pipeline("MyPipelineForLogs1",PipelineType.Logs,new string[]
 {
@@ -365,30 +365,30 @@ Processors =
                 ExtendedLocation = new ExtendedLocation(ExtendedLocationType.CustomLocation, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation"),
                 Receivers =
 {
-new Receiver(ReceiverType.Syslog,"syslog-receiver1")
+new PipelineGroupReceiver(ReceiverType.Syslog,"syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
 }
 },
                 Processors =
 {
-new Processor(ProcessorType.Batch,"batch-processor1")
+new PipelineGroupProcessor(ProcessorType.Batch,"batch-processor1")
 },
                 Exporters =
 {
-new Exporter(ExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new AzureMonitorWorkspaceLogsExporter(new AzureMonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new SchemaMap(new RecordMap[]
 {
 new RecordMap("body","Body"),new RecordMap("severity_text","SeverityText"),new RecordMap("time_unix_nano","TimeGenerated")
 })))
 {
-Concurrency = new ConcurrencyConfiguration()
+Concurrency = new MonitorWorkspaceLogsExporterConcurrencyConfiguration()
 {
 WorkerCount = 4,
 BatchQueueSize = 100,
 },
-Cache = new CacheConfiguration()
+Cache = new MonitorWorkspaceLogsExporterCacheConfiguration()
 {
 MaxStorageUsage = 100,
 RetentionPeriod = 10,
@@ -396,7 +396,7 @@ RetentionPeriod = 10,
 },
 }
 },
-                Service = new Service(new Pipeline[]
+                Service = new PipelineGroupService(new Pipeline[]
             {
 new Pipeline("MyPipelineForLogs1",PipelineType.Logs,new string[]
 {
@@ -458,7 +458,7 @@ Processors =
                 ExtendedLocation = new ExtendedLocation(ExtendedLocationType.CustomLocation, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation"),
                 Receivers =
 {
-new Receiver(ReceiverType.Syslog,"syslog-receiver1")
+new PipelineGroupReceiver(ReceiverType.Syslog,"syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
 }
@@ -468,14 +468,14 @@ Syslog = new SyslogReceiver("0.0.0.0:514"),
 },
                 Exporters =
 {
-new Exporter(ExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
+new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
 {
 AzureMonitorWorkspaceLogs = new AzureMonitorWorkspaceLogsExporter(new AzureMonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new SchemaMap(new RecordMap[]
 {
 new RecordMap("body","Body"),new RecordMap("severity_text","SeverityText"),new RecordMap("time_unix_nano","TimeGenerated")
 })))
 {
-Concurrency = new ConcurrencyConfiguration()
+Concurrency = new MonitorWorkspaceLogsExporterConcurrencyConfiguration()
 {
 WorkerCount = 4,
 BatchQueueSize = 100,
@@ -483,7 +483,7 @@ BatchQueueSize = 100,
 },
 }
 },
-                Service = new Service(new Pipeline[]
+                Service = new PipelineGroupService(new Pipeline[]
             {
 new Pipeline("MyPipelineForLogs1",PipelineType.Logs,new string[]
 {
@@ -500,9 +500,9 @@ Processors =
             }),
                 NetworkingConfigurations =
 {
-new NetworkingConfiguration(ExternalNetworkingMode.LoadBalancerOnly,new NetworkingRoute[]
+new PipelineGroupNetworkingConfiguration(PipelineGroupExternalNetworkingMode.LoadBalancerOnly,new PipelineGroupNetworkingRoute[]
 {
-new NetworkingRoute("syslog-receiver1")
+new PipelineGroupNetworkingRoute("syslog-receiver1")
 })
 {
 Host = "azuremonitorpipeline.contoso.com",

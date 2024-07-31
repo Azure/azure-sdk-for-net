@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Processor : IUtf8JsonSerializable, IJsonModel<Processor>
+    public partial class PipelineGroupProcessor : IUtf8JsonSerializable, IJsonModel<PipelineGroupProcessor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Processor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineGroupProcessor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Processor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PipelineGroupProcessor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Processor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupProcessor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Processor)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupProcessor)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        Processor IJsonModel<Processor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PipelineGroupProcessor IJsonModel<PipelineGroupProcessor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Processor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupProcessor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Processor)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupProcessor)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProcessor(document.RootElement, options);
+            return DeserializePipelineGroupProcessor(document.RootElement, options);
         }
 
-        internal static Processor DeserializeProcessor(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PipelineGroupProcessor DeserializePipelineGroupProcessor(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,38 +105,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Processor(type, name, batch, serializedAdditionalRawData);
+            return new PipelineGroupProcessor(type, name, batch, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Processor>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PipelineGroupProcessor>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Processor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupProcessor>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Processor)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupProcessor)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Processor IPersistableModel<Processor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PipelineGroupProcessor IPersistableModel<PipelineGroupProcessor>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Processor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupProcessor>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProcessor(document.RootElement, options);
+                        return DeserializePipelineGroupProcessor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Processor)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupProcessor)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Processor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PipelineGroupProcessor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Cache configurations. </summary>
-    public partial class CacheConfiguration
+    public partial class MonitorWorkspaceLogsExporterCacheConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CacheConfiguration"/>. </summary>
-        public CacheConfiguration()
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsExporterCacheConfiguration"/>. </summary>
+        public MonitorWorkspaceLogsExporterCacheConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsExporterCacheConfiguration"/>. </summary>
         /// <param name="maxStorageUsage"> Max storage usage in megabytes. </param>
         /// <param name="retentionPeriod"> Retention period in minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheConfiguration(int? maxStorageUsage, int? retentionPeriod, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceLogsExporterCacheConfiguration(int? maxStorageUsage, int? retentionPeriod, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxStorageUsage = maxStorageUsage;
             RetentionPeriod = retentionPeriod;

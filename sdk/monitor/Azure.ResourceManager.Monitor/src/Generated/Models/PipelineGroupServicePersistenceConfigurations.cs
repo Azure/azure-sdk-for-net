@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Concurrent publishing configuration. </summary>
-    public partial class ConcurrencyConfiguration
+    /// <summary> Persistence options to all pipelines in the instance. </summary>
+    internal partial class PipelineGroupServicePersistenceConfigurations
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,31 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConcurrencyConfiguration"/>. </summary>
-        public ConcurrencyConfiguration()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupServicePersistenceConfigurations"/>. </summary>
+        /// <param name="persistentVolumeName"> The name of the mounted persistent volume. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="persistentVolumeName"/> is null. </exception>
+        public PipelineGroupServicePersistenceConfigurations(string persistentVolumeName)
         {
+            Argument.AssertNotNull(persistentVolumeName, nameof(persistentVolumeName));
+
+            PersistentVolumeName = persistentVolumeName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConcurrencyConfiguration"/>. </summary>
-        /// <param name="workerCount"> Number of parallel workers processing the log queues. </param>
-        /// <param name="batchQueueSize"> Size of the queue for log batches. </param>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupServicePersistenceConfigurations"/>. </summary>
+        /// <param name="persistentVolumeName"> The name of the mounted persistent volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConcurrencyConfiguration(int? workerCount, int? batchQueueSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupServicePersistenceConfigurations(string persistentVolumeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            WorkerCount = workerCount;
-            BatchQueueSize = batchQueueSize;
+            PersistentVolumeName = persistentVolumeName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Number of parallel workers processing the log queues. </summary>
-        public int? WorkerCount { get; set; }
-        /// <summary> Size of the queue for log batches. </summary>
-        public int? BatchQueueSize { get; set; }
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupServicePersistenceConfigurations"/> for deserialization. </summary>
+        internal PipelineGroupServicePersistenceConfigurations()
+        {
+        }
+
+        /// <summary> The name of the mounted persistent volume. </summary>
+        public string PersistentVolumeName { get; set; }
     }
 }

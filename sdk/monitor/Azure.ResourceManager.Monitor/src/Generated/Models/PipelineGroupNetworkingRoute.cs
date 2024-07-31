@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Networking route configuration. </summary>
-    public partial class NetworkingRoute
+    public partial class PipelineGroupNetworkingRoute
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +45,23 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkingRoute"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupNetworkingRoute"/>. </summary>
         /// <param name="receiver"> The name of the previously defined receiver. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiver"/> is null. </exception>
-        public NetworkingRoute(string receiver)
+        public PipelineGroupNetworkingRoute(string receiver)
         {
             Argument.AssertNotNull(receiver, nameof(receiver));
 
             Receiver = receiver;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkingRoute"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupNetworkingRoute"/>. </summary>
         /// <param name="receiver"> The name of the previously defined receiver. </param>
         /// <param name="port"> The port that will be configured externally. If not specified, it will use the port from the receiver definition. </param>
         /// <param name="path"> Route path. </param>
         /// <param name="subdomain"> Route subdomain. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkingRoute(string receiver, int? port, string path, string subdomain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupNetworkingRoute(string receiver, int? port, string path, string subdomain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Receiver = receiver;
             Port = port;
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkingRoute"/> for deserialization. </summary>
-        internal NetworkingRoute()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupNetworkingRoute"/> for deserialization. </summary>
+        internal PipelineGroupNetworkingRoute()
         {
         }
 

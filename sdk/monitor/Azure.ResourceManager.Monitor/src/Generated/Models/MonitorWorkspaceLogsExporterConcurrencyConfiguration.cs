@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Service Info. </summary>
-    public partial class Service
+    /// <summary> Concurrent publishing configuration. </summary>
+    public partial class MonitorWorkspaceLogsExporterConcurrencyConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,41 +45,25 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Service"/>. </summary>
-        /// <param name="pipelines"> Pipelines belonging to a given pipeline group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelines"/> is null. </exception>
-        public Service(IEnumerable<Pipeline> pipelines)
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsExporterConcurrencyConfiguration"/>. </summary>
+        public MonitorWorkspaceLogsExporterConcurrencyConfiguration()
         {
-            Argument.AssertNotNull(pipelines, nameof(pipelines));
-
-            Pipelines = pipelines.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Service"/>. </summary>
-        /// <param name="pipelines"> Pipelines belonging to a given pipeline group. </param>
-        /// <param name="persistence"> Persistence options to all pipelines in the instance. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsExporterConcurrencyConfiguration"/>. </summary>
+        /// <param name="workerCount"> Number of parallel workers processing the log queues. </param>
+        /// <param name="batchQueueSize"> Size of the queue for log batches. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Service(IList<Pipeline> pipelines, PersistenceConfigurations persistence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceLogsExporterConcurrencyConfiguration(int? workerCount, int? batchQueueSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Pipelines = pipelines;
-            Persistence = persistence;
+            WorkerCount = workerCount;
+            BatchQueueSize = batchQueueSize;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Service"/> for deserialization. </summary>
-        internal Service()
-        {
-        }
-
-        /// <summary> Pipelines belonging to a given pipeline group. </summary>
-        public IList<Pipeline> Pipelines { get; }
-        /// <summary> Persistence options to all pipelines in the instance. </summary>
-        internal PersistenceConfigurations Persistence { get; set; }
-        /// <summary> The name of the mounted persistent volume. </summary>
-        public string PersistencePersistentVolumeName
-        {
-            get => Persistence is null ? default : Persistence.PersistentVolumeName;
-            set => Persistence = new PersistenceConfigurations(value);
-        }
+        /// <summary> Number of parallel workers processing the log queues. </summary>
+        public int? WorkerCount { get; set; }
+        /// <summary> Size of the queue for log batches. </summary>
+        public int? BatchQueueSize { get; set; }
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NetworkingConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkingConfiguration>
+    public partial class PipelineGroupNetworkingConfiguration : IUtf8JsonSerializable, IJsonModel<PipelineGroupNetworkingConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkingConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineGroupNetworkingConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PipelineGroupNetworkingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkingConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupNetworkingConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        NetworkingConfiguration IJsonModel<NetworkingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PipelineGroupNetworkingConfiguration IJsonModel<PipelineGroupNetworkingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkingConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupNetworkingConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkingConfiguration(document.RootElement, options);
+            return DeserializePipelineGroupNetworkingConfiguration(document.RootElement, options);
         }
 
-        internal static NetworkingConfiguration DeserializeNetworkingConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PipelineGroupNetworkingConfiguration DeserializePipelineGroupNetworkingConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            ExternalNetworkingMode externalNetworkingMode = default;
+            PipelineGroupExternalNetworkingMode externalNetworkingMode = default;
             string host = default;
-            IList<NetworkingRoute> routes = default;
+            IList<PipelineGroupNetworkingRoute> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("externalNetworkingMode"u8))
                 {
-                    externalNetworkingMode = new ExternalNetworkingMode(property.Value.GetString());
+                    externalNetworkingMode = new PipelineGroupExternalNetworkingMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("host"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("routes"u8))
                 {
-                    List<NetworkingRoute> array = new List<NetworkingRoute>();
+                    List<PipelineGroupNetworkingRoute> array = new List<PipelineGroupNetworkingRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkingRoute.DeserializeNetworkingRoute(item, options));
+                        array.Add(PipelineGroupNetworkingRoute.DeserializePipelineGroupNetworkingRoute(item, options));
                     }
                     routes = array;
                     continue;
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkingConfiguration(externalNetworkingMode, host, routes, serializedAdditionalRawData);
+            return new PipelineGroupNetworkingConfiguration(externalNetworkingMode, host, routes, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetworkingConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PipelineGroupNetworkingConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkingConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupNetworkingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkingConfiguration IPersistableModel<NetworkingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PipelineGroupNetworkingConfiguration IPersistableModel<PipelineGroupNetworkingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNetworkingConfiguration(document.RootElement, options);
+                        return DeserializePipelineGroupNetworkingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkingConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupNetworkingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PipelineGroupNetworkingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Processor Info. </summary>
-    public partial class Processor
+    /// <summary> Exporter Info. </summary>
+    public partial class PipelineGroupExporter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,41 +45,51 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Processor"/>. </summary>
-        /// <param name="processorType"> The type of processor. </param>
-        /// <param name="name"> The name of processor. </param>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupExporter"/>. </summary>
+        /// <param name="exporterType"> The type of exporter. </param>
+        /// <param name="name"> The name of exporter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Processor(ProcessorType processorType, string name)
+        public PipelineGroupExporter(PipelineGroupExporterType exporterType, string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ProcessorType = processorType;
+            ExporterType = exporterType;
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Processor"/>. </summary>
-        /// <param name="processorType"> The type of processor. </param>
-        /// <param name="name"> The name of processor. </param>
-        /// <param name="batch"> Batch processor configurations. </param>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupExporter"/>. </summary>
+        /// <param name="exporterType"> The type of exporter. </param>
+        /// <param name="name"> The name of exporter. </param>
+        /// <param name="azureMonitorWorkspaceLogs"> Azure Monitor Workspace Logs specific configurations. </param>
+        /// <param name="tcp"> TCP based exporter. Used for pipelineGroup exporter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Processor(ProcessorType processorType, string name, BatchProcessor batch, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupExporter(PipelineGroupExporterType exporterType, string name, AzureMonitorWorkspaceLogsExporter azureMonitorWorkspaceLogs, TcpExporter tcp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ProcessorType = processorType;
+            ExporterType = exporterType;
             Name = name;
-            Batch = batch;
+            AzureMonitorWorkspaceLogs = azureMonitorWorkspaceLogs;
+            Tcp = tcp;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Processor"/> for deserialization. </summary>
-        internal Processor()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupExporter"/> for deserialization. </summary>
+        internal PipelineGroupExporter()
         {
         }
 
-        /// <summary> The type of processor. </summary>
-        public ProcessorType ProcessorType { get; set; }
-        /// <summary> The name of processor. </summary>
+        /// <summary> The type of exporter. </summary>
+        public PipelineGroupExporterType ExporterType { get; set; }
+        /// <summary> The name of exporter. </summary>
         public string Name { get; set; }
-        /// <summary> Batch processor configurations. </summary>
-        public BatchProcessor Batch { get; set; }
+        /// <summary> Azure Monitor Workspace Logs specific configurations. </summary>
+        public AzureMonitorWorkspaceLogsExporter AzureMonitorWorkspaceLogs { get; set; }
+        /// <summary> TCP based exporter. Used for pipelineGroup exporter. </summary>
+        internal TcpExporter Tcp { get; set; }
+        /// <summary> TCP url to export. </summary>
+        public Uri TcpUri
+        {
+            get => Tcp is null ? default : Tcp.Uri;
+            set => Tcp = new TcpExporter(value);
+        }
     }
 }

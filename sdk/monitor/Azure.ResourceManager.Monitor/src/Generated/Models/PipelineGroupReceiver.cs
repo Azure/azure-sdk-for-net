@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Receiver Info. </summary>
-    public partial class Receiver
+    public partial class PipelineGroupReceiver
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Receiver"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupReceiver"/>. </summary>
         /// <param name="receiverType"> The type of receiver. </param>
         /// <param name="name"> The name of receiver. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Receiver(ReceiverType receiverType, string name)
+        public PipelineGroupReceiver(ReceiverType receiverType, string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Receiver"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupReceiver"/>. </summary>
         /// <param name="receiverType"> The type of receiver. </param>
         /// <param name="name"> The name of receiver. </param>
         /// <param name="syslog"> Syslog configurations. This field is mandatory for syslog type receivers. </param>
         /// <param name="otlp"> OTLP receiver configurations. This field is mandatory for OTLP and pipelineGroup receivers. </param>
         /// <param name="udp"> UDP receiver configurations. This field is mandatory for UDP receivers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Receiver(ReceiverType receiverType, string name, SyslogReceiver syslog, OtlpReceiver otlp, UdpReceiver udp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupReceiver(ReceiverType receiverType, string name, SyslogReceiver syslog, OtlpReceiver otlp, UdpReceiver udp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReceiverType = receiverType;
             Name = name;
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Receiver"/> for deserialization. </summary>
-        internal Receiver()
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupReceiver"/> for deserialization. </summary>
+        internal PipelineGroupReceiver()
         {
         }
 

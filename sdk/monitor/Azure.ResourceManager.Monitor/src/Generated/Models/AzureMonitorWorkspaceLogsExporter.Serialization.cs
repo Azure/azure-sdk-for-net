@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             AzureMonitorWorkspaceLogsApiConfig api = default;
-            ConcurrencyConfiguration concurrency = default;
-            CacheConfiguration cache = default;
+            MonitorWorkspaceLogsExporterConcurrencyConfiguration concurrency = default;
+            MonitorWorkspaceLogsExporterCacheConfiguration cache = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    concurrency = ConcurrencyConfiguration.DeserializeConcurrencyConfiguration(property.Value, options);
+                    concurrency = MonitorWorkspaceLogsExporterConcurrencyConfiguration.DeserializeMonitorWorkspaceLogsExporterConcurrencyConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cache"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    cache = CacheConfiguration.DeserializeCacheConfiguration(property.Value, options);
+                    cache = MonitorWorkspaceLogsExporterCacheConfiguration.DeserializeMonitorWorkspaceLogsExporterCacheConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Exporter : IUtf8JsonSerializable, IJsonModel<Exporter>
+    public partial class PipelineGroupExporter : IUtf8JsonSerializable, IJsonModel<PipelineGroupExporter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Exporter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineGroupExporter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Exporter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PipelineGroupExporter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Exporter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupExporter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Exporter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupExporter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        Exporter IJsonModel<Exporter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PipelineGroupExporter IJsonModel<PipelineGroupExporter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Exporter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupExporter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Exporter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineGroupExporter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExporter(document.RootElement, options);
+            return DeserializePipelineGroupExporter(document.RootElement, options);
         }
 
-        internal static Exporter DeserializeExporter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PipelineGroupExporter DeserializePipelineGroupExporter(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            ExporterType type = default;
+            PipelineGroupExporterType type = default;
             string name = default;
             AzureMonitorWorkspaceLogsExporter azureMonitorWorkspaceLogs = default;
             TcpExporter tcp = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ExporterType(property.Value.GetString());
+                    type = new PipelineGroupExporterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -120,38 +120,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Exporter(type, name, azureMonitorWorkspaceLogs, tcp, serializedAdditionalRawData);
+            return new PipelineGroupExporter(type, name, azureMonitorWorkspaceLogs, tcp, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Exporter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PipelineGroupExporter>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Exporter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupExporter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Exporter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupExporter)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Exporter IPersistableModel<Exporter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PipelineGroupExporter IPersistableModel<PipelineGroupExporter>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Exporter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PipelineGroupExporter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExporter(document.RootElement, options);
+                        return DeserializePipelineGroupExporter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Exporter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineGroupExporter)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Exporter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PipelineGroupExporter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

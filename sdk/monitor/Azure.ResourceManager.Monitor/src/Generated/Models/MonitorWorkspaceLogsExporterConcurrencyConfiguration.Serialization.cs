@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ConcurrencyConfiguration : IUtf8JsonSerializable, IJsonModel<ConcurrencyConfiguration>
+    public partial class MonitorWorkspaceLogsExporterConcurrencyConfiguration : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConcurrencyConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConcurrencyConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConcurrencyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConcurrencyConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporterConcurrencyConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        ConcurrencyConfiguration IJsonModel<ConcurrencyConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MonitorWorkspaceLogsExporterConcurrencyConfiguration IJsonModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConcurrencyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConcurrencyConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporterConcurrencyConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConcurrencyConfiguration(document.RootElement, options);
+            return DeserializeMonitorWorkspaceLogsExporterConcurrencyConfiguration(document.RootElement, options);
         }
 
-        internal static ConcurrencyConfiguration DeserializeConcurrencyConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MonitorWorkspaceLogsExporterConcurrencyConfiguration DeserializeMonitorWorkspaceLogsExporterConcurrencyConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConcurrencyConfiguration(workerCount, batchQueueSize, serializedAdditionalRawData);
+            return new MonitorWorkspaceLogsExporterConcurrencyConfiguration(workerCount, batchQueueSize, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConcurrencyConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConcurrencyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConcurrencyConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporterConcurrencyConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConcurrencyConfiguration IPersistableModel<ConcurrencyConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MonitorWorkspaceLogsExporterConcurrencyConfiguration IPersistableModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConcurrencyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConcurrencyConfiguration(document.RootElement, options);
+                        return DeserializeMonitorWorkspaceLogsExporterConcurrencyConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConcurrencyConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceLogsExporterConcurrencyConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConcurrencyConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorWorkspaceLogsExporterConcurrencyConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
