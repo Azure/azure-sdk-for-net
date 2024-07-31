@@ -2039,8 +2039,8 @@ namespace Azure.Storage.Queues.Test
                     break;
             }
 
-            Assert.AreEqual(actualPermissionsStr, expectedPermissionsStr);
-            Assert.AreEqual(actualPermissionsEnum.ToPermissionsString(), expectedPermissionsEnum.ToPermissionsString());
+            Assert.AreEqual(expectedPermissionsStr, actualPermissionsStr);
+            Assert.AreEqual(expectedPermissionsEnum.ToPermissionsString(), actualPermissionsEnum.ToPermissionsString());
         }
     }
 }
