@@ -330,6 +330,8 @@ namespace OpenAI.TestFramework.Tests
                 proxy = await ProxyService.CreateNewAsync(
                     new ProxyServiceOptions()
                     {
+                        DotnetExecutable = AssemblyHelper.GetDotnetExecutable()?.FullName!,
+                        TestProxyDll = AssemblyHelper.GetAssemblyMetadata<ProxyService>("TestProxyPath")!,
                         StorageLocationDir = RecordingDir!.FullName
                     },
                     Token);
