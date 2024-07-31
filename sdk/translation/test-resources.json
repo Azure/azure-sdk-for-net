@@ -77,8 +77,17 @@
                 "name": "S1"
             },
             "kind": "TextTranslation",
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
-                "customSubDomainName": "[variables('uniqueSubDomainName')]"
+                "customSubDomainName": "[variables('uniqueSubDomainName')]",
+                "networkAcls": {
+                    "defaultAction": "Allow",
+                    "virtualNetworkRules": [],
+                    "ipRules": []
+                },
+                "publicNetworkAccess": "Enabled"
             }
         },
         {
