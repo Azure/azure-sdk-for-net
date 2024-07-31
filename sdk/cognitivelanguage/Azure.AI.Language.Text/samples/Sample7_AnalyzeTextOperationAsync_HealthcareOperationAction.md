@@ -43,7 +43,7 @@ string documentB = "Prescribed 100mg ibuprofen, taken twice daily.";
 // perform the same operation on all of them simultaneously.
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
-    Documents =
+    MultiLanguageInputs =
     {
         new MultiLanguageInput("A", documentA) { Language = "en" },
         new MultiLanguageInput("B", documentB) { Language = "en" },

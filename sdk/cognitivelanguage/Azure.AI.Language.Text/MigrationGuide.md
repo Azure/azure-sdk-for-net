@@ -161,7 +161,7 @@ try
     {
         TextInput = new LanguageDetectionTextInput()
         {
-            Documents =
+            LanguageInputs =
             {
                 new LanguageInput("A", documentA),
                 new LanguageInput("B", documentB),
@@ -282,7 +282,7 @@ try
     {
         TextInput = new MultiLanguageTextInput()
         {
-            Documents =
+            MultiLanguageInputs =
             {
                 new MultiLanguageInput("A", documentA) { Language = "en" },
                 new MultiLanguageInput("B", documentB) { Language = "es" },
@@ -410,7 +410,7 @@ AnalyzeTextInput body = new TextKeyPhraseExtractionInput()
 {
     TextInput = new MultiLanguageTextInput()
     {
-        Documents =
+        MultiLanguageInputs =
         {
             new MultiLanguageInput("A", documentA) { Language = "en" },
             new MultiLanguageInput("B", documentB) { Language = "es" },
@@ -547,7 +547,7 @@ AnalyzeTextInput body = new TextEntityRecognitionInput()
 {
     TextInput = new MultiLanguageTextInput()
     {
-        Documents =
+        MultiLanguageInputs =
         {
             new MultiLanguageInput("A", documentA) { Language = "en" },
             new MultiLanguageInput("B", documentB) { Language = "es" },
@@ -675,7 +675,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
 {
     TextInput = new MultiLanguageTextInput()
     {
-        Documents =
+        MultiLanguageInputs =
         {
             new MultiLanguageInput("A", documentA) { Language = "en" },
             new MultiLanguageInput("B", documentB) { Language = "es" },
@@ -815,7 +815,7 @@ AnalyzeTextInput body = new TextEntityLinkingInput()
 {
     TextInput = new MultiLanguageTextInput()
     {
-        Documents =
+        MultiLanguageInputs =
         {
             new MultiLanguageInput("A", documentA) { Language = "en" },
             new MultiLanguageInput("B", documentB) { Language = "en" },
@@ -1015,7 +1015,7 @@ string documentB = "Prescribed 100mg ibuprofen, taken twice daily.";
 // perform the same operation on all of them simultaneously.
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
-    Documents =
+    MultiLanguageInputs =
     {
         new MultiLanguageInput("A", documentA) { Language = "en" },
         new MultiLanguageInput("B", documentB) { Language = "en" },
@@ -1208,7 +1208,7 @@ string documentB =
 // perform the same operation on all of them simultaneously.
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
-    Documents =
+    MultiLanguageInputs =
     {
         new MultiLanguageInput("A", documentA) { Language = "en" },
         new MultiLanguageInput("B", documentB) { Language = "en" },
@@ -1332,7 +1332,7 @@ string documentA =
 // perform the same operation on all of them simultaneously.
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
-    Documents =
+    MultiLanguageInputs =
     {
         new MultiLanguageInput("A", documentA)
         {
@@ -1452,7 +1452,7 @@ string documentA =
 // perform the same operation on all of them simultaneously.
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
-    Documents =
+    MultiLanguageInputs =
     {
         new MultiLanguageInput("A", documentA)
         {
@@ -1638,7 +1638,7 @@ string documentA =
 // perform the same operation on all of them simultaneously.
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
-    Documents =
+    MultiLanguageInputs =
     {
         new MultiLanguageInput("A", documentA) { Language = "en" },
     }
@@ -1821,7 +1821,7 @@ string documentA =
 // perform the same operation on all of them simultaneously.
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
-    Documents =
+    MultiLanguageInputs =
     {
         new MultiLanguageInput("A", documentA) { Language = "en" },
     }
@@ -2010,7 +2010,7 @@ string documentD = string.Empty;
 // perform the same operation on all of them simultaneously.
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
-    Documents =
+    MultiLanguageInputs =
     {
         new MultiLanguageInput("A", documentA) { Language = "en" },
         new MultiLanguageInput("B", documentB) { Language = "es" },

@@ -1640,7 +1640,7 @@ namespace Azure.AI.Language.Text
     public partial class LanguageDetectionTextInput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.LanguageDetectionTextInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LanguageDetectionTextInput>
     {
         public LanguageDetectionTextInput() { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Text.LanguageInput> Documents { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.LanguageInput> LanguageInputs { get { throw null; } }
         Azure.AI.Language.Text.LanguageDetectionTextInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.LanguageDetectionTextInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.LanguageDetectionTextInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.LanguageDetectionTextInput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LanguageDetectionTextInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1763,7 +1763,7 @@ namespace Azure.AI.Language.Text
     public partial class MultiLanguageTextInput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.MultiLanguageTextInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.MultiLanguageTextInput>
     {
         public MultiLanguageTextInput() { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Text.MultiLanguageInput> Documents { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.MultiLanguageInput> MultiLanguageInputs { get { throw null; } }
         Azure.AI.Language.Text.MultiLanguageTextInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.MultiLanguageTextInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.MultiLanguageTextInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.MultiLanguageTextInput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.MultiLanguageTextInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

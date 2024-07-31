@@ -41,7 +41,7 @@ try
     {
         TextInput = new MultiLanguageTextInput()
         {
-            Documents =
+            MultiLanguageInputs =
             {
                 new MultiLanguageInput("A", documentA) { Language = "en" },
                 new MultiLanguageInput("B", documentB) { Language = "es" },
@@ -121,7 +121,7 @@ AnalyzeTextInput body = new TextSentimentAnalysisInput()
 {
     TextInput = new MultiLanguageTextInput()
     {
-        Documents =
+        MultiLanguageInputs =
         {
             new MultiLanguageInput("A", reviewA) { Language = "en" },
             new MultiLanguageInput("B", reviewB) { Language = "en" },
