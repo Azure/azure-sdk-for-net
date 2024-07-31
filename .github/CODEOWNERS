@@ -153,6 +153,9 @@
 # ServiceLabel: %Azure Stack
 # ServiceOwners:                                                   @sijuman @sarathys @bganapa @rakku-ms
 
+# ServiceLabel: %Azure Stack Hci
+# ServiceOwners:                                                   @NikitaSingh-ms @priyjain358
+
 # ServiceLabel: %Azure Arc Enabled Servers
 # ServiceOwners:                                                   @rpsqrd @edyoung
 
