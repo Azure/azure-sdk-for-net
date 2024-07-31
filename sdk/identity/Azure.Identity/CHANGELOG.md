@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- If `DefaultAzureCredential` attempts to authenticate with the `MangagedIdentityCredential` and it receives either a failed response that is not json, it will now fall through to the next credential in the chain. [#45184](https://github.com/Azure/azure-sdk-for-net/issues/45184)
 
 ### Other Changes
 
