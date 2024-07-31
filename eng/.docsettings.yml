@@ -20,7 +20,7 @@ omitted_paths:
   - sdk/resourcemanager/*
   - src/*
   - tools/*
-  - sdk/batch/Microsoft.Azure.Batch/tools/*
+  - sdk/**/tools/*
 
 language: net
 root_check_enabled: True
