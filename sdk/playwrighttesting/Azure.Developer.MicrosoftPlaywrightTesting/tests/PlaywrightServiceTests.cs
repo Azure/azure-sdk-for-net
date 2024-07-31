@@ -15,6 +15,7 @@ using Moq;
 namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PlaywrightServiceTests
 {
     private static string GetToken(Dictionary<string, object> claims, DateTime? expires = null)

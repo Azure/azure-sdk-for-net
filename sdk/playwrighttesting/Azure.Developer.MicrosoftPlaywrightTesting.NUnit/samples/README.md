@@ -11,6 +11,6 @@ description: Samples for the Azure.Developer.MicrosoftPlaywrightTesting.NUnit cl
 
 # Azure.Developer.MicrosoftPlaywrightTesting.NUnit samples for .NET
 
-- [Manually connecting to browsers](./manually-connecting-to-browsers/README.md)
-- [Customising service parameters](./customising-service-parameters/README.md)
-- [Set default authentication mechanism](./set-default-authentication-mechanism/README.md)
+- [Customising service parameters](./Sample1_CustomisingServiceParameters.md)
+- [Set default authentication mechanism](./Sample2_SetDefaultAuthenticationMechanism.md)
+- [Manually connecting to browsers](./Sample3_ManuallyConnectingToBrowsers.md)
