@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DeidServiceProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serviceUri"> Deid service url. </param>
+        /// <param name="deidServicePropertiei"> Deid service url. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <returns> A new <see cref="Models.DeidServiceProperties"/> instance for mocking. </returns>
-        public static DeidServiceProperties DeidServiceProperties(ProvisioningState? provisioningState = null, Uri serviceUri = null, IEnumerable<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = null, PublicNetworkAccess? publicNetworkAccess = null)
+        public static DeidServiceProperties DeidServiceProperties(ProvisioningState? provisioningState = null, string deidServicePropertiei = null, IEnumerable<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = null, PublicNetworkAccess? publicNetworkAccess = null)
         {
             privateEndpointConnections ??= new List<HealthDataAIServicesPrivateEndpointConnection>();
 
-            return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections?.ToList(), publicNetworkAccess, serializedAdditionalRawData: null);
+            return new DeidServiceProperties(provisioningState, deidServicePropertiei, privateEndpointConnections?.ToList(), publicNetworkAccess, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HealthDataAIServicesPrivateEndpointConnection"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
+        /// <param name="properties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.HealthDataAIServicesPrivateEndpointConnection"/> instance for mocking. </returns>
         public static HealthDataAIServicesPrivateEndpointConnection HealthDataAIServicesPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
@@ -76,14 +76,27 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpointId"> The private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, HealthDataAIServicesPrivateLinkServiceConnectionState connectionState = null, HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             groupIds ??= new List<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new PrivateEndpointConnectionProperties(groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceIdentity"/>. </summary>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
+        public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId = null, Guid? tenantId = null, ManagedServiceIdentityType type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        {
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+
+            return new ManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthDataAIServices.HealthDataAIServicePrivateEndpointConnectionResourceData"/>. </summary>

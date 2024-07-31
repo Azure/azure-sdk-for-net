@@ -11,8 +11,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
-    /// <summary> The template for adding optional properties. </summary>
-    public partial class ManagedServiceIdentityUpdate
+    /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+    public partial class ManagedServiceIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +46,40 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
-        public ManagedServiceIdentityUpdate()
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentity"/>. </summary>
+        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        public ManagedServiceIdentity(ManagedServiceIdentityType type)
         {
+            Type = type;
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentity"/>. </summary>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="type"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServiceIdentityUpdate(ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            PrincipalId = principalId;
+            TenantId = tenantId;
             Type = type;
             UserAssignedIdentities = userAssignedIdentities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentity"/> for deserialization. </summary>
+        internal ManagedServiceIdentity()
+        {
+        }
+
+        /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        public Guid? PrincipalId { get; }
+        /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        public Guid? TenantId { get; }
         /// <summary> The type of managed identity assigned to this resource. </summary>
-        public ManagedServiceIdentityType? Type { get; set; }
+        public ManagedServiceIdentityType Type { get; set; }
         /// <summary> The identities assigned to this resource by the user. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

@@ -14,24 +14,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
-    public partial class ManagedServiceIdentityUpdate : IUtf8JsonSerializable, IJsonModel<ManagedServiceIdentityUpdate>
+    public partial class ManagedServiceIdentity : IUtf8JsonSerializable, IJsonModel<ManagedServiceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceIdentityUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ManagedServiceIdentityUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedServiceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
@@ -61,19 +68,19 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             writer.WriteEndObject();
         }
 
-        ManagedServiceIdentityUpdate IJsonModel<ManagedServiceIdentityUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedServiceIdentity IJsonModel<ManagedServiceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedServiceIdentityUpdate(document.RootElement, options);
+            return DeserializeManagedServiceIdentity(document.RootElement, options);
         }
 
-        internal static ManagedServiceIdentityUpdate DeserializeManagedServiceIdentityUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,18 +88,34 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 return null;
             }
-            ManagedServiceIdentityType? type = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            ManagedServiceIdentityType type = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (property.NameEquals("principalId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+                    principalId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("tenantId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
                     type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
@@ -116,38 +139,38 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedServiceIdentityUpdate(type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
+            return new ManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ManagedServiceIdentityUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedServiceIdentity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ManagedServiceIdentityUpdate IPersistableModel<ManagedServiceIdentityUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedServiceIdentity IPersistableModel<ManagedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeManagedServiceIdentityUpdate(document.RootElement, options);
+                        return DeserializeManagedServiceIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ManagedServiceIdentityUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedServiceIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

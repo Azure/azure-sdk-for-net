@@ -36,8 +36,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 return null;
             }
             DeidServiceProperties properties = default;
-            ManagedServiceIdentity identity = default;
+            Models.ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -137,8 +136,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

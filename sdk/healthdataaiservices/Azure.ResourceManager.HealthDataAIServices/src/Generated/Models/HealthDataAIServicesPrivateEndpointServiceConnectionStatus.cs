@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Connectionaiting for approval or rejection. </summary>
         public static HealthDataAIServicesPrivateEndpointServiceConnectionStatus Pending { get; } = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary> Connection approved. </summary>
         public static HealthDataAIServicesPrivateEndpointServiceConnectionStatus Approved { get; } = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary> Connection Rejected. </summary>
         public static HealthDataAIServicesPrivateEndpointServiceConnectionStatus Rejected { get; } = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(HealthDataAIServicesPrivateEndpointServiceConnectionStatus left, HealthDataAIServicesPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HealthDataAIServicePrivateLinkResourceData"/>. </summary>
-        public HealthDataAIServicePrivateLinkResourceData()
+        internal HealthDataAIServicePrivateLinkResourceData()
         {
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public HealthDataAIServicesPrivateLinkResourceProperties Properties { get; set; }
+        public HealthDataAIServicesPrivateLinkResourceProperties Properties { get; }
     }
 }
