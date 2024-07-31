@@ -609,6 +609,7 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                StartInConferenceMode = options.StartInConferenceMode,
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
@@ -652,8 +653,6 @@ namespace Azure.Communication.CallAutomation
 
             request.OperationContext = options.OperationContext;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
-            // group call should always start in conference mode
-            request.StartInConferenceMode = true;
 
             return request;
         }
