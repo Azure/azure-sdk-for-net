@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<Pipeline> pipelines = default;
+            IList<PipelineGroupServicePipeline> pipelines = default;
             PipelineGroupServicePersistenceConfigurations persistence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("pipelines"u8))
                 {
-                    List<Pipeline> array = new List<Pipeline>();
+                    List<PipelineGroupServicePipeline> array = new List<PipelineGroupServicePipeline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Pipeline.DeserializePipeline(item, options));
+                        array.Add(PipelineGroupServicePipeline.DeserializePipelineGroupServicePipeline(item, options));
                     }
                     pipelines = array;
                     continue;

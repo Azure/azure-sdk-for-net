@@ -316,11 +316,19 @@ rename-mapping:
   Unit: MonitorMetricUnit
   CacheConfiguration: MonitorWorkspaceLogsExporterCacheConfiguration
   ConcurrencyConfiguration: MonitorWorkspaceLogsExporterConcurrencyConfiguration
+  SchemaMap: MonitorWorkspaceLogsSchemaMap
+  RecordMap: MonitorWorkspaceLogsRecordMap
+  ResourceMap: MonitorWorkspaceLogsResourceMap
+  ScopeMap: MonitorWorkspaceLogsScopeMap
   Receiver: PipelineGroupReceiver
+  ReceiverType: PipelineGroupReceiverType
   Processor: PipelineGroupProcessor
+  ProcessorType: PipelineGroupProcessorType
   Exporter: PipelineGroupExporter
   ExporterType: PipelineGroupExporterType
   Service: PipelineGroupService
+  Pipeline: PipelineGroupServicePipeline
+  PipelineType: PipelineGroupServicePipelineType
   PersistenceConfigurations: PipelineGroupServicePersistenceConfigurations
   NetworkingConfiguration: PipelineGroupNetworkingConfiguration
   NetworkingRoute: PipelineGroupNetworkingRoute

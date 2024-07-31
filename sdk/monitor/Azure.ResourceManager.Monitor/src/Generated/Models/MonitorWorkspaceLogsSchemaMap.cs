@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Schema map for azure monitor for logs. </summary>
-    public partial class SchemaMap
+    public partial class MonitorWorkspaceLogsSchemaMap
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SchemaMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsSchemaMap"/>. </summary>
         /// <param name="recordMap"> Record Map. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordMap"/> is null. </exception>
-        public SchemaMap(IEnumerable<RecordMap> recordMap)
+        public MonitorWorkspaceLogsSchemaMap(IEnumerable<MonitorWorkspaceLogsRecordMap> recordMap)
         {
             Argument.AssertNotNull(recordMap, nameof(recordMap));
 
             RecordMap = recordMap.ToList();
-            ResourceMap = new ChangeTrackingList<ResourceMap>();
-            ScopeMap = new ChangeTrackingList<ScopeMap>();
+            ResourceMap = new ChangeTrackingList<MonitorWorkspaceLogsResourceMap>();
+            ScopeMap = new ChangeTrackingList<MonitorWorkspaceLogsScopeMap>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchemaMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsSchemaMap"/>. </summary>
         /// <param name="recordMap"> Record Map. </param>
         /// <param name="resourceMap"> Resource Map captures information about the entity for which telemetry is recorded. For example, metrics exposed by a Kubernetes container can be linked to a resource that specifies the cluster, namespace, pod, and container name.Resource may capture an entire hierarchy of entity identification. It may describe the host in the cloud and specific container or an application running in the process. </param>
         /// <param name="scopeMap"> A scope map is a logical unit of the application code with which the emitted telemetry can be associated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaMap(IList<RecordMap> recordMap, IList<ResourceMap> resourceMap, IList<ScopeMap> scopeMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceLogsSchemaMap(IList<MonitorWorkspaceLogsRecordMap> recordMap, IList<MonitorWorkspaceLogsResourceMap> resourceMap, IList<MonitorWorkspaceLogsScopeMap> scopeMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecordMap = recordMap;
             ResourceMap = resourceMap;
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchemaMap"/> for deserialization. </summary>
-        internal SchemaMap()
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsSchemaMap"/> for deserialization. </summary>
+        internal MonitorWorkspaceLogsSchemaMap()
         {
         }
 
         /// <summary> Record Map. </summary>
-        public IList<RecordMap> RecordMap { get; }
+        public IList<MonitorWorkspaceLogsRecordMap> RecordMap { get; }
         /// <summary> Resource Map captures information about the entity for which telemetry is recorded. For example, metrics exposed by a Kubernetes container can be linked to a resource that specifies the cluster, namespace, pod, and container name.Resource may capture an entire hierarchy of entity identification. It may describe the host in the cloud and specific container or an application running in the process. </summary>
-        public IList<ResourceMap> ResourceMap { get; }
+        public IList<MonitorWorkspaceLogsResourceMap> ResourceMap { get; }
         /// <summary> A scope map is a logical unit of the application code with which the emitted telemetry can be associated. </summary>
-        public IList<ScopeMap> ScopeMap { get; }
+        public IList<MonitorWorkspaceLogsScopeMap> ScopeMap { get; }
     }
 }

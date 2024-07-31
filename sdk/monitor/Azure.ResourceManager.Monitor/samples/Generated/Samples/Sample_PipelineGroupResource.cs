@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Samples
                 Replicas = 3,
                 Receivers =
 {
-new PipelineGroupReceiver(ReceiverType.Syslog,"syslog-receiver1")
+new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog,"syslog-receiver1")
 {
 Syslog = new SyslogReceiver("0.0.0.0:514"),
 }
@@ -123,9 +123,9 @@ Syslog = new SyslogReceiver("0.0.0.0:514"),
 {
 new PipelineGroupExporter(PipelineGroupExporterType.AzureMonitorWorkspaceLogs,"my-workspace-logs-exporter1")
 {
-AzureMonitorWorkspaceLogs = new AzureMonitorWorkspaceLogsExporter(new AzureMonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new SchemaMap(new RecordMap[]
+AzureMonitorWorkspaceLogs = new AzureMonitorWorkspaceLogsExporter(new AzureMonitorWorkspaceLogsApiConfig(new Uri("https://logs-myingestion-eb0s.eastus-1.ingest.monitor.azure.com"),"Custom-MyTableRawData_CL","dcr-00000000000000000000000000000000",new MonitorWorkspaceLogsSchemaMap(new MonitorWorkspaceLogsRecordMap[]
 {
-new RecordMap("body","Body"),new RecordMap("severity_text","SeverityText"),new RecordMap("time_unix_nano","TimeGenerated")
+new MonitorWorkspaceLogsRecordMap("body","Body"),new MonitorWorkspaceLogsRecordMap("severity_text","SeverityText"),new MonitorWorkspaceLogsRecordMap("time_unix_nano","TimeGenerated")
 })))
 {
 Concurrency = new MonitorWorkspaceLogsExporterConcurrencyConfiguration()
@@ -140,7 +140,7 @@ BatchQueueSize = 100,
                 {
                     Pipelines =
 {
-new Pipeline("MyPipelineForLogs1",PipelineType.Logs,new string[]
+new PipelineGroupServicePipeline("MyPipelineForLogs1",PipelineGroupServicePipelineType.Logs,new string[]
 {
 "syslog-receiver1"
 },new string[]

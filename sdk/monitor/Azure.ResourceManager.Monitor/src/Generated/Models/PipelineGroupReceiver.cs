@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="receiverType"> The type of receiver. </param>
         /// <param name="name"> The name of receiver. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PipelineGroupReceiver(ReceiverType receiverType, string name)
+        public PipelineGroupReceiver(PipelineGroupReceiverType receiverType, string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="otlp"> OTLP receiver configurations. This field is mandatory for OTLP and pipelineGroup receivers. </param>
         /// <param name="udp"> UDP receiver configurations. This field is mandatory for UDP receivers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupReceiver(ReceiverType receiverType, string name, SyslogReceiver syslog, OtlpReceiver otlp, UdpReceiver udp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupReceiver(PipelineGroupReceiverType receiverType, string name, SyslogReceiver syslog, OtlpReceiver otlp, UdpReceiver udp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReceiverType = receiverType;
             Name = name;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The type of receiver. </summary>
-        public ReceiverType ReceiverType { get; set; }
+        public PipelineGroupReceiverType ReceiverType { get; set; }
         /// <summary> The name of receiver. </summary>
         public string Name { get; set; }
         /// <summary> Syslog configurations. This field is mandatory for syslog type receivers. </summary>

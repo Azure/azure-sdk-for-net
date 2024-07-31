@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Scope map for schema in azure monitor. </summary>
-    public partial class ScopeMap
+    public partial class MonitorWorkspaceLogsScopeMap
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScopeMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsScopeMap"/>. </summary>
         /// <param name="from"> Scope Map Key. </param>
         /// <param name="to"> Scope Map Value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="to"/> is null. </exception>
-        public ScopeMap(string @from, string to)
+        public MonitorWorkspaceLogsScopeMap(string @from, string to)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Monitor.Models
             To = to;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScopeMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsScopeMap"/>. </summary>
         /// <param name="from"> Scope Map Key. </param>
         /// <param name="to"> Scope Map Value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScopeMap(string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceLogsScopeMap(string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             From = @from;
             To = to;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScopeMap"/> for deserialization. </summary>
-        internal ScopeMap()
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceLogsScopeMap"/> for deserialization. </summary>
+        internal MonitorWorkspaceLogsScopeMap()
         {
         }
 

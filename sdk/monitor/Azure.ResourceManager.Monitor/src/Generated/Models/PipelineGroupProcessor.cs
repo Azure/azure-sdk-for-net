@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="processorType"> The type of processor. </param>
         /// <param name="name"> The name of processor. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PipelineGroupProcessor(ProcessorType processorType, string name)
+        public PipelineGroupProcessor(PipelineGroupProcessorType processorType, string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of processor. </param>
         /// <param name="batch"> Batch processor configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupProcessor(ProcessorType processorType, string name, BatchProcessor batch, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupProcessor(PipelineGroupProcessorType processorType, string name, BatchProcessor batch, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProcessorType = processorType;
             Name = name;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The type of processor. </summary>
-        public ProcessorType ProcessorType { get; set; }
+        public PipelineGroupProcessorType ProcessorType { get; set; }
         /// <summary> The name of processor. </summary>
         public string Name { get; set; }
         /// <summary> Batch processor configurations. </summary>

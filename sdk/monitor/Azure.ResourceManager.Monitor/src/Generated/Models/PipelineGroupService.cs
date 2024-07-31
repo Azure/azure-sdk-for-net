@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="PipelineGroupService"/>. </summary>
         /// <param name="pipelines"> Pipelines belonging to a given pipeline group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelines"/> is null. </exception>
-        public PipelineGroupService(IEnumerable<Pipeline> pipelines)
+        public PipelineGroupService(IEnumerable<PipelineGroupServicePipeline> pipelines)
         {
             Argument.AssertNotNull(pipelines, nameof(pipelines));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="pipelines"> Pipelines belonging to a given pipeline group. </param>
         /// <param name="persistence"> Persistence options to all pipelines in the instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupService(IList<Pipeline> pipelines, PipelineGroupServicePersistenceConfigurations persistence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupService(IList<PipelineGroupServicePipeline> pipelines, PipelineGroupServicePersistenceConfigurations persistence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Pipelines = pipelines;
             Persistence = persistence;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Pipelines belonging to a given pipeline group. </summary>
-        public IList<Pipeline> Pipelines { get; }
+        public IList<PipelineGroupServicePipeline> Pipelines { get; }
         /// <summary> Persistence options to all pipelines in the instance. </summary>
         internal PipelineGroupServicePersistenceConfigurations Persistence { get; set; }
         /// <summary> The name of the mounted persistent volume. </summary>

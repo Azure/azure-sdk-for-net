@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            ReceiverType type = default;
+            PipelineGroupReceiverType type = default;
             string name = default;
             SyslogReceiver syslog = default;
             OtlpReceiver otlp = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ReceiverType(property.Value.GetString());
+                    type = new PipelineGroupReceiverType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
