@@ -17,6 +17,8 @@ namespace Azure.AI.Language.Conversations
         /// </summary>
         public virtual Uri Endpoint => _endpoint;
 
+        private readonly TokenCredential _tokenCredential;
+
         /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -30,12 +32,13 @@ namespace Azure.AI.Language.Conversations
 
             var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? ConversationsAudience.AzurePublicCloud : options.Audience)}/.default";
 
+            _tokenCredential = credential;
+
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
-
 
         /// <summary>
         /// Convenience method to submit an analysis long running operation for conversations and return the response once processed.

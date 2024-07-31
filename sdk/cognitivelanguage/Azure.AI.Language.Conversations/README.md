@@ -122,7 +122,7 @@ The Azure.AI.Language.Conversations client library provides both synchronous and
 
 The following examples show common scenarios using the `client` [created above](#create-a-conversationanalysisclient).
 
-### Analyze a conversation
+### Extracting intents and entities from a conversation (Conversation Language Understanding)
 
 To analyze a conversation, you can call the `AnalyzeConversation()` method:
 
@@ -182,7 +182,7 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 }
 ```
 
-Additional options can be passed to `AnalyzeConversations` like enabling more verbose output:
+Additional options can be passed to `AnalyzeConversation` like enabling more verbose output:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 string projectName = "Menu";
@@ -204,7 +204,7 @@ AnalyzeConversationInput data = new ConversationalInput(
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
-### Analyze a conversation in a different language
+#### Extracting intents and entities from a conversation in a different language (Conversation Language Understanding)
 
 The `language` property can be set to specify the language of the conversation:
 
@@ -232,7 +232,7 @@ AnalyzeConversationInput data =
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
-### Analyze a conversation using an orchestration project
+### Analyze a conversation using an orchestration project (Conversation Orchestration)
 
 To analyze a conversation using an orchestration project, you can call the `AnalyzeConversations()` method just like the conversation project.
 
@@ -277,9 +277,33 @@ if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringT
 }
 ```
 
+#### CLU prediction
+
+If your conversation was analyzed by CLU, it will include an intent:
+
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult is ConversationTargetIntentResult conversationTargetIntent)
+{
+    ConversationResult conversationResult = conversationTargetIntent.Result;
+    ConversationPrediction conversationPrediction = conversationResult.Prediction;
+
+    Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
+    Console.WriteLine($"Intents:");
+    foreach (ConversationIntent intent in conversationPrediction.Intents)
+    {
+        Console.WriteLine($"Intent Category: {intent.Category}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
+        Console.WriteLine();
+    }
+}
+```
+
 ### Summarize a conversation
 
-To summarize a conversation, you can use the `AnalyzeConversationsOperation` method overload that returns an `Response<AnalyzeConversationJobState>`:
+To summarize a conversation, you can use the `AnalyzeConversationsAsync` method overload that returns an `Response<AnalyzeConversationJobState>`:
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
 MultiLanguageConversationInput input = new MultiLanguageConversationInput(
@@ -356,7 +380,7 @@ foreach (var operationResult in operationState.Actions.Items)
 
 ### Extract PII from a conversation
 
-To detect and redact PII in a conversation, you can use the `AnalyzeConversationsOperation` method overload with an action of type `PiiOperationAction`:
+To detect and redact PII in a conversation, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction`:
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
 MultiLanguageConversationInput input = new MultiLanguageConversationInput(
