@@ -840,7 +840,7 @@ namespace Azure.Storage.Files.Shares
                 metadata: options?.Metadata,
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission?.Permission,
-                permissionFormat: options?.FilePermission?.PermissionFormat,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -886,7 +886,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
-                permissionFormat: null,
+                filePermissionFormat: null,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -921,7 +921,7 @@ namespace Azure.Storage.Files.Shares
                 metadata: options?.Metadata,
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission?.Permission,
-                permissionFormat: options?.FilePermission?.PermissionFormat,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 async: true,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -967,7 +967,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
-                permissionFormat: null,
+                filePermissionFormat: null,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -988,6 +988,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional file permission format.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1011,7 +1014,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
-            FilePermissionFormat? permissionFormat,
+            FilePermissionFormat? filePermissionFormat,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -1027,7 +1030,7 @@ namespace Azure.Storage.Files.Shares
                         metadata,
                         smbProperties,
                         filePermission,
-                        permissionFormat,
+                        filePermissionFormat,
                         async,
                         cancellationToken,
                         operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(CreateIfNotExists)}")

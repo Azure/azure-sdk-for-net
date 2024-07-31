@@ -3261,9 +3261,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermissionFormat">
         /// Optional. Available for version 2024-11-04 and later. Specifies the format in which the permission is returned.
-        /// If filePermissionFormat is unspecified or explicityly set to <see cref="FilePermissionKeyFormat.Sddl"/>, the permission will be
+        /// If filePermissionFormat is unspecified or explicityly set to <see cref="FilePermissionFormat.Sddl"/>, the permission will be
         /// returned in SSDL format.
-        /// If filePermissionFormat is explicity set to <see cref="FilePermissionKeyFormat.Binary"/>, the permission is returned as a
+        /// If filePermissionFormat is explicity set to <see cref="FilePermissionFormat.Binary"/>, the permission is returned as a
         /// base64 string representing the binary encoding of the permission in self-relative format.
         /// </param>
         /// <param name="cancellationToken">
@@ -3293,9 +3293,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermissionFormat">
         /// Optional. Available for version 2024-11-04 and later. Specifies the format in which the permission is returned.
-        /// If filePermissionFormat is unspecified or explicityly set to <see cref="FilePermissionKeyFormat.Sddl"/>, the permission will be
+        /// If filePermissionFormat is unspecified or explicityly set to <see cref="FilePermissionFormat.Sddl"/>, the permission will be
         /// returned in SSDL format.
-        /// If filePermissionFormat is explicity set to <see cref="FilePermissionKeyFormat.Binary"/>, the permission is returned as a
+        /// If filePermissionFormat is explicity set to <see cref="FilePermissionFormat.Binary"/>, the permission is returned as a
         /// base64 string representing the binary encoding of the permission in self-relative format.
         /// </param>
         /// <param name="cancellationToken">
@@ -3602,14 +3602,14 @@ namespace Azure.Storage.Files.Shares
 
         #region CreateDirectory
         /// <summary>
-        /// The <see cref="CreateDirectory"/> operation creates a new
+        /// The <see cref="CreateDirectoryAsync(string, ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new
         /// directory in this share.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
         /// Create Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to create.
         /// </param>
         /// <param name="options">
@@ -3646,14 +3646,14 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="CreateDirectory"/> operation creates a new
+        /// The <see cref="CreateDirectory(string, Metadata, FileSmbProperties, string, CancellationToken)"/> operation creates a new
         /// directory in this share.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
         /// Create Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to create.
         /// </param>
         /// <param name="metadata">
@@ -3701,14 +3701,14 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="CreateDirectoryAsync"/> operation creates a new
+        /// The <see cref="CreateDirectoryAsync(string, ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new
         /// directory in this share.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
         /// Create Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to create.
         /// </param>
         /// <param name="options">
@@ -3745,14 +3745,14 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="CreateDirectoryAsync"/> operation creates a new
+        /// The <see cref="CreateDirectoryAsync(string, Metadata, FileSmbProperties, string, CancellationToken)"/> operation creates a new
         /// directory in this share.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
         /// Create Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to create.
         /// </param>
         /// <param name="metadata">
@@ -3809,7 +3809,7 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
         /// Delete Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to delete.
         /// </param>
         /// <param name="cancellationToken">
@@ -3839,7 +3839,7 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
         /// Delete Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to delete.
         /// </param>
         /// <param name="cancellationToken">
