@@ -3440,7 +3440,7 @@ namespace Azure.Storage.Files.Shares
         /// Creates a permission (a security descriptor) at the share level. The created security descriptor
         /// can be used for the files/directories in the share.
         /// </summary>
-        /// <param name="filePermission">
+        /// <param name="permission">
         /// A <see cref="ShareFilePermission"/>.
         /// </param>
         /// <param name="cancellationToken">
@@ -3452,11 +3452,11 @@ namespace Azure.Storage.Files.Shares
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Response<PermissionInfo> CreatePermission(
-            ShareFilePermission filePermission,
+            ShareFilePermission permission,
             CancellationToken cancellationToken = default) =>
             CreatePermissionInternal(
-                permission: filePermission?.Permission,
-                permissionFormat: filePermission?.PermissionFormat,
+                permission: permission?.Permission,
+                permissionFormat: permission?.PermissionFormat,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3465,7 +3465,7 @@ namespace Azure.Storage.Files.Shares
         /// Creates a permission (a security descriptor) at the share level. The created security descriptor
         /// can be used for the files/directories in the share.
         /// </summary>
-        /// <param name="filePermission">
+        /// <param name="permission">
         /// A <see cref="ShareFilePermission"/>.
         /// </param>
         /// <param name="cancellationToken">
@@ -3478,11 +3478,11 @@ namespace Azure.Storage.Files.Shares
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
-            ShareFilePermission filePermission,
+            ShareFilePermission permission,
             CancellationToken cancellationToken = default) =>
             await CreatePermissionInternal(
-                permission: filePermission?.Permission,
-                permissionFormat: filePermission?.PermissionFormat,
+                permission: permission?.Permission,
+                permissionFormat: permission?.PermissionFormat,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
