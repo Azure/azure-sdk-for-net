@@ -36,7 +36,7 @@
    ],
    "Description": "The type of message. Supports text, image, template.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "Input,Json"
   },
   {
    "$id": "7",
@@ -87,7 +87,7 @@
    ],
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "Input,Json"
   },
   {
    "$id": "15",
@@ -108,7 +108,7 @@
    ],
    "Description": "The type of the message template.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "Input,Json"
   },
   {
    "$id": "18",
@@ -135,13 +135,13 @@
    ],
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "Input,Json"
   },
   {
    "$id": "22",
    "Kind": "enum",
-   "Name": "RepeatabilityResult",
-   "CrossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
+   "Name": "Versions",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
    "ValueType": {
     "$id": "23",
     "Kind": "string"
@@ -149,51 +149,45 @@
    "Values": [
     {
      "$id": "24",
-     "Name": "accepted",
-     "Value": "accepted",
-     "Description": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation."
-    },
-    {
-     "$id": "25",
-     "Name": "rejected",
-     "Value": "rejected",
-     "Description": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server."
+     "Name": "c2024_02_01",
+     "Value": "2024-02-01",
+     "Description": "Azure Communication Messages 2024-02-01 api version"
     }
    ],
-   "Description": "Repeatability Result header options",
+   "Description": "Azure Communication Messages Versions",
    "IsExtensible": false,
-   "Usage": "Output"
+   "Usage": "ApiVersionEnum"
   },
   {
-   "$id": "26",
+   "$id": "25",
    "Kind": "enum",
    "Name": "MessageTemplateStatus",
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
    "ValueType": {
-    "$id": "27",
+    "$id": "26",
     "Kind": "string"
    },
    "Values": [
     {
-     "$id": "28",
+     "$id": "27",
      "Name": "approved",
      "Value": "approved",
      "Description": "Message template is approved."
     },
     {
-     "$id": "29",
+     "$id": "28",
      "Name": "rejected",
      "Value": "rejected",
      "Description": "Message template is rejected."
     },
     {
-     "$id": "30",
+     "$id": "29",
      "Name": "pending",
      "Value": "pending",
      "Description": "Message template is pending."
     },
     {
-     "$id": "31",
+     "$id": "30",
      "Name": "paused",
      "Value": "paused",
      "Description": "Message template is paused."
@@ -201,20 +195,20 @@
    ],
    "Description": "The aggregated template status.",
    "IsExtensible": true,
-   "Usage": "Output"
+   "Usage": "Output,Json"
   },
   {
-   "$id": "32",
+   "$id": "31",
    "Kind": "enum",
    "Name": "CommunicationMessagesChannel",
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessagesChannel",
    "ValueType": {
-    "$id": "33",
+    "$id": "32",
     "Kind": "string"
    },
    "Values": [
     {
-     "$id": "34",
+     "$id": "33",
      "Name": "whatsApp",
      "Value": "whatsApp",
      "Description": "The WhatsApp communication messages channel type."
@@ -222,26 +216,32 @@
    ],
    "Description": "The type of the communication messages channel.",
    "IsExtensible": true,
-   "Usage": "Output"
+   "Usage": "Output,Json"
   },
   {
-   "$id": "35",
+   "$id": "34",
    "Kind": "enum",
-   "Name": "Versions",
-   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
+   "Name": "RepeatabilityResult",
+   "CrossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
    "ValueType": {
-    "$id": "36",
+    "$id": "35",
     "Kind": "string"
    },
    "Values": [
     {
+     "$id": "36",
+     "Name": "accepted",
+     "Value": "accepted",
+     "Description": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation."
+    },
+    {
      "$id": "37",
-     "Name": "c2024_02_01",
-     "Value": "2024-02-01",
-     "Description": "Azure Communication Messages 2024-02-01 api version"
+     "Name": "rejected",
+     "Value": "rejected",
+     "Description": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server."
     }
    ],
-   "Description": "Azure Communication Messages Versions",
+   "Description": "Repeatability Result header options",
    "IsExtensible": false,
    "Usage": "None"
   }
@@ -252,7 +252,7 @@
    "Kind": "model",
    "Name": "NotificationContent",
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent",
-   "Usage": "Input",
+   "Usage": "Input,Json",
    "Description": "Details of the message to send.",
    "DiscriminatorProperty": {
     "$id": "39",
@@ -309,7 +309,7 @@
      "Kind": "model",
      "Name": "TextNotificationContent",
      "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent",
-     "Usage": "Input",
+     "Usage": "Input,Json",
      "Description": "A request to send a text notification.",
      "DiscriminatorValue": "text",
      "BaseModel": {
@@ -353,7 +353,7 @@
      "Kind": "model",
      "Name": "MediaNotificationContent",
      "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent",
-     "Usage": "Input",
+     "Usage": "Input,Json",
      "Description": "A request to send a media notification.",
      "DiscriminatorValue": "image",
      "BaseModel": {
@@ -409,7 +409,7 @@
      "Kind": "model",
      "Name": "TemplateNotificationContent",
      "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent",
-     "Usage": "Input",
+     "Usage": "Input,Json",
      "Description": "A request to send a template notification.",
      "DiscriminatorValue": "template",
      "BaseModel": {
@@ -444,7 +444,7 @@
         "Kind": "model",
         "Name": "MessageTemplate",
         "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate",
-        "Usage": "Input",
+        "Usage": "Input,Json",
         "Description": "The template object used to create templates.",
         "Properties": [
          {
@@ -485,7 +485,7 @@
             "Kind": "model",
             "Name": "MessageTemplateValue",
             "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue",
-            "Usage": "Input",
+            "Usage": "Input,Json",
             "Description": "The class describes a parameter of a template.",
             "DiscriminatorProperty": {
              "$id": "73",
@@ -523,7 +523,7 @@
               "Kind": "model",
               "Name": "MessageTemplateText",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's text value information.",
               "DiscriminatorValue": "text",
               "BaseModel": {
@@ -567,7 +567,7 @@
               "Kind": "model",
               "Name": "MessageTemplateImage",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's image value information.",
               "DiscriminatorValue": "image",
               "BaseModel": {
@@ -635,7 +635,7 @@
               "Kind": "model",
               "Name": "MessageTemplateDocument",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's document value information.",
               "DiscriminatorValue": "document",
               "BaseModel": {
@@ -703,7 +703,7 @@
               "Kind": "model",
               "Name": "MessageTemplateVideo",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's video value information.",
               "DiscriminatorValue": "video",
               "BaseModel": {
@@ -771,7 +771,7 @@
               "Kind": "model",
               "Name": "MessageTemplateLocation",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's location value information.",
               "DiscriminatorValue": "location",
               "BaseModel": {
@@ -851,7 +851,7 @@
               "Kind": "model",
               "Name": "MessageTemplateQuickAction",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's quick action value information.",
               "DiscriminatorValue": "quickAction",
               "BaseModel": {
@@ -919,7 +919,7 @@
            "Kind": "model",
            "Name": "MessageTemplateBindings",
            "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings",
-           "Usage": "Input",
+           "Usage": "Input,Json",
            "Description": "The binding object to link values to the template specific locations",
            "DiscriminatorProperty": {
             "$id": "135",
@@ -945,7 +945,7 @@
              "Kind": "model",
              "Name": "WhatsAppMessageTemplateBindings",
              "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings",
-             "Usage": "Input",
+             "Usage": "Input,Json",
              "Description": "The template bindings for WhatsApp",
              "DiscriminatorValue": "whatsApp",
              "BaseModel": {
@@ -984,7 +984,7 @@
                  "Kind": "model",
                  "Name": "WhatsAppMessageTemplateBindingsComponent",
                  "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent",
-                 "Usage": "Input",
+                 "Usage": "Input,Json",
                  "Description": "The template bindings component for WhatsApp",
                  "Properties": [
                   {
@@ -1054,7 +1054,7 @@
                  "Kind": "model",
                  "Name": "WhatsAppMessageTemplateBindingsButton",
                  "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton",
-                 "Usage": "Input",
+                 "Usage": "Input,Json",
                  "Description": "The template bindings component button for WhatsApp",
                  "Properties": [
                   {
@@ -1153,7 +1153,7 @@
    "Kind": "model",
    "Name": "SendMessageResult",
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult",
-   "Usage": "Output",
+   "Usage": "Output,Json",
    "Description": "Result of the send message operation.",
    "Properties": [
     {
@@ -1170,7 +1170,7 @@
        "Kind": "model",
        "Name": "MessageReceipt",
        "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt",
-       "Usage": "Output",
+       "Usage": "Output,Json",
        "Description": "Receipt of the sending one message.",
        "Properties": [
         {
@@ -1212,126 +1212,132 @@
   {
    "$id": "164",
    "Kind": "model",
+   "Name": "MessageTemplateItem",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem",
+   "Usage": "Output,Json",
+   "Description": "The message template as returned from the service.",
+   "DiscriminatorProperty": {
+    "$id": "165",
+    "Name": "kind",
+    "SerializedName": "kind",
+    "Description": "The type discriminator describing a template type.",
+    "Type": {
+     "$ref": "31"
+    },
+    "IsRequired": true,
+    "IsReadOnly": false,
+    "IsDiscriminator": true
+   },
+   "Properties": [
+    {
+     "$id": "166",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "The template's name.",
+     "Type": {
+      "$id": "167",
+      "Kind": "string"
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "168",
+     "Name": "language",
+     "SerializedName": "language",
+     "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
+     "Type": {
+      "$id": "169",
+      "Kind": "string"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "170",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "The aggregated template status.",
+     "Type": {
+      "$ref": "25"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$ref": "165"
+    }
+   ],
+   "DiscriminatedSubtypes": {
+    "$id": "171",
+    "whatsApp": {
+     "$id": "172",
+     "Kind": "model",
+     "Name": "WhatsAppMessageTemplateItem",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem",
+     "Usage": "Output,Json",
+     "Description": "The WhatsApp-specific template response contract",
+     "DiscriminatorValue": "whatsApp",
+     "BaseModel": {
+      "$ref": "164"
+     },
+     "Properties": [
+      {
+       "$id": "173",
+       "Name": "content",
+       "SerializedName": "content",
+       "Description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
+       "Type": {
+        "$id": "174",
+        "Kind": "any"
+       },
+       "IsRequired": false,
+       "IsReadOnly": false
+      },
+      {
+       "$id": "175",
+       "Name": "kind",
+       "SerializedName": "kind",
+       "Description": "Message template response type is whatsApp.",
+       "Type": {
+        "$id": "176",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "177",
+         "Kind": "string"
+        },
+        "Value": "whatsApp"
+       },
+       "IsRequired": true,
+       "IsReadOnly": false,
+       "IsDiscriminator": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "$ref": "172"
+  },
+  {
+   "$id": "178",
+   "Kind": "model",
    "Name": "PagedMessageTemplateItem",
    "CrossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
-   "Usage": "Output",
+   "Usage": "None",
    "Description": "Paged collection of MessageTemplateItem items",
    "Properties": [
     {
-     "$id": "165",
+     "$id": "179",
      "Name": "value",
      "SerializedName": "value",
      "Description": "The MessageTemplateItem items on this page",
      "Type": {
-      "$id": "166",
+      "$id": "180",
       "Kind": "array",
       "Name": "ArrayMessageTemplateItem",
       "ValueType": {
-       "$id": "167",
-       "Kind": "model",
-       "Name": "MessageTemplateItem",
-       "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem",
-       "Usage": "Output",
-       "Description": "The message template as returned from the service.",
-       "DiscriminatorProperty": {
-        "$id": "168",
-        "Name": "kind",
-        "SerializedName": "kind",
-        "Description": "The type discriminator describing a template type.",
-        "Type": {
-         "$ref": "32"
-        },
-        "IsRequired": true,
-        "IsReadOnly": false,
-        "IsDiscriminator": true
-       },
-       "Properties": [
-        {
-         "$id": "169",
-         "Name": "name",
-         "SerializedName": "name",
-         "Description": "The template's name.",
-         "Type": {
-          "$id": "170",
-          "Kind": "string"
-         },
-         "IsRequired": true,
-         "IsReadOnly": true
-        },
-        {
-         "$id": "171",
-         "Name": "language",
-         "SerializedName": "language",
-         "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
-         "Type": {
-          "$id": "172",
-          "Kind": "string"
-         },
-         "IsRequired": true,
-         "IsReadOnly": false
-        },
-        {
-         "$id": "173",
-         "Name": "status",
-         "SerializedName": "status",
-         "Description": "The aggregated template status.",
-         "Type": {
-          "$ref": "26"
-         },
-         "IsRequired": true,
-         "IsReadOnly": false
-        },
-        {
-         "$ref": "168"
-        }
-       ],
-       "DiscriminatedSubtypes": {
-        "$id": "174",
-        "whatsApp": {
-         "$id": "175",
-         "Kind": "model",
-         "Name": "WhatsAppMessageTemplateItem",
-         "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem",
-         "Usage": "Output",
-         "Description": "The WhatsApp-specific template response contract",
-         "DiscriminatorValue": "whatsApp",
-         "BaseModel": {
-          "$ref": "167"
-         },
-         "Properties": [
-          {
-           "$id": "176",
-           "Name": "content",
-           "SerializedName": "content",
-           "Description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
-           "Type": {
-            "$id": "177",
-            "Kind": "any"
-           },
-           "IsRequired": false,
-           "IsReadOnly": false
-          },
-          {
-           "$id": "178",
-           "Name": "kind",
-           "SerializedName": "kind",
-           "Description": "Message template response type is whatsApp.",
-           "Type": {
-            "$id": "179",
-            "Kind": "constant",
-            "ValueType": {
-             "$id": "180",
-             "Kind": "string"
-            },
-            "Value": "whatsApp"
-           },
-           "IsRequired": true,
-           "IsReadOnly": false,
-           "IsDiscriminator": true
-          }
-         ]
-        }
-       }
+       "$ref": "164"
       },
       "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
@@ -1351,19 +1357,12 @@
      "IsReadOnly": false
     }
    ]
-  },
-  {
-   "$ref": "167"
-  },
-  {
-   "$ref": "175"
   }
  ],
  "Clients": [
   {
    "$id": "183",
    "Name": "NotificationMessagesClient",
-   "Description": "",
    "Operations": [
     {
      "$id": "184",
@@ -1379,7 +1378,7 @@
        "Description": "The communication resource, for example https://my-resource.communication.azure.com",
        "Type": {
         "$id": "186",
-        "Kind": "url"
+        "Kind": "uri"
        },
        "Location": "Uri",
        "IsApiVersion": false,
@@ -1401,6 +1400,12 @@
         "Kind": "string"
        },
        "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
        "DefaultValue": {
         "$id": "189",
         "Type": {
@@ -1408,15 +1413,7 @@
          "Kind": "string"
         },
         "Value": "2024-02-01"
-       },
-       "IsRequired": true,
-       "IsApiVersion": true,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Client"
+       }
       },
       {
        "$id": "191",
@@ -1428,13 +1425,11 @@
         "Kind": "string"
        },
        "Location": "Header",
-       "IsRequired": false,
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
+       "IsRequired": false,
        "Kind": "Method"
       },
       {
@@ -1452,13 +1447,11 @@
         }
        },
        "Location": "Header",
-       "IsRequired": false,
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
+       "IsRequired": false,
        "Kind": "Method"
       },
       {
@@ -1472,82 +1465,71 @@
         "Encode": "string"
        },
        "Location": "Header",
-       "IsRequired": false,
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
+       "IsRequired": false,
        "Kind": "Method"
       },
       {
        "$id": "198",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "199",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "200",
+         "Kind": "string"
+        },
+        "Value": "application/json"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "201",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "202",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "203",
+         "Kind": "string"
+        },
+        "Value": "application/json"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "204",
        "Name": "notificationContent",
-       "NameInRequest": "body",
+       "NameInRequest": "notificationContent",
        "Description": "Details of the message to send.",
        "Type": {
         "$ref": "38"
        },
        "Location": "Body",
-       "IsRequired": true,
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
+       "IsRequired": true,
        "Kind": "Method"
-      },
-      {
-       "$id": "199",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "200",
-        "Kind": "string"
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "201",
-        "Type": {
-         "$ref": "200"
-        },
-        "Value": "application/json"
-       }
-      },
-      {
-       "$id": "202",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Type": {
-        "$id": "203",
-        "Kind": "string"
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": true,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "204",
-        "Type": {
-         "$ref": "203"
-        },
-        "Value": "application/json"
-       }
       }
      ],
      "Responses": [
@@ -1563,17 +1545,17 @@
        "Headers": [
         {
          "$id": "206",
-         "Name": "Repeatability-Result",
-         "NameInResponse": "repeatabilityResult",
+         "Name": "repeatabilityResult",
+         "NameInResponse": "Repeatability-Result",
          "Description": "Indicates whether the repeatable request was accepted or rejected.",
          "Type": {
-          "$ref": "22"
+          "$ref": "34"
          }
         },
         {
          "$id": "207",
-         "Name": "x-ms-client-request-id",
-         "NameInResponse": "clientRequestId",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
           "$id": "208",
@@ -1619,105 +1601,115 @@
         "Kind": "string"
        },
        "Location": "Query",
-       "DefaultValue": {
-        "$ref": "189"
-       },
-       "IsRequired": true,
        "IsApiVersion": true,
-       "IsResourceParameter": false,
        "IsContentType": false,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
-       "Kind": "Client"
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "212",
+        "Type": {
+         "$id": "213",
+         "Kind": "string"
+        },
+        "Value": "2024-02-01"
+       }
       },
       {
-       "$id": "212",
+       "$id": "214",
        "Name": "id",
        "NameInRequest": "id",
        "Description": "The stream ID.",
        "Type": {
-        "$id": "213",
+        "$id": "215",
         "Kind": "string"
        },
        "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
        "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "214",
-       "Name": "clientRequestId",
-       "NameInRequest": "x-ms-client-request-id",
-       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
-       "Type": {
-        "$id": "215",
-        "Kind": "uuid",
-        "Encode": "string"
-       },
-       "Location": "Header",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
        "Kind": "Method"
       },
       {
        "$id": "216",
-       "Name": "accept",
-       "NameInRequest": "Accept",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
         "$id": "217",
-        "Kind": "string"
+        "Kind": "uuid",
+        "Encode": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
-       "IsRequired": true,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "218",
-        "Type": {
-         "$ref": "217"
+       "IsRequired": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "218",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "219",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "220",
+         "Kind": "string"
         },
         "Value": "application/octet-stream"
-       }
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant"
       }
      ],
      "Responses": [
       {
-       "$id": "219",
+       "$id": "221",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "220",
+        "$id": "222",
         "Kind": "bytes",
         "Encode": "base64"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "221",
-         "Name": "x-ms-client-request-id",
-         "NameInResponse": "clientRequestId",
+         "$id": "223",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "222",
+          "$id": "224",
           "Kind": "uuid",
           "Encode": "string"
+         }
+        },
+        {
+         "$id": "225",
+         "Name": "contentType",
+         "NameInResponse": "content-type",
+         "Description": "The stream content type.",
+         "Type": {
+          "$id": "226",
+          "Kind": "constant",
+          "ValueType": {
+           "$id": "227",
+           "Kind": "string"
+          },
+          "Value": "application/octet-stream"
          }
         }
        ],
@@ -1737,7 +1729,7 @@
     }
    ],
    "Protocol": {
-    "$id": "223"
+    "$id": "228"
    },
    "Parameters": [
     {
@@ -1746,145 +1738,153 @@
    ]
   },
   {
-   "$id": "224",
+   "$id": "229",
    "Name": "MessageTemplateClient",
-   "Description": "",
    "Operations": [
     {
-     "$id": "225",
+     "$id": "230",
      "Name": "getTemplates",
      "ResourceName": "MessageTemplateItem",
      "Description": "List all templates for given Azure Communication Services channel",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$ref": "185"
-      },
-      {
-       "$id": "226",
-       "Name": "apiVersion",
-       "NameInRequest": "api-version",
-       "Description": "The API version to use for this operation.",
+       "$id": "231",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Description": "The communication resource, for example https://my-resource.communication.azure.com",
        "Type": {
-        "$id": "227",
-        "Kind": "string"
+        "$id": "232",
+        "Kind": "uri"
        },
-       "Location": "Query",
-       "DefaultValue": {
-        "$ref": "189"
-       },
-       "IsRequired": true,
-       "IsApiVersion": true,
+       "Location": "Uri",
+       "IsApiVersion": false,
        "IsResourceParameter": false,
        "IsContentType": false,
-       "IsEndpoint": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
        "SkipUrlEncoding": false,
        "Explode": false,
        "Kind": "Client"
       },
       {
-       "$id": "228",
+       "$id": "233",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "234",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "235",
+        "Type": {
+         "$id": "236",
+         "Kind": "string"
+        },
+        "Value": "2024-02-01"
+       }
+      },
+      {
+       "$id": "237",
        "Name": "channelId",
        "NameInRequest": "channelId",
        "Description": "The registration ID of the channel.",
        "Type": {
-        "$id": "229",
+        "$id": "238",
         "Kind": "uuid",
         "Encode": "string"
        },
        "Location": "Path",
-       "IsRequired": true,
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
+       "IsRequired": true,
        "Kind": "Method"
       },
       {
-       "$id": "230",
+       "$id": "239",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "231",
+        "$id": "240",
         "Kind": "int32"
        },
        "Location": "Query",
-       "IsRequired": false,
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
+       "IsRequired": false,
        "Kind": "Method"
       },
       {
-       "$id": "232",
+       "$id": "241",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "233",
+        "$id": "242",
         "Kind": "uuid",
         "Encode": "string"
        },
        "Location": "Header",
-       "IsRequired": false,
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
+       "IsRequired": false,
        "Kind": "Method"
       },
       {
-       "$id": "234",
+       "$id": "243",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "235",
-        "Kind": "string"
+        "$id": "244",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "245",
+         "Kind": "string"
+        },
+        "Value": "application/json"
        },
        "Location": "Header",
        "IsApiVersion": false,
-       "IsResourceParameter": false,
        "IsContentType": false,
-       "IsRequired": true,
        "IsEndpoint": false,
-       "SkipUrlEncoding": false,
        "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "236",
-        "Type": {
-         "$ref": "235"
-        },
-        "Value": "application/json"
-       }
+       "IsRequired": true,
+       "Kind": "Constant"
       }
      ],
      "Responses": [
       {
-       "$id": "237",
+       "$id": "246",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "164"
+        "$ref": "178"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "238",
-         "Name": "x-ms-client-request-id",
-         "NameInResponse": "clientRequestId",
+         "$id": "247",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "239",
+          "$id": "248",
           "Kind": "uuid",
           "Encode": "string"
          }
@@ -1902,35 +1902,35 @@
      "Path": "/messages/channels/{channelId}/templates",
      "BufferResponse": true,
      "Paging": {
-      "$id": "240",
-      "NextLinkName": "nextLink",
-      "ItemName": "value"
+      "$id": "249",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
      },
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true
     }
    ],
    "Protocol": {
-    "$id": "241"
+    "$id": "250"
    },
    "Parameters": [
     {
-     "$ref": "185"
+     "$ref": "231"
     }
    ]
   }
  ],
  "Auth": {
-  "$id": "242",
-  "ApiKey": {
-   "$id": "243",
-   "Name": "Authorization"
-  },
+  "$id": "251",
   "OAuth2": {
-   "$id": "244",
+   "$id": "252",
    "Scopes": [
     "https://communication.azure.com/.default"
    ]
+  },
+  "ApiKey": {
+   "$id": "253",
+   "Name": "Authorization"
   }
  }
 }

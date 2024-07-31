@@ -1,10 +1,8 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
@@ -12,11 +10,24 @@
 
 ### Other Changes
 
+## 1.1.0-beta.2 (2027-07-23)
+
+### Features Added
+
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+- Upgraded api-version tag from 'package-2023-02-01' to 'package-2023-06-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/d1f4d6fcf1bbb2e71a32bb2079de12f17fedf56a/specification/quota/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.41.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
+
 ## 1.1.0-beta.1 (2023-11-29)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -35,8 +46,8 @@ Polishing since last public beta release:
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
-- Add support for new version 2023-02-01
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added support for new version 2023-02-01.
 
 ### Other Changes
 

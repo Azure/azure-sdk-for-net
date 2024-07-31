@@ -16,6 +16,9 @@ public class MockResponseHeaders : PipelineResponseHeaders
         _headers = headers ?? new Dictionary<string, string>();
     }
 
+    public void SetHeader(string name, string value)
+        => _headers[name] = value;
+
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
     {
         IEnumerator<KeyValuePair<string, string>> enumerator = _headers.GetEnumerator();

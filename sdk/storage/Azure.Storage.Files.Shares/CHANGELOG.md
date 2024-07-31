@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 12.19.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
 ## 12.19.0 (2024-07-16)
 
 ### Features Added

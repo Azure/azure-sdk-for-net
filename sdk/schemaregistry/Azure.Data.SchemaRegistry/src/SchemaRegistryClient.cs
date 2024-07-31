@@ -290,11 +290,11 @@ namespace Azure.Data.SchemaRegistry
                 Response<BinaryData> response;
                 if (async)
                 {
-                    response = await GetSchemaByVersionAsync(groupName, schemaName, version, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByVersionAsync(groupName, schemaName, version, SchemaFormat.Avro.ToContentType().ToString(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaByVersion(groupName, schemaName, version, cancellationToken);
+                    response = GetSchemaByVersion(groupName, schemaName, version, SchemaFormat.Avro.ToContentType().ToString(), cancellationToken);
                 }
 
                 var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -324,11 +324,11 @@ namespace Azure.Data.SchemaRegistry
                 Response<BinaryData> response;
                 if (async)
                 {
-                    response = await GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByIdAsync(schemaId, SchemaFormat.Avro.ToContentType().ToString(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaById(schemaId, cancellationToken);
+                    response = GetSchemaById(schemaId, SchemaFormat.Avro.ToContentType().ToString(), cancellationToken);
                 }
 
                 var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;

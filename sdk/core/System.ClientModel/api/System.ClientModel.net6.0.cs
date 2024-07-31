@@ -89,6 +89,11 @@ namespace System.ClientModel
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
         public static System.ClientModel.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
+    public enum ReturnWhen
+    {
+        Completed = 0,
+        Started = 1,
+    }
 }
 namespace System.ClientModel.Primitives
 {
@@ -207,6 +212,14 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public abstract partial class OperationResult : System.ClientModel.ClientResult
+    {
+        protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        public abstract bool IsCompleted { get; protected set; }
+        public abstract System.ClientModel.ContinuationToken? RehydrationToken { get; protected set; }
+        public abstract void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute

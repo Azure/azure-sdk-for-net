@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Added `OperationResult` and `ReturnWhen` types to support long-running operations.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Added support for delaying retrying a request until after the interval specified on a response `Retry-After` header.
 
 ### Other Changes
 

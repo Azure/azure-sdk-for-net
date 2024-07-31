@@ -7,8 +7,14 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed \[BUG\] BlobContainerClient(connectionString, blobContainerName, options) ctor to set clientSideEncryptionOptions #44623
 
 ### Other Changes
+
+## 12.21.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
 
 ## 12.21.0 (2024-07-16)
 
