@@ -11,6 +11,7 @@ param (
 	[string] $BaseName, # this is the Translator resource name
 	[string] $TestApplicationId, # this is the TestApplicationId
 	[string] $TenantId # this is the TenantId
+	[string] $ProvisionerApplicationOid # this is the ProvisionerApplicationOid
 )
 
 if($DeploymentOutputs.ContainsKey('DOCUMENT_TRANSLATION_STORAGE_NAME')){
@@ -36,10 +37,9 @@ Log 'Starting sdk\translation\test-resources-post.ps1'
 # PowerShell cmd : az cognitiveservices account identity assign --name <TranslatorResourceName> --resource-group <ResourceGroupName>
 # az cognitiveservices account identity assign --name $BaseName --resource-group $ResourceGroupName
 
-Log 'Determine the Azure context that the script is running in.'
-$context = Get-AzContext;
-$userId = $context.Account.Id
-Log 'The azure account ID it is running in is $($userId)'
+Log 'Logging in if the user is not logged, running Connect-AzAccount'
+Connect-AzAccount
+Log "Application ID of the logged account is $($ProvisionerApplicationOid)"
 
 Log 'In the storage account, assign Storage-Blob-Data-Contributor role access to translator resource'
 Log 'Step 1: Get the Resource ID of the storage account'
@@ -60,7 +60,7 @@ Log 'Step 3: Assign Storage-Blob-Data-Contributor role'
 #Log 'Executing Azure PowerShell cmd : New-AzRoleAssignment -RoleDefinitionName $($roleName) -ObjectId $($identityObjectId) -Scope $($storageAccountId)'
 $roleName = "Storage Blob Data Contributor"
 Log 'Executing New-AzRoleAssignment -RoleDefinitionName $($roleName) -UserPrincipalName $($userId) -Scope $($resourceId)'
-New-AzRoleAssignment -RoleDefinitionName $roleName -UserPrincipalName $userId -Scope $resourceId
+New-AzRoleAssignment -RoleDefinitionName $roleName -UserPrincipalName $ProvisionerApplicationOid -Scope $resourceId
 # New-AzRoleAssignment -RoleDefinitionName $roleName -ObjectId $identityObjectId -Scope $storageAccountId
 
 Log 'Finishing sdk\translation\test-resources-post.ps1'
