@@ -83,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
         }
 
 #if !NET462
-        [Fact(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")]
+        [Fact]
         public async Task VerifyRequest()
         {
             var exportedActivities = new List<Activity>();
@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                     .AddAspNetCoreInstrumentation()
                     .AddInMemoryExporter(exportedActivities));
 
-            var app = builder.Build();
+            using var app = builder.Build();
             app.MapGet("/", () =>
             {
                 return "Response from Test Server";
@@ -108,6 +108,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
             Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
 
+            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+            tracerProvider.ForceFlush();
+
             WaitForActivityExport(exportedActivities);
 
             // Assert
@@ -119,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(requestActivity.Duration.ToString("c"), requestDocument.Duration);
             Assert.Equal("GET /", requestDocument.Name);
             Assert.Equal("200", requestDocument.ResponseCode);
-            Assert.Equal(TestServerUrl, requestDocument.Url.AbsolutePath);
+            Assert.Equal("/", requestDocument.Url.AbsolutePath);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);

@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
             });
 
-            var app = builder.Build();
+            using var app = builder.Build();
             app.MapGet("/", () => "Hello");
 
             _ = app.RunAsync("http://localhost:9999");

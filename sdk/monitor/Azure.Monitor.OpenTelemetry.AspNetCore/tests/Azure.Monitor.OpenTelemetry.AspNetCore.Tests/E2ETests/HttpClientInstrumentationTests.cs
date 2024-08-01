@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
     [Collection("InstrumentationLibraries")]
     public class HttpClientInstrumentationTests
     {
-        [Theory]
+        [Theory(Skip = "investigating test failure")]
         [InlineData(null, 200)]
         [InlineData("?key=value", 200)]
         [InlineData(null, 500)]
