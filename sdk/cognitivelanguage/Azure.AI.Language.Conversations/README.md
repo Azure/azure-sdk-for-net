@@ -421,12 +421,12 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
             {
                 foreach (NamedEntity entity in item.Entities)
                 {
-                    Console.WriteLine($"Category: {entity.Category}");
-                    Console.WriteLine($"Subcategory: {entity.Subcategory}");
-                    Console.WriteLine($"Text: {entity.Text}");
-                    Console.WriteLine($"Offset: {entity.Offset}");
-                    Console.WriteLine($"Length: {entity.Length}");
-                    Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine($"  Category: {entity.Category}");
+                    Console.WriteLine($"  Subcategory: {entity.Subcategory}");
+                    Console.WriteLine($"  Text: {entity.Text}");
+                    Console.WriteLine($"  Offset: {entity.Offset}");
+                    Console.WriteLine($"  Length: {entity.Length}");
+                    Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
                     Console.WriteLine();
                 }
             }
