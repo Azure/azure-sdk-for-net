@@ -8,8 +8,7 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 
 # find which packages we need to confirm the changelog for
-$packageProperties = Get-ChildItem -Recurse -Force "$PackagePropertiesFolder" `
-  | Where-Object { $_.Extension -eq '.json' }
+$packageProperties = Get-ChildItem -Recurse "$PackagePropertiesFolder" *.json
 
 # grab the json file, then confirm the changelog entry for it
 $allPassing = $true
