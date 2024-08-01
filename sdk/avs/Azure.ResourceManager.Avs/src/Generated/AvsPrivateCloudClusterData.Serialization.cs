@@ -77,6 +77,11 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(VsanDatastoreName))
+            {
+                writer.WritePropertyName("vsanDatastoreName"u8);
+                writer.WriteStringValue(VsanDatastoreName);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,6 +130,7 @@ namespace Azure.ResourceManager.Avs
             AvsPrivateCloudClusterProvisioningState? provisioningState = default;
             int? clusterId = default;
             IList<string> hosts = default;
+            string vsanDatastoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,6 +214,11 @@ namespace Azure.ResourceManager.Avs
                             hosts = array;
                             continue;
                         }
+                        if (property0.NameEquals("vsanDatastoreName"u8))
+                        {
+                            vsanDatastoreName = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -227,6 +238,7 @@ namespace Azure.ResourceManager.Avs
                 provisioningState,
                 clusterId,
                 hosts ?? new ChangeTrackingList<string>(),
+                vsanDatastoreName,
                 serializedAdditionalRawData);
         }
 

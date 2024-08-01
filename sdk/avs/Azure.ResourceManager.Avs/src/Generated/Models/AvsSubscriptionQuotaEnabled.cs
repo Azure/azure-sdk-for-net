@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Host quota is active for current subscription. </summary>
+    /// <summary> quota enabled. </summary>
     public readonly partial struct AvsSubscriptionQuotaEnabled : IEquatable<AvsSubscriptionQuotaEnabled>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> is enabled. </summary>
         public static AvsSubscriptionQuotaEnabled Enabled { get; } = new AvsSubscriptionQuotaEnabled(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> is disabled. </summary>
         public static AvsSubscriptionQuotaEnabled Disabled { get; } = new AvsSubscriptionQuotaEnabled(DisabledValue);
         /// <summary> Determines if two <see cref="AvsSubscriptionQuotaEnabled"/> values are the same. </summary>
         public static bool operator ==(AvsSubscriptionQuotaEnabled left, AvsSubscriptionQuotaEnabled right) => left.Equals(right);

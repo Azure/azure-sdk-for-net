@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SuccessValue = "SUCCESS";
         private const string FailureValue = "FAILURE";
 
-        /// <summary> SUCCESS. </summary>
+        /// <summary> is success. </summary>
         public static WorkloadNetworkSegmentStatus Success { get; } = new WorkloadNetworkSegmentStatus(SuccessValue);
-        /// <summary> FAILURE. </summary>
+        /// <summary> is failure. </summary>
         public static WorkloadNetworkSegmentStatus Failure { get; } = new WorkloadNetworkSegmentStatus(FailureValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentStatus"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkSegmentStatus left, WorkloadNetworkSegmentStatus right) => left.Equals(right);

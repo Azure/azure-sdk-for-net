@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List HCX on-premises key in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List HcxEnterpriseSite resources by PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List HCX on-premises key in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List HcxEnterpriseSite resources by PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Get an HCX on-premises key by name in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a HcxEnterpriseSite. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
+        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Get an HCX on-premises key by name in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a HcxEnterpriseSite. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
+        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -276,12 +276,12 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Create or update an activation key for on-premises HCX site. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a HcxEnterpriseSite. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> The name of the private cloud. </param>
-        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
-        /// <param name="data"> The HCX Enterprise Site. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="hcxEnterpriseSiteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -310,12 +310,12 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Create or update an activation key for on-premises HCX site. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a HcxEnterpriseSite. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> The name of the private cloud. </param>
-        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
-        /// <param name="data"> The HCX Enterprise Site. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="hcxEnterpriseSiteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -382,11 +382,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Delete HCX on-premises key in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a HcxEnterpriseSite. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
+        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Delete HCX on-premises key in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a HcxEnterpriseSite. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
+        /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -458,9 +458,9 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List HCX on-premises key in a private cloud. </summary>
+        /// <summary> List HcxEnterpriseSite resources by PrivateCloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -489,9 +489,9 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List HCX on-premises key in a private cloud. </summary>
+        /// <summary> List HcxEnterpriseSite resources by PrivateCloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

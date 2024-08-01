@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.Avs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ActivationKey))
             {
                 writer.WritePropertyName("activationKey"u8);
@@ -103,6 +108,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            HcxEnterpriseSiteProvisioningState? provisioningState = default;
             string activationKey = default;
             HcxEnterpriseSiteStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -142,6 +148,15 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new HcxEnterpriseSiteProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("activationKey"u8))
                         {
                             activationKey = property0.Value.GetString();
@@ -170,6 +185,7 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
+                provisioningState,
                 activationKey,
                 status,
                 serializedAdditionalRawData);
