@@ -57,6 +57,42 @@ function GetBaseAndResourceGroupNames(
     return $base, $group
 }
 
+# Helper function for processing sub config files from a pipeline file list yaml parameter
+function UpdateSubscriptionConfigurationWithFiles([object]$baseSubConfig, [string]$fileListJson) {
+  if (!$fileListJson) {
+    return $baseSubConfig
+  }
+
+  $finalConfig = $baseSubConfig
+
+  $subConfigFiles = $fileListJson | ConvertFrom-Json -AsHashtable
+  foreach ($file in $subConfigFiles) {
+    # In some cases, $file could be an empty string. Get-Content will fail
+    # if $file is an empty string, so skip those cases.
+    if (!$file) {
+      continue
+    }
+
+    Write-Host "Merging sub config from file: $file"
+    $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
+    $allowedValues = @()
+    # Since the keys are all coming from a file in github, we know every key should not be marked
+    # as a secret. Set up these exclusions here to make pipeline log debugging easier.
+    foreach ($pair in $subConfig.GetEnumerator()) {
+      if ($pair.Value -is [Hashtable]) {
+        foreach($nestedPair in $pair.Value.GetEnumerator()) {
+          $allowedValues += $nestedPair.Name
+        }
+      } else {
+        $allowedValues += $pair.Name
+      }
+    }
+    $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig $allowedValues
+  }
+
+  return $finalConfig
+}
+
 function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())
 {
     $logOutputNonSecret = @(
@@ -82,7 +118,8 @@ function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$va
         "TenantId",
         "TestApplicationId",
         "TestApplicationOid",
-        "ProvisionerApplicationId"
+        "ProvisionerApplicationId",
+        "ProvisionerApplicationOid"
     )
 
     $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
@@ -129,7 +166,7 @@ function SetSubscriptionConfiguration([object]$subscriptionConfiguration)
     return $subscriptionConfiguration
 }
 
-function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase, [object]$subscriptionConfiguration)
+function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase, [object]$subscriptionConfiguration, [array]$allowedValues)
 {
     foreach ($pair in $subscriptionConfiguration.GetEnumerator()) {
         if ($pair.Value -is [Hashtable]) {
@@ -140,13 +177,13 @@ function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase,
                 # Mark values as secret so we don't print json blobs containing secrets in the logs.
                 # Prepend underscore to the variable name, so we can still access the variable names via environment
                 # variables if they get set subsequently.
-                if (ShouldMarkValueAsSecret "AZURE_" $nestedPair.Name $nestedPair.Value) {
+                if (ShouldMarkValueAsSecret "AZURE_" $nestedPair.Name $nestedPair.Value $allowedValues) {
                     Write-Host "##vso[task.setvariable variable=_$($nestedPair.Name);issecret=true;]$($nestedPair.Value)"
                 }
                 $subscriptionConfigurationBase[$pair.Name][$nestedPair.Name] = $nestedPair.Value
             }
         } else {
-            if (ShouldMarkValueAsSecret "AZURE_" $pair.Name $pair.Value) {
+            if (ShouldMarkValueAsSecret "AZURE_" $pair.Name $pair.Value $allowedValues) {
                 Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
             }
             $subscriptionConfigurationBase[$pair.Name] = $pair.Value
