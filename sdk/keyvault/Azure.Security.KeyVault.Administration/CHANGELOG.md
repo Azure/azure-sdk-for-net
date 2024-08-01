@@ -3,12 +3,15 @@
 ## 4.5.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service API version `7.6-preview.1`.
+- New `StartPreRestoreAsync`, `StartPreRestore`, `StartPreBackupAsync` and `StartPreBackupAsync` methods available in the `KeyVaultBackupClient`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+- The default service version is now "V7_6_Preview_1".
 
 ## 4.4.0 (2024-02-14)
 
