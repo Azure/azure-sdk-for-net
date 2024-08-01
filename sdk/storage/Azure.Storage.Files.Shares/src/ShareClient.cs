@@ -657,15 +657,15 @@ namespace Azure.Storage.Files.Shares
         /// If not specified, the default is true.
         /// </param>
         /// <param name="enablePaidBursting">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  This property enables paid bursting on premium file storage accounts.
         /// </param>
         /// <param name="paidBurstingMaxIops">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS.
         /// </param>
         /// <param name="paidBurstingMaxBandwidthMibps">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </param>
         /// <param name="async">
@@ -965,15 +965,15 @@ namespace Azure.Storage.Files.Shares
         /// If not specified, the default is true.
         /// </param>
         /// <param name="enablePaidBursting">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  This property enables paid bursting on premium file storage accounts.
         /// </param>
         /// <param name="paidBurstingMaxIops">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS.
         /// </param>
         /// <param name="paidBurstingMaxBandwidthMibps">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </param>
         /// <param name="async">
@@ -2061,15 +2061,15 @@ namespace Azure.Storage.Files.Shares
         /// If not specified, the default is true.
         /// </param>
         /// <param name="enablePaidBursting">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  This property enables paid bursting on premium file storage accounts.
         /// </param>
         /// <param name="paidBurstingMaxIops">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS.
         /// </param>
         /// <param name="paidBurstingMaxBandwidthMibps">
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </param>
         /// <param name="conditions">

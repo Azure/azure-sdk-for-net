@@ -120,19 +120,19 @@ namespace Azure.Storage.Files.Shares.Models
         public bool? EnableSnapshotVirtualDirectoryAccess { get; internal set; }
 
         /// <summary>
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  This property enables paid bursting on premium file storage accounts.
         /// </summary>
         public bool? EnablePaidBursting { get; internal set; }
 
         /// <summary>
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS.
         /// </summary>
         public long? PaidBurstingMaxIops { get; internal set; }
 
         /// <summary>
-        ///  Optional. Supported in version 2023-11-03 and above.  Only applicable for premium file storage accounts.
+        ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </summary>
         public long? PaidBurstingMaxBandwidthMibps { get; internal set; }
