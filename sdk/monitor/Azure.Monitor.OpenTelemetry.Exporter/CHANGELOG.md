@@ -9,7 +9,7 @@
 ### Bugs Fixed
 
 * RPC attributes are now correctly exported to Application Insights as custom properties.
-  ([]())
+  ([#45316](https://github.com/Azure/azure-sdk-for-net/pull/45316))
 
 ### Other Changes
 
