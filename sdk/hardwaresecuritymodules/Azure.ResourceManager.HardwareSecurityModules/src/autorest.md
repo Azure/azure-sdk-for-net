@@ -35,6 +35,10 @@ rename-mapping:
   OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
   PrivateLinkResource: HardwareSecurityModulesPrivateLinkData
 
+override-operation-name:
+  CloudHsmClusterBackupStatus_Get: GetCloudHsmClusterBackupStatus
+  CloudHsmClusterRestoreStatus_Get: GetCloudHsmClusterRestoreStatus
+
 acronym-mapping:
   CPU: Cpu
   CPUs: Cpus

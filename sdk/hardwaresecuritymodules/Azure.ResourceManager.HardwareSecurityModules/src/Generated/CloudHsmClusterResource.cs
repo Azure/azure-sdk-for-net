@@ -851,11 +851,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<BackupResult>> GetCloudHsmClusterBackupStatuAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupResult>> GetCloudHsmClusterBackupStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterBackupStatu");
+            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterBackupStatus");
             scope.Start();
             try
             {
@@ -890,11 +890,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<BackupResult> GetCloudHsmClusterBackupStatu(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<BackupResult> GetCloudHsmClusterBackupStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterBackupStatu");
+            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterBackupStatus");
             scope.Start();
             try
             {
@@ -929,11 +929,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<RestoreResult>> GetCloudHsmClusterRestoreStatuAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestoreResult>> GetCloudHsmClusterRestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterRestoreStatu");
+            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterRestoreStatus");
             scope.Start();
             try
             {
@@ -968,11 +968,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<RestoreResult> GetCloudHsmClusterRestoreStatu(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<RestoreResult> GetCloudHsmClusterRestoreStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterRestoreStatu");
+            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterRestoreStatus");
             scope.Start();
             try
             {

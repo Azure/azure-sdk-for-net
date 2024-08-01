@@ -15,6 +15,7 @@ namespace Azure.Communication.CallingServer
         { }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DownloadMetadata()
         {
             if (SkipCallingServerInteractionLiveTests)
@@ -33,6 +34,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DownloadMetadata_404()
         {
             if (SkipCallingServerInteractionLiveTests)
@@ -65,6 +67,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DownloadMetadataRange()
         {
             if (SkipCallingServerInteractionLiveTests)
@@ -83,6 +86,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         /// This test tries to get a US stored document id from EU endpoint.
         /// The backend server will redirect (respond with a 302) the request to a US endpoint
         /// and the SDK should be able to make the new request with no error.

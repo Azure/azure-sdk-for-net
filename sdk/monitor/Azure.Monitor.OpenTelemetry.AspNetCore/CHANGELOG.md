@@ -1,12 +1,23 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.1 (2024-07-12)
+
+### Bugs Fixed
+
+* Added the `LogRecord.CategoryName` field to log and exception telemetry.
+  Previously the `CategoryName` field was omitted, which was inconsistent with
+  expected `ILogger` behavior, and with Application Insights classic behavior.
+  ([#44754](https://github.com/Azure/azure-sdk-for-net/pull/44754))
 
 * Fixed an issue where a `DuplicateKeyException` could be thrown if `EventId`
   and `EventName` were present in both `LogRecord` (`LogRecord.EventId`,
