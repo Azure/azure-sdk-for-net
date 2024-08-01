@@ -72,6 +72,46 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly]
+        public async Task PreBackupAndPreRestoreSampleAsync()
+        {
+            var blobStorageUrl = TestEnvironment.StorageUri;
+            var blobContainerName = BlobContainerName;
+            var sasToken = "?" + SasToken;
+
+            #region Snippet:HelloPreFullBackupAsync
+            // Create a Uri with the storage container
+            UriBuilder builder = new UriBuilder(blobStorageUrl)
+            {
+                Path = blobContainerName,
+            };
+
+            // Check for backup readiness.
+            KeyVaultBackupOperation backupOperation = await Client.StartPreBackupAsync(builder.Uri, sasToken);
+
+            // Wait for completion of the PreBackupOperation.
+            KeyVaultBackupResult backupResult = await backupOperation.WaitForCompletionAsync();
+
+            // Get the Uri for the location of your backup blob.
+            bool readyforBackup = backupResult.FolderUri != null;
+            #endregion
+
+            Assert.That(folderUri, Is.Not.Null);
+            Assert.That(backupOperation.HasValue, Is.True);
+
+            await WaitForOperationAsync();
+
+            #region Snippet:HelloPreFullRestoreAsync
+            // Check for restore readiness using the backupBlobUri returned from a previous BackupOperation.
+            KeyVaultRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(folderUri, sasToken);
+
+            //
+
+
+            #endregion
+        }
+
+        [RecordedTest]
         [SyncOnly]
         public async Task BackupAndRestoreSampleSync()
         {
