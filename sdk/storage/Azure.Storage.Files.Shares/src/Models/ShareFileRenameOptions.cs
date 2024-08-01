@@ -49,7 +49,7 @@ namespace Azure.Storage.Files.Shares.Models
         public string FilePermission { get; set; }
 
         /// <summary>
-        /// optional file permission format to set on 
+        /// Optional format of the <see cref="FilePermission"/>.
         /// </summary>
         public FilePermissionFormat? FilePermissionFormat { get; set; }
 

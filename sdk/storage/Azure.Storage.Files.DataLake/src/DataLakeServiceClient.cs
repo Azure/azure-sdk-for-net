@@ -1396,7 +1396,6 @@ namespace Azure.Storage.Files.DataLake
             AccountSasResourceTypes resourceTypes)
             => GenerateAccountSasUri(permissions, expiresOn, resourceTypes, out _);
 
-
         /// <summary>
         /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
         /// returns a <see cref="Uri"/> that generates a DataLake Account
