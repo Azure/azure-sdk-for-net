@@ -9,8 +9,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "259",
         "Content-Type": "application/json",
-        "traceparent": "00-5ada5d9ecccf36d06a51caf2458046e1-566a1772dc1d8040-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240725.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-f2f50ab88a4020419a3418e4f33ac6f2-ca3adb94d6bdc200-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -42,22 +42,22 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "1",
-        "apim-request-id": "142b1ca3-7c68-4da7-8403-e77beff7e9d5",
-        "azureml-model-session": "d048-20240716055122",
-        "Content-Length": "1302",
+        "apim-request-id": "5af731d3-8f40-45e5-8e52-2d6be60ccffa",
+        "azureml-model-session": "d004-20240713213546",
+        "Content-Length": "1257",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jul 2024 23:41:32 GMT",
-        "request-id": "142b1ca3-7c68-4da7-8403-e77beff7e9d5",
+        "Date": "Thu, 01 Aug 2024 23:09:49 GMT",
+        "request-id": "5af731d3-8f40-45e5-8e52-2d6be60ccffa",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "2438",
+        "x-envoy-upstream-service-time": "1886",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "Sweden Central",
         "x-ratelimit-remaining-requests": "9",
         "x-ratelimit-remaining-tokens": "7848",
-        "X-Request-ID": "957b07d6-bae9-4447-8e61-b2c4e1ca73f3"
+        "X-Request-ID": "245e28be-71ca-4984-a2da-8b6f4b8ed823"
       },
       "ResponseBody": {
         "choices": [
@@ -84,13 +84,13 @@
             "index": 0,
             "logprobs": null,
             "message": {
-              "content": "The image shows three juggling balls resting on a wooden surface. Each ball is divided into four colored segments: red, blue, green, and yellow. The balls are arranged in a small pyramid, with two balls at the bottom supporting a third one on top. The wooden surface has a natural grain pattern.",
+              "content": "The image shows three juggling balls on a wooden surface. Each ball is segmented into four colored panels: red, green, blue, and yellow. The balls are arranged closely together, and their colorful patterns stand out against the wood grain background.",
               "role": "assistant"
             }
           }
         ],
-        "created": 1721950891,
-        "id": "chatcmpl-9p2NPPVTOlR5GtncRfVuJmQ3svOgo",
+        "created": 1722553790,
+        "id": "chatcmpl-9rZDa3z3ZqkZMK8GB41yusDZpB1s2",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -135,9 +135,9 @@
         ],
         "system_fingerprint": "fp_abc28019ad",
         "usage": {
-          "completion_tokens": 61,
+          "completion_tokens": 48,
           "prompt_tokens": 90,
-          "total_tokens": 151
+          "total_tokens": 138
         }
       }
     }
@@ -145,6 +145,6 @@
   "Variables": {
     "AOAI_CHAT_COMPLETIONS_ENDPOINT": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o",
     "AOAI_CHAT_COMPLETIONS_KEY": "644e6b8b83b84596a8a3f1ae5d9f1e28",
-    "RandomSeed": "1680932255"
+    "RandomSeed": "1954246223"
   }
 }

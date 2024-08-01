@@ -75,8 +75,9 @@ namespace Azure.AI.Inference.Tests.Samples
                 },
             };
 
-            string jsonMessages = "{\"messages\": [{\"Role\": \"system\", \"Content\": \"You are a helpful assistant.\"}, {\"Role\": \"user\", \"Content\": \"How many feet are in a mile?\"}]}";
-            requestOptions = ModelReaderWriter.Read<ChatCompletionsOptions>(BinaryData.FromString(jsonMessages));
+            string jsonMessages = "{\"messages\": [{\"role\": \"system\", \"content\": \"You are a helpful assistant.\"}, {\"role\": \"user\", \"content\": \"How many feet are in a mile?\"}]}";
+            BinaryData messages = BinaryData.FromString(jsonMessages);
+            requestOptions = ModelReaderWriter.Read<ChatCompletionsOptions>(messages);
 
             Response<ChatCompletions> response = client.Complete(requestOptions);
             System.Console.WriteLine(response.Value.Choices[0].Message.Content);

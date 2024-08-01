@@ -41,7 +41,7 @@ private class AddAoaiAuthHeaderPolicy : HttpPipelinePolicy
 
 The policy can then be added to the `ChatCompletionsClientOptions` object, to configure the client to add the header at runtime.
 
-```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenario
+```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenarioClientCreate
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
 var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
 
@@ -53,7 +53,25 @@ ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
 clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
 
 var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
+```
 
+Alternatively, you can use EntraId to authenticate. This does not require the header policy, but it does currently require a separate built-in policy, `BearerTokenAuthenticationPolicy`, to apply the correct token scope.
+
+```C# Snippet:Azure_AI_Inference_HelloWorldScenarioWithEntraIdClientCreate
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
+var credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
+
+ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://cognitiveservices.azure.com/.default" });
+clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
+```
+
+After the client is created, you can make completion requests with it as shown
+
+```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenarioCompleteRequest
 var requestOptions = new ChatCompletionsOptions()
 {
     Messages =
@@ -69,19 +87,7 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 
 An `async` option is also available.
 
-```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenarioAsync
-var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
-var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
-
-// For AOAI, currently the key is passed via a different header not directly handled by the client, however
-// the credential object is still required. So create with a dummy value.
-var credential = new AzureKeyCredential("foo");
-
-ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
-clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
-
-var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
-
+```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenarioCompleteRequestAsync
 var requestOptions = new ChatCompletionsOptions()
 {
     Messages =

@@ -3,14 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using File = System.IO.File;
@@ -68,6 +71,55 @@ namespace Azure.AI.Inference.Tests
             };
 
             Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            ChatChoice choice = response.Value.Choices[0];
+            Assert.That(choice.Index, Is.EqualTo(0));
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+        }
+
+        [RecordedTest]
+        public async Task TestChatCompletionsWithEntraIdAuth()
+        {
+            var aoaiEndpoint = new Uri(TestEnvironment.AoaiEndpoint);
+            var entraIdCredential = TestEnvironment.Credential;
+
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+
+            BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(entraIdCredential, new string[] { "https://cognitiveservices.azure.com/.default" });
+            clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+            var client = CreateClient(aoaiEndpoint, entraIdCredential, clientOptions);
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("How many feet are in a mile?"),
+                },
+            };
+
+            Response<ChatCompletions> response = null;
+            try
+            {
+                response = await client.CompleteAsync(requestOptions);
+            }
+            catch (Exception ex)
+            {
+                var requestPayload = captureRequestPayloadPolicy._requestContent;
+                var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
@@ -502,6 +554,7 @@ namespace Azure.AI.Inference.Tests
         private class AddAoaiAuthHeaderPolicy : HttpPipelinePolicy
         {
             public InferenceClientTestEnvironment TestEnvironment { get; }
+            public string Token { get; }
 
             public AddAoaiAuthHeaderPolicy(InferenceClientTestEnvironment testEnvironment)
             {
@@ -526,6 +579,11 @@ namespace Azure.AI.Inference.Tests
         }
 
         private ChatCompletionsClient CreateClient(Uri endpoint, AzureKeyCredential credential, ChatCompletionsClientOptions clientOptions)
+        {
+            return InstrumentClient(new ChatCompletionsClient(endpoint, credential, InstrumentClientOptions(clientOptions)));
+        }
+
+        private ChatCompletionsClient CreateClient(Uri endpoint, TokenCredential credential, ChatCompletionsClientOptions clientOptions)
         {
             return InstrumentClient(new ChatCompletionsClient(endpoint, credential, InstrumentClientOptions(clientOptions)));
         }
