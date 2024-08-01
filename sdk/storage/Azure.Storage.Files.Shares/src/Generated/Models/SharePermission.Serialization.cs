@@ -33,7 +33,7 @@ namespace Azure.Storage.Files.Shares.Models
                 return null;
             }
             string permission = default;
-            FilePermissionKeyFormat? format = default;
+            FilePermissionFormat? format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permission"u8))
@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.Shares.Models
                     {
                         continue;
                     }
-                    format = property.Value.GetString().ToFilePermissionKeyFormat();
+                    format = property.Value.GetString().ToFilePermissionFormat();
                     continue;
                 }
             }

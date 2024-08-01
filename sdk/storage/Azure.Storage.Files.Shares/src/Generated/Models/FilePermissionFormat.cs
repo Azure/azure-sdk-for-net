@@ -7,12 +7,12 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The FilePermissionKeyFormat. </summary>
-    public enum FilePermissionKeyFormat
+    /// <summary> The FilePermissionFormat. </summary>
+    public enum FilePermissionFormat
     {
-        /// <summary> SDDL. </summary>
+        /// <summary> Sddl. </summary>
         Sddl,
-        /// <summary> binary. </summary>
+        /// <summary> Binary. </summary>
         Binary
     }
 }

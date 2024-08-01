@@ -3259,6 +3259,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey">
         /// The file permission key.
         /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional. Available for version 2024-11-04 and later. Specifies the format in which the permission is returned.
+        /// If filePermissionFormat is unspecified or explicityly set to <see cref="FilePermissionFormat.Sddl"/>, the permission will be
+        /// returned in SSDL format.
+        /// If filePermissionFormat is explicity set to <see cref="FilePermissionFormat.Binary"/>, the permission is returned as a
+        /// base64 string representing the binary encoding of the permission in self-relative format.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3266,14 +3273,48 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// A <see cref="Response{String}"/> file permission.
         /// </returns>
-        public virtual Response<string> GetPermission(
-            string filePermissionKey = default,
+        public virtual Response<ShareFilePermission> GetPermission(
+            string filePermissionKey,
+            FilePermissionFormat? filePermissionFormat = default,
             CancellationToken cancellationToken = default) =>
             GetPermissionInternal(
-                filePermissionKey,
+                filePermissionKey: filePermissionKey,
+                filePermissionFormat: filePermissionFormat,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
+
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional. Available for version 2024-11-04 and later. Specifies the format in which the permission is returned.
+        /// If filePermissionFormat is unspecified or explicityly set to <see cref="FilePermissionFormat.Sddl"/>, the permission will be
+        /// returned in SSDL format.
+        /// If filePermissionFormat is explicity set to <see cref="FilePermissionFormat.Binary"/>, the permission is returned as a
+        /// base64 string representing the binary encoding of the permission in self-relative format.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        public virtual async Task<Response<ShareFilePermission>> GetPermissionAsync(
+            string filePermissionKey,
+            FilePermissionFormat? filePermissionFormat = default,
+            CancellationToken cancellationToken = default) =>
+            await GetPermissionInternal(
+                filePermissionKey: filePermissionKey,
+                filePermissionFormat: filePermissionFormat,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// Gets the file permission in Security Descriptor Definition Language (SDDL).
@@ -3289,17 +3330,61 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// A <see cref="Response{String}"/> file permission.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<string> GetPermission(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string filePermissionKey,
+            CancellationToken cancellationToken)
+        {
+            Response<ShareFilePermission> response = GetPermissionInternal(
+                filePermissionKey: filePermissionKey,
+                filePermissionFormat: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+            return Response.FromValue(
+                response.Value.Permission,
+                response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<string>> GetPermissionAsync(
-            string filePermissionKey = default,
-            CancellationToken cancellationToken = default) =>
-            await GetPermissionInternal(
-                filePermissionKey,
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string filePermissionKey,
+            CancellationToken cancellationToken)
+        {
+            Response<ShareFilePermission> response = await GetPermissionInternal(
+                filePermissionKey: filePermissionKey,
+                filePermissionFormat: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        private async Task<Response<string>> GetPermissionInternal(
+            return Response.FromValue(
+                response.Value.Permission,
+                response.GetRawResponse());
+        }
+
+        private async Task<Response<ShareFilePermission>> GetPermissionInternal(
             string filePermissionKey,
+            FilePermissionFormat? filePermissionFormat,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3321,6 +3406,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.GetPermissionAsync(
                             filePermissionKey: filePermissionKey,
+                            filePermissionFormat: filePermissionFormat,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3328,12 +3414,11 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.GetPermission(
                             filePermissionKey: filePermissionKey,
+                            filePermissionFormat: filePermissionFormat,
                             cancellationToken: cancellationToken);
                     }
 
-                    return Response.FromValue(
-                        response.Value.Permission,
-                        response.GetRawResponse());
+                    return response.ToShareFilePermission();
                 }
                 catch (Exception ex)
                 {
@@ -3356,6 +3441,57 @@ namespace Azure.Storage.Files.Shares
         /// can be used for the files/directories in the share.
         /// </summary>
         /// <param name="permission">
+        /// A <see cref="ShareFilePermission"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Response<PermissionInfo> CreatePermission(
+            ShareFilePermission permission,
+            CancellationToken cancellationToken = default) =>
+            CreatePermissionInternal(
+                permission: permission?.Permission,
+                permissionFormat: permission?.PermissionFormat,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
+        /// </summary>
+        /// <param name="permission">
+        /// A <see cref="ShareFilePermission"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
+            ShareFilePermission permission,
+            CancellationToken cancellationToken = default) =>
+            await CreatePermissionInternal(
+                permission: permission?.Permission,
+                permissionFormat: permission?.PermissionFormat,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
+        /// </summary>
+        /// <param name="permission">
         /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
         /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
         /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
@@ -3368,11 +3504,15 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PermissionInfo> CreatePermission(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string permission,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             CreatePermissionInternal(
                 permission,
+                permissionFormat: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3394,17 +3534,22 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string permission,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             await CreatePermissionInternal(
                 permission,
+                permissionFormat: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         internal async Task<Response<PermissionInfo>> CreatePermissionInternal(
             string permission,
+            FilePermissionFormat? permissionFormat,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3420,7 +3565,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     scope.Start();
                     ResponseWithHeaders<ShareCreatePermissionHeaders> response;
-                    SharePermission sharePermission = new SharePermission(permission);
+                    SharePermission sharePermission = new SharePermission(permission, permissionFormat);
 
                     if (async)
                     {
@@ -3457,14 +3602,58 @@ namespace Azure.Storage.Files.Shares
 
         #region CreateDirectory
         /// <summary>
-        /// The <see cref="CreateDirectory"/> operation creates a new
+        /// The <see cref="CreateDirectoryAsync(string, ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new
         /// directory in this share.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
         /// Create Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
+        /// The name of the directory to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DirectoryClient}"/> referencing the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareDirectoryClient> CreateDirectory(
+            string directoryName,
+           ShareDirectoryCreateOptions options = default,
+           CancellationToken cancellationToken = default)
+        {
+            ShareDirectoryClient directory = GetDirectoryClient(directoryName);
+            Response<ShareDirectoryInfo> response = directory.CreateInternal(
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                async: false,
+                cancellationToken,
+                operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
+                .EnsureCompleted();
+            return Response.FromValue(directory, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateDirectory(string, Metadata, FileSmbProperties, string, CancellationToken)"/> operation creates a new
+        /// directory in this share.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
+        /// </summary>
+        /// <param name="directoryName">
         /// The name of the directory to create.
         /// </param>
         /// <param name="metadata">
@@ -3488,18 +3677,22 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareDirectoryClient> CreateDirectory(
-           string directoryName,
-           IDictionary<string, string> metadata = default,
-           FileSmbProperties smbProperties = default,
-           string filePermission = default,
-           CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string directoryName,
+           IDictionary<string, string> metadata,
+           FileSmbProperties smbProperties,
+           string filePermission,
+           CancellationToken cancellationToken)
         {
             ShareDirectoryClient directory = GetDirectoryClient(directoryName);
             Response<ShareDirectoryInfo> response = directory.CreateInternal(
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: null,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3508,24 +3701,18 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="CreateDirectoryAsync"/> operation creates a new
+        /// The <see cref="CreateDirectoryAsync(string, ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new
         /// directory in this share.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
         /// Create Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to create.
         /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for the directory.
-        /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set on the directory.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3541,16 +3728,70 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual async Task<Response<ShareDirectoryClient>> CreateDirectoryAsync(
            string directoryName,
-           IDictionary<string, string> metadata = default,
-           FileSmbProperties smbProperties = default,
-           string filePermission = default,
+           ShareDirectoryCreateOptions options = default,
            CancellationToken cancellationToken = default)
+        {
+            ShareDirectoryClient directory = GetDirectoryClient(directoryName);
+            Response<ShareDirectoryInfo> response = await directory.CreateInternal(
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                async: true,
+                cancellationToken,
+                operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
+                .ConfigureAwait(false);
+            return Response.FromValue(directory, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateDirectoryAsync(string, Metadata, FileSmbProperties, string, CancellationToken)"/> operation creates a new
+        /// directory in this share.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
+        /// </summary>
+        /// <param name="directoryName">
+        /// The name of the directory to create.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DirectoryClient}"/> referencing the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareDirectoryClient>> CreateDirectoryAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string directoryName,
+           IDictionary<string, string> metadata,
+           FileSmbProperties smbProperties,
+           string filePermission,
+           CancellationToken cancellationToken)
         {
             ShareDirectoryClient directory = GetDirectoryClient(directoryName);
             Response<ShareDirectoryInfo> response = await directory.CreateInternal(
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: null,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3568,7 +3809,7 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
         /// Delete Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to delete.
         /// </param>
         /// <param name="cancellationToken">
@@ -3598,7 +3839,7 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
         /// Delete Directory</see>.
         /// </summary>
-        /// <param name="directoryName">T
+        /// <param name="directoryName">
         /// The name of the directory to delete.
         /// </param>
         /// <param name="cancellationToken">
