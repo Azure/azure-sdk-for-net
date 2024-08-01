@@ -16,8 +16,7 @@ parameters:
 
 steps:
 - pwsh: |
-    $packageProperties = Get-ChildItem -Recurse -Force "${{ parameters.PackagePropertiesFolder }}" `
-      | Where-Object { $_.Extension -eq '.json' } `
+    $packageProperties = Get-ChildItem -Recurse "${{ parameters.PackagePropertiesFolder }}" *.json
 
     $paths = @()
 

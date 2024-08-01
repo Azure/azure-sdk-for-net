@@ -103,8 +103,7 @@ if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiR
 
 $responses = @{}
 
-$packageProperties = Get-ChildItem -Recurse -Force "$configFileDir" `
-  | Where-Object { $_.Extension -eq '.json' }
+$packageProperties = Get-ChildItem -Recurse "$configFileDir" *.json
 
 foreach ($packagePropFile in $packageProperties)
 {
@@ -117,7 +116,7 @@ foreach ($packagePropFile in $packageProperties)
     {
         $pkgPath = $packages.Values[0]
         $isRequired = Should-Process-Package -pkgPath $pkgPath -packageName $($packageMetadata.Name)
-        Write-Host "Is API change detect required for $($packages.Name):$($isRequired)"
+        Write-Host "Is API change detect required for $($packageMetadata.Name):$($isRequired)"
         if ($isRequired -eq $True)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
