@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed \[BUG\] BlobContainerClient(connectionString, blobContainerName, options) ctor to set clientSideEncryptionOptions #44623
 
 ### Other Changes
 
