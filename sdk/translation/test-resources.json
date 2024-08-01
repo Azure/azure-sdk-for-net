@@ -52,19 +52,20 @@
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]",
         "storageAccountName": "[concat(parameters('baseName'), 'prim')]",
+        "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
         "encryption": {
-			"services": {
-				"file": {
-					"keyType": "Account",
-					"enabled": true
-				},
-				"blob": {
-					"keyType": "Account",
-					"enabled": true
-				}
-			},
-			"keySource": "Microsoft.Storage"
-		},
+            "services": {
+                "file": {
+                    "keyType": "Account",
+                    "enabled": true
+                },
+                "blob": {
+                    "keyType": "Account",
+                    "enabled": true
+                }
+            },
+            "keySource": "Microsoft.Storage"
+        },
         "networkAcls": {
             "bypass": "AzureServices",
             "virtualNetworkRules": [],
@@ -73,6 +74,16 @@
         }
     },
     "resources": [
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('storageBlobDataContributorRoleID'))]",
+                "principalId": "[parameters('testApplicationOid')]",
+                "scope": "[resourceGroup().id]"
+              }
+        },
         {
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2017-04-18",
