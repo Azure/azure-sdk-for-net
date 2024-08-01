@@ -37,37 +37,17 @@ steps:
   - pwsh: |
       . ./eng/common/TestResources/SubConfig-Helpers.ps1
 
-      $finalConfig = @{}
-      $baseSubConfigRaw = @'
+      $baseSubConfigJson = @'
         ${{ parameters.SubscriptionConfiguration }}
       '@.Trim()
-      if ($baseSubConfigRaw) {
-        $baseSubConfig = $baseSubConfigRaw | ConvertFrom-Json -AsHashtable
 
-        Write-Host "Setting base sub config"
-        $finalConfig = SetSubscriptionConfiguration $baseSubConfig
-      }
-
-      $subConfigJsonsRaw = @'
+      $additionalSubConfigsJson = @'
         ${{ convertToJson(parameters.SubscriptionConfigurations) }}
       '@.Trim() -replace '"{', '{' -replace '}"', '}'
 
-      if ($subConfigJsonsRaw) {
-        $subConfigs = $subConfigJsonsRaw | ConvertFrom-Json -AsHashtable
-
-        foreach ($subConfig in $subConfigs) {
-          Write-Host "Merging sub config from list"
-          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
-        }
-      }
-
-      Write-Host "Merging sub config from files"
-      $subConfigFilesRaw = @'
+      $subConfigFilesJson = @'
         ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
       '@.Trim()
-      $finalConfig = UpdateSubscriptionConfigurationWithFiles $finalConfig $subConfigFilesRaw
 
-      Write-Host ($finalConfig | ConvertTo-Json)
-      $serialized = $finalConfig | ConvertTo-Json -Compress
-      Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+      BuildAndSetSubscriptionConfig $baseSubConfigJson $additionalSubConfigsJson $subConfigFilesJson
     displayName: Merge subscription configurations

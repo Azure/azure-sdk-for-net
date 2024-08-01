@@ -57,42 +57,6 @@ function GetBaseAndResourceGroupNames(
     return $base, $group
 }
 
-# Helper function for processing sub config files from a pipeline file list yaml parameter
-function UpdateSubscriptionConfigurationWithFiles([object]$baseSubConfig, [string]$fileListJson) {
-  if (!$fileListJson) {
-    return $baseSubConfig
-  }
-
-  $finalConfig = $baseSubConfig
-
-  $subConfigFiles = $fileListJson | ConvertFrom-Json -AsHashtable
-  foreach ($file in $subConfigFiles) {
-    # In some cases, $file could be an empty string. Get-Content will fail
-    # if $file is an empty string, so skip those cases.
-    if (!$file) {
-      continue
-    }
-
-    Write-Host "Merging sub config from file: $file"
-    $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
-    $allowedValues = @()
-    # Since the keys are all coming from a file in github, we know every key should not be marked
-    # as a secret. Set up these exclusions here to make pipeline log debugging easier.
-    foreach ($pair in $subConfig.GetEnumerator()) {
-      if ($pair.Value -is [Hashtable]) {
-        foreach($nestedPair in $pair.Value.GetEnumerator()) {
-          $allowedValues += $nestedPair.Name
-        }
-      } else {
-        $allowedValues += $pair.Name
-      }
-    }
-    $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig $allowedValues
-  }
-
-  return $finalConfig
-}
-
 function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())
 {
     $logOutputNonSecret = @(
@@ -191,4 +155,67 @@ function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase,
     }
 
     return $subscriptionConfigurationBase
+}
+
+# Helper function for processing sub config files from a pipeline file list yaml parameter
+function UpdateSubscriptionConfigurationWithFiles([object]$baseSubConfig, [string]$fileListJson) {
+  if (!$fileListJson) {
+    return $baseSubConfig
+  }
+
+  $finalConfig = $baseSubConfig
+
+  $subConfigFiles = $fileListJson | ConvertFrom-Json -AsHashtable
+  foreach ($file in $subConfigFiles) {
+    # In some cases, $file could be an empty string. Get-Content will fail
+    # if $file is an empty string, so skip those cases.
+    if (!$file) {
+      continue
+    }
+
+    Write-Host "Merging sub config from file: $file"
+    $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
+    $allowedValues = @()
+    # Since the keys are all coming from a file in github, we know every key should not be marked
+    # as a secret. Set up these exclusions here to make pipeline log debugging easier.
+    foreach ($pair in $subConfig.GetEnumerator()) {
+      if ($pair.Value -is [Hashtable]) {
+        foreach($nestedPair in $pair.Value.GetEnumerator()) {
+          $allowedValues += $nestedPair.Name
+        }
+      } else {
+        $allowedValues += $pair.Name
+      }
+    }
+    $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig $allowedValues
+  }
+
+  return $finalConfig
+}
+
+# Helper function for processing stringified json sub configs from pipeline parameter data
+function BuildAndSetSubscriptionConfig([string]$baseSubConfigJson, [string]$additionalSubConfigsJson, [string]$subConfigFilesJson) {
+  $finalConfig = @{}
+  if ($baseSubConfigJson) {
+    $baseSubConfig = $baseSubConfigJson | ConvertFrom-Json -AsHashtable
+
+    Write-Host "Setting base sub config"
+    $finalConfig = SetSubscriptionConfiguration $baseSubConfig
+  }
+
+  if ($additionalSubConfigsJson) {
+    $subConfigs = $additionalSubConfigsJson | ConvertFrom-Json -AsHashtable
+
+    foreach ($subConfig in $subConfigs) {
+      Write-Host "Merging sub config from list"
+      $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
+    }
+  }
+
+  Write-Host "Merging sub config from files"
+  $finalConfig = UpdateSubscriptionConfigurationWithFiles $finalConfig $subConfigFilesJson
+
+  Write-Host ($finalConfig | ConvertTo-Json)
+  $serialized = $finalConfig | ConvertTo-Json -Compress
+  Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
 }
