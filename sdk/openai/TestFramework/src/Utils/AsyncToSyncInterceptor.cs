@@ -3,6 +3,7 @@
 
 using System.ClientModel;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Reflection;
 using Castle.DynamicProxy;
 using OpenAI.TestFramework.Adapters;
@@ -15,6 +16,7 @@ namespace OpenAI.TestFramework.Mocks.Client;
 /// is called on the proxy. This is useful for testing where you can write the async version of a test, and then automatically test
 /// both async and sync methods with the same test code.
 /// </summary>
+[DebuggerStepThrough]
 public class AsyncToSyncInterceptor : IInterceptor
 {
     private const string AsyncSuffix = "Async";
@@ -51,6 +53,7 @@ public class AsyncToSyncInterceptor : IInterceptor
     public static AsyncToSyncInterceptor UseAsyncMethods { get; } = new(true);
 
     /// <inheritdoc />
+    [DebuggerStepThrough]
     public virtual void Intercept(IInvocation invocation)
     {
         // 1. Skip for special names (i.e. getters and setters)

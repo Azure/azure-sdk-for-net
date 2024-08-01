@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 using NUnit.Framework;
@@ -48,6 +49,13 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// Creates a new instance.
     /// </summary>
     /// <param name="isAsync">True to run the async version of a test, false to run the sync version of a test.</param>
+    public RecordedClientTestBase(bool isAsync) : this(isAsync, null)
+    { }
+
+    /// <summary>
+    /// Creates a new instance.
+    /// </summary>
+    /// <param name="isAsync">True to run the async version of a test, false to run the sync version of a test.</param>
     /// <param name="mode">(Optional) The recorded test mode to use. If unset, the default recorded test mode will be used.</param>
     public RecordedClientTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
     {
@@ -86,7 +94,9 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// Gets the maximum amount of time to wait for starting/tearing down the test proxy, as well as the maximum amount of time
     /// to wait for configuring a recording session, and then saving it or closing it.
     /// </summary>
-    public virtual TimeSpan TestProxyWaitTime => Default.TestProxyWaitTime;
+    public virtual TimeSpan TestProxyWaitTime => Debugger.IsAttached
+        ? Default.DebuggerAttachedWaitTime
+        : Default.TestProxyWaitTime;
 
     /// <summary>
     /// Gets the test timeout.
@@ -95,6 +105,11 @@ public abstract class RecordedClientTestBase : ClientTestBase
     {
         get
         {
+            if (Debugger.IsAttached)
+            {
+                return Default.DebuggerAttachedWaitTime;
+            }
+
             switch (Mode)
             {
                 default:

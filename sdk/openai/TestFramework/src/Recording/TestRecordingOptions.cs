@@ -74,6 +74,12 @@ public class TestRecordingOptions
     /// </summary>
     public ISet<string> ExcludedHeaders { get; } = new HashSet<string>()
     {
+#if NETFRAMEWORK
+        // .Net framework will add some headers not found in newer .Net versions so let's completely ignore them here. It is also
+        // different in how it handles setting the Content-Length header when there is no body as compared to .Net
+        "Connection",
+        "Content-Length",
+#endif
     };
 
     /// <summary>

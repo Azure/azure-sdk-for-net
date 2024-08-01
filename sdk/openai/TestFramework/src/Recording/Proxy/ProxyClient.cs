@@ -559,7 +559,11 @@ public class ProxyClient
     protected virtual PipelineMessage CreateJsonRequest<TBody>(HttpMethod method, string path, TBody? body, CancellationToken token, Dictionary<string, string>? headers = null)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        message.Apply(new RequestOptions { CancellationToken = token });
+        message.Apply(new RequestOptions
+        {
+            CancellationToken = token,
+            BufferResponse = true
+        });
 
         PipelineRequest request = message.Request;
         request.Method = method.Method;
@@ -602,7 +606,37 @@ public class ProxyClient
         PipelineResponse response = message.Response ?? throw new ClientResultException("Response was null", message.Response);
         if (response.IsError)
         {
-            throw new ClientResultException(message.Response);
+            if (response.Content.ToMemory().Length > 0)
+            {
+                string contentType = response.Headers.GetFirstOrDefault("Content-Type") ?? string.Empty;
+
+                if (contentType.StartsWith("text/", StringComparison.OrdinalIgnoreCase))
+                {
+                    string error = response.Content.ToString();
+                    throw new ClientResultException(error, response);
+                }
+                else if (contentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase))
+                {
+                    string error;
+                    try
+                    {
+                        var parsed = response.Content.ToObjectFromJson<ErrorResponse>(new()
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+
+                        error = $"{parsed.Status}: {parsed.Message}";
+                    }
+                    catch 
+                    {
+                        error = response.Content.ToString();
+                    }
+
+                    throw new ClientResultException(error, response);
+                }
+            }
+
+            throw new ClientResultException(response);
         }
 
         return new ProxyClientResult(response);
@@ -621,15 +655,6 @@ public class ProxyClient
 
         PipelineResponse response = message.Response!; // we've already validated this is not null in the previous call
 
-        if (isAsync)
-        {
-            await response.BufferContentAsync().ConfigureAwait(false);
-        }
-        else
-        {
-            response.BufferContent();
-        }
-
         try
         {
             TResponse? parsed = JsonSerializer.Deserialize<TResponse>(response.Content.ToMemory().Span, Default.TestProxyJsonOptions);
@@ -644,5 +669,11 @@ public class ProxyClient
         {
             throw new ClientResultException("Failed to deserialize response", message.Response, ex);
         }
+    }
+
+    private struct ErrorResponse
+    {
+        public string? Message { get; set; }
+        public string? Status { get; set; }
     }
 }

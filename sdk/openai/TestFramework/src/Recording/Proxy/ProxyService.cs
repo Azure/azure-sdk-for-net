@@ -124,7 +124,10 @@ public class ProxyService : IDisposable
     public void Dispose()
     {
         _portsAvailableTcs.TrySetException(new ObjectDisposedException(nameof(ProxyService)));
-        _testProxyProcess.Kill();
+        try
+        {
+            _testProxyProcess.Kill();
+        } catch { /* we tried */ }
     }
 
     /// <summary>

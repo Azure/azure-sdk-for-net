@@ -10,7 +10,16 @@ namespace OpenAI.TestFramework.Mocks;
 
 public abstract class MockRestService<TData> : IDisposable
 {
-    public record Entry(string id, TData data);
+    public record Entry(string id, TData data)
+    {
+#if NETFRAMEWORK
+        public Entry() : this(string.Empty, default!)
+        {
+            // .Net framework System.Text.Json cannot deserialize records without a parameterless constructor
+        }
+#endif
+    };
+
     public record Error(int error, string message, string? stack = null);
 
     private static readonly JsonSerializerOptions s_options = new()
@@ -27,10 +36,7 @@ public abstract class MockRestService<TData> : IDisposable
 
     public MockRestService(string? basePath = null, ushort port = 0)
     {
-        if (basePath?.EndsWith("/") == false)
-        {
-            basePath += "/";
-        }
+        basePath = basePath?.EnsureEndsWith("/");
 
         int maxAttempts = port == 0 ? 15 : 1;
         Exception? ex = null;

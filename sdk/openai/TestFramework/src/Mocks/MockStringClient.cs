@@ -14,13 +14,20 @@ namespace OpenAI.TestFramework.Mocks
         private ClientPipeline _pipeline;
         private Uri _baseUri;
 
+        protected MockStringClient()
+        {
+            // only used to generate dynamic proxy for testing
+            _pipeline = null!;
+            _baseUri = null!;
+        }
+
         public MockStringClient(Uri serviceUri, ClientPipelineOptions? options = null)
         {
             _pipeline = ClientPipeline.Create(options);
             _baseUri = serviceUri ?? throw new ArgumentNullException(nameof(serviceUri));
         }
 
-        public Task<ClientResult> AddAsync(string id, string value, CancellationToken token = default)
+        public virtual Task<ClientResult> AddAsync(string id, string value, CancellationToken token = default)
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
@@ -30,7 +37,7 @@ namespace OpenAI.TestFramework.Mocks
             return SendSyncOrAsync(true, HttpMethod.Post, id, value, token).AsTask();
         }
 
-        public ClientResult Add(string id, string value, CancellationToken token = default)
+        public virtual ClientResult Add(string id, string value, CancellationToken token = default)
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
@@ -40,7 +47,7 @@ namespace OpenAI.TestFramework.Mocks
             return SendSyncOrAsync(false, HttpMethod.Post, id, value, token).GetAwaiter().GetResult();
         }
 
-        public async Task<ClientResult<string?>> GetAsync(string id, CancellationToken token = default)
+        public virtual async Task<ClientResult<string?>> GetAsync(string id, CancellationToken token = default)
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
@@ -66,7 +73,7 @@ namespace OpenAI.TestFramework.Mocks
             }
         }
 
-        public ClientResult<string?> Get(string id, CancellationToken token = default)
+        public virtual ClientResult<string?> Get(string id, CancellationToken token = default)
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
@@ -90,7 +97,7 @@ namespace OpenAI.TestFramework.Mocks
             }
         }
 
-        public async Task<ClientResult<bool>> RemoveAsync(string id, CancellationToken token = default)
+        public virtual async Task<ClientResult<bool>> RemoveAsync(string id, CancellationToken token = default)
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
@@ -111,7 +118,7 @@ namespace OpenAI.TestFramework.Mocks
             }
         }
 
-        public ClientResult<bool> Remove(string id, CancellationToken token = default)
+        public virtual ClientResult<bool> Remove(string id, CancellationToken token = default)
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));

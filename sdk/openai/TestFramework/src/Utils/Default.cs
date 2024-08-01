@@ -12,11 +12,12 @@ namespace OpenAI.TestFramework.Utils;
 /// </summary>
 public static class Default
 {
-    private static JsonSerializerOptions? _recordingJsonOptions = null;
-    private static JsonSerializerOptions? _innerRecordingJsonOptions = null;
-    private static JsonSerializerOptions? _testProxyJsonOptions = null;
-    private static TimeSpan? _testProxyWaitTime = null;
-    private static TimeSpan? _requestRetryDelay = null;
+    private static JsonSerializerOptions? _recordingJsonOptions;
+    private static JsonSerializerOptions? _innerRecordingJsonOptions;
+    private static JsonSerializerOptions? _testProxyJsonOptions;
+    private static TimeSpan? _testProxyWaitTime;
+    private static TimeSpan? _requestRetryDelay;
+    private static TimeSpan? _debuggerWaitTime;
 
     /// <summary>
     /// Gets the default value to replace matches with while sanitizing.
@@ -90,7 +91,12 @@ public static class Default
     public const int MaxRequestRetries = 3;
 
     /// <summary>
-    /// The amount of time to wait between requests
+    /// The amount of time to wait between requests.
     /// </summary>
     public static TimeSpan RequestRetryDelay => _requestRetryDelay ??= TimeSpan.FromSeconds(0.8);
+
+    /// <summary>
+    /// The amount of time to wait when the debugger is attached. This is much higher than normal to allow for more time while debugging.
+    /// </summary>
+    public static TimeSpan DebuggerAttachedWaitTime => _debuggerWaitTime ??= TimeSpan.FromMinutes(15);
 }

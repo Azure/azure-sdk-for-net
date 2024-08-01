@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/openai/OpenAI.TestFramework",
+  "Tag": "net/openai/OpenAI.TestFramework_f41330e3ac"
+}

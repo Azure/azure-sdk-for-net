@@ -8,6 +8,27 @@ using System.Text.Json.Serialization;
 
 namespace OpenAI.TestFramework.Utils;
 
+public static class StringExtensions
+{
+    public static string EnsureEndsWith(this string value, string suffix, StringComparison comparison = StringComparison.Ordinal)
+    {
+        if (value == null)
+        {
+            return null!;
+        }
+
+        if (value.EndsWith(suffix, comparison))
+        {
+            return value;
+        }
+
+        return value + suffix;
+    }
+
+    public static string EnsureEndsWith(this string value, char suffix, StringComparison comparison = StringComparison.Ordinal)
+        => EnsureEndsWith(value, suffix.ToString(), comparison);
+}
+
 public static class HeaderExtensions
 {
     public static string? GetFirstOrDefault(this PipelineResponseHeaders headers, string name)
@@ -70,8 +91,8 @@ public static class FileExtensions
 #if NET
         return Path.GetRelativePath(relativeTo, path);
 #else
-        relativeTo = Path.GetFullPath(relativeTo);
-        path = Path.GetFullPath(path);
+        relativeTo = Path.GetFullPath(relativeTo).EnsureEndsWith(Path.DirectorySeparatorChar);
+        path = Path.GetFullPath(path).EnsureEndsWith(Path.DirectorySeparatorChar);
 
         Uri relativeToUri = new Uri(relativeTo);
         Uri pathUri = new Uri(path);
