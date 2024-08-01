@@ -72,24 +72,6 @@ namespace Azure.AI.Language.Text
             _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of TextAnalysisClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TextAnalysisClient(Uri endpoint, TokenCredential credential, TextAnalysisClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new TextAnalysisClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
-
         /// <summary> Request text analysis over a collection of documents. </summary>
         /// <param name="analyzeTextInput"> The input documents to analyze. </param>
         /// <param name="showStatistics"> (Optional) if set to true, response will contain request and document level statistics. </param>
