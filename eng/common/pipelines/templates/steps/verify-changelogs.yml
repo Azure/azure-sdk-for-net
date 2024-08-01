@@ -14,4 +14,3 @@ steps:
       pwsh: true
     displayName: Verify ChangeLogEntries
     condition: ${{ parameters.Condition }}
-    continueOnError: false
