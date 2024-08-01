@@ -357,12 +357,31 @@ namespace Azure.Storage.Sas
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public DataLakeSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
+            => ToSasQueryParameters(sharedKeyCredential, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  The string to sign that was used to generate the <see cref="DataLakeSasQueryParameters"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="DataLakeSasQueryParameters"/> used for authenticating
+        /// requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public DataLakeSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential, out string stringToSign)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
             EnsureState();
 
-            string stringToSign = ToStringToSign(sharedKeyCredential);
+            stringToSign = ToStringToSign(sharedKeyCredential);
 
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
@@ -388,18 +407,7 @@ namespace Azure.Storage.Sas
             return p;
         }
 
-        /// <summary>
-        /// For debugging purposes only.
-        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
-        /// If you use this method, call it immediately before <see cref="ToSasQueryParameters(StorageSharedKeyCredential)"/>.
-        /// </summary>
-        /// <param name="sharedKeyCredential">
-        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
-        /// </param>
-        /// <returns>
-        /// The string to sign that will be used to generate the signature for the SAS URL.
-        /// </returns>
-        public string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        private string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
         {
             string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
@@ -439,12 +447,32 @@ namespace Azure.Storage.Sas
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public DataLakeSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
+            => ToSasQueryParameters(userDelegationKey, accountName, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="UserDelegationKey"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="userDelegationKey">
+        /// A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// </param>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="DataLakeSasQueryParameters"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="DataLakeSasQueryParameters"/> used for authenticating requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public DataLakeSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName, out string stringToSign)
         {
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
 
             EnsureState();
 
-            string stringToSign = ToStringToSign(userDelegationKey, accountName);
+            stringToSign = ToStringToSign(userDelegationKey, accountName);
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
@@ -479,20 +507,7 @@ namespace Azure.Storage.Sas
             return p;
         }
 
-        /// <summary>
-        /// For debugging purposes only.
-        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
-        /// If you use this method, call it immediately before <see cref="ToSasQueryParameters(UserDelegationKey, string)"/>.
-        /// </summary>
-        /// <param name="userDelegationKey">
-        /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
-        /// </param>
-        /// <param name="accountName">The name of the storage account.</param>
-        /// <returns>
-        /// The string to sign that will be used to generate the signature for the SAS URL.
-        /// </returns>
-        public string ToStringToSign(UserDelegationKey userDelegationKey, string accountName)
+        private string ToStringToSign(UserDelegationKey userDelegationKey, string accountName)
         {
             string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);

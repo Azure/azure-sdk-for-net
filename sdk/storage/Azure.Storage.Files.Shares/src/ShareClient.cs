@@ -3894,13 +3894,21 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn) =>
-            GenerateSasUri(new ShareSasBuilder(permissions, expiresOn) { ShareName = Name });
+            GenerateSasUri(permissions, expiresOn, out _);
 
         /// <summary>
-        /// For debugging purposes only.
-        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
-        /// If you use this method, call it immediately before
-        /// <see cref="GenerateSasStringToSign(ShareSasPermissions, DateTimeOffset)"/>.
+        /// The <see cref="GenerateSasUri(ShareSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Share Service
+        /// Shared Access Signature (SAS) Uri based on the
+        /// Client properties and parameters passed.
+        /// The SAS is signed by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
         /// </summary>
         /// <param name="permissions">
         /// Required. Specifies the list of permissions to be associated with the SAS.
@@ -3910,19 +3918,19 @@ namespace Azure.Storage.Files.Shares
         /// Required. Specifies the time at which the SAS becomes invalid. This field
         /// must be omitted if it has been specified in an associated stored access policy.
         /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
         /// <returns>
-        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// A <see cref="Uri"/> containing the SAS Uri.
         /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual string GenerateSasStringToSign(ShareSasPermissions permissions, DateTimeOffset expiresOn)
-        {
-            ShareSasBuilder shareSasBuilder = new ShareSasBuilder(permissions, expiresOn)
-            {
-                ShareName = Name
-            };
-
-            return shareSasBuilder.ToStringToSign(ClientConfiguration.SharedKeyCredential);
-        }
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Uri GenerateSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, out string stringToSign) =>
+            GenerateSasUri(new ShareSasBuilder(permissions, expiresOn) { ShareName = Name }, out stringToSign);
 
         /// <summary>
         /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a <see cref="Uri"/>
@@ -3948,6 +3956,36 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
+            => GenerateSasUri(builder, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a Blob Container Service Shared Access Signature (SAS) Uri
+        /// based on the Client properties and builder passed.
+        /// The SAS is signed by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Uri GenerateSasUri(ShareSasBuilder builder, out string stringToSign)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
 
@@ -3973,7 +4011,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString()
             };
             return sasUri.ToUri();
         }

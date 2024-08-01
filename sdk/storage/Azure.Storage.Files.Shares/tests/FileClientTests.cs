@@ -6654,8 +6654,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = fileClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = fileClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
@@ -6670,6 +6672,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -6699,8 +6702,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 FilePath = fileName
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             ShareSasBuilder sasBuilder2 = new ShareSasBuilder(permissions, expiresOn)
@@ -6715,6 +6720,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
