@@ -130,13 +130,13 @@ To analyze a conversation, you can call the `AnalyzeConversation()` method:
 string projectName = "Menu";
 string deploymentName = "production";
 
-AnalyzeConversationInput data = new ConversationalInput(
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
             participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         // Use Utf16CodeUnit for strings in .NET.
         StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -188,13 +188,13 @@ Additional options can be passed to `AnalyzeConversation` like enabling more ver
 string projectName = "Menu";
 string deploymentName = "production";
 
-AnalyzeConversationInput data = new ConversationalInput(
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
             participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
 {
     // Use Utf16CodeUnit for strings in .NET.
     StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -213,7 +213,7 @@ string projectName = "Menu";
 string deploymentName = "production";
 
 AnalyzeConversationInput data =
-    new ConversationalInput(
+    new ConversationLanguageUnderstandingInput(
         new ConversationAnalysisInput(
             new TextConversationItem(
                 id: "1",
@@ -222,7 +222,7 @@ AnalyzeConversationInput data =
             {
                 Language = "es"
             }),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         // Use Utf16CodeUnit for strings in .NET.
         StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -240,13 +240,13 @@ To analyze a conversation using an orchestration project, you can call the `Anal
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
 string projectName = "DomainOrchestrator";
 string deploymentName = "production";
-AnalyzeConversationInput data = new ConversationalInput(
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
             participantId: "participant1",
             text: "How are you?")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         StringIndexType = StringIndexType.Utf16CodeUnit,
     });

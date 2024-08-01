@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class ConversationalInput : IUtf8JsonSerializable, IJsonModel<ConversationalInput>
+    public partial class ConversationLanguageUnderstandingInput : IUtf8JsonSerializable, IJsonModel<ConversationLanguageUnderstandingInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationalInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationLanguageUnderstandingInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConversationalInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConversationLanguageUnderstandingInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalInput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationalInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,19 +50,19 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteEndObject();
         }
 
-        ConversationalInput IJsonModel<ConversationalInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConversationLanguageUnderstandingInput IJsonModel<ConversationLanguageUnderstandingInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalInput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationalInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationalInput(document.RootElement, options);
+            return DeserializeConversationLanguageUnderstandingInput(document.RootElement, options);
         }
 
-        internal static ConversationalInput DeserializeConversationalInput(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConversationLanguageUnderstandingInput DeserializeConversationLanguageUnderstandingInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Conversations.Models
                 return null;
             }
             ConversationAnalysisInput analysisInput = default;
-            ConversationActionContent parameters = default;
+            ConversationLanguageUnderstandingActionContent parameters = default;
             AnalyzeConversationInputKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = ConversationActionContent.DeserializeConversationActionContent(property.Value, options);
+                    parameters = ConversationLanguageUnderstandingActionContent.DeserializeConversationLanguageUnderstandingActionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -98,46 +98,46 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationalInput(kind, serializedAdditionalRawData, analysisInput, parameters);
+            return new ConversationLanguageUnderstandingInput(kind, serializedAdditionalRawData, analysisInput, parameters);
         }
 
-        BinaryData IPersistableModel<ConversationalInput>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConversationLanguageUnderstandingInput>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalInput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationalInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConversationalInput IPersistableModel<ConversationalInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConversationLanguageUnderstandingInput IPersistableModel<ConversationLanguageUnderstandingInput>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalInput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationLanguageUnderstandingInput>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConversationalInput(document.RootElement, options);
+                        return DeserializeConversationLanguageUnderstandingInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationalInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationLanguageUnderstandingInput)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConversationalInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConversationLanguageUnderstandingInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ConversationalInput FromResponse(Response response)
+        internal static new ConversationLanguageUnderstandingInput FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConversationalInput(document.RootElement);
+            return DeserializeConversationLanguageUnderstandingInput(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

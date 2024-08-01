@@ -26,13 +26,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             deploymentName = TestEnvironment.DeploymentName;
 #endif
 
-            AnalyzeConversationInput data = new ConversationalInput(
+            AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
                 new ConversationAnalysisInput(
                     new TextConversationItem(
                         id: "1",
                         participantId: "participant1",
                         text: "Send an email to Carol about tomorrow's demo")),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
             {
                 // Use Utf16CodeUnit for strings in .NET.
                 StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -91,13 +91,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             string projectName = TestEnvironment.ProjectName;
             string deploymentName = TestEnvironment.DeploymentName;
 
-            AnalyzeConversationInput data = new ConversationalInput(
+            AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
                 new ConversationAnalysisInput(
                     new TextConversationItem(
                         id: "1",
                         participantId: "participant1",
                         text: "Send an email to Carol about tomorrow's demo")),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
                     StringIndexType = StringIndexType.Utf16CodeUnit,
