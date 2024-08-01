@@ -122,7 +122,7 @@ The Azure.AI.Language.Conversations client library provides both synchronous and
 
 The following examples show common scenarios using the `client` [created above](#create-a-conversationanalysisclient).
 
-### Analyze a conversation
+### Extract intents and entities from a conversation (Conversation Language Understanding)
 
 To analyze a conversation, you can call the `AnalyzeConversation()` method:
 
@@ -130,13 +130,13 @@ To analyze a conversation, you can call the `AnalyzeConversation()` method:
 string projectName = "Menu";
 string deploymentName = "production";
 
-AnalyzeConversationInput data = new ConversationalInput(
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
             participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         // Use Utf16CodeUnit for strings in .NET.
         StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -182,19 +182,19 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 }
 ```
 
-Additional options can be passed to `AnalyzeConversations` like enabling more verbose output:
+Additional options can be passed to `AnalyzeConversation` like enabling more verbose output:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 string projectName = "Menu";
 string deploymentName = "production";
 
-AnalyzeConversationInput data = new ConversationalInput(
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
             participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
 {
     // Use Utf16CodeUnit for strings in .NET.
     StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -204,7 +204,7 @@ AnalyzeConversationInput data = new ConversationalInput(
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
-### Analyze a conversation in a different language
+#### Extract intents and entities from a conversation in a different language (Conversation Language Understanding)
 
 The `language` property can be set to specify the language of the conversation:
 
@@ -213,7 +213,7 @@ string projectName = "Menu";
 string deploymentName = "production";
 
 AnalyzeConversationInput data =
-    new ConversationalInput(
+    new ConversationLanguageUnderstandingInput(
         new ConversationAnalysisInput(
             new TextConversationItem(
                 id: "1",
@@ -222,7 +222,7 @@ AnalyzeConversationInput data =
             {
                 Language = "es"
             }),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         // Use Utf16CodeUnit for strings in .NET.
         StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -232,7 +232,7 @@ AnalyzeConversationInput data =
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
-### Analyze a conversation using an orchestration project
+### Orchestrate a conversation between various conversation apps like Question Answering app, CLU app
 
 To analyze a conversation using an orchestration project, you can call the `AnalyzeConversations()` method just like the conversation project.
 
@@ -240,13 +240,13 @@ To analyze a conversation using an orchestration project, you can call the `Anal
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
 string projectName = "DomainOrchestrator";
 string deploymentName = "production";
-AnalyzeConversationInput data = new ConversationalInput(
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
             participantId: "participant1",
             text: "How are you?")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         StringIndexType = StringIndexType.Utf16CodeUnit,
     });
@@ -277,9 +277,33 @@ if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringT
 }
 ```
 
+#### CLU prediction
+
+If your conversation was analyzed by a CLU application, it will include an intent and entities:
+
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult is ConversationTargetIntentResult conversationTargetIntent)
+{
+    ConversationResult conversationResult = conversationTargetIntent.Result;
+    ConversationPrediction conversationPrediction = conversationResult.Prediction;
+
+    Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
+    Console.WriteLine($"Intents:");
+    foreach (ConversationIntent intent in conversationPrediction.Intents)
+    {
+        Console.WriteLine($"Intent Category: {intent.Category}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
+        Console.WriteLine();
+    }
+}
+```
+
 ### Summarize a conversation
 
-To summarize a conversation, you can use the `AnalyzeConversationsOperation` method overload that returns an `Response<AnalyzeConversationJobState>`:
+To summarize a conversation, you can use the `AnalyzeConversationsAsync` method overload that returns an `Response<AnalyzeConversationOperationState>`:
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
 MultiLanguageConversationInput input = new MultiLanguageConversationInput(
@@ -356,7 +380,7 @@ foreach (var operationResult in operationState.Actions.Items)
 
 ### Extract PII from a conversation
 
-To detect and redact PII in a conversation, you can use the `AnalyzeConversationsOperation` method overload with an action of type `PiiOperationAction`:
+To detect and redact PII in a conversation, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` that  returns an `Response<AnalyzeConversationOperationState>`::
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
 MultiLanguageConversationInput input = new MultiLanguageConversationInput(
@@ -389,7 +413,7 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 
     if (operationResult is ConversationPiiOperationResult piiOperationResult)
     {
-        foreach (ConversationalPiiResultWithResultBase conversation in piiOperationResult.Results.Conversations)
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
         {
             Console.WriteLine($"Conversation: #{conversation.Id}");
             Console.WriteLine("Detected Entities:");
@@ -397,12 +421,12 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
             {
                 foreach (NamedEntity entity in item.Entities)
                 {
-                    Console.WriteLine($"Category: {entity.Category}");
-                    Console.WriteLine($"Subcategory: {entity.Subcategory}");
-                    Console.WriteLine($"Text: {entity.Text}");
-                    Console.WriteLine($"Offset: {entity.Offset}");
-                    Console.WriteLine($"Length: {entity.Length}");
-                    Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine($"  Category: {entity.Category}");
+                    Console.WriteLine($"  Subcategory: {entity.Subcategory}");
+                    Console.WriteLine($"  Text: {entity.Text}");
+                    Console.WriteLine($"  Offset: {entity.Offset}");
+                    Console.WriteLine($"  Length: {entity.Length}");
+                    Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
                     Console.WriteLine();
                 }
             }

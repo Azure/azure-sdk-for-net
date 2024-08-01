@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Models
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string modelVersion = default;
-            IReadOnlyList<ConversationalPiiResultWithResultBase> conversations = default;
+            IReadOnlyList<ConversationalPiiResult> conversations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,10 +119,10 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("conversations"u8))
                 {
-                    List<ConversationalPiiResultWithResultBase> array = new List<ConversationalPiiResultWithResultBase>();
+                    List<ConversationalPiiResult> array = new List<ConversationalPiiResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConversationalPiiResultWithResultBase.DeserializeConversationalPiiResultWithResultBase(item, options));
+                        array.Add(ConversationalPiiResult.DeserializeConversationalPiiResult(item, options));
                     }
                     conversations = array;
                     continue;

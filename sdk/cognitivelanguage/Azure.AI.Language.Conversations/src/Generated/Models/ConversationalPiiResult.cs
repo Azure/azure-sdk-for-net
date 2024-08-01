@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Conversation PII result item. </summary>
-    public partial class ConversationalPiiResultWithResultBase
+    public partial class ConversationalPiiResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalPiiResultWithResultBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationalPiiResult"/>. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="conversationItems"> List of conversationItems. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="conversationItems"/> is null. </exception>
-        internal ConversationalPiiResultWithResultBase(string id, IEnumerable<InputWarning> warnings, IEnumerable<ConversationPiiItemResult> conversationItems)
+        internal ConversationalPiiResult(string id, IEnumerable<InputWarning> warnings, IEnumerable<ConversationPiiItemResult> conversationItems)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
@@ -62,13 +62,13 @@ namespace Azure.AI.Language.Conversations.Models
             ConversationItems = conversationItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalPiiResultWithResultBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationalPiiResult"/>. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="conversationItems"> List of conversationItems. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalPiiResultWithResultBase(string id, IReadOnlyList<InputWarning> warnings, ConversationStatistics statistics, IReadOnlyList<ConversationPiiItemResult> conversationItems, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationalPiiResult(string id, IReadOnlyList<InputWarning> warnings, ConversationStatistics statistics, IReadOnlyList<ConversationPiiItemResult> conversationItems, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Warnings = warnings;
@@ -77,8 +77,8 @@ namespace Azure.AI.Language.Conversations.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalPiiResultWithResultBase"/> for deserialization. </summary>
-        internal ConversationalPiiResultWithResultBase()
+        /// <summary> Initializes a new instance of <see cref="ConversationalPiiResult"/> for deserialization. </summary>
+        internal ConversationalPiiResult()
         {
         }
 

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class ConversationalPiiResultWithResultBase : IUtf8JsonSerializable, IJsonModel<ConversationalPiiResultWithResultBase>
+    public partial class ConversationalPiiResult : IUtf8JsonSerializable, IJsonModel<ConversationalPiiResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationalPiiResultWithResultBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationalPiiResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConversationalPiiResultWithResultBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConversationalPiiResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalPiiResultWithResultBase>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationalPiiResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationalPiiResultWithResultBase)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationalPiiResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,19 +65,19 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteEndObject();
         }
 
-        ConversationalPiiResultWithResultBase IJsonModel<ConversationalPiiResultWithResultBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConversationalPiiResult IJsonModel<ConversationalPiiResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalPiiResultWithResultBase>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationalPiiResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationalPiiResultWithResultBase)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationalPiiResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationalPiiResultWithResultBase(document.RootElement, options);
+            return DeserializeConversationalPiiResult(document.RootElement, options);
         }
 
-        internal static ConversationalPiiResultWithResultBase DeserializeConversationalPiiResultWithResultBase(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConversationalPiiResult DeserializeConversationalPiiResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,46 +133,46 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationalPiiResultWithResultBase(id, warnings, statistics, conversationItems, serializedAdditionalRawData);
+            return new ConversationalPiiResult(id, warnings, statistics, conversationItems, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConversationalPiiResultWithResultBase>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConversationalPiiResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalPiiResultWithResultBase>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationalPiiResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationalPiiResultWithResultBase)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationalPiiResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConversationalPiiResultWithResultBase IPersistableModel<ConversationalPiiResultWithResultBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConversationalPiiResult IPersistableModel<ConversationalPiiResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalPiiResultWithResultBase>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationalPiiResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConversationalPiiResultWithResultBase(document.RootElement, options);
+                        return DeserializeConversationalPiiResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationalPiiResultWithResultBase)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationalPiiResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConversationalPiiResultWithResultBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConversationalPiiResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConversationalPiiResultWithResultBase FromResponse(Response response)
+        internal static ConversationalPiiResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConversationalPiiResultWithResultBase(document.RootElement);
+            return DeserializeConversationalPiiResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

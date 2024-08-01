@@ -15,13 +15,13 @@ namespace Azure.AI.Language.Conversations
     /// <summary> Model factory for models. </summary>
     public static partial class ConversationsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingInput"/>. </summary>
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
-        /// <param name="actionContent"> Input parameters necessary for a Conversation task. </param>
-        /// <returns> A new <see cref="Models.ConversationalInput"/> instance for mocking. </returns>
-        public static ConversationalInput ConversationalInput(ConversationAnalysisInput conversationInput = null, ConversationActionContent actionContent = null)
+        /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
+        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingInput"/> instance for mocking. </returns>
+        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = null, ConversationLanguageUnderstandingActionContent actionContent = null)
         {
-            return new ConversationalInput(AnalyzeConversationInputKind.Conversation, serializedAdditionalRawData: null, conversationInput, actionContent);
+            return new ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind.Conversation, serializedAdditionalRawData: null, conversationInput, actionContent);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TextConversationItem"/>. </summary>
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="verbose"> If true, the service will return more detailed information in the response. </param>
@@ -56,12 +56,12 @@ namespace Azure.AI.Language.Conversations
         /// Please note <see cref="AnalysisConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QuestionAnsweringConfig"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.ConversationActionContent"/> instance for mocking. </returns>
-        public static ConversationActionContent ConversationActionContent(string projectName = null, string deploymentName = null, bool? verbose = null, bool? isLoggingEnabled = null, StringIndexType? stringIndexType = null, string directTarget = null, IDictionary<string, AnalysisConfig> targetProjectParameters = null)
+        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
+        public static ConversationLanguageUnderstandingActionContent ConversationLanguageUnderstandingActionContent(string projectName = null, string deploymentName = null, bool? verbose = null, bool? isLoggingEnabled = null, StringIndexType? stringIndexType = null, string directTarget = null, IDictionary<string, AnalysisConfig> targetProjectParameters = null)
         {
             targetProjectParameters ??= new Dictionary<string, AnalysisConfig>();
 
-            return new ConversationActionContent(
+            return new ConversationLanguageUnderstandingActionContent(
                 projectName,
                 deploymentName,
                 verbose,
@@ -641,10 +641,10 @@ namespace Azure.AI.Language.Conversations
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
         /// <returns> A new <see cref="Models.ConversationPiiResults"/> instance for mocking. </returns>
-        public static ConversationPiiResults ConversationPiiResults(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<ConversationalPiiResultWithResultBase> conversations = null)
+        public static ConversationPiiResults ConversationPiiResults(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<ConversationalPiiResult> conversations = null)
         {
             errors ??= new List<DocumentError>();
-            conversations ??= new List<ConversationalPiiResultWithResultBase>();
+            conversations ??= new List<ConversationalPiiResult>();
 
             return new ConversationPiiResults(errors?.ToList(), statistics, modelVersion, conversations?.ToList(), serializedAdditionalRawData: null);
         }
@@ -669,18 +669,18 @@ namespace Azure.AI.Language.Conversations
             return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalPiiResultWithResultBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationalPiiResult"/>. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="conversationItems"> List of conversationItems. </param>
-        /// <returns> A new <see cref="Models.ConversationalPiiResultWithResultBase"/> instance for mocking. </returns>
-        public static ConversationalPiiResultWithResultBase ConversationalPiiResultWithResultBase(string id = null, IEnumerable<InputWarning> warnings = null, ConversationStatistics statistics = null, IEnumerable<ConversationPiiItemResult> conversationItems = null)
+        /// <returns> A new <see cref="Models.ConversationalPiiResult"/> instance for mocking. </returns>
+        public static ConversationalPiiResult ConversationalPiiResult(string id = null, IEnumerable<InputWarning> warnings = null, ConversationStatistics statistics = null, IEnumerable<ConversationPiiItemResult> conversationItems = null)
         {
             warnings ??= new List<InputWarning>();
             conversationItems ??= new List<ConversationPiiItemResult>();
 
-            return new ConversationalPiiResultWithResultBase(id, warnings?.ToList(), statistics, conversationItems?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationalPiiResult(id, warnings?.ToList(), statistics, conversationItems?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InputWarning"/>. </summary>
