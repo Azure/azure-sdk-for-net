@@ -5,20 +5,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Represents a long-running operation for TestRun.
     /// </summary>
-    public class TestRunResultOperation : Operation<BinaryData>
+    public class TestRunResultOperation : Operation<TestRun>
     {
         private bool _completed;
-        private Response _response;
-        private BinaryData _value;
+        private Response<TestRun> _response;
+        private TestRun _value;
         private readonly string _testRunId;
         private readonly LoadTestRunClient _client;
         private readonly List<string> _terminalStatus = new()
@@ -31,7 +31,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// Value.
         /// </summary>
-        public override BinaryData Value
+        public override TestRun Value
         {
             get {
                 if (HasCompleted && !HasValue)
@@ -68,7 +68,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public TestRunResultOperation(string testRunId, LoadTestRunClient client, Response initialResponse = null)
+        public TestRunResultOperation(string testRunId, LoadTestRunClient client, Response<TestRun> initialResponse = null)
         {
             _testRunId = Id = testRunId;
             _client = client;
@@ -76,7 +76,7 @@ namespace Azure.Developer.LoadTesting
             if (initialResponse != null)
             {
                 _response = initialResponse;
-                _value = _response.Content;
+                _value = _response.Value;
                 GetCompletionResponse();
             }
         }
@@ -86,7 +86,7 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         public override Response GetRawResponse()
         {
-            return _response;
+            return _response.GetRawResponse();
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Azure.Developer.LoadTesting
             }
 
             _response = _client.GetTestRun(_testRunId);
-            _value = _response.Content;
+            _value = _response.Value;
 
             return GetCompletionResponse();
         }
@@ -118,11 +118,11 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 _response = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
-                _value = _response.Content;
+                _value = _response.Value;
             }
             catch
             {
-                throw new RequestFailedException(_response);
+                throw new RequestFailedException(_response.GetRawResponse());
             }
 
             return GetCompletionResponse();
@@ -130,26 +130,7 @@ namespace Azure.Developer.LoadTesting
 
         private Response GetCompletionResponse()
         {
-            string testRunStatus;
-            JsonDocument jsonDocument;
-
-            try
-            {
-                jsonDocument = JsonDocument.Parse(_value.ToMemory());
-            }
-            catch (Exception e)
-            {
-                throw new RequestFailedException("Unable to parse JOSN: " + e.Message);
-            }
-
-            try
-            {
-                testRunStatus = jsonDocument.RootElement.GetProperty("status").GetString();
-            }
-            catch
-            {
-                throw new RequestFailedException("No property validationStatus in reposne JSON: " + _value.ToString());
-            }
+            string testRunStatus = _value.Status.ToString();
 
             if (_terminalStatus.Contains(testRunStatus))
             {
