@@ -1634,7 +1634,7 @@ namespace Azure.Storage.Blobs.Models
             };
 
         /// <summary>
-        /// Creates a new BlobDownloadDetails with etag instance for mocking.
+        /// Creates a new BlobDownloadDetails instance with etag set for mocking.
         /// </summary>
         public static BlobDownloadDetails BlobDownloadDetails(
             BlobType blobType,
