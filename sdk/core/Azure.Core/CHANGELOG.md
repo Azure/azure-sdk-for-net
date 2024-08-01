@@ -1,14 +1,12 @@
 # Release History
 
-## 1.42.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.42.0 (2024-08-01)
 
 ### Other Changes
+
+- Improved memory performance for Event Source formatting [#43947](https://github.com/Azure/azure-sdk-for-net/pull/43947)
+- Upgraded dependency on System.Text.Encodings.Web to 6.0.0
+- Upgraded dependency on Microsoft.Bcl.AsyncInterfaces to 6.0.0
 
 ## 1.41.0 (2024-07-11)
 
