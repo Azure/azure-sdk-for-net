@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterface(string resourceId, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkInterface(ResourceIdentifier resourceId, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             PrivateIPAddress = privateIPAddress;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Private Ip address of the interface. </summary>
         public string PrivateIPAddress { get; set; }
     }

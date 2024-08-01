@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        internal RequestUriBuilder CreateValidateBackupRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
+        internal RequestUriBuilder CreateValidateBackupPropertiesRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             return uri;
         }
 
-        internal HttpMessage CreateValidateBackupRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
+        internal HttpMessage CreateValidateBackupPropertiesRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -635,13 +635,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateBackupAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateBackupPropertiesAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateValidateBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
+            using var message = CreateValidateBackupPropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -661,13 +661,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateBackup(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
+        public Response ValidateBackupProperties(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateValidateBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
+            using var message = CreateValidateBackupPropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        internal RequestUriBuilder CreateValidateRestoreRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
+        internal RequestUriBuilder CreateValidateRestorePropertiesRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             return uri;
         }
 
-        internal HttpMessage CreateValidateRestoreRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
+        internal HttpMessage CreateValidateRestorePropertiesRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -825,13 +825,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateRestoreAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateRestorePropertiesAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateValidateRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
+            using var message = CreateValidateRestorePropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -851,13 +851,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateRestore(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
+        public Response ValidateRestoreProperties(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateValidateRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
+            using var message = CreateValidateRestorePropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

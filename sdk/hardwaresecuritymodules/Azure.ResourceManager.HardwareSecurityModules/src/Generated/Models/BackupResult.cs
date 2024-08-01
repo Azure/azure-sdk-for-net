@@ -11,32 +11,55 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Backup operation Result. </summary>
-    public partial class BackupResult : BackupRestoreBaseResult
+    public partial class BackupResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BackupResult"/>. </summary>
         internal BackupResult()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupResult"/>. </summary>
-        /// <param name="status"> Status of the backup/restore operation. </param>
-        /// <param name="statusDetails"> The status details of backup/restore operation. </param>
-        /// <param name="error"> Error encountered, if any, during the backup/restore operation. </param>
-        /// <param name="startOn"> The start time of the backup/restore operation in UTC. </param>
-        /// <param name="endOn"> The end time of the backup/restore operation in UTC. </param>
-        /// <param name="jobId"> Identifier for the backup/restore operation. </param>
+        /// <param name="properties"> Properties of the Cloud HSM Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
-        /// <param name="backupId"> The ID of the backup. </param>
-        internal BackupResult(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri azureStorageBlobContainerUri, string backupId) : base(status, statusDetails, error, startOn, endOn, jobId, serializedAdditionalRawData)
+        internal BackupResult(BackupResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AzureStorageBlobContainerUri = azureStorageBlobContainerUri;
-            BackupId = backupId;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure blob storage container Uri which contains the backup. </summary>
-        public Uri AzureStorageBlobContainerUri { get; }
-        /// <summary> The ID of the backup. </summary>
-        public string BackupId { get; }
+        /// <summary> Properties of the Cloud HSM Cluster. </summary>
+        public BackupResultProperties Properties { get; }
     }
 }

@@ -26,52 +26,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureStorageBlobContainerUri))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("azureStorageBlobContainerUri"u8);
-                writer.WriteStringValue(AzureStorageBlobContainerUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(BackupId))
-            {
-                writer.WritePropertyName("backupId"u8);
-                writer.WriteStringValue(BackupId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (Optional.IsDefined(StatusDetails))
-            {
-                writer.WritePropertyName("statusDetails"u8);
-                writer.WriteStringValue(StatusDetails);
-            }
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
-            {
-                if (EndOn != null)
-                {
-                    writer.WritePropertyName("endTime"u8);
-                    writer.WriteStringValue(EndOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("endTime");
-                }
-            }
-            if (Optional.IsDefined(JobId))
-            {
-                writer.WritePropertyName("jobId"u8);
-                writer.WriteStringValue(JobId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,77 +69,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Uri azureStorageBlobContainerUri = default;
-            string backupId = default;
-            BackupRestoreOperationStatus? status = default;
-            string statusDetails = default;
-            ResponseError error = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
-            string jobId = default;
+            BackupResultProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureStorageBlobContainerUri"u8))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureStorageBlobContainerUri = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("backupId"u8))
-                {
-                    backupId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = new BackupRestoreOperationStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("statusDetails"u8))
-                {
-                    statusDetails = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("error"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("startTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("endTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endTime = null;
-                        continue;
-                    }
-                    endTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("jobId"u8))
-                {
-                    jobId = property.Value.GetString();
+                    properties = BackupResultProperties.DeserializeBackupResultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -190,16 +89,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackupResult(
-                status,
-                statusDetails,
-                error,
-                startTime,
-                endTime,
-                jobId,
-                serializedAdditionalRawData,
-                azureStorageBlobContainerUri,
-                backupId);
+            return new BackupResult(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResult>.Write(ModelReaderWriterOptions options)

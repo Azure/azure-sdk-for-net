@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_ValidateBackup</description>
+        /// <description>CloudHsmClusters_ValidateBackupProperties</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -452,14 +452,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="backupRequestProperties"> Backup Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BackupResult>> ValidateBackupAsync(WaitUntil waitUntil, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupResult>> ValidateBackupPropertiesAsync(WaitUntil waitUntil, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateBackup");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateBackupProperties");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterRestClient.ValidateBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<BackupResult>(new BackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudHsmClusterRestClient.ValidateBackupPropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwareSecurityModulesArmOperation<BackupResult>(new BackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateBackupPropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_ValidateBackup</description>
+        /// <description>CloudHsmClusters_ValidateBackupProperties</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -495,14 +495,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="backupRequestProperties"> Backup Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BackupResult> ValidateBackup(WaitUntil waitUntil, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupResult> ValidateBackupProperties(WaitUntil waitUntil, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateBackup");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateBackupProperties");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterRestClient.ValidateBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<BackupResult>(new BackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudHsmClusterRestClient.ValidateBackupProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties, cancellationToken);
+                var operation = new HardwareSecurityModulesArmOperation<BackupResult>(new BackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateBackupPropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_ValidateRestore</description>
+        /// <description>CloudHsmClusters_ValidateRestoreProperties</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -624,14 +624,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequestProperties"> Optional Parameters to validate prior performing a restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<RestoreResult>> ValidateRestoreAsync(WaitUntil waitUntil, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RestoreResult>> ValidateRestorePropertiesAsync(WaitUntil waitUntil, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateRestore");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateRestoreProperties");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterRestClient.ValidateRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<RestoreResult>(new RestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudHsmClusterRestClient.ValidateRestorePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwareSecurityModulesArmOperation<RestoreResult>(new RestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateRestorePropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_ValidateRestore</description>
+        /// <description>CloudHsmClusters_ValidateRestoreProperties</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -667,14 +667,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequestProperties"> Optional Parameters to validate prior performing a restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<RestoreResult> ValidateRestore(WaitUntil waitUntil, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RestoreResult> ValidateRestoreProperties(WaitUntil waitUntil, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateRestore");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateRestoreProperties");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterRestClient.ValidateRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<RestoreResult>(new RestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudHsmClusterRestClient.ValidateRestoreProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties, cancellationToken);
+                var operation = new HardwareSecurityModulesArmOperation<RestoreResult>(new RestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateRestorePropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class BackupRestoreBaseResult : IUtf8JsonSerializable, IJsonModel<BackupRestoreBaseResult>
+    public partial class BackupRestoreBaseResultProperties : IUtf8JsonSerializable, IJsonModel<BackupRestoreBaseResultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRestoreBaseResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRestoreBaseResultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BackupRestoreBaseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BackupRestoreBaseResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRestoreBaseResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRestoreBaseResultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             writer.WriteEndObject();
         }
 
-        BackupRestoreBaseResult IJsonModel<BackupRestoreBaseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackupRestoreBaseResultProperties IJsonModel<BackupRestoreBaseResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRestoreBaseResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRestoreBaseResultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackupRestoreBaseResult(document.RootElement, options);
+            return DeserializeBackupRestoreBaseResultProperties(document.RootElement, options);
         }
 
-        internal static BackupRestoreBaseResult DeserializeBackupRestoreBaseResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BackupRestoreBaseResultProperties DeserializeBackupRestoreBaseResultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackupRestoreBaseResult(
+            return new BackupRestoreBaseResultProperties(
                 status,
                 statusDetails,
                 error,
@@ -174,35 +174,35 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BackupRestoreBaseResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BackupRestoreBaseResultProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResultProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupRestoreBaseResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRestoreBaseResultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BackupRestoreBaseResult IPersistableModel<BackupRestoreBaseResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BackupRestoreBaseResultProperties IPersistableModel<BackupRestoreBaseResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreBaseResultProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBackupRestoreBaseResult(document.RootElement, options);
+                        return DeserializeBackupRestoreBaseResultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupRestoreBaseResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRestoreBaseResultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BackupRestoreBaseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BackupRestoreBaseResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

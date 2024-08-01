@@ -100,6 +100,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         value = RestoreResult.DeserializeRestoreResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 202:
+                    return Response.FromValue((RestoreResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -131,6 +133,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         value = RestoreResult.DeserializeRestoreResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 202:
+                    return Response.FromValue((RestoreResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

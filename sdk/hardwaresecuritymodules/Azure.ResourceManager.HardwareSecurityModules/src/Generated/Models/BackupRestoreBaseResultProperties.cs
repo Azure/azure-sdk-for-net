@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Backup and Restore operation common properties. </summary>
-    public partial class BackupRestoreBaseResult
+    public partial class BackupRestoreBaseResultProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackupRestoreBaseResult"/>. </summary>
-        internal BackupRestoreBaseResult()
+        /// <summary> Initializes a new instance of <see cref="BackupRestoreBaseResultProperties"/>. </summary>
+        internal BackupRestoreBaseResultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupRestoreBaseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRestoreBaseResultProperties"/>. </summary>
         /// <param name="status"> Status of the backup/restore operation. </param>
         /// <param name="statusDetails"> The status details of backup/restore operation. </param>
         /// <param name="error"> Error encountered, if any, during the backup/restore operation. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="endOn"> The end time of the backup/restore operation in UTC. </param>
         /// <param name="jobId"> Identifier for the backup/restore operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupRestoreBaseResult(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupRestoreBaseResultProperties(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             StatusDetails = statusDetails;
