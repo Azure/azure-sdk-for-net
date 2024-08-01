@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+* RPC attributes are now correctly exported to Application Insights as custom properties.
+  ([]())
+
 ### Other Changes
 
 ## 1.4.0-beta.1 (2024-07-12)

@@ -381,6 +381,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Thread.CurrentThread.CurrentCulture = originalCulture;
         }
 
+        [Fact]
+        public void TagObjects_RpcTagsAreNotMapped()
+        {
+            /// As of today (20[24-08-01), The RPC Semantic Convention is still Experimental.
+            /// https://github.com/open-telemetry/semantic-conventions/blob/main/docs/rpc/rpc-spans.md
+            /// We shouldn't have any special handling of these attributes until they are promoted to stable.
+            /// Unmapped Tags should pass through to a telemetry item's custom properties.
+            /// This test can be removed when the RPC Semantic Convention is promoted to stable.
+
+            var activityTagsProcessor = new ActivityTagsProcessor();
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                ["rpc.system"] = "test",
+                ["rpc.grpc.status_code"] = "test",
+                ["rpc.service"] = "test",
+                ["rpc.method"] = "test",
+            };
+
+            using var activity = CreateTestActivity(tagObjects);
+            activityTagsProcessor.CategorizeTags(activity);
+
+            Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
+
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(4, activityTagsProcessor.UnMappedTags.Length);
+        }
+
         private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object?>>? additionalAttributes = null, ActivityKind activityKind = ActivityKind.Server)
         {
             var startTimestamp = DateTime.UtcNow;
