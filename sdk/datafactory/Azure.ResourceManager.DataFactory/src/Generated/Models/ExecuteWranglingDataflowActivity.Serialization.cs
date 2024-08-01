@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime, options);
             }
+            if (Optional.IsDefined(ContinuationSettings))
+            {
+                writer.WritePropertyName("continuationSettings"u8);
+                writer.WriteObjectValue(ContinuationSettings, options);
+            }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
@@ -178,6 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlowReference dataFlow = default;
             DataFlowStagingInfo staging = default;
             IntegrationRuntimeReference integrationRuntime = default;
+            ContinuationSettingsReference continuationSettings = default;
             ExecuteDataFlowActivityComputeType compute = default;
             DataFactoryElement<string> traceLevel = default;
             DataFactoryElement<bool> continueOnError = default;
@@ -291,6 +297,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("continuationSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            continuationSettings = ContinuationSettingsReference.DeserializeContinuationSettingsReference(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("compute"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -383,6 +398,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dataFlow,
                 staging,
                 integrationRuntime,
+                continuationSettings,
                 compute,
                 traceLevel,
                 continueOnError,

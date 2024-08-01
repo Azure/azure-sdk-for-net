@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -117,6 +119,59 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new LicenseProfileStorageModelEsuProperties(assignedLicenseImmutableId, esuKeys ?? new ChangeTrackingList<EsuKey>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignedLicenseImmutableId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  assignedLicenseImmutableId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssignedLicenseImmutableId))
+                {
+                    builder.Append("  assignedLicenseImmutableId: ");
+                    builder.AppendLine($"'{AssignedLicenseImmutableId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EsuKeys), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  esuKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EsuKeys))
+                {
+                    if (EsuKeys.Any())
+                    {
+                        builder.Append("  esuKeys: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EsuKeys)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  esuKeys: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LicenseProfileStorageModelEsuProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileStorageModelEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +180,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LicenseProfileStorageModelEsuProperties)} does not support writing '{options.Format}' format.");
             }

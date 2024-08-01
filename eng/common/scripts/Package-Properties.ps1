@@ -105,6 +105,30 @@ function Get-PkgProperties
     return $null
 }
 
+function Get-PrPkgProperties([string]$InputDiffJson) {
+    $packagesWithChanges = @()
+
+    $allPackageProperties = Get-AllPkgProperties
+    $diff = Get-Content $InputDiffJson | ConvertFrom-Json
+    $targetedFiles = $diff.ChangedFiles
+
+    foreach($pkg in $allPackageProperties)
+    {
+        $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
+
+        foreach($file in $targetedFiles)
+        {
+            $filePath = Resolve-Path (Join-Path $RepoRoot $file)
+            $shouldInclude = $filePath -like "$pkgDirectory*"
+            if ($shouldInclude) {
+                $packagesWithChanges += $pkg
+            }
+        }
+    }
+
+    return $packagesWithChanges
+}
+
 # Takes ServiceName and Repo Root Directory
 # Returns important properties for each package in the specified service, or entire repo if the serviceName is not specified
 # Returns a Table of service key to array values of PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }

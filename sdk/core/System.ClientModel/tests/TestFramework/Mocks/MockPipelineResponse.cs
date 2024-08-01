@@ -17,7 +17,7 @@ public class MockPipelineResponse : PipelineResponse
     private Stream? _contentStream;
     private BinaryData? _bufferedContent;
 
-    private readonly PipelineResponseHeaders _headers;
+    private readonly MockResponseHeaders _headers;
 
     private bool _disposed;
 
@@ -35,6 +35,9 @@ public class MockPipelineResponse : PipelineResponse
     public override string ReasonPhrase => _reasonPhrase;
 
     public void SetReasonPhrase(string value) => _reasonPhrase = value;
+
+    public void SetHeader(string name, string value)
+        => _headers.SetHeader(name, value);
 
     public void SetContent(byte[] content)
     {

@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/commerce" -AutoRestVersion "v2" -SdkRootDirectory $PSScriptRoot

@@ -5,12 +5,20 @@
 ### Features Added
 - Added support for service version 2024-11-04.
 - Added ability to retrieve SAS string to sign for debugging purposes.
+- Add Queue Permissions enum to represent QueueAccessPolicy.Permissions #37653
+
+### Bugs Fixed
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.19.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
 
 ## 12.19.0 (2024-07-16)
 

@@ -8,6 +8,12 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 5.11.4 (2024-07-17)
+
+### Bugs Fixed
+
 - Fixed an error that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection. 
 
 - Fixed an error with ETW logs which caused structured arguments for Id 105 (Event Processor position determined) to be out-of-order with the message format.  This also caused the date to render incorrectly for some captures.
