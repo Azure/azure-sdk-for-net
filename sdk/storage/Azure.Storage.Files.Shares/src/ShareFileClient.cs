@@ -15,7 +15,6 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Storage.Common;
-using System.Net.Http.Headers;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
