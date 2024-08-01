@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of <see cref="SharePermission"/>. </summary>
         /// <param name="permission"> The permission in the Security Descriptor Definition Language (SDDL). </param>
         /// <param name="format"></param>
-        internal SharePermission(string permission, FilePermissionKeyFormat? format)
+        internal SharePermission(string permission, FilePermissionFormat? format)
         {
             Permission = permission;
             Format = format;
@@ -35,6 +35,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> The permission in the Security Descriptor Definition Language (SDDL). </summary>
         public string Permission { get; set; }
         /// <summary> Gets or sets the format. </summary>
-        public FilePermissionKeyFormat? Format { get; set; }
+        public FilePermissionFormat? Format { get; set; }
     }
 }
