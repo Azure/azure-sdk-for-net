@@ -27,6 +27,7 @@ public class MockPipelineResponse : PipelineResponse
         Status = status ?? 200;
         ReasonPhrase = reasonPhrase ?? "OK";
         _buffered = content;
+        ContentStream = content?.ToStream();
         HeadersCore = new MockResponseHeaders();
     }
 

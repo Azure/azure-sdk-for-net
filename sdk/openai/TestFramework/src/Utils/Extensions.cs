@@ -45,9 +45,9 @@ public static class StringExtensions
 }
 
 /// <summary>
-/// Extension methods for <c>System.ClientModel</c> headers.
+/// Extension methods for <c>System.ClientModel</c> types.
 /// </summary>
-public static class HeaderExtensions
+public static class ScmExtensions
 {
     /// <summary>
     /// Gets the first value associated with the specified header name from the pipeline request headers.
