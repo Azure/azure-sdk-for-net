@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             _telemetryOutput = new TelemetryItemOutputHelper(output);
         }
 
-        [Theory]//(Skip = "investigating test failure")]
+        [Theory]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError)]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError, false)]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataWriteCommandError, false, true)]
@@ -137,7 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 activity: activity);
         }
 
-        [Theory(Skip = "investigating test failure")]
+        [Theory]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataAfterExecuteCommand, CommandType.StoredProcedure, "SP_GetOrders", true, false)]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataAfterExecuteCommand, CommandType.StoredProcedure, "SP_GetOrders", true, false, false)]
         [InlineData(SqlDataBeforeExecuteCommand, SqlDataAfterExecuteCommand, CommandType.Text, "select * from sys.databases", true, false)]

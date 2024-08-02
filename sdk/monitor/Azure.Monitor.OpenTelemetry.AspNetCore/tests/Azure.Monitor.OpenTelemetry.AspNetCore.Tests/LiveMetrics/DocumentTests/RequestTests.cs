@@ -1,28 +1,59 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !NETFRAMEWORK
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
+using OpenTelemetry.Instrumentation.AspNetCore;
+using OpenTelemetry.Instrumentation.SqlClient;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Tests;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
 {
-    public class RequestTests : DocumentTestBase
+    public class RequestTests : DocumentTestBase, IClassFixture<WebApplicationFactory<AspNetCoreTestApp.Program>>, IDisposable
     {
+        private readonly WebApplicationFactory<AspNetCoreTestApp.Program> _factory;
+        private readonly TelemetryItemOutputHelper _telemetryOutput;
+
         private const string TestServerUrl = "http://localhost:9997/";
 
-        public RequestTests(ITestOutputHelper output) : base(output)
+        public RequestTests(WebApplicationFactory<AspNetCoreTestApp.Program> factory, ITestOutputHelper output) : base(output)
         {
+            _factory = factory;
+            _telemetryOutput = new TelemetryItemOutputHelper(output);
+        }
+
+        public void Dispose()
+        {
+            // OpenTelemetry is registered on a nested Factory which is not disposed between test runs!
+            // MUST explicitly dispose the nested Factory to avoid test conflicts.
+            _factory.Factories.LastOrDefault()?.Dispose();
+
+            _factory.Dispose();
         }
 
         [Theory]
@@ -82,33 +113,47 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.True(requestDocument.Extension_IsSuccess);
         }
 
-#if !NET462
         [Fact]
-        public async Task VerifyRequest()
+        public void VerifyRequest()
         {
             var exportedActivities = new List<Activity>();
 
-            // SETUP WEBAPPLICATION WITH OPENTELEMETRY
-            var builder = WebApplication.CreateBuilder();
-            builder.Services.AddOpenTelemetry()
-                .WithTracing(builder => builder
-                    .AddAspNetCoreInstrumentation()
-                    .AddInMemoryExporter(exportedActivities));
+            // SETUP WEBAPPLICATIONFACTORY WITH OPENTELEMETRY
+            using (var client = _factory
+                .WithWebHostBuilder(builder =>
+                {
+                    builder.ConfigureTestServices(serviceCollection =>
+                    {
+                        serviceCollection.AddOpenTelemetry()
+                            .WithTracing(x =>
+                            {
+                                x.AddAspNetCoreInstrumentation();
+                                x.AddInMemoryExporter(exportedActivities);
+                            });
+                    });
 
-            using var app = builder.Build();
-            app.MapGet("/", () =>
+                    builder.Configure(app =>
+                    {
+                        app.UseRouting();
+
+                        app.UseEndpoints(endpoints =>
+                        {
+                            endpoints.MapGet("/", async context =>
+                            {
+                                context.Response.StatusCode = 200;
+                                await context.Response.WriteAsync("Response from Test Server");
+                            });
+                        });
+                    });
+                })
+                .CreateClient())
             {
-                return "Response from Test Server";
-            });
+                using var response = client.GetAsync("/").Result;
+                Assert.True(response.Content.ReadAsStringAsync().Result.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
+            }
 
-            _ = app.RunAsync(TestServerUrl);
-
-            // ACT
-            using var httpClient = new HttpClient();
-            var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
-            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
-
-            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+            // SHUTDOWN
+            var tracerProvider = _factory.Factories.Last().Services.GetRequiredService<TracerProvider>();
             tracerProvider.ForceFlush();
 
             WaitForActivityExport(exportedActivities);
@@ -128,6 +173,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);
             Assert.True(requestDocument.Extension_IsSuccess);
         }
-#endif
     }
 }
+#endif

@@ -65,8 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Equal(_profiler.SessionId, activity.GetTagItem(ProfilingSessionTraceProcessor.TagName));
         }
 
-        [Fact(Skip = "investigating test failure")]
-        //[Fact]
+        [Fact]
         public void TraceProcessorIsAddedViaUseAzureMonitor()
         {
             // Configure DI services
