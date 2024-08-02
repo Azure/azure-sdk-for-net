@@ -26,9 +26,5 @@ extends:
     ServiceDirectory: healthinsights
     ArtifactName: packages
     Artifacts:
-      - name: Azure.Health.Insights.ClinicalMatching
-        safeName: AzureHealthInsightsClinicalMatching
-      - name: Azure.Health.Insights.CancerProfiling
-        safeName: AzureHealthInsightsCancerProfiling
       - name: Azure.Health.Insights.RadiologyInsights
         safeName: AzureHealthInsightsRadiologyInsights
