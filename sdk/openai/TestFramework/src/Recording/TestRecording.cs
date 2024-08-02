@@ -192,7 +192,7 @@ public class TestRecording : IAsyncDisposable
             HttpsEndpoint = Proxy.HttpsEndpoint,
             Mode = Mode,
             RecordingId = ID,
-            RequestId = Random.GetGuid().ToString()
+            RequestId = Random.NewGuid().ToString()
         };
     }
 

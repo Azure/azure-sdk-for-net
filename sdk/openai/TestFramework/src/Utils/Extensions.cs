@@ -104,6 +104,38 @@ public static class CollectionExtensions
         return string.Join(separator, values);
     }
 
+#if NETFRAMEWORK
+    /// <summary>
+    /// Gets the value associated with the specified key from the dictionary, or returns the default value if the key is not found.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+    /// <typeparam name="TVal">The type of the values in the dictionary.</typeparam>
+    /// <param name="dict">The dictionary.</param>
+    /// <param name="key">The key to locate.</param>
+    /// <returns>The value associated with the specified key, or the default value if the key is not found.</returns>
+    public static TVal? GetValueOrDefault<TKey, TVal>(this IReadOnlyDictionary<TKey, TVal> dict, TKey key)
+        => GetValueOrDefault(dict, key, default!);
+
+    /// <summary>
+    /// Gets the value associated with the specified key from the dictionary, or returns the specified default value if the key is not found.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+    /// <typeparam name="TVal">The type of the values in the dictionary.</typeparam>
+    /// <param name="dict">The dictionary.</param>
+    /// <param name="key">The key to locate.</param>
+    /// <param name="defaultValue">The default value to return if the key is not found.</param>
+    /// <returns>The value associated with the specified key, or the specified default value if the key is not found.</returns>
+    public static TVal GetValueOrDefault<TKey, TVal>(this IReadOnlyDictionary<TKey, TVal> dict, TKey key, TVal defaultValue)
+    {
+        if (dict?.TryGetValue(key, out TVal? value) == true)
+        {
+            return value;
+        }
+
+        return defaultValue;
+    }
+#endif
+
     /// <summary>
     /// Gets the value associated with the specified key from the dictionary, or returns the default value if the key is not found.
     /// </summary>
@@ -178,6 +210,81 @@ public static class CollectionExtensions
         }
 
         return defaultValue;
+    }
+
+    /// <summary>
+    /// Gets the value associated with the specified key from the dictionary, or creates and adds a new value if the key did not exist.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+    /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+    /// <param name="dictionary">The dictionary.</param>
+    /// <param name="key">The key to locate.</param>
+    /// <param name="valueFactory">The function used to create a value for the key if it is not found in the dictionary.</param>
+    /// <returns>The value associated with the specified key, or the value created by the <paramref name="valueFactory"/> if the key is not found.</returns>
+    public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, TValue> valueFactory)
+    {
+        if (dictionary == null)
+        {
+            throw new ArgumentNullException(nameof(dictionary));
+        }
+
+        if (!dictionary.TryGetValue(key, out TValue? value))
+        {
+            value = valueFactory(key);
+            dictionary[key] = value;
+        }
+
+        return value!;
+    }
+
+    /// <summary>
+    /// Asynchronously returns the first element of a sequence.
+    /// is found.
+    /// </summary>
+    /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
+    /// <param name="enumerable">The sequence to search.</param>
+    /// <param name="token">A cancellation token to cancel the operation.</param>
+    /// <returns>Asynchronous task.</returns>
+    public static ValueTask<T> FirstOrDefaultAsync<T>(this IAsyncEnumerable<T> enumerable, CancellationToken token = default)
+            => FirstOrDefaultAsync<T>(enumerable, _ => true);
+
+    /// <summary>
+    /// Asynchronously returns the first element of a sequence that satisfies a specified condition or a default value if no such element
+    /// is found.
+    /// </summary>
+    /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
+    /// <param name="enumerable">The sequence to search.</param>
+    /// <param name="predicate">A function to test each element for a condition.</param>
+    /// <param name="token">A cancellation token to cancel the operation.</param>
+    /// <returns>Asynchronous task.</returns>
+    public static async ValueTask<T> FirstOrDefaultAsync<T>(this IAsyncEnumerable<T> enumerable, Predicate<T> predicate, CancellationToken token = default)
+    {
+        await foreach (T item in enumerable.WithCancellation(token))
+        {
+            if (predicate(item))
+            {
+                return item;
+            }
+        }
+
+        return default!;
+    }
+
+    /// <summary>
+    /// Converts an <see cref="IAsyncEnumerable{T}"/> to a <see cref="List{T}"/> asynchronously.
+    /// </summary>
+    /// <typeparam name="T">The type of the elements in the enumerable.</typeparam>
+    /// <param name="asyncEnumerable">The <see cref="IAsyncEnumerable{T}"/> to convert.</param>
+    /// <param name="token">The cancellation token.</param>
+    /// <returns>Asynchronous task to do the conversion.</returns>
+    public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<T> asyncEnumerable, CancellationToken token = default)
+    {
+        List<T> list = new List<T>();
+        await foreach (T item in asyncEnumerable.WithCancellation(token))
+        {
+            list.Add(item);
+        }
+        return list;
     }
 }
 

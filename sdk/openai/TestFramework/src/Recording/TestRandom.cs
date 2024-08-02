@@ -24,7 +24,7 @@ public class TestRandom : Random
     /// Generates a new <see cref="Guid"/> based on the recorded test mode.
     /// </summary>
     /// <returns>A new <see cref="Guid"/>.</returns>
-    public Guid GetGuid()
+    public Guid NewGuid()
     {
         if (_mode == RecordedTestMode.Live)
         {
