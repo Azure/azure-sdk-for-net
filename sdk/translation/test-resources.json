@@ -52,7 +52,8 @@
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]",
         "storageAccountName": "[concat(parameters('baseName'), 'prim')]",
-        "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
+        "authorizationApiVersion": "2018-09-01-preview",
+        "blobDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
         "encryption": {
             "services": {
                 "file": {
@@ -74,16 +75,6 @@
         }
     },
     "resources": [
-        {
-            "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2018-09-01-preview",
-            "name": "[guid(resourceGroup().id)]",
-            "properties": {
-                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('storageBlobDataContributorRoleID'))]",
-                "principalId": "[parameters('testApplicationOid')]",
-                "scope": "[resourceGroup().id]"
-              }
-        },
         {
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2017-04-18",
@@ -108,7 +99,16 @@
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2018-09-01-preview",
+            "apiVersion": "[variables('authorizationApiVersion')]",
+            "name": "[guid(concat('dataContributorRoleId', resourceGroup().id))]",
+            "properties": {
+                "roleDefinitionId": "[variables('blobDataContributorRoleId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('authorizationApiVersion')]",
             "name": "[guid(resourceGroup().id)]",
             "properties": {
                 "roleDefinitionId": "[variables('roleDefinitionId')]",
