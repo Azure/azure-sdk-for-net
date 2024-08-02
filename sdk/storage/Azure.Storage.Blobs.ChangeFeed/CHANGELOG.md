@@ -3,6 +3,7 @@
 ## 12.0.0-preview.48 (Unreleased)
 
 ### Features Added
+- Added support for service version 2024-11-04.
 
 ### Breaking Changes
 
