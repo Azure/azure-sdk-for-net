@@ -1019,10 +1019,10 @@
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
-# PRLabel: %Azure AI Inference
+# PRLabel: %AI Model Inference
 /sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper
 
-# ServiceLabel: %Azure AI Inference
+# ServiceLabel: %AI Model Inference
 # ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # ######## Eng Sys ########
