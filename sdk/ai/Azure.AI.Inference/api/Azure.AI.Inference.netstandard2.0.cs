@@ -51,7 +51,9 @@ namespace Azure.AI.Inference
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Inference.ChatCompletions>> CompleteAsync(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, Azure.AI.Inference.ExtraParameters? extraParams = default(Azure.AI.Inference.ExtraParameters?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.Inference.StreamingResponse<Azure.AI.Inference.StreamingChatCompletionsUpdate> CompleteStreaming(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.Inference.StreamingResponse<Azure.AI.Inference.StreamingChatCompletionsUpdate>> CompleteStreamingAsync(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetModelInfo(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Inference.ModelInfo> GetModelInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetModelInfoAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Inference.ModelInfo>> GetModelInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ChatCompletionsClientOptions : Azure.Core.ClientOptions
