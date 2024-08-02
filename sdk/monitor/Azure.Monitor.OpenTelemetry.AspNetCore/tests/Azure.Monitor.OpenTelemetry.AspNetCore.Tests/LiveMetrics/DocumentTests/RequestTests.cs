@@ -39,8 +39,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
         private readonly WebApplicationFactory<AspNetCoreTestApp.Program> _factory;
         private readonly TelemetryItemOutputHelper _telemetryOutput;
 
-        private const string TestServerUrl = "http://localhost:9997/";
-
         public RequestTests(WebApplicationFactory<AspNetCoreTestApp.Program> factory, ITestOutputHelper output) : base(output)
         {
             _factory = factory;
