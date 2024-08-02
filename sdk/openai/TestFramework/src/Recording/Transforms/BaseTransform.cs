@@ -29,7 +29,7 @@ public abstract class BaseTransform : IUtf8JsonSerializable
     public string Type { get; }
 
     /// <inheritdoc />
-    public virtual void Write(Utf8JsonWriter writer)
+    public virtual void Write(Utf8JsonWriter writer, JsonSerializerOptions? options = null)
     {
         // By default use reflection based serialization
         JsonSerializer.Serialize(writer, this, GetType(), Default.InnerRecordingJsonOptions);

@@ -180,7 +180,7 @@ namespace OpenAI.TestFramework.Tests
 
             using ProxyService proxy = await CreateProxyServiceAsync();
 
-            StartInformation startInfo = new()
+            RecordingStartInformation startInfo = new()
             {
                 RecordingFile = RecordingFile!.FullName,
             };
@@ -213,9 +213,9 @@ namespace OpenAI.TestFramework.Tests
         public async Task RecordAndPlayback()
         {
             using ProxyService recordingProxyService = await CreateProxyServiceAsync();
-            StartInformation startInfo = new() { RecordingFile = RecordingFile!.FullName };
+            RecordingStartInformation startInfo = new() { RecordingFile = RecordingFile!.FullName };
 
-            using MockStringRestService mockRestService = new();
+            using MockRestService<string> mockRestService = new();
             TestRecordingOptions recordingOptions = new()
             {
                 SanitizersToRemove =
@@ -283,7 +283,7 @@ namespace OpenAI.TestFramework.Tests
                 options.RetryPolicy = new TestClientRetryPolicy(0, TimeSpan.FromMilliseconds(100));
                 options.Transport = new ProxyTransport(recording.GetProxyTransportOptions());
 
-                using MockStringClient client = new(restEndpoint, options);
+                using MockRestServiceClient<string> client = new(restEndpoint, options);
 
                 ClientResult add = await client.AddAsync(id1, value1, token);
                 Assert.That(add, Is.Not.Null);

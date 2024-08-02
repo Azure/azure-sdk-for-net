@@ -400,5 +400,5 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// Creates the information used to configured a recording/playback session for the current test on the test proxy.
     /// </summary>
     /// <returns>The information to use.</returns>
-    protected abstract StartInformation CreateRecordingSessionStartInfo();
+    protected abstract RecordingStartInformation CreateRecordingSessionStartInfo();
 }

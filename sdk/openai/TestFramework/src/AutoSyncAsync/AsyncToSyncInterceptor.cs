@@ -9,7 +9,7 @@ using Castle.DynamicProxy;
 using OpenAI.TestFramework.Adapters;
 using Ext = OpenAI.TestFramework.Utils.TypeExtensions;
 
-namespace OpenAI.TestFramework.Mocks.Client;
+namespace OpenAI.TestFramework.AutoSyncAsync;
 
 /// <summary>
 /// An interceptor for Castle dynamic proxies that allows you to call the synchronous version of a method when the asynchronous one
@@ -56,8 +56,8 @@ public class AsyncToSyncInterceptor : IInterceptor
     [DebuggerStepThrough]
     public virtual void Intercept(IInvocation invocation)
     {
-        // 1. Skip for special names (i.e. getters and setters)
-        if (invocation.Method.IsSpecialName)
+        // 1. Should we even intercept this?
+        if (ShouldSkipIntercepting(invocation.Method))
         {
             invocation.Proceed();
             return;
@@ -96,7 +96,7 @@ public class AsyncToSyncInterceptor : IInterceptor
                 methodName, _flags, binder: null, expectedArgs, modifiers: null)!;
 
             // this should never happen since we've already checked for the existence of the expected method
-            System.Diagnostics.Debug.Assert(syncMethod != null);
+            Debug.Assert(syncMethod != null);
             if (syncMethod == null)
             {
                 throw CreateEx("Could not find the synchronous version of the method", invocation.Method);
@@ -129,6 +129,20 @@ public class AsyncToSyncInterceptor : IInterceptor
     /// Whether or not we are using async methods.
     /// </summary>
     public bool UseAsync { get; }
+
+    /// Determines whether or not we should skip intercepting this method or not.
+    /// </summary>
+    /// <param name="method">The method we are inspecting.</param>
+    /// <returns>True to skip intercepting this method, false otherwise.</returns>
+    protected virtual bool ShouldSkipIntercepting(MethodInfo? method)
+    {
+        return method == null
+            // Skip for special names (i.e. getters and setters)
+            || method.IsSpecialName
+            // Also for dispose methods
+            || method.Name == nameof(IDisposable.Dispose)
+            || method.Name == nameof(IAsyncDisposable.DisposeAsync);
+    }
 
     /// <summary>
     /// Determines whether or not the specified method is part of a pair of synchronous and asynchronous methods. This will

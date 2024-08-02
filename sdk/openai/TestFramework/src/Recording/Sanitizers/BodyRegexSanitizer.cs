@@ -11,8 +11,8 @@ public class BodyRegexSanitizer : BaseRegexSanitizer
     /// <summary>
     /// Creates a new instance.
     /// </summary>
-    /// <param name="regex"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <param name="regex">Gets the regular expression to match what to replace.</param>
+    /// <exception cref="ArgumentNullException">If <paramref name="regex"/> was null.</exception>
     public BodyRegexSanitizer(string regex) : base("BodyRegexSanitizer")
     {
         Regex = regex ?? throw new ArgumentNullException(nameof(regex));

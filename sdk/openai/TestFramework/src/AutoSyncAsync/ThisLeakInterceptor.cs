@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using Castle.DynamicProxy;
 
-namespace OpenAI.TestFramework.Utils;
+namespace OpenAI.TestFramework.AutoSyncAsync;
 
 /// <summary>
 /// A basic interceptor that prevents the leaking of the original un-proxied this instance as a return value.

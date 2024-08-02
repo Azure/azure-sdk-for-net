@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
@@ -8,8 +9,17 @@ using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Mocks;
 
-public abstract class MockRestService<TData> : IDisposable
+/// <summary>
+/// Represents a mock REST service for testing purposes.
+/// </summary>
+/// <typeparam name="TData">The type of data stored in the service.</typeparam>
+public class MockRestService<TData> : IDisposable
 {
+    /// <summary>
+    /// Represents an entry in the mock REST service.
+    /// </summary>
+    /// <param name="id">The ID of the entry.</param>
+    /// <param name="data">The data associated with the entry.</param>
     public record Entry(string id, TData data)
     {
 #if NETFRAMEWORK
@@ -20,6 +30,12 @@ public abstract class MockRestService<TData> : IDisposable
 #endif
     };
 
+    /// <summary>
+    /// Represents an error in the mock REST service.
+    /// </summary>
+    /// <param name="error">The error code.</param>
+    /// <param name="message">The error message.</param>
+    /// <param name="stack">The stack trace of the error.</param>
     public record Error(int error, string message, string? stack = null);
 
     private static readonly JsonSerializerOptions s_options = new()
@@ -30,12 +46,19 @@ public abstract class MockRestService<TData> : IDisposable
 #pragma warning restore SYSLIB0020
     };
 
+    private ConcurrentDictionary<string, TData> _data;
     private HttpListener _listener;
     private CancellationTokenSource _cts;
     private Task _workerTask;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MockRestService{TData}"/> class.
+    /// </summary>
+    /// <param name="basePath">(Optional) The base path of the service.</param>
+    /// <param name="port">(Optional) The port number to listen on. If set to 0, a port will be automatically selected.</param>
     public MockRestService(string? basePath = null, ushort port = 0)
     {
+        _data = new();
         basePath = basePath?.EnsureEndsWith("/");
 
         int maxAttempts = port == 0 ? 15 : 1;
@@ -55,15 +78,87 @@ public abstract class MockRestService<TData> : IDisposable
         _workerTask = Task.Run(() => WorkerAsync(_cts.Token), _cts.Token);
     }
 
+    /// <summary>
+    /// Gets the HTTP endpoint of the mock REST service.
+    /// </summary>
     public Uri HttpEndpoint { get; }
 
-    public abstract IEnumerable<Entry> GetAll();
-    public abstract bool TryGet(string id, out Entry? entry);
-    public abstract bool TryAdd(string id, TData? data, out Entry? entry);
-    public abstract bool TryDelete(string id);
-    public abstract bool TryUpdate(string id, TData? data, out Entry? entry);
-    public abstract void Reset();
+    /// <summary>
+    /// Gets all entries in the mock REST service.
+    /// </summary>
+    /// <returns>An enumerable collection of entries.</returns>
+    public virtual IEnumerable<Entry> GetAll()
+        => _data.Select(kvp => new Entry(kvp.Key, kvp.Value));
 
+    /// <summary>
+    /// Tries to get an entry from the mock REST service.
+    /// </summary>
+    /// <param name="id">The ID of the entry to get.</param>
+    /// <param name="entry">When this method returns, contains the entry associated with the specified ID, if found; otherwise, <c>null</c>.</param>
+    /// <returns><c>true</c> if the entry was found; otherwise, <c>false</c>.</returns>
+    public virtual bool TryGet(string id, out Entry? entry)
+    {
+        if (_data.TryGetValue(id, out TData? value))
+        {
+            entry = new(id, value);
+            return true;
+        }
+
+        entry = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to add an entry to the mock REST service.
+    /// </summary>
+    /// <param name="id">The ID of the entry to add.</param>
+    /// <param name="data">The data associated with the entry.</param>
+    /// <param name="entry">When this method returns, contains the added entry, if successful; otherwise, <c>null</c>.</param>
+    /// <returns><c>true</c> if the entry was added successfully; otherwise, <c>false</c>.</returns>
+    public virtual bool TryAdd(string id, TData data, out Entry? entry)
+    {
+        entry = null;
+
+        if (_data.TryAdd(id, data))
+        {
+            entry = new(id, data);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to delete an entry from the mock REST service.
+    /// </summary>
+    /// <param name="id">The ID of the entry to delete.</param>
+    /// <returns><c>true</c> if the entry was deleted successfully; otherwise, <c>false</c>.</returns>
+    public virtual bool TryDelete(string id)
+        => _data.TryRemove(id, out _);
+
+    /// <summary>
+    /// Tries to update an entry in the mock REST service.
+    /// </summary>
+    /// <param name="id">The ID of the entry to update.</param>
+    /// <param name="data">The updated data for the entry.</param>
+    /// <param name="entry">When this method returns, contains the updated entry, if successful; otherwise, <c>null</c>.</param>
+    /// <returns><c>true</c> if the entry was updated successfully; otherwise, <c>false</c>.</returns>
+    public virtual bool TryUpdate(string id, TData data, out Entry? entry)
+    {
+        _data[id] = data;
+        entry = new(id, data);
+        return true;
+    }
+
+    /// <summary>
+    /// Resets the mock REST service removing all entries.
+    /// </summary>
+    public virtual void Reset()
+        => _data.Clear();
+
+    /// <summary>
+    /// Disposes of the resources used by the mock REST service.
+    /// </summary>
     public void Dispose()
     {
         _cts.Cancel();
@@ -73,9 +168,12 @@ public abstract class MockRestService<TData> : IDisposable
         _cts.Dispose();
     }
 
+    /// <summary>
+    /// Worker method that handles incoming HTTP requests.
+    /// </summary>
+    /// <param name="token">The cancellation token.</param>
     protected virtual async Task WorkerAsync(CancellationToken token)
     {
-
         while (!token.IsCancellationRequested)
         {
             HttpListenerContext context = await _listener.GetContextAsync().ConfigureAwait(false);
@@ -120,7 +218,11 @@ public abstract class MockRestService<TData> : IDisposable
                         else
                         {
                             TData? data = ReadBody(request);
-                            if (TryAdd(id, data, out Entry? entry))
+                            if (data == null)
+                            {
+                                response.StatusCode = (int)HttpStatusCode.GatewayTimeout;
+                            }
+                            else if (TryAdd(id, data, out Entry? entry))
                             {
                                 if (entry == null)
                                 {
@@ -146,7 +248,11 @@ public abstract class MockRestService<TData> : IDisposable
                         else
                         {
                             TData? data = ReadBody(request);
-                            if (TryUpdate(id, data, out Entry? entry))
+                            if (data == null)
+                            {
+                                response.StatusCode = (int)HttpStatusCode.GatewayTimeout;
+                            }
+                            else if (TryUpdate(id, data, out Entry? entry))
                             {
                                 if (entry == null)
                                 {
@@ -289,7 +395,7 @@ public abstract class MockRestService<TData> : IDisposable
             return default;
         }
 
-        return JsonExtensions.Deserialize<TData>(request.InputStream, s_options);
+        return JsonHelpers.Deserialize<TData>(request.InputStream, s_options);
     }
 
     private static void WriteJsonResponse<T>(HttpListenerResponse response, int status, T data)
@@ -297,7 +403,7 @@ public abstract class MockRestService<TData> : IDisposable
         response.StatusCode = status;
 
         using MemoryStream buffer = new();
-        JsonExtensions.Serialize(buffer, data, s_options);
+        JsonHelpers.Serialize(buffer, data, s_options);
         buffer.Seek(0, SeekOrigin.Begin);
 
         response.ContentType = "application/json";

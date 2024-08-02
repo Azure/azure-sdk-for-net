@@ -4,8 +4,7 @@
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using OpenAI.TestFramework.Mocks.Client;
-using OpenAI.TestFramework.Utils;
+using OpenAI.TestFramework.AutoSyncAsync;
 
 namespace OpenAI.TestFramework;
 
@@ -85,7 +84,7 @@ public abstract class ClientTestBase
     /// <exception cref="NotSupportedException">The the client passed was not wrapped.</exception>
     public virtual T UnWrap<T>(T wrapped) where T : class
     {
-        if (wrapped is IWrapped instrumented)
+        if (wrapped is IAutoSyncAsync instrumented)
         {
             return (T)instrumented.Original;
         }
@@ -102,7 +101,7 @@ public abstract class ClientTestBase
     /// <exception cref="NotSupportedException">The the instance passed was not wrapped.</exception>
     public virtual object? GetClientContext<T>(T client) where T : class
     {
-        if (client is IWrapped instrumented)
+        if (client is IAutoSyncAsync instrumented)
         {
             return instrumented.Context;
         }
@@ -132,7 +131,7 @@ public abstract class ClientTestBase
         allInterceptors.Add(IsAsync ? UseAsyncMethodInterceptor : UseSyncMethodInterceptor);
 
         ProxyGenerationOptions options = new();
-        options.AddMixinInstance(new WrappedMixIn(client, context));
+        options.AddMixinInstance(new AutoSyncAsyncMixIn(client, context));
 
         object proxy = ProxyGenerator.CreateClassProxyWithTarget(
             instanceType,

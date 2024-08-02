@@ -4,9 +4,9 @@
 namespace OpenAI.TestFramework.Recording.Proxy.Service;
 
 /// <summary>
-/// Information about certificates for the test proxy.
+/// Information about certificates for the test proxy service.
 /// </summary>
-public class ProxyOptionsTransportCertificatesItem
+public class PemPair
 {
     /// <summary> Gets or sets the pem value. </summary>
     public string? PemValue { get; set; }

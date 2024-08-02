@@ -26,7 +26,7 @@ public class ExistingMatcher(string existingMatcherName) : BaseMatcher(existingM
     public static ExistingMatcher Headerless => _headerless ??= new ExistingMatcher("HeaderlessMatcher");
 
     /// <inheritdoc />
-    public override void Write(Utf8JsonWriter writer)
+    public override void Write(Utf8JsonWriter writer, JsonSerializerOptions? options = null)
     {
         // Pre-existing matchers use an empty JSON object.
         writer.WriteStartObject();

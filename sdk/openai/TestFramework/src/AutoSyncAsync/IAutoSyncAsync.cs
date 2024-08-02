@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace OpenAI.TestFramework.Utils;
+namespace OpenAI.TestFramework.AutoSyncAsync;
 
 /// <summary>
-/// An interface that serves as a way to identify a proxied class, as well as get the original un-proxied
+/// An interface that serves as a way to identify a dynamically proxied class that supports automatic sync and async testing. This
+/// also provides a way to get the the original un-proxied instance.
 /// instance.
 /// </summary>
-public interface IWrapped
+public interface IAutoSyncAsync
 {
     /// <summary>
     /// Gets the original un-proxied instance back.

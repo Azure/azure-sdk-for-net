@@ -8,7 +8,7 @@ using System.Reflection;
 namespace OpenAI.TestFramework.Utils;
 
 /// <summary>
-/// Represents a retry policy for the test client.
+/// Represents a retry policy to be used when testing clients.
 /// </summary>
 public class TestClientRetryPolicy : ClientRetryPolicy
 {

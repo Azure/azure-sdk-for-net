@@ -8,7 +8,9 @@ using System.Text.Json;
 namespace OpenAI.TestFramework.Recording.RecordingProxy;
 
 /// <summary>
-/// A re-implementation of Azure.Core.TestFramework.ProxyTransport but for the new System.ClientModel pipeline types.
+/// Implements a <see cref="PipelineTransport"/> that will redirect all HTTP/HTTPS requests to the test proxy for recording or playback.
+/// Depending on the mode, the test proxy will then either forward the request to the upstream service and record the request and response,
+/// or playback the response from a previous recording.
 /// </summary>
 public class ProxyTransport : PipelineTransport
 {
@@ -18,6 +20,10 @@ public class ProxyTransport : PipelineTransport
 
     private readonly ProxyTransportOptions _options;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProxyTransport"/> class.
+    /// </summary>
+    /// <param name="options">The options for the proxy transport.</param>
     public ProxyTransport(ProxyTransportOptions options)
     {
         _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -42,8 +48,12 @@ public class ProxyTransport : PipelineTransport
         InnerTransport = new HttpClientPipelineTransport(new HttpClient(handler));
     }
 
+    /// <summary>
+    /// The actual transport to use for sending requests, and receiving responses.
+    /// </summary>
     protected PipelineTransport InnerTransport { get; }
 
+    /// <inheritdoc/>
     protected override PipelineMessage CreateMessageCore()
     {
         Exception? ex = _options.MismatchException?.GetValue();
@@ -61,12 +71,20 @@ public class ProxyTransport : PipelineTransport
         return message;
     }
 
+    /// <inheritdoc/>
     protected override void ProcessCore(PipelineMessage message)
         => ProcessCoreSyncOrAsync(message, async: false).GetAwaiter().GetResult();
 
+    /// <inheritdoc/>
     protected override ValueTask ProcessCoreAsync(PipelineMessage message)
         => ProcessCoreSyncOrAsync(message, async: true);
 
+    /// <summary>
+    /// Processes the pipeline message synchronously or asynchronously.
+    /// </summary>
+    /// <param name="message">The pipeline message to process.</param>
+    /// <param name="async">A flag indicating whether to process asynchronously.</param>
+    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation.</returns>
     protected virtual async ValueTask ProcessCoreSyncOrAsync(PipelineMessage message, bool async)
     {
         try
@@ -107,6 +125,12 @@ public class ProxyTransport : PipelineTransport
         }
     }
 
+    /// <summary>
+    /// Processes the response synchronously or asynchronously.
+    /// </summary>
+    /// <param name="message">The pipeline message containing the response.</param>
+    /// <param name="async">A flag indicating whether to process asynchronously.</param>
+    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation.</returns>
     protected virtual async ValueTask ProcessResponseSyncAsync(PipelineMessage message, bool async)
     {
         if (message.Response?.Headers.TryGetValues("x-request-mismatch", out _) == true)
@@ -124,6 +148,10 @@ public class ProxyTransport : PipelineTransport
     }
 
     // copied from https://github.com/Azure/azure-sdk-for-net/blob/main/common/Perf/Azure.Test.Perf/TestProxyPolicy.cs
+    /// <summary>
+    /// Redirects the pipeline message to the test proxy based on the recording mode.
+    /// </summary>
+    /// <param name="message">The pipeline message to redirect.</param>
     protected virtual void RedirectToTestProxy(PipelineMessage message)
     {
         if (_options.Mode == RecordedTestMode.Record)

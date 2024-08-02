@@ -14,6 +14,8 @@ namespace OpenAI.TestFramework.Tests;
 
 public class MockStringServiceTests : RecordedClientTestBase
 {
+    private const string c_basePath = "data";
+
     public MockStringServiceTests(bool isAsync)
         : base(isAsync, null)
     {
@@ -28,9 +30,9 @@ public class MockStringServiceTests : RecordedClientTestBase
         const string id = "first.one";
         const string expected = "The first value goes here";
 
-        using MockStringRestService service = new();
+        using MockRestService<string> service = new(c_basePath);
         var options = ConfigureClientOptions(new ClientPipelineOptions());
-        using var client = WrapClient(new MockStringClient(service.HttpEndpoint, options));
+        using var client = WrapClient(new MockRestServiceClient<string>(service.HttpEndpoint, options));
 
         ClientResult add = await client.AddAsync(id, expected, Token);
         Assert.That(add, Is.Not.Null);
@@ -46,9 +48,9 @@ public class MockStringServiceTests : RecordedClientTestBase
         const string id = "first.one";
         const string expected = "The first value goes here";
 
-        using MockStringRestService service = new();
+        using MockRestService<string> service = new(c_basePath);
         var options = ConfigureClientOptions(new ClientPipelineOptions());
-        using var client = WrapClient(new MockStringClient(service.HttpEndpoint, options));
+        using var client = WrapClient(new MockRestServiceClient<string>(service.HttpEndpoint, options));
 
         ClientResult add = await client.AddAsync(id, expected, Token);
         Assert.That(add, Is.Not.Null);
@@ -78,7 +80,7 @@ public class MockStringServiceTests : RecordedClientTestBase
             StorageLocationDir = RepositoryRoot.FullName,
         };
 
-    protected override StartInformation CreateRecordingSessionStartInfo()
+    protected override RecordingStartInformation CreateRecordingSessionStartInfo()
         => new()
         {
             RecordingFile = GetRecordingFile(),
@@ -115,7 +117,7 @@ public class MockStringServiceTests : RecordedClientTestBase
         DirectoryInfo sourceDir = AssemblyHelper.GetSourcePath<MockStringServiceTests>()
             ?? throw new InvalidOperationException("Could not determine the source path for this assembly");
         string name = GetRecordedTestName();
-        string relativeDir = FileExtensions.GetRelativePath(RepositoryRoot.FullName, sourceDir.FullName);
+        string relativeDir = PathHelpers.GetRelativePath(RepositoryRoot.FullName, sourceDir.FullName);
         return Path.Combine(
             relativeDir,
             "SessionRecords",

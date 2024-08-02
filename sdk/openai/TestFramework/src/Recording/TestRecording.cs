@@ -10,12 +10,30 @@ using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Recording;
 
+/// <summary>
+/// Represents a test recording session. This is used to record or playback requests and responses. It also provides
+/// a random generator that is consistent between recording and playback sessions.
+/// </summary>
 public class TestRecording : IAsyncDisposable
 {
+    /// <summary>
+    /// The key to use to store the random seed in the recording.
+    /// </summary>
     public const string RandomSeedVariableKey = "RandomSeed";
 
     private SortedDictionary<string, string> _variables;
 
+    /// <summary>
+    /// Creates a new instance.
+    /// </summary>
+    /// <param name="id">The unique identifier for the recording.</param>
+    /// <param name="mode">The current recording mode.</param>
+    /// <param name="proxy">The test proxy service instance to use for the recording.</param>
+    /// <param name="variables">(Optional) Any variables populate this recording this. This is normally used in
+    /// playback mode to pass in any variables saved as part of the recording.</param>
+    /// <exception cref="ArgumentNullException">Any of the required parameters are null.</exception>
+    /// <exception cref="InvalidOperationException">Some expected values were missing or null.</exception>
+    /// <exception cref="NotSupportedException">The current recording mode is not supported.</exception>
     public TestRecording(string id, RecordedTestMode mode, ProxyService proxy, IDictionary<string, string>? variables = null)
     {
         ID = id ?? throw new ArgumentNullException(nameof(id));
@@ -39,7 +57,7 @@ public class TestRecording : IAsyncDisposable
 
             case RecordedTestMode.Record:
                 seed = GetRandomSeed();
-                Variables[RandomSeedVariableKey] = seed.ToString(CultureInfo.InvariantCulture);
+                _variables[RandomSeedVariableKey] = seed.ToString(CultureInfo.InvariantCulture);
                 Random = new TestRandom(Mode, seed);
                 break;
 
@@ -60,20 +78,49 @@ public class TestRecording : IAsyncDisposable
         }
     }
 
+    /// <summary>
+    /// Gets the unique identifier for this recording.
+    /// </summary>
     public string ID { get; }
 
+    /// <summary>
+    /// Gets the current recording mode.
+    /// </summary>
     public RecordedTestMode Mode { get; }
 
+    /// <summary>
+    /// Gets the random generator to use for this recording. Using this ensures consistent random values generated during
+    /// recording, as well as during playback.
+    /// </summary>
     public TestRandom Random { get; }
 
+    /// <summary>
+    /// Gets the proxy service associated with the recording.
+    /// </summary>
     protected internal ProxyService Proxy { get; }
 
-    protected IDictionary<string, string> Variables => _variables;
+    /// <summary>
+    /// Gets any variables associated with the recording.
+    /// </summary>
+    protected IReadOnlyDictionary<string, string> Variables => _variables;
 
-    public TestRecordingMismatchException? MismatchException { get; protected internal set; }
-
+    /// <summary>
+    /// Disposes of the recording session. If you were recording, this will try to save your captured requests and
+    /// responses. If you were playing back, this will stop the playback session.
+    /// </summary>
+    /// <returns>Asynchronous task</returns>
     public virtual ValueTask DisposeAsync() => FinishAsync(true);
 
+    /// <summary>
+    /// Finishes the recording session. This will stop recording or playback. If you were recording, you can use
+    /// <paramref name="save"/> to determine whether or not captured requests and responses will be saved.
+    /// </summary>
+    /// <param name="save">True to save any captured requests and responses to the file specified in your
+    /// <see cref="Proxy.Service.RecordingStartInformation"/>. False to not save. This is only used if
+    /// you were recording.</param>
+    /// <param name="token">The cancellation token to use.</param>
+    /// <returns>Asynchronous task</returns>
+    /// <exception cref="NotSupportedException">If the recording mode is not supported.</exception>
     public async virtual ValueTask FinishAsync(bool save, CancellationToken token = default)
     {
         switch (Mode)
@@ -85,7 +132,7 @@ public class TestRecording : IAsyncDisposable
                 await Proxy.Client.StopPlaybackAsync(ID, token).ConfigureAwait(false);
                 break;
             case RecordedTestMode.Record:
-                await Proxy.Client.StopRecordingAsync(ID, Variables, !save, token).ConfigureAwait(false);
+                await Proxy.Client.StopRecordingAsync(ID, _variables, !save, token).ConfigureAwait(false);
                 break;
             default:
                 throw new NotSupportedException("The following mode is not supported: " + Mode);
@@ -94,20 +141,36 @@ public class TestRecording : IAsyncDisposable
         Proxy.ThrowOnErrors();
     }
 
+    /// <summary>
+    /// Gets a recorded variable.
+    /// </summary>
+    /// <param name="name">The name of the variable.</param>
+    /// <returns>The variable value, or null if the variable was not set.</returns>
     public virtual string? GetVariable(string name)
     {
-        return Variables.GetValueOrDefault(name);
+        return _variables.GetValueOrDefault(name);
     }
 
+    /// <summary>
+    /// Sets a recorded variable to a value.
+    /// </summary>
+    /// <param name="name">The name of the variable.</param>
+    /// <param name="value">The value to set.</param>
     public virtual void SetVariable(string name, string value)
     {
-        Variables[name] = value;
+        _variables[name] = value;
     }
 
+    /// <summary>
+    /// Gets a recorded variable, or if it was not set, creates and adds a new variable.
+    /// </summary>
+    /// <param name="name">The name of the variable.</param>
+    /// <param name="valueFactory">The factory used to create a value if none was previously set.</param>
+    /// <returns>The already existing value, or the newly added value.</returns>
     public virtual string GetOrAddVariable(string name, Func<string> valueFactory)
     {
         string? value;
-        if (!Variables.TryGetValue(name, out value) || value == null)
+        if (!_variables.TryGetValue(name, out value) || value == null)
         {
             value = valueFactory();
             SetVariable(name, value);
@@ -116,6 +179,11 @@ public class TestRecording : IAsyncDisposable
         return value;
     }
 
+    /// <summary>
+    /// Gets the options to use as the options for creating transport to pass to clients. This will allow the clients to
+    /// forward requests to the test proxy.
+    /// </summary>
+    /// <returns>The options to use.</returns>
     public virtual ProxyTransportOptions GetProxyTransportOptions()
     {
         return new()
@@ -128,6 +196,12 @@ public class TestRecording : IAsyncDisposable
         };
     }
 
+    /// <summary>
+    /// Applies recording options to the current recording.
+    /// </summary>
+    /// <param name="options">The recording options to apply for this recording/playback session.</param>
+    /// <param name="token">The cancellation token to use.</param>
+    /// <returns>Asynchronous task</returns>
     public virtual async Task ApplyOptions(TestRecordingOptions options, CancellationToken token)
     {
         if (options.Sanitizers.Any())

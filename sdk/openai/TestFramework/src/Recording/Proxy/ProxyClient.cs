@@ -50,7 +50,7 @@ public class ProxyClient
     /// <param name="startInfo">The configuration to use for starting playback.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The result that includes any recorded variables.</returns>
-    public virtual ProxyClientResult<IDictionary<string, string>> StartPlayback(StartInformation startInfo, CancellationToken token = default)
+    public virtual ProxyClientResult<IDictionary<string, string>> StartPlayback(RecordingStartInformation startInfo, CancellationToken token = default)
     {
         if (startInfo == null)
         {
@@ -67,7 +67,7 @@ public class ProxyClient
     /// <param name="startInfo">The configuration to use for starting playback.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The result that includes any recorded variables.</returns>
-    public virtual async Task<ProxyClientResult<IDictionary<string, string>>> StartPlaybackAsync(StartInformation startInfo, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult<IDictionary<string, string>>> StartPlaybackAsync(RecordingStartInformation startInfo, CancellationToken token = default)
     {
         if (startInfo == null)
         {
@@ -124,7 +124,7 @@ public class ProxyClient
     /// <param name="startInfo">The configuration to use for the recording session.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public virtual ProxyClientResult StartRecording(StartInformation startInfo, CancellationToken token = default)
+    public virtual ProxyClientResult StartRecording(RecordingStartInformation startInfo, CancellationToken token = default)
     {
         if (startInfo == null)
         {
@@ -141,7 +141,7 @@ public class ProxyClient
     /// <param name="startInfo">The configuration to use for the recording session.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public virtual async Task<ProxyClientResult> StartRecordingAsync(StartInformation startInfo, CancellationToken token = default)
+    public virtual async Task<ProxyClientResult> StartRecordingAsync(RecordingStartInformation startInfo, CancellationToken token = default)
     {
         if (startInfo == null)
         {

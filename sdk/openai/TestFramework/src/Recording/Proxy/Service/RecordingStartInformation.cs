@@ -8,7 +8,7 @@ namespace OpenAI.TestFramework.Recording.Proxy.Service;
 /// <summary>
 /// Information for starting a recording or playback session with the recording test proxy.
 /// </summary>
-public class StartInformation
+public class RecordingStartInformation
 {
     /// <summary>
     /// Gets or sets the file to save recordings to, or to play back requests from.
@@ -17,8 +17,14 @@ public class StartInformation
     required public string RecordingFile { get; set; }
 
     /// <summary>
-    /// Gets or sets the file that controls where the test recordings are restored from, or pushed to.
+    /// Gets or sets the path to the "assets.json" file to use for integration with external Git
+    /// repositories. This enables the proxy to work against repositories that do not emplace their
+    /// test recordings directly alongside their test implementations.
     /// </summary>
+    /// <remarks>
+    /// Please refer to the documentation for more information:
+    /// https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/documentation/asset-sync/README.md
+    /// </remarks>
     [JsonPropertyName("x-recording-assets-file")]
     public string? AssetsFile { get; set; }
 }
