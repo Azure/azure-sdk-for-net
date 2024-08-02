@@ -58,7 +58,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
-            SendAndProcessEvent(handler, new CreateCallFailed(new CreateCallFailedInternal("mismatchedOperationId", null, CallConnectionId, ServerCallId, CorelationId)));
+            SendAndProcessEvent(handler, new CreateCallFailed(new CreateCallFailedInternal(CallConnectionId, ServerCallId, CorelationId, "mismatchedOperationId", null)));
 
             CreateCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -114,7 +114,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new AnswerFailed(new AnswerFailedInternal("mismatchedOperationId", null, CallConnectionId, ServerCallId, CorelationId)));
+            SendAndProcessEvent(handler, new AnswerFailed(new AnswerFailedInternal(CallConnectionId, ServerCallId, CorelationId, "mismatchedOperationId", null)));
 
             AnswerCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 

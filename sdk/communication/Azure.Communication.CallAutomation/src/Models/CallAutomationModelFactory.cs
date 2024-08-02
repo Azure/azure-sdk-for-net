@@ -294,6 +294,46 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Initializes a new instance of create call failed event.
+        /// </summary>
+        public static CreateCallFailed CreateCallFailed(
+            string callConnectionId = default,
+            string serverCallId = default,
+            string correlationId = default,
+            ResultInformation resultInformation = default,
+            string operationContext = default)
+        {
+            var internalObject = new CreateCallFailedInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation);
+
+            return new CreateCallFailed(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of answer failed event.
+        /// </summary>
+        public static AnswerFailed AnswerFailed(
+            string callConnectionId = default,
+            string serverCallId = default,
+            string correlationId = default,
+            ResultInformation resultInformation = default,
+            string operationContext = default)
+        {
+            var internalObject = new AnswerFailedInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation);
+
+            return new AnswerFailed(internalObject);
+        }
+
+        /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
         public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default)
