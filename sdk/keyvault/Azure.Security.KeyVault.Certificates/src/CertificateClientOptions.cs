@@ -99,6 +99,7 @@ namespace Azure.Security.KeyVault.Certificates
                 ServiceVersion.V7_3 => "7.3",
                 ServiceVersion.V7_4 => "7.4",
                 ServiceVersion.V7_5 => "7.5",
+                ServiceVersion.V7_6_Preview_1 => "7.6-preview.1",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }
