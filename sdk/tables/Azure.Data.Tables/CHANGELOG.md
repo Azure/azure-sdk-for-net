@@ -1,6 +1,11 @@
 # Release History
 
-## 12.9.0 (2024-07-18)
+## 12.9.1 (2024-08-06)
+
+### Bugs Fixed
+- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a constructor to `TableSasBuilder` that accepts a stored access policy identifier without needing to specify the policy's permissions.
+
+## 12.9.0 (2024-07-22)
 
 ### Features Added
 - Overload the `DeleteEntity` method to allow an `ITableEntity` object as parameter.

@@ -8,6 +8,13 @@
 
 ### Bugs Fixed
 
+* Fixed an issue where `APPLICATIONINSIGHTS_CONNECTION_STRING` was not read from
+  `IConfiguration` when using the `UseAzureMonitor` overload with the
+  `Action<AzureMonitorOptions>` parameter. If the connection string is not set
+  using the `Action<AzureMonitorOptions>` delegate, the distro will now check if
+  `APPLICATIONINSIGHTS_CONNECTION_STRING` is present in `IConfiguration`.
+  ([#45292](https://github.com/Azure/azure-sdk-for-net/pull/45292))
+
 * Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
