@@ -1020,10 +1020,10 @@
 # ServiceOwners:                                                   @sunkun99
 
 # PRLabel: %Azure AI Inference
-/sdk/ai/                                                           @trangevi @dargilco
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper
 
 # ServiceLabel: %Azure AI Inference
-# ServiceOwners:                                                   @trangevi @dargilco
+# ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
