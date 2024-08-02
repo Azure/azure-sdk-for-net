@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            IList<ToolOutput> toolOutputs = default;
+            IReadOnlyList<ToolOutput> toolOutputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

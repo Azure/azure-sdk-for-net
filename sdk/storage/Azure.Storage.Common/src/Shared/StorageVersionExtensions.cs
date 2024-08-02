@@ -44,7 +44,7 @@ namespace Azure.Storage
         /// </summary>
         public const ServiceVersion LatestVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK || BlobDataMovementSDK || ShareDataMovementSDK
-            ServiceVersion.V2024_08_04;
+            ServiceVersion.V2024_11_04;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
@@ -54,7 +54,7 @@ namespace Azure.Storage
         /// </summary>
         internal const ServiceVersion MaxVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK || BlobDataMovementSDK || ShareDataMovementSDK
-            ServiceVersion.V2024_08_04;
+            ServiceVersion.V2024_11_04;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
@@ -91,6 +91,7 @@ namespace Azure.Storage
                 ServiceVersion.V2024_02_04 => "2024-02-04",
                 ServiceVersion.V2024_05_04 => "2024-05-04",
                 ServiceVersion.V2024_08_04 => "2024-08-04",
+                ServiceVersion.V2024_11_04 => "2024-11-04",
 #elif QueueSDK
                 ServiceVersion.V2019_02_02 => "2019-02-02",
                 ServiceVersion.V2019_07_07 => "2019-07-07",
@@ -115,6 +116,7 @@ namespace Azure.Storage
                 ServiceVersion.V2024_02_04 => "2024-02-04",
                 ServiceVersion.V2024_05_04 => "2024-05-04",
                 ServiceVersion.V2024_08_04 => "2024-08-04",
+                ServiceVersion.V2024_11_04 => "2024-11-04",
 #endif
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
@@ -174,6 +176,8 @@ namespace Azure.Storage
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2024_05_04,
                 Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2024_08_04 =>
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2024_08_04,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2024_11_04 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2024_11_04,
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
 #endif
