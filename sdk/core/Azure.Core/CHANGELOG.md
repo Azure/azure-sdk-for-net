@@ -1,14 +1,19 @@
 # Release History
 
-## 1.41.0-beta.1 (Unreleased)
+## 1.42.0 (2024-08-01)
 
-### Features Added
+### Other Changes
 
-### Breaking Changes
+- Improved memory performance for Event Source formatting [#43947](https://github.com/Azure/azure-sdk-for-net/pull/43947)
+- Upgraded dependency on System.Text.Encodings.Web to 6.0.0
+- Upgraded dependency on Microsoft.Bcl.AsyncInterfaces to 6.0.0
+
+## 1.41.0 (2024-07-11)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed an issue that could result in `BearerTokenAuthenticationPolicy` fails to refresh a token, resulting in a `OperationCanceledException` ([#44882](https://github.com/Azure/azure-sdk-for-net/pull/44882)).
+- Fixed case where a GeoJSON string could not be deserialized when the BoundingBox JSON value ("bbox") was set explicitly to null ([#44835](https://github.com/Azure/azure-sdk-for-net/pull/44835)).
 
 ## 1.40.0 (2024-06-06)
 

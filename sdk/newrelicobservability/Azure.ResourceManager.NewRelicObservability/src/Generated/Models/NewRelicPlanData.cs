@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Plan details. </summary>
+        [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData { get; set; }
         /// <summary> Source of org creation. </summary>
+        [WirePath("properties.orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
         /// <summary> Source of account creation. </summary>
+        [WirePath("properties.accountCreationSource")]
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
     }
 }

@@ -37,12 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             try
             {
                 {
-                    TokenCredential tokenCredential =
-                    new ClientSecretCredential(
-                        ActiveDirectoryTenantId,
-                        ActiveDirectoryApplicationId,
-                        ActiveDirectoryApplicationSecret,
-                        new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    TokenCredential tokenCredential = new DefaultAzureCredential();
 
                     TransferManager transferManager = new TransferManager();
 

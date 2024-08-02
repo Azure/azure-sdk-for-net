@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
+            if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
+            {
+                writer.WritePropertyName("disableAccessKeyAuthentication"u8);
+                writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.Redis.Models
             RedisTlsVersion? minimumTlsVersion = default;
             RedisPublicNetworkAccess? publicNetworkAccess = default;
             UpdateChannel? updateChannel = default;
+            bool? disableAccessKeyAuthentication = default;
             RedisSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -285,6 +291,15 @@ namespace Azure.ResourceManager.Redis.Models
                             updateChannel = new UpdateChannel(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("disableAccessKeyAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableAccessKeyAuthentication = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -316,6 +331,7 @@ namespace Azure.ResourceManager.Redis.Models
                 minimumTlsVersion,
                 publicNetworkAccess,
                 updateChannel,
+                disableAccessKeyAuthentication,
                 sku,
                 serializedAdditionalRawData);
         }
