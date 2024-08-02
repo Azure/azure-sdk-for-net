@@ -16,10 +16,17 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public CallConnected SuccessResult { get; }
 
-        internal AnswerCallEventResult(bool isSuccess, CallConnected successResult)
+        /// <summary>
+        /// <see cref="AnswerFailed"/> evnet will be returned when the call was not answered.
+        /// </summary>
+        /// <value></value>
+        public AnswerFailed FailureResult { get; }
+
+        internal AnswerCallEventResult(bool isSuccess, CallConnected successResult, AnswerFailed failureResult)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;
+            FailureResult = failureResult;
         }
     }
 }

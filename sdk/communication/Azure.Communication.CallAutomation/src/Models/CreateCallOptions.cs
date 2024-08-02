@@ -48,6 +48,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// If passed true, the call will start in an escalated state. (i.e. GroupCall).
         /// </summary>
-        public bool? StartInConferenceMode { get; set; }
+        public bool StartInConferenceMode { get; set; }
     }
 }

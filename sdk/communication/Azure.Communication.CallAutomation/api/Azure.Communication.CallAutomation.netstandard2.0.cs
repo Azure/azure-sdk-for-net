@@ -40,6 +40,7 @@ namespace Azure.Communication.CallAutomation
     public partial class AnswerCallEventResult
     {
         internal AnswerCallEventResult() { }
+        public Azure.Communication.CallAutomation.AnswerFailed FailureResult { get { throw null; } }
         public bool IsSuccess { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnected SuccessResult { get { throw null; } }
     }
@@ -51,6 +52,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
+        public bool StartInConferenceMode { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
     public partial class AnswerCallResult
@@ -60,6 +62,11 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
         public Azure.Communication.CallAutomation.AnswerCallEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AnswerCallEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AnswerFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal AnswerFailed() { }
+        public static Azure.Communication.CallAutomation.AnswerFailed Deserialize(string content) { throw null; }
     }
     public abstract partial class BaseDialog
     {
@@ -555,8 +562,14 @@ namespace Azure.Communication.CallAutomation
     public partial class CreateCallEventResult
     {
         internal CreateCallEventResult() { }
+        public Azure.Communication.CallAutomation.CreateCallFailed FailureResult { get { throw null; } }
         public bool IsSuccess { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnected SuccessResult { get { throw null; } }
+    }
+    public partial class CreateCallFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal CreateCallFailed() { }
+        public static Azure.Communication.CallAutomation.CreateCallFailed Deserialize(string content) { throw null; }
     }
     public partial class CreateCallOptions
     {
@@ -565,6 +578,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallInvite CallInvite { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
+        public bool StartInConferenceMode { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
     public partial class CreateCallResult
