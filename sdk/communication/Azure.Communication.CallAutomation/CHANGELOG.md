@@ -14,12 +14,6 @@
 - Expose original PSTN number target from incoming call event in call connection properties
 - Support for VoIP to PSTN transfer scenario
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0 (2024-04-15)
 
 ### Features Added
