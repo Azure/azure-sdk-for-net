@@ -103,14 +103,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 [SemanticConventions.AttributeHttpMethod] = "GET",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
                 [SemanticConventions.AttributeHttpHostPort] = "8888",
-                [SemanticConventions.AttributeRpcSystem] = "test"
             };
 
             using var activity = CreateTestActivity(tagObjects);
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Http, activityTagsProcessor.activityType);
-            Assert.Equal(6, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(5, activityTagsProcessor.MappedTags.Length);
             Assert.Equal("https", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpScheme));
             Assert.Equal("localhost", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpHost));
             Assert.Equal("8888", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpHostPort));
