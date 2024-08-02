@@ -19,7 +19,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <remarks>
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
-        /// At the moment, only tags can be generated in none-English languages.
+        /// At the moment, only tags can be generated in non-English languages.
         /// </remarks>
         public string Language { get; set; }
 
