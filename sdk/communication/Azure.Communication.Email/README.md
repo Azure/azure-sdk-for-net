@@ -220,11 +220,14 @@ var emailMessage = new EmailMessage(
 var filePath = "<path to your file>";
 var attachmentName = "<name of your attachment>";
 var contentType = MediaTypeNames.Text.Plain;
+var contentId = "<optional content ID for inline attachment>";
 
 var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
 var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+var emailInlineAttachment = new EmailAttachment(attachmentName, contentType, content, contentId);
 
 emailMessage.Attachments.Add(emailAttachment);
+emailMessage.Attachments.Add(emailInlineAttachment);
 
 try
 {

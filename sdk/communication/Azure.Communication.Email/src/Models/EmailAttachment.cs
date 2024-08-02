@@ -4,13 +4,12 @@
 #nullable disable
 
 using System;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.Email
 {
     [CodeGenModel("EmailAttachment")]
-    [CodeGenSuppress("EmailAttachment", typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("EmailAttachment", typeof(string), typeof(string), typeof(string), typeof(string))]
     public partial class EmailAttachment
     {
         /// <summary> Initializes a new instance of EmailAttachment. </summary>
@@ -27,6 +26,25 @@ namespace Azure.Communication.Email
             Name = name;
             ContentType = contentType;
             Content = content;
+        }
+
+        /// <summary> Initializes a new instance of EmailAttachment. </summary>
+        /// <param name="name"> Name of the attachment. </param>
+        /// <param name="contentType"> MIME type of the content being attached. </param>
+        /// <param name="content"> BinaryData representing the contents of the attachment. </param>
+        /// <param name="contentId"> Optional content ID for the attachment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="contentType"/> or <paramref name="content"/> is null. </exception>
+        public EmailAttachment(string name, string contentType, BinaryData content, string contentId)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(contentType, nameof(contentType));
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(contentId, nameof(contentId));
+
+            Name = name;
+            ContentType = contentType;
+            Content = content;
+            ContentId = contentId;
         }
 
         internal void ValidateAttachmentContent()
