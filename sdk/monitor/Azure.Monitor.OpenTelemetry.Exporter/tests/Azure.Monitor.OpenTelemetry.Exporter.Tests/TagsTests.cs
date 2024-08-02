@@ -383,7 +383,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void TagObjects_RpcTagsAreNotMapped()
         {
-            /// As of today (20[24-08-01), The RPC Semantic Convention is still Experimental.
+            /// As of today (2024-08-01), The RPC Semantic Convention is still Experimental.
             /// https://github.com/open-telemetry/semantic-conventions/blob/main/docs/rpc/rpc-spans.md
             /// We shouldn't have any special handling of these attributes until they are promoted to stable.
             /// Unmapped Tags should pass through to a telemetry item's custom properties.
