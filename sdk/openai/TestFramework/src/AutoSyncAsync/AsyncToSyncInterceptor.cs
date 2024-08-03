@@ -233,8 +233,7 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncPageableCollection<>).MakeGenericType(genericTypes),
-                result,
-                default(CancellationToken));
+                result);
         }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
         {
@@ -314,6 +313,7 @@ public class AsyncToSyncInterceptor : IInterceptor
             : name;
     }
 
+    [DebuggerStepperBoundary]
     private ISet<string> DetermineValidSyncAsyncPairs(Type declaringType, BindingFlags flags)
     {
         // Group potential pairs based only on the method name removing the "Async" postfix

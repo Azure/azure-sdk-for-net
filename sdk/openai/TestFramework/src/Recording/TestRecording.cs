@@ -69,7 +69,10 @@ public class TestRecording : IAsyncDisposable
                 }
                 else
                 {
-                    throw new InvalidOperationException("No random seed was set during recording");
+                    // To maximise backwards compatibility with the recordings from the previous test framework, we'll just use a random
+                    // seed if one wasn't set instead of failing here. Worst case, we'll get recording mismatches if this is not configured
+                    // correctly.
+                    Random = new TestRandom(Mode, GetRandomSeed());
                 }
                 break;
 

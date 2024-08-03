@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Net.Http;
 using System.Text.Json;
@@ -99,7 +100,7 @@ public class ProxyTransport : PipelineTransport
                 InnerTransport.Process(message);
             }
 
-            await ProcessResponseSyncAsync(message, true).ConfigureAwait(false);
+            await ProcessResponseSyncAsync(message, async).ConfigureAwait(false);
         }
         finally
         {
@@ -175,7 +176,10 @@ public class ProxyTransport : PipelineTransport
                 case RequestRecordMode.Record:
                     break;
                 case RequestRecordMode.RecordWithoutRequestBody:
-                    message.Request.Content = null;
+                    // CAUTION: setting the request content to null has the unfortunate side effect of causing any HttpClient backed
+                    //          implementation of networking to not send up any Content-??? headers as well which can cause test
+                    //          mismatches. Let's work around this by setting some empty content.
+                    message.Request.Content = BinaryContent.Create(BinaryData.FromBytes(Array.Empty<byte>()));
                     break;
                 case RequestRecordMode.DoNotRecord:
                     throw new InvalidOperationException(
