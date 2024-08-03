@@ -321,11 +321,11 @@ public abstract class RecordedClientTestBase : ClientTestBase
     protected virtual RecordedTestMode GetDefaultRecordedTestMode() => RecordedTestMode.Playback;
 
     /// <summary>
-    /// Determines the name of the test to use in the recording. This will automatically sanitize test names,
-    /// and append "Async" when running the asynchronous versions of tests.
+    /// Gets the name of recording JSON file that contains the recording. This will be based on a sanitized version
+    /// of test name, and "Async" will be automatically appended when running the asynchronous versions of tests.
     /// </summary>
     /// <returns>The name of the test to use.</returns>
-    protected virtual string GetRecordedTestName()
+    protected virtual string GetRecordedTestFileName()
     {
         const string c_asyncSuffix = "Async";
         TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
@@ -340,6 +340,8 @@ public abstract class RecordedClientTestBase : ClientTestBase
         {
             builder.Append(c_asyncSuffix);
         }
+
+        builder.Append(".json");
 
         return builder.ToString();
     }

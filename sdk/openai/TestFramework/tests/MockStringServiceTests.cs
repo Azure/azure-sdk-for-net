@@ -114,20 +114,19 @@ public class MockStringServiceTests : RecordedClientTestBase
 
     private string GetRecordingFile()
     {
-        DirectoryInfo sourceDir = AssemblyHelper.GetSourcePath<MockStringServiceTests>()
+        DirectoryInfo sourceDir = AssemblyHelper.GetAssemblySourceDir<MockStringServiceTests>()
             ?? throw new InvalidOperationException("Could not determine the source path for this assembly");
-        string name = GetRecordedTestName();
         string relativeDir = PathHelpers.GetRelativePath(RepositoryRoot.FullName, sourceDir.FullName);
         return Path.Combine(
             relativeDir,
             "SessionRecords",
             GetType().Name,
-            $"{name}.json");
+            GetRecordedTestFileName());
     }
 
     private string? GetAssetsFile()
     {
-        DirectoryInfo? sourceDir = AssemblyHelper.GetSourcePath<MockStringServiceTests>()
+        DirectoryInfo? sourceDir = AssemblyHelper.GetAssemblySourceDir<MockStringServiceTests>()
             ?? throw new InvalidOperationException("Could not determine the source path for this assembly");
 
         // walk up the tree until we hit either the repository root, or found a folder with an "assets.json" file

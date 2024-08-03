@@ -18,16 +18,33 @@ namespace OpenAI.TestFramework.Utils
         /// <param name="name">The name of the metadata assembly attribute to read.</param>
         /// <returns>The value of the metadata attribute, or null if none was specified or could be found.</returns>
         public static string? GetAssemblyMetadata<T>(string name)
+            => GetAssemblyMetadata(typeof(T).Assembly, name);
+
+        /// <summary>
+        /// Gets the value of the named assembly metadata attribute from assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly to read the metadata attribute from</param>
+        /// <param name="name">The name of the metadata assembly attribute to read.</param>
+        /// <returns>The value of the metadata attribute, or null if none was specified or could be found.</returns>
+        public static string? GetAssemblyMetadata(this Assembly assembly, string name)
         {
-            return typeof(T).Assembly
-                .GetCustomAttributes<AssemblyMetadataAttribute>()
+            return assembly
+                ?.GetCustomAttributes<AssemblyMetadataAttribute>()
                 .FirstOrDefault(a => a.Key == name && !string.IsNullOrWhiteSpace(a.Value))
                 ?.Value;
         }
 
         /// <summary>
-        /// Gets the source path for the assembly that defines the type <typeparamref name="T"/>. In order for this to work, you will
-        /// need to set the assembly metadata attribute your project file as follows:
+        /// Gets the root source directory for the assembly that defines the type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type whose assembly source path we want to read.</typeparam>
+        /// <returns>The directory containing the original source path, or null if it was not set or did not exist.</returns>
+        public static DirectoryInfo? GetAssemblySourceDir<T>()
+            => GetAssemblySourceDir(typeof(T).Assembly);
+
+        /// <summary>
+        /// Gets the source path for the assembly. In order for this to work, you will need to set the assembly metadata attribute
+        /// your project file as follows:
         /// <code>
         /// &lt;ItemGroup&gt;
         ///   &lt;AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute"&gt;
@@ -37,17 +54,20 @@ namespace OpenAI.TestFramework.Utils
         /// &lt;/ItemGroup>
         /// </code>
         /// </summary>
-        /// <typeparam name="T">The type whose assembly source path we want to read.</typeparam>
-        /// <returns>The directory containing the original source path, or null if it was not set.</returns>
-        public static DirectoryInfo? GetSourcePath<T>()
+        /// <param name="assembly">The assembly whose source path we want to find.</param>
+        /// <returns>The directory containing the original source path, or null if it was not set or did not exist.</returns>
+        public static DirectoryInfo? GetAssemblySourceDir(this Assembly assembly)
         {
-            string? sourcePath = GetAssemblyMetadata<T>("SourcePath");
+            string? sourcePath = assembly.GetAssemblyMetadata("SourcePath");
             if (sourcePath == null)
             {
                 return null;
             }
 
-            return new DirectoryInfo(sourcePath);
+            DirectoryInfo dir = new(sourcePath);
+            return dir.Exists
+                ? dir
+                : null;
         }
 
         /// <summary>

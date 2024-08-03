@@ -88,6 +88,20 @@ public static class ScmExtensions
 public static class CollectionExtensions
 {
     /// <summary>
+    /// Adds the elements to a collection.
+    /// </summary>
+    /// <typeparam name="T">The type of the elements in the collection.</typeparam>
+    /// <param name="collection">The collection to add elements to.</param>
+    /// <param name="itemsToAdd">The items to add.</param>
+    public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> itemsToAdd)
+    {
+        foreach (T item in itemsToAdd)
+        {
+            collection.Add(item);
+        }
+    }
+
+    /// <summary>
     /// Joins the elements of a collection into a single string using the specified separator.
     /// Returns null if the collection is null or empty.
     /// </summary>

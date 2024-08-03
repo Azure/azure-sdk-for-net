@@ -237,8 +237,8 @@ namespace OpenAI.TestFramework.Tests
                 await using TestRecording recording = new(recordingId, RecordedTestMode.Record, recordingProxyService);
                 await recording.ApplyOptions(recordingOptions, Token);
 
-                id1 = recording.Random.GetGuid().ToString();
-                id2 = recording.Random.GetGuid().ToString();
+                id1 = recording.Random.NewGuid().ToString();
+                id2 = recording.Random.NewGuid().ToString();
 
                 await SendRequestsAsync(recording, mockRestService.HttpEndpoint, id1, id2, Token);
             }
@@ -261,9 +261,9 @@ namespace OpenAI.TestFramework.Tests
                 await using TestRecording playback = new(recordingId, RecordedTestMode.Playback, recordingProxyService, result.Value);
                 await playback.ApplyOptions(recordingOptions, Token);
 
-                string id = playback.Random.GetGuid().ToString();
+                string id = playback.Random.NewGuid().ToString();
                 Assert.That(id, Is.EqualTo(id1));
-                id = playback.Random.GetGuid().ToString();
+                id = playback.Random.NewGuid().ToString();
                 Assert.That(id, Is.EqualTo(id2));
 
                 await SendRequestsAsync(playback, mockRestService.HttpEndpoint, id1, id2, Token);
