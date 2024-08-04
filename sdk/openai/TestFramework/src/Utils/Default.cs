@@ -17,7 +17,8 @@ public static class Default
     private static JsonSerializerOptions? _testProxyJsonOptions;
     private static TimeSpan? _testProxyWaitTime;
     private static TimeSpan? _requestRetryDelay;
-    private static TimeSpan? _debuggerWaitTime;
+    private static TimeSpan? _debuggerTestTimeout;
+    private static TimeSpan? _defaultTestTimeout;
 
     /// <summary>
     /// Gets the default value to replace matches with while sanitizing.
@@ -98,5 +99,10 @@ public static class Default
     /// <summary>
     /// The amount of time to wait when the debugger is attached. This is much higher than normal to allow for more time while debugging.
     /// </summary>
-    public static TimeSpan DebuggerAttachedWaitTime => _debuggerWaitTime ??= TimeSpan.FromMinutes(15);
+    public static TimeSpan DebuggerAttachedTestTimeout => _debuggerTestTimeout ??= TimeSpan.FromMinutes(15);
+
+    /// <summary>
+    /// The default test timeout.
+    /// </summary>
+    public static TimeSpan TestTimeout => _defaultTestTimeout ??= TimeSpan.FromSeconds(15);
 }
