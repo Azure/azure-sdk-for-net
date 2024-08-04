@@ -1,27 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.ClientModel;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Identity;
+using NUnit.Framework;
 using OpenAI.Images;
+using OpenAI.TestFramework.Recording;
 
 namespace Azure.AI.OpenAI.Tests;
 
-public class ImageTests : AoaiTestBase<ImageClient>
+public class ImageTests(bool isAsync) : AoaiTestBase<ImageClient>(isAsync)
 {
-    public ImageTests(bool isAsync) : base(isAsync)
-    { }
-
     [RecordedTest]
     [Category("Smoke")]
     public void CanCreateClient()
     {
-        ImageClient client = GetTestClient(tokenCredential: new DefaultAzureCredential());
+        ImageClient client = GetTestClient(tokenCredential: TestEnvironment.Credential);
         Assert.That(client, Is.InstanceOf<ImageClient>());
     }
 

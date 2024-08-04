@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -16,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
+using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests.Models;
 
@@ -35,14 +34,14 @@ internal class AzureDeploymentClient : IDisposable
     private readonly string _endpointUrl;
     private readonly string _apiVersion;
 
-    protected AzureDeploymentClient()
+    internal AzureDeploymentClient()
     {
         // for mocking
         _cts = new();
         _pipeline = ClientPipeline.Create();
         _subscriptionId = _resourceGroup = _resourceName = _endpointUrl = string.Empty;
         _apiVersion = DEFAULT_API_VERSION;
-        _credential = new Core.TestFramework.MockCredential();
+        _credential = null!;
     }
 
     public AzureDeploymentClient(IConfiguration config, Core.TokenCredential credential, string? apiVersion = null, PipelineTransport? transport = null)
@@ -140,7 +139,7 @@ internal class AzureDeploymentClient : IDisposable
     private static BinaryContent ToJsonContent<T>(T value)
     {
         Utf8JsonBinaryContent content = new();
-        JsonSerializer.Serialize(content.JsonWriter, value, typeof(T), JsonHelpers.AzureJsonOptions);
+        JsonSerializer.Serialize(content.JsonWriter, value, typeof(T), JsonOptions.AzureJsonOptions);
         return content;
     }
 
@@ -160,10 +159,10 @@ internal class AzureDeploymentClient : IDisposable
         if (response.IsError)
         {
             if (response.Content != null
-                && response.Headers.GetFirstValueOrDefault("Content-Type")?.StartsWith("application/json") == true)
+                && response.Headers.GetFirstOrDefault("Content-Type")?.StartsWith("application/json") == true)
             {
                 using Stream errorStream = response.Content.ToStream();
-                ErrorInfo? error = JsonHelpers.Deserialize<ErrorInfo>(errorStream, JsonHelpers.AzureJsonOptions);
+                ErrorInfo? error = JsonHelpers.Deserialize<ErrorInfo>(errorStream, JsonOptions.AzureJsonOptions);
                 if (error?.Error != null)
                 {
                     throw new ClientResultException($"[{response.Status} - {error.Error.Code}] {error.Error.Message}", response);
@@ -179,7 +178,7 @@ internal class AzureDeploymentClient : IDisposable
         ThrowOnFailed(response);
 
         using Stream stream = response.Content.ToStream();
-        return JsonHelpers.Deserialize<T>(stream, JsonHelpers.AzureJsonOptions)
+        return JsonHelpers.Deserialize<T>(stream, JsonOptions.AzureJsonOptions)
             ?? throw new InvalidDataException("Service returned a null JSON response body");
     }
 

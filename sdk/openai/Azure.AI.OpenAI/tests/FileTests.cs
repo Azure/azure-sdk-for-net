@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 using OpenAI.Files;
+using OpenAI.TestFramework.Recording;
 
 namespace Azure.AI.OpenAI.Tests;
 

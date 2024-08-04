@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework.Internal;
+using OpenAI.TestFramework.AutoSyncAsync;
 
 namespace Azure.AI.OpenAI.Tests.Utils.Config;
 
@@ -82,9 +79,9 @@ public static class ConfigurationExtensions
     /// <param name="client">The client instance.</param>
     /// <returns>The configuration.</returns>
     /// <exception cref="KeyNotFoundException">The client did not have a config associated with it.</exception>
-    public static IConfiguration GetConfigOrThrow<TExplicitClient>(this TExplicitClient client)
+    public static IConfiguration GetConfigOrThrow<TExplicitClient>(this TExplicitClient client) where TExplicitClient : class
     {
-        var instrumented = GetInstrumentedData(client);
+        var instrumented = GetTopLevelClientInfo(client);
         return instrumented.Config ?? throw new ArgumentException("The client was instrumented with a null configuration");
     }
 
@@ -110,31 +107,23 @@ public static class ConfigurationExtensions
     /// <returns>The deployment name used for that client instance.</returns>
     /// <exception cref="ArgumentException">The client either was not properly instrumented.</exception>
     /// <exception cref="KeyNotFoundException">The client did not have a deployment configured.</exception>
-    public static string DeploymentOrThrow<TExplicitClient>(this TExplicitClient client)
+    public static string DeploymentOrThrow<TExplicitClient>(this TExplicitClient client) where TExplicitClient : class
     {
-        var instrumented = GetInstrumentedData(client);
+        var instrumented = GetTopLevelClientInfo(client);
         return instrumented.Config.DeploymentOrThrow(client!.GetType().Name);
     }
 
-    private static AoaiTestBase<TExplicitClient>.AzureOpenAiInstrumented GetInstrumentedData<TExplicitClient>(TExplicitClient? client)
+    private static AoaiTestBase<TExplicitClient>.TopLevelInfo GetTopLevelClientInfo<TExplicitClient>(TExplicitClient? client)
+        where TExplicitClient : class
     {
         if (client == null)
         {
             throw new ArgumentNullException(nameof(client));
         }
 
-        var testBase = TestExecutionContext.CurrentContext?.TestObject as AoaiTestBase<TExplicitClient>;
-        if (testBase == null)
-        {
-            throw new InvalidOperationException("You are not currently in a NUnit test class that extends " + nameof(AoaiTestBase<TExplicitClient>));
-        }
-
-        var instrumented = testBase._clientToTopLevel.FirstOrDefault(e => ReferenceEquals(client, e.Client));
-        if (instrumented == null)
-        {
-            throw new ArgumentException($"The client was not properly instrumented ({client.GetType().Name})", nameof(client));
-        }
-
-        return instrumented;
+        return ((AoaiTestBase<TExplicitClient>.TopLevelInfo?)(client as IAutoSyncAsync)?.Context)
+            ?? throw new ArgumentException(
+                $"The client was not properly wrapped for automatic sync/async ({client.GetType().Name})",
+                nameof(client));
     }
 }
