@@ -25,7 +25,7 @@ public abstract class ClientTestBase
     private static AsyncToSyncInterceptor? s_asyncInterceptor = null;
     private static AsyncToSyncInterceptor? s_syncInterceptor = null;
 
-    private CancellationTokenSource _cts = new();
+    private CancellationTokenSource? _cts = null;
 
     /// <summary>
     /// Creates a new instance.
@@ -56,13 +56,20 @@ public abstract class ClientTestBase
     /// <summary>
     /// Gets the cancellation token to use
     /// </summary>
-    public virtual CancellationToken Token => _cts.Token;
+    public virtual CancellationToken Token => _cts?.Token ?? default;
 
     [SetUp]
     public void TestSetup()
     {
         _cts?.Dispose();
         _cts = new CancellationTokenSource(TestTimeout);
+    }
+
+    [TearDown]
+    public void TestCleanup()
+    {
+        _cts?.Dispose();
+        _cts = null;
     }
 
     /// <summary>

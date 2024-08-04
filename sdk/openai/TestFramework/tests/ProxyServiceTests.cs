@@ -25,10 +25,6 @@ namespace OpenAI.TestFramework.Tests
 
         public FileInfo? RecordingFile { get; private set; }
 
-        public CancellationToken Token => TokenSource?.Token ?? default;
-
-        public CancellationTokenSource? TokenSource { get; private set; }
-
         [SetUp]
         public void CreateRecordingFile()
         {
@@ -39,9 +35,6 @@ namespace OpenAI.TestFramework.Tests
             }
 
             RecordingFile = new FileInfo(Path.Combine(RecordingDir.FullName, Path.GetRandomFileName() + ".json"));
-            TokenSource = new CancellationTokenSource(System.Diagnostics.Debugger.IsAttached
-                ? TimeSpan.FromMinutes(30)
-                : TimeSpan.FromMinutes(1));
         }
 
         [TearDown]
@@ -56,8 +49,6 @@ namespace OpenAI.TestFramework.Tests
             {
                 RecordingDir.Delete(true);
             }
-
-            TokenSource?.Dispose();
         }
 
         #endregion
