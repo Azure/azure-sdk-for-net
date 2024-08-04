@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Text;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using OpenAI.TestFramework.Recording;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.Proxy.Service;
@@ -24,8 +25,6 @@ namespace OpenAI.TestFramework;
 [NonParallelizable]
 public abstract class RecordedClientTestBase : ClientTestBase
 {
-    private CancellationTokenSource _cts = new();
-
     /// <summary>
     /// Invalid characters that will be removed from test names when creating recordings.
     /// </summary>
@@ -95,19 +94,19 @@ public abstract class RecordedClientTestBase : ClientTestBase
     /// to wait for configuring a recording session, and then saving it or closing it.
     /// </summary>
     public virtual TimeSpan TestProxyWaitTime => Debugger.IsAttached
-        ? Default.DebuggerAttachedWaitTime
+        ? Default.DebuggerAttachedTestTimeout
         : Default.TestProxyWaitTime;
 
     /// <summary>
     /// Gets the test timeout.
     /// </summary>
-    public virtual TimeSpan TestTimeout
+    public override TimeSpan TestTimeout
     {
         get
         {
             if (Debugger.IsAttached)
             {
-                return Default.DebuggerAttachedWaitTime;
+                return Default.DebuggerAttachedTestTimeout;
             }
 
             switch (Mode)
@@ -118,15 +117,10 @@ public abstract class RecordedClientTestBase : ClientTestBase
                     return TimeSpan.FromSeconds(60);
 
                 case RecordedTestMode.Playback:
-                    return TimeSpan.FromSeconds(15);
+                    return Default.TestTimeout;
             }
         }
     }
-
-    /// <summary>
-    /// Gets the cancellation token to use
-    /// </summary>
-    public virtual CancellationToken Token => _cts.Token;
 
     /// <summary>
     /// Determines whether or not to use Fiddler. If this is true, then the recording transport will be updated to use Fiddler
@@ -223,7 +217,11 @@ public abstract class RecordedClientTestBase : ClientTestBase
     [SetUp]
     public virtual async Task StartTestRecordingAsync()
     {
-        _cts = new CancellationTokenSource(TestTimeout);
+        // Check if the current NUnit test method has a specific attribute applied to it
+        if (!IsCurrentTestRecorded())
+        {
+            return;
+        }
 
         if (Proxy == null)
         {
@@ -249,6 +247,11 @@ public abstract class RecordedClientTestBase : ClientTestBase
     [TearDown]
     public virtual async Task StopTestRecordingAsync()
     {
+        if (!IsCurrentTestRecorded())
+        {
+            return;
+        }
+
         bool testsPassed = TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed;
         using CancellationTokenSource cts = new(TestProxyWaitTime);
 
@@ -271,6 +274,11 @@ public abstract class RecordedClientTestBase : ClientTestBase
     public virtual TClientOptions ConfigureClientOptions<TClientOptions>(TClientOptions options)
         where TClientOptions : ClientPipelineOptions
     {
+        if (!IsCurrentTestRecorded())
+        {
+            return options;
+        }
+
         // If we are in playback, or record mode we should set the transport to the test proxy transport, except
         // in the case where we've explicitly specified the transport ourselves in case we are doing some custom
         // work.
@@ -390,6 +398,15 @@ public abstract class RecordedClientTestBase : ClientTestBase
         TestRecording recording = new TestRecording(recordingId!, Mode, proxy, variables);
         await recording.ApplyOptions(_options, token).ConfigureAwait(false);
         return recording;
+    }
+
+    /// <summary>
+    /// Determines whether or not the current test should be recorded (or played back from a file).
+    /// </summary>
+    /// <returns>True to enable the use of the recording test proxy, false otherwise.</returns>
+    protected virtual bool IsCurrentTestRecorded()
+    {
+        return TestExecutionContext.CurrentContext.CurrentTest.GetCustomAttributes<RecordedTestAttribute>(true).Any();
     }
 
     /// <summary>

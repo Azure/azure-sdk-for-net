@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using OpenAI.TestFramework.AutoSyncAsync;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework;
 
@@ -22,6 +24,8 @@ public abstract class ClientTestBase
     private static ThisLeakInterceptor? s_thisLeakInterceptor = null;
     private static AsyncToSyncInterceptor? s_asyncInterceptor = null;
     private static AsyncToSyncInterceptor? s_syncInterceptor = null;
+
+    private CancellationTokenSource _cts = new();
 
     /// <summary>
     /// Creates a new instance.
@@ -41,6 +45,25 @@ public abstract class ClientTestBase
     /// Gets the start time of the test.
     /// </summary>
     public virtual DateTimeOffset TestStartTime => TestExecutionContext.CurrentContext.StartTime.ToUniversalTime();
+
+    /// <summary>
+    /// Gets the test timeout.
+    /// </summary>
+    public virtual TimeSpan TestTimeout => Debugger.IsAttached
+        ? Default.DebuggerAttachedTestTimeout
+        : Default.TestTimeout;
+
+    /// <summary>
+    /// Gets the cancellation token to use
+    /// </summary>
+    public virtual CancellationToken Token => _cts.Token;
+
+    [SetUp]
+    public void TestSetup()
+    {
+        _cts?.Dispose();
+        _cts = new CancellationTokenSource(TestTimeout);
+    }
 
     /// <summary>
     /// Gets the <see cref="Castle.DynamicProxy.ProxyGenerator"/> instance to use to create proxies of classes
