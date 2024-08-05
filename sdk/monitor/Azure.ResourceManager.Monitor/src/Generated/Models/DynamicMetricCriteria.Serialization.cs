@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<DynamicMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DynamicMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
             writer.WritePropertyName("alertSensitivity"u8);
@@ -77,7 +86,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         DynamicMetricCriteria IJsonModel<DynamicMetricCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

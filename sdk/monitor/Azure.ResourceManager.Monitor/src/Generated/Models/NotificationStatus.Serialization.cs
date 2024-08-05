@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<NotificationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationStatus)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
@@ -68,7 +76,6 @@ namespace Azure.ResourceManager.Monitor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NotificationStatus IJsonModel<NotificationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

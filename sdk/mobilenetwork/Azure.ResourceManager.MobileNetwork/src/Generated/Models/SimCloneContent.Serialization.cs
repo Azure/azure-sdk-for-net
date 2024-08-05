@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         void IJsonModel<SimCloneContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SimCloneContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SimCloneContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TargetSimGroupId))
             {
                 writer.WritePropertyName("targetSimGroupId"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SimCloneContent IJsonModel<SimCloneContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

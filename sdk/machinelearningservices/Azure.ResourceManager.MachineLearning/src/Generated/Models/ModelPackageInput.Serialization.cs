@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<ModelPackageInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ModelPackageInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ModelPackageInput)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("inputType"u8);
             writer.WriteStringValue(InputType.ToString());
             if (Optional.IsDefined(Mode))
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ModelPackageInput IJsonModel<ModelPackageInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

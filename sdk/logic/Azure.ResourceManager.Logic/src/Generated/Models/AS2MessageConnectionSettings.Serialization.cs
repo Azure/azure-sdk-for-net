@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Logic.Models
 
         void IJsonModel<AS2MessageConnectionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AS2MessageConnectionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AS2MessageConnectionSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("ignoreCertificateNameMismatch"u8);
             writer.WriteBooleanValue(IgnoreCertificateNameMismatch);
             writer.WritePropertyName("supportHttpStatusCodeContinue"u8);
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.Logic.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AS2MessageConnectionSettings IJsonModel<AS2MessageConnectionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

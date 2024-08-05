@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         void IJsonModel<ExpressRouteConnectionInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteConnectionInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteConnectionInformation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("expressRouteCircuitId"u8);
             writer.WriteStringValue(ExpressRouteCircuitId);
             if (Optional.IsDefined(ExpressRouteAuthorizationKey))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ExpressRouteConnectionInformation IJsonModel<ExpressRouteConnectionInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<CustomMetricThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CustomMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomMetricThreshold)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("metric"u8);
             writer.WriteStringValue(Metric);
             if (Optional.IsDefined(Threshold))
@@ -55,7 +63,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CustomMetricThreshold IJsonModel<CustomMetricThreshold>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

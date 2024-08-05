@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         void IJsonModel<PinholeTimeouts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PinholeTimeouts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PinholeTimeouts IJsonModel<PinholeTimeouts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

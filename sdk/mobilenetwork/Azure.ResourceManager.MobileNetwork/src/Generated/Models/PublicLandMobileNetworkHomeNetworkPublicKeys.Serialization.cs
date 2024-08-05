@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         void IJsonModel<PublicLandMobileNetworkHomeNetworkPublicKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PublicLandMobileNetworkHomeNetworkPublicKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PublicLandMobileNetworkHomeNetworkPublicKeys)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ProfileA))
             {
                 writer.WritePropertyName("profileA"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PublicLandMobileNetworkHomeNetworkPublicKeys IJsonModel<PublicLandMobileNetworkHomeNetworkPublicKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

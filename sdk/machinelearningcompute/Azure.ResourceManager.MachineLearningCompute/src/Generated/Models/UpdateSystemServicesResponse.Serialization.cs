@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         void IJsonModel<UpdateSystemServicesResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSystemServicesResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(UpdateStatus))
             {
                 writer.WritePropertyName("updateStatus"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UpdateSystemServicesResponse IJsonModel<UpdateSystemServicesResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
