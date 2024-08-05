@@ -31,20 +31,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
         {
             var exportedActivities = new List<Activity>();
 
-            var testActivitySource = new ActivitySource("testSource");
+            var testActivitySource = new ActivitySource("TestActivitySource");
 
             // SETUP
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource("testSource")
+                .AddSource("TestActivitySource")
                 .AddInMemoryExporter(exportedActivities)
                 .Build();
 
             // ACT
-            using (var activity = testActivitySource.StartActivity("testActivity", ActivityKind.Internal))
+            using (var activity = testActivitySource.StartActivity("TestActivityName", ActivityKind.Internal))
             {
                 activity?.SetStatus(activityStatusCode);
             }
 
+            tracerProvider.ForceFlush();
             WaitForActivityExport(exportedActivities);
 
             // Assert
@@ -54,8 +55,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
 
             Assert.Null(dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
-            Assert.Equal("testActivity", dependencyDocument.Name);
-            Assert.Equal("testSource", dependencyDocument.Properties.Single(x => x.Key == "ActivitySource").Value);
+            Assert.Equal("TestActivityName", dependencyDocument.Name);
+            Assert.Equal("TestActivitySource", dependencyDocument.Properties.Single(x => x.Key == "ActivitySource").Value);
             Assert.Equal("Unknown", dependencyDocument.Properties.Single(x => x.Key == "ActivityType").Value);
 
             //// The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
