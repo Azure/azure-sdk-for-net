@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,16 +27,6 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly ILogger _logger;
     private readonly string? _correlationIdHeaderName;
     private readonly string _clientAssembly = "System-ClientModel";
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="clientAssembly"></param>
-    /// <param name="options"></param>
-    protected ClientLoggingPolicy(string clientAssembly, LoggingOptions? options = default) : this(options)
-    {
-        _clientAssembly = clientAssembly;
-    }
 
     /// <summary>
     /// TODO.
@@ -110,16 +99,6 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <returns></returns>
     protected virtual ValueTask OnLogResponseContentAsync(PipelineMessage message, byte[] bytes, Encoding? textEncoding, int? block) => default;
 
-    internal string? GetCorrelationIdFromHeaders(PipelineRequestHeaders keyValuePairs)
-    {
-        if (_correlationIdHeaderName == null)
-        {
-            return null;
-        }
-        keyValuePairs.TryGetValue(_correlationIdHeaderName, out var clientRequestId);
-        return clientRequestId;
-    }
-
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
         bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Warning); // We only log warnings, information, and trace
@@ -148,24 +127,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         string requestId = GetCorrelationIdFromHeaders(request.Headers) ?? Guid.NewGuid().ToString();
         message.LoggingCorrelationId = requestId;
 
-        LogRequest(_logger, request, requestId);
-
-        if (_logContent)
-        {
-            await LogRequestContent(message, _logger, request, requestId, async, message.CancellationToken).ConfigureAwait(false);
-        }
-        else
-        {
-            // OnSendingRequest is called in LogRequestContent if content logging is enabled
-            if (async)
-            {
-                await OnSendingRequestAsync(message, null, null).ConfigureAwait(false);
-            }
-            else
-            {
-                OnSendingRequest(message, null, null);
-            }
-        }
+        LogRequest(requestId, request, message, async);
 
         var before = Stopwatch.GetTimestamp();
 
@@ -182,7 +144,6 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         catch (Exception ex)
         {
-            ClientModelLogMessages.ExceptionResponse(_logger, requestId, ex.ToString());
             ClientModelEventSource.Log.ExceptionResponse(requestId, ex.ToString());
 
             throw;
@@ -218,113 +179,90 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (elapsed > RequestTooLongTime)
         {
-            ClientModelLogMessages.ResponseDelay(_logger, responseId, elapsed);
             ClientModelEventSource.Log.ResponseDelay(responseId, elapsed);
         }
     }
 
-    private void LogRequest(ILogger logger, PipelineRequest request, string requestId)
+    private bool IsLoggingEnabled(LogLevel logLevel, EventLevel eventLevel, EventKeywords keywords = EventKeywords.None)
     {
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
-        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
-
-        if (!isLoggerEnabled && !isEventSourceEnabled)
-        {
-            return;
-        }
-
-        string uri = _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri);
-        string headers = FormatHeaders(request.Headers, _sanitizer);
-
-        ClientModelLogMessages.Request(logger, requestId, request.Method, uri, headers, _clientAssembly);
-        ClientModelEventSource.Log.Request(requestId, request.Method, uri, headers, _clientAssembly);
+        return _logger.IsEnabled(logLevel) || ClientModelEventSource.Log.IsEnabled(eventLevel, keywords);
     }
 
-    private async Task LogRequestContent(PipelineMessage message, ILogger logger, PipelineRequest request, string requestId, bool async, CancellationToken cancellationToken)
+    private async void LogRequest(string requestId, PipelineRequest request, PipelineMessage message, bool async)
     {
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
-        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
+        // Log the request
 
-        if (request.Content == null || !(isLoggerEnabled || isEventSourceEnabled))
+        if (IsLoggingEnabled(LogLevel.Information, EventLevel.Informational))
         {
-            return;
+            ClientModelEventSource.Log.Request(requestId, request, _clientAssembly, _sanitizer);
         }
 
-        // Convert binary content to bytes
-        using var memoryStream = new MaxLengthStream(_maxLength);
-        if (async)
-        {
-            await request.Content.WriteToAsync(memoryStream, cancellationToken).ConfigureAwait(false);
-        }
-        else
-        {
-            request.Content.WriteTo(memoryStream, cancellationToken);
-        }
-        var bytes = memoryStream.ToArray();
+        // Log the request content
 
-        // Try to extract a text encoding from the headers
-        Encoding? requestTextEncoding = null;
+        byte[]? bytes = null;
+        Encoding? encoding = null;
 
-        if (request.Headers.TryGetValue("Content-Type", out var contentType) && contentType != null)
+        if (_logContent && request.Content != null && IsLoggingEnabled(LogLevel.Information, EventLevel.Informational))
         {
-            ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
-        }
+            // Convert binary content to bytes
+            using var memoryStream = new MaxLengthStream(_maxLength);
 
-        // Log text event
-        if (requestTextEncoding != null)
-        {
-            string content = requestTextEncoding.GetString(bytes);
-            ClientModelEventSource.Log.RequestContentText(requestId, content);
-            ClientModelLogMessages.RequestContentText(logger, requestId, content);
-        }
-        else // Log bytes
-        {
-            ClientModelEventSource.Log.RequestContent(requestId, bytes);
-            ClientModelLogMessages.RequestContent(logger, requestId, bytes);
+            if (async)
+            {
+                await request.Content.WriteToAsync(memoryStream, message.CancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                request.Content.WriteTo(memoryStream, message.CancellationToken);
+            }
+
+            bytes = memoryStream.ToArray();
+
+            // Try to extract a text encoding from the headers
+            if (request.Headers.TryGetValue("Content-Type", out var contentType) && contentType != null)
+            {
+                ContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
+            }
+
+            ClientModelEventSource.Log.RequestContent(requestId, bytes, encoding);
         }
 
         if (async)
         {
-            await OnSendingRequestAsync(message, bytes, requestTextEncoding).ConfigureAwait(false);
+            await OnSendingRequestAsync(message, bytes, encoding).ConfigureAwait(false);
         }
         else
         {
-            OnSendingRequest(message, bytes, requestTextEncoding);
+            OnSendingRequest(message, bytes, encoding);
         }
     }
 
     private void LogResponse(ILogger logger, PipelineResponse response, string responseId, double elapsed)
     {
-        bool isEnabled = response.IsError
-            ? (logger.IsEnabled(LogLevel.Warning) || ClientModelEventSource.Log.IsEnabled(EventLevel.Warning, EventKeywords.None))
-            : (logger.IsEnabled(LogLevel.Information) || ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None));
+        bool isEnabled = response.IsError ?
+            IsLoggingEnabled(LogLevel.Warning, EventLevel.Warning)
+            : IsLoggingEnabled(LogLevel.Information, EventLevel.Informational);
 
         if (!isEnabled)
         {
             return;
         }
 
-        string headers = FormatHeaders(response.Headers, _sanitizer);
-
         if (response.IsError)
         {
-            ClientModelLogMessages.ErrorResponse(logger, responseId, response.Status, response.ReasonPhrase, headers, elapsed);
-            ClientModelEventSource.Log.ErrorResponse(responseId, response.Status, response.ReasonPhrase, headers, elapsed);
+            ClientModelEventSource.Log.ErrorResponse(responseId, response, _sanitizer, elapsed);
         }
         else
         {
-            ClientModelLogMessages.Response(logger, responseId, response.Status, response.ReasonPhrase, headers, elapsed);
-            ClientModelEventSource.Log.Response(responseId, response.Status, response.ReasonPhrase, headers, elapsed);
+            ClientModelEventSource.Log.Response(responseId, response, _sanitizer, elapsed);
         }
     }
 
     private async void LogResponseContent(ILogger logger, PipelineMessage message, string responseId, bool contentBuffered, bool async)
     {
         PipelineResponse response = message.Response!;
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
-        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
 
-        if (response.ContentStream == null || !(isLoggerEnabled || isEventSourceEnabled))
+        if (response.ContentStream == null || !IsLoggingEnabled(LogLevel.Information, EventLevel.Informational))
         {
             return;
         }
@@ -344,7 +282,14 @@ public class ClientLoggingPolicy : PipelinePolicy
             var length = Math.Min(contentAsMemory.Length, _maxLength);
             byte[] bytes = contentAsMemory.Span.Slice(0, length).ToArray();
 
-            LogFormattedResponseContent(logger, response.IsError, responseId, bytes, responseTextEncoding);
+            if (response.IsError)
+            {
+                ClientModelEventSource.Log.ErrorResponseContent(responseId, bytes, responseTextEncoding);
+            }
+            else
+            {
+                ClientModelEventSource.Log.ResponseContent(responseId, bytes, responseTextEncoding);
+            }
 
             if (async)
             {
@@ -365,7 +310,14 @@ public class ClientLoggingPolicy : PipelinePolicy
             response.ContentStream.Read(bytes, 0, _maxLength);
             response.ContentStream.Seek(0, SeekOrigin.Begin);
 
-            LogFormattedResponseContent(logger, response.IsError, responseId, bytes, responseTextEncoding);
+            if (response.IsError)
+            {
+                ClientModelEventSource.Log.ErrorResponseContent(responseId, bytes, responseTextEncoding);
+            }
+            else
+            {
+                ClientModelEventSource.Log.ResponseContent(responseId, bytes, responseTextEncoding);
+            }
 
             if (async)
             {
@@ -383,30 +335,14 @@ public class ClientLoggingPolicy : PipelinePolicy
     }
 
     #region Formatting Helpers
-
-    private static void LogFormattedResponseContent(ILogger logger, bool isError, string responseId, byte[] bytes, Encoding? encoding)
+    private string? GetCorrelationIdFromHeaders(PipelineRequestHeaders keyValuePairs)
     {
-        switch (isError, encoding)
+        if (_correlationIdHeaderName == null)
         {
-            case (true, null):
-                ClientModelLogMessages.ErrorResponseContent(logger, responseId, bytes);
-                ClientModelEventSource.Log.ErrorResponseContent(responseId, bytes);
-                break;
-            case (true, not null):
-                string encodedErrorContent = encoding.GetString(bytes);
-                ClientModelLogMessages.ErrorResponseContentText(logger, responseId, encodedErrorContent);
-                ClientModelEventSource.Log.ErrorResponseContentText(responseId, encodedErrorContent);
-                break;
-            case (false, null):
-                ClientModelLogMessages.ResponseContent(logger, responseId, bytes);
-                ClientModelEventSource.Log.ResponseContent(responseId, bytes);
-                break;
-            case (false, not null):
-                string encodedContent = encoding.GetString(bytes);
-                ClientModelLogMessages.ResponseContentText(logger, responseId, encoding.GetString(bytes));
-                ClientModelEventSource.Log.ResponseContentText(responseId, encodedContent);
-                break;
+            return null;
         }
+        keyValuePairs.TryGetValue(_correlationIdHeaderName, out var clientRequestId);
+        return clientRequestId;
     }
 
     private string? GetCorrelationIdFromHeaders(PipelineResponseHeaders keyValuePairs)
@@ -417,19 +353,6 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         keyValuePairs.TryGetValue(_correlationIdHeaderName, out var clientRequestId);
         return clientRequestId;
-    }
-
-    private static string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers, PipelineMessageSanitizer sanitizer)
-    {
-        var stringBuilder = new StringBuilder();
-        foreach (var header in headers)
-        {
-            stringBuilder.Append(header.Key);
-            stringBuilder.Append(':');
-            stringBuilder.Append(sanitizer.SanitizeHeader(header.Key, header.Value));
-            stringBuilder.Append(Environment.NewLine);
-        }
-        return stringBuilder.ToString();
     }
 
     #endregion
@@ -533,24 +456,13 @@ public class ClientLoggingPolicy : PipelinePolicy
                 Buffer.BlockCopy(buffer, offset, bytes, 0, logLength);
             }
 
-            switch (_error, _textEncoding)
+            if (_error)
             {
-                case (true, null):
-                    ClientModelLogMessages.ErrorResponseContentBlock(_logger, _requestId, _blockNumber, bytes);
-                    ClientModelEventSource.Log.ErrorResponseContentBlock(_requestId, _blockNumber, bytes);
-                    break;
-                case (true, not null):
-                    ClientModelLogMessages.ErrorResponseContentTextBlock(_logger, _requestId, _blockNumber, _textEncoding.GetString(bytes));
-                    ClientModelEventSource.Log.ErrorResponseContentTextBlock(_requestId, _blockNumber, _textEncoding.GetString(bytes));
-                    break;
-                case (false, null):
-                    ClientModelLogMessages.ResponseContentBlock(_logger, _requestId, _blockNumber, bytes);
-                    ClientModelEventSource.Log.ResponseContentBlock(_requestId, _blockNumber, bytes);
-                    break;
-                case (false, not null):
-                    ClientModelLogMessages.ResponseContentTextBlock(_logger, _requestId, _blockNumber, _textEncoding.GetString(bytes));
-                    ClientModelEventSource.Log.ResponseContentTextBlock(_requestId, _blockNumber, _textEncoding.GetString(bytes));
-                    break;
+                ClientModelEventSource.Log.ErrorResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+            }
+            else
+            {
+                ClientModelEventSource.Log.ResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
             }
 
             if (async)
