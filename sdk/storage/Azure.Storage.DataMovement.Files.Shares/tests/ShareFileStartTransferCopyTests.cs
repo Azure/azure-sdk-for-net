@@ -352,7 +352,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 string sourcePermission = await sourceShareClient.GetPermissionAsync(sourceProperties.SmbProperties.FilePermissionKey, CancellationToken.None);
 
                 ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
-                string fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
+                string fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey, CancellationToken.None);
                 Assert.AreEqual(sourcePermission, fullPermission);
             }
             else // Default properties
@@ -518,7 +518,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
 
                 ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
-                string actualPermissions = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
+                string actualPermissions = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey, CancellationToken.None);
                 Assert.AreEqual(_defaultShortPermissions, actualPermissions);
             }
             else if (propertiesType == TransferPropertiesTestType.Preserve)
@@ -537,10 +537,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 // Check if the permissions are the same. Permission Keys will be different as they are defined by the share service.
                 ShareClient sourceShareClient = sourceClient.GetParentShareClient();
-                string sourcePermission = await sourceShareClient.GetPermissionAsync(sourceProperties.SmbProperties.FilePermissionKey);
+                string sourcePermission = await sourceShareClient.GetPermissionAsync(sourceProperties.SmbProperties.FilePermissionKey, CancellationToken.None);
 
                 ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
-                string fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
+                string fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey, CancellationToken.None);
                 Assert.AreEqual(sourcePermission, fullPermission);
             }
         }

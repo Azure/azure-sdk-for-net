@@ -21,6 +21,7 @@ using NUnit.Framework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -186,7 +187,9 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     maxSize: objectLength.Value,
                     httpHeaders: httpHeaders,
                     metadata: metadata,
-                    smbProperties: smbProperties);
+                    smbProperties: smbProperties,
+                    filePermission: null,
+                    cancellationToken: CancellationToken.None);
 
                 if (contents != default)
                 {
