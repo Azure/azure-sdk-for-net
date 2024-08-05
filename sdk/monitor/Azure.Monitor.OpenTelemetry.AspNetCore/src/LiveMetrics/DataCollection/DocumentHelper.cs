@@ -143,11 +143,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                     // AI SDK reads a Number property from Connection or Command objects.
                     // As of Feb 2024, OpenTelemetry doesn't record this. This may change in the future when the semantic convention stabalizes.
 
-                    var dbName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeDbName)?.ToString();
-                    if (dbName != null)
-                    {
-                        remoteDependencyDocument.Properties.Add(new KeyValuePairString(SemanticConventions.AttributeDbName, dbName));
-                    }
+                    // TODO: DISCUSS PROPERTIES
+                    //var dbName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeDbName)?.ToString();
+                    //if (dbName != null)
+                    //{
+                    //    remoteDependencyDocument.Properties.Add(new KeyValuePairString(SemanticConventions.AttributeDbName, dbName));
+                    //}
                     break;
                 case OperationType.Rpc:
                     remoteDependencyDocument.Name = activity.DisplayName;
