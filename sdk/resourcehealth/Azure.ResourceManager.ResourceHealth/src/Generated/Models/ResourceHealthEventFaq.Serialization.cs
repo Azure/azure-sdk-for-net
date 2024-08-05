@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         void IJsonModel<ResourceHealthEventFaq>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventFaq>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceHealthEventFaq)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Question))
             {
                 writer.WritePropertyName("question"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceHealthEventFaq IJsonModel<ResourceHealthEventFaq>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<WorkloadContainerExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(HostServerName))
             {
                 writer.WritePropertyName("hostServerName"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WorkloadContainerExtendedInfo IJsonModel<WorkloadContainerExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

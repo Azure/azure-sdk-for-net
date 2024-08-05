@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         void IJsonModel<MoverPrepareContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MoverPrepareContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MoverPrepareContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ValidateOnly))
             {
                 writer.WritePropertyName("validateOnly"u8);
@@ -63,7 +71,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MoverPrepareContent IJsonModel<MoverPrepareContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

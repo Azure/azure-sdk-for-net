@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Redis.Models
 
         void IJsonModel<RedisCommonConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisCommonConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsRdbBackupEnabled))
             {
                 writer.WritePropertyName("rdb-backup-enabled"u8);
@@ -134,7 +142,6 @@ namespace Azure.ResourceManager.Redis.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         RedisCommonConfiguration IJsonModel<RedisCommonConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

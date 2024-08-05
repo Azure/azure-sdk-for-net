@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         void IJsonModel<MoverResourceStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(MoveState))
             {
                 writer.WritePropertyName("moveState"u8);
@@ -70,7 +78,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MoverResourceStatus IJsonModel<MoverResourceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
