@@ -15,6 +15,9 @@
   `APPLICATIONINSIGHTS_CONNECTION_STRING` is present in `IConfiguration`.
   ([#45292](https://github.com/Azure/azure-sdk-for-net/pull/45292))
 
+* Updated field mappings for sample telemetry sent to LiveMetrics.
+  ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
+
 * Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
