@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
 
 using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares;
 using Moq;
 using NUnit.Framework;
 
@@ -30,9 +31,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 It.IsAny<DataTransferOptions>(),
                 It.IsAny<CancellationToken>()));
 
-            _backupTransferManagerValue = (Lazy<TransferManager>)typeof(ShareDirectoryClientExtensions)
+            _backupTransferManagerValue = (Lazy<TransferManager>)typeof(Storage.Files.Shares.ShareDirectoryClientExtensions)
                 .GetField("s_defaultTransferManager", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-            typeof(ShareDirectoryClientExtensions)
+            typeof(Storage.Files.Shares.ShareDirectoryClientExtensions)
                 .GetField("s_defaultTransferManager", BindingFlags.NonPublic | BindingFlags.Static)
                 .SetValue(null, new Lazy<TransferManager>(() => ExtensionMockTransferManager.Object));
         }
@@ -40,7 +41,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [TearDown]
         public void Teardown()
         {
-            typeof(ShareDirectoryClientExtensions)
+            typeof(Storage.Files.Shares.ShareDirectoryClientExtensions)
                 .GetField("s_defaultTransferManager", BindingFlags.NonPublic | BindingFlags.Static)
                 .SetValue(null, _backupTransferManagerValue);
         }
@@ -58,7 +59,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
 
-            await clientMock.Object.StartUploadDirectoryAsync(localPath, useOptions ? transferOptions : null);
+            await Storage.Files.Shares.ShareDirectoryClientExtensions.StartUploadDirectoryAsync(clientMock.Object, localPath, useOptions ? transferOptions : null);
 
             ExtensionMockTransferManager.Verify(tm => tm.StartTransferAsync(
                 It.IsAny<StorageResource>(),
@@ -83,7 +84,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
 
-            await clientMock.Object.StartDownloadToDirectoryAsync(localPath, useOptions ? transferOptions : null);
+            await Storage.Files.Shares.ShareDirectoryClientExtensions.StartUploadDirectoryAsync(clientMock.Object, localPath, useOptions ? transferOptions : null);
 
             ExtensionMockTransferManager.Verify(tm => tm.StartTransferAsync(
                 It.Is<StorageResource>(res => res is ShareDirectoryStorageResourceContainer &&
