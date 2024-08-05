@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetApp.Models
 
         void IJsonModel<UpdateNetworkSiblingSetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateNetworkSiblingSetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateNetworkSiblingSetContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("networkSiblingSetId"u8);
             writer.WriteStringValue(NetworkSiblingSetId);
             writer.WritePropertyName("subnetId"u8);
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.NetApp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UpdateNetworkSiblingSetContent IJsonModel<UpdateNetworkSiblingSetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
