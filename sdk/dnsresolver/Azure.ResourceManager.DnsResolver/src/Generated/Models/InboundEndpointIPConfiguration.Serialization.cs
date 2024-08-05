@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         void IJsonModel<InboundEndpointIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<InboundEndpointIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
             JsonSerializer.Serialize(writer, Subnet);
             if (Optional.IsDefined(PrivateIPAddress))
@@ -55,7 +63,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InboundEndpointIPConfiguration IJsonModel<InboundEndpointIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

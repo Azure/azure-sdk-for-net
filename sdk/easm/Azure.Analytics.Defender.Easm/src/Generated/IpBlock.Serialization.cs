@@ -19,13 +19,21 @@ namespace Azure.Analytics.Defender.Easm
 
         void IJsonModel<IpBlock>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<IpBlock>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IpBlock)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IpBlockName))
             {
                 writer.WritePropertyName("ipBlock"u8);
@@ -76,7 +84,6 @@ namespace Azure.Analytics.Defender.Easm
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         IpBlock IJsonModel<IpBlock>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
