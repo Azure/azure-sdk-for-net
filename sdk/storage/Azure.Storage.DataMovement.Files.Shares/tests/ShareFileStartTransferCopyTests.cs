@@ -106,7 +106,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         FileChangedOn = _defaultFileChangedOn,
                         FileLastWrittenOn = _defaultFileLastWrittenOn,
                     },
-                    filePermission: permissions);
+                    filePermission: permissions,
+                    conditions: null,
+                    cancellationToken: CancellationToken.None);
 
                 if (contents != default)
                 {
@@ -141,7 +143,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 string permissionKey = default;
                 if (propertiesType == TransferPropertiesTestType.Preserve)
                 {
-                    PermissionInfo permissionInfo = await container.CreatePermissionAsync(_defaultPermissions);
+                    PermissionInfo permissionInfo = await container.CreatePermissionAsync(_defaultPermissions, CancellationToken.None);
                     permissionKey = permissionInfo.FilePermissionKey;
                 }
                 await fileClient.CreateAsync(
@@ -160,7 +162,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         FileCreatedOn = _defaultFileCreatedOn,
                         FileChangedOn = _defaultFileChangedOn,
                         FileLastWrittenOn = _defaultFileLastWrittenOn,
-                    });
+                    },
+                    filePermission: null,
+                    conditions: null,
+                    cancellationToken: CancellationToken.None);
 
                 if (contents != default)
                 {
@@ -344,7 +349,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 // Check if the permissions are the same. Permission Keys will be different as they are defined by the share service.
                 ShareClient sourceShareClient = sourceClient.GetParentShareClient();
-                string sourcePermission = await sourceShareClient.GetPermissionAsync(sourceProperties.SmbProperties.FilePermissionKey);
+                string sourcePermission = await sourceShareClient.GetPermissionAsync(sourceProperties.SmbProperties.FilePermissionKey, CancellationToken.None);
 
                 ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
                 string fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
