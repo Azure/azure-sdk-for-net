@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<FunctionsScaleAndConcurrencyTriggersHttp>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionsScaleAndConcurrencyTriggersHttp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionsScaleAndConcurrencyTriggersHttp)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PerInstanceConcurrency))
             {
                 writer.WritePropertyName("perInstanceConcurrency"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FunctionsScaleAndConcurrencyTriggersHttp IJsonModel<FunctionsScaleAndConcurrencyTriggersHttp>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Support.Models
 
         void IJsonModel<SupportServiceLevelAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SupportServiceLevelAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Support.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SupportServiceLevelAgreement IJsonModel<SupportServiceLevelAgreement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

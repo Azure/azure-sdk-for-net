@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         void IJsonModel<StreamingJobOutputWatermarkProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobOutputWatermarkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(WatermarkMode))
             {
                 writer.WritePropertyName("watermarkMode"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StreamingJobOutputWatermarkProperties IJsonModel<StreamingJobOutputWatermarkProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

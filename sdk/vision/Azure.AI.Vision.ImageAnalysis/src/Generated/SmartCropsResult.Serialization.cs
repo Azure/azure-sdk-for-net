@@ -19,13 +19,21 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         void IJsonModel<SmartCropsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SmartCropsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SmartCropsResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("values"u8);
             writer.WriteStartArray();
             foreach (var item in Values)
@@ -48,7 +56,6 @@ namespace Azure.AI.Vision.ImageAnalysis
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SmartCropsResult IJsonModel<SmartCropsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
