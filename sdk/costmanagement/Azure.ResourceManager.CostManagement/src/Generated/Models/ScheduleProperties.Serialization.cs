@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         void IJsonModel<ScheduleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
             if (Optional.IsDefined(HourOfDay))
@@ -77,7 +85,6 @@ namespace Azure.ResourceManager.CostManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ScheduleProperties IJsonModel<ScheduleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

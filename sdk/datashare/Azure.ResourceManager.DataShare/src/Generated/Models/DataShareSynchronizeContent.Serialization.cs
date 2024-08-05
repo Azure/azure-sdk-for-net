@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataShare.Models
 
         void IJsonModel<DataShareSynchronizeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataShareSynchronizeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataShareSynchronizeContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.DataShare.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataShareSynchronizeContent IJsonModel<DataShareSynchronizeContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

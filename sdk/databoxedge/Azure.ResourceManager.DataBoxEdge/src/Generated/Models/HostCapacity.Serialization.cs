@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         void IJsonModel<HostCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HostCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HostCapacity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
@@ -82,7 +90,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         HostCapacity IJsonModel<HostCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         void IJsonModel<ManagedCcfBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedCcfBackupContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(RestoreRegion))
             {
                 writer.WritePropertyName("restoreRegion"u8);
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedCcfBackupContent IJsonModel<ManagedCcfBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
