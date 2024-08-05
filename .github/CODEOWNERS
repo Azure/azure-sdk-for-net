@@ -80,6 +80,12 @@
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
 
+# PRLabel: %AI Model Inference
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper
+
+# ServiceLabel: %AI Model Inference
+# ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
+
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
 
@@ -1018,12 +1024,6 @@
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
-
-# PRLabel: %AI Model Inference
-/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper
-
-# ServiceLabel: %AI Model Inference
-# ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
