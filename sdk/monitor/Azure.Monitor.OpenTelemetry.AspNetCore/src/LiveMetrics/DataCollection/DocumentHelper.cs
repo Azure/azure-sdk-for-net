@@ -158,8 +158,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 default:
                     // Unknown or Manual or Unexpected Dependency Type
                     remoteDependencyDocument.Name = activity.DisplayName;
-
-                    remoteDependencyDocument.Properties.Add(new KeyValuePairString("ActivityType", liveMetricsTagsProcessor.ActivityType.ToString()));
                     remoteDependencyDocument.Properties.Add(new KeyValuePairString("ActivitySource", activity.Source.Name));
                     break;
             }
