@@ -969,10 +969,10 @@
 # ServiceOwners:                                                   @ptnan7
 
 # PRLabel: %Network - Mobile
-/sdk/mobilenetwork/Azure.ResourceManager.*/                        @Azure/private-5g-core
+/sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArthurMa1978
 
 # ServiceLabel: %Network - Mobile %Mgmt
-# ServiceOwners:                                                   @Azure/private-5g-core
+# ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
