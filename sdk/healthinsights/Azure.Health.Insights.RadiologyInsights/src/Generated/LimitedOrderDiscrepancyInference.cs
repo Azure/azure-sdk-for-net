@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="LimitedOrderDiscrepancyInference"/>. </summary>
         /// <param name="orderType"> Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderType"/> is null. </exception>
-        public LimitedOrderDiscrepancyInference(FhirR4CodeableConcept orderType)
+        internal LimitedOrderDiscrepancyInference(FhirR4CodeableConcept orderType)
         {
             Argument.AssertNotNull(orderType, nameof(orderType));
 
@@ -27,13 +27,13 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Initializes a new instance of <see cref="LimitedOrderDiscrepancyInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for RadiologyInsightsInference. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="orderType"> Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast. </param>
         /// <param name="presentBodyParts"> List of body parts found in the document : SNOMED CT codes. </param>
         /// <param name="presentBodyPartMeasurements"> List of body parts that are measured according to the document : SNOMED CT codes. </param>
-        internal LimitedOrderDiscrepancyInference(RadiologyInsightsInferenceType kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept orderType, IList<FhirR4CodeableConcept> presentBodyParts, IList<FhirR4CodeableConcept> presentBodyPartMeasurements) : base(kind, extension, serializedAdditionalRawData)
+        internal LimitedOrderDiscrepancyInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept orderType, IReadOnlyList<FhirR4CodeableConcept> presentBodyParts, IReadOnlyList<FhirR4CodeableConcept> presentBodyPartMeasurements) : base(kind, extension, serializedAdditionalRawData)
         {
             OrderType = orderType;
             PresentBodyParts = presentBodyParts;
@@ -46,10 +46,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast. </summary>
-        public FhirR4CodeableConcept OrderType { get; set; }
+        public FhirR4CodeableConcept OrderType { get; }
         /// <summary> List of body parts found in the document : SNOMED CT codes. </summary>
-        public IList<FhirR4CodeableConcept> PresentBodyParts { get; }
+        public IReadOnlyList<FhirR4CodeableConcept> PresentBodyParts { get; }
         /// <summary> List of body parts that are measured according to the document : SNOMED CT codes. </summary>
-        public IList<FhirR4CodeableConcept> PresentBodyPartMeasurements { get; }
+        public IReadOnlyList<FhirR4CodeableConcept> PresentBodyPartMeasurements { get; }
     }
 }

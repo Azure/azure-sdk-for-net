@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             #endregion
 
             RadiologyInsightsInferenceResult responseData = operation.Value;
-            IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+            IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
@@ -66,13 +66,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     #region Snippet:Radiology_Procedure_Sync_Tests_Samples_RadiologyProcedureInference
                     Console.Write("Radiology Procedure Inference found");
                     Console.Write("   Procedure codes:");
-                    IList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
+                    IReadOnlyList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
                     foreach (FhirR4CodeableConcept procedureCode in procedureCodes)
                     {
                         DisplayCodes(procedureCode, 2);
                     }
                     Console.Write("   Imaging procedures:");
-                    IList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
+                    IReadOnlyList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
 
                     foreach (ImagingProcedure imagingProcedure in imagingProcedures)
                     {

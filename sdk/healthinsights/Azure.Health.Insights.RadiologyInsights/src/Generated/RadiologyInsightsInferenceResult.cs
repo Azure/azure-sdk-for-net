@@ -50,7 +50,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="patientResults"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patientResults"/> or <paramref name="modelVersion"/> is null. </exception>
-        public RadiologyInsightsInferenceResult(IEnumerable<RadiologyInsightsPatientResult> patientResults, string modelVersion)
+        internal RadiologyInsightsInferenceResult(IEnumerable<RadiologyInsightsPatientResult> patientResults, string modelVersion)
         {
             Argument.AssertNotNull(patientResults, nameof(patientResults));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
@@ -63,7 +63,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="patientResults"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiologyInsightsInferenceResult(IList<RadiologyInsightsPatientResult> patientResults, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RadiologyInsightsInferenceResult(IReadOnlyList<RadiologyInsightsPatientResult> patientResults, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatientResults = patientResults;
             ModelVersion = modelVersion;
@@ -76,8 +76,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Results for the patients given in the request. </summary>
-        public IList<RadiologyInsightsPatientResult> PatientResults { get; }
+        public IReadOnlyList<RadiologyInsightsPatientResult> PatientResults { get; }
         /// <summary> The version of the model used for inference, expressed as the model date. </summary>
-        public string ModelVersion { get; set; }
+        public string ModelVersion { get; }
     }
 }

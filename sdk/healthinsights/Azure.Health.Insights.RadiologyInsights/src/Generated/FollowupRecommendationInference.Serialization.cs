@@ -108,14 +108,14 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             string effectiveAt = default;
             FhirR4Period effectivePeriod = default;
-            IList<RecommendationFinding> findings = default;
+            IReadOnlyList<RecommendationFinding> findings = default;
             bool isConditional = default;
             bool isOption = default;
             bool isGuideline = default;
             bool isHedging = default;
             ProcedureRecommendation recommendedProcedure = default;
             RadiologyInsightsInferenceType kind = default;
-            IList<FhirR4Extension> extension = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

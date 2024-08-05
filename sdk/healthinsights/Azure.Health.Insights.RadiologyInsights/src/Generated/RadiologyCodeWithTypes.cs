@@ -50,7 +50,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="code"> The SNOMED CT code indicates whether imaging was conducted with or without contrast in the case of contrast, and in the case of views, it denotes the number of views. </param>
         /// <param name="types"> The collection of types will indicate the contrast substance used in the case of contrast and, in the case of views, it will specify the types of views, such as lateral and frontal, etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="types"/> is null. </exception>
-        public RadiologyCodeWithTypes(FhirR4CodeableConcept code, IEnumerable<FhirR4CodeableConcept> types)
+        internal RadiologyCodeWithTypes(FhirR4CodeableConcept code, IEnumerable<FhirR4CodeableConcept> types)
         {
             Argument.AssertNotNull(code, nameof(code));
             Argument.AssertNotNull(types, nameof(types));
@@ -63,7 +63,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="code"> The SNOMED CT code indicates whether imaging was conducted with or without contrast in the case of contrast, and in the case of views, it denotes the number of views. </param>
         /// <param name="types"> The collection of types will indicate the contrast substance used in the case of contrast and, in the case of views, it will specify the types of views, such as lateral and frontal, etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiologyCodeWithTypes(FhirR4CodeableConcept code, IList<FhirR4CodeableConcept> types, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RadiologyCodeWithTypes(FhirR4CodeableConcept code, IReadOnlyList<FhirR4CodeableConcept> types, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Types = types;
@@ -76,8 +76,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> The SNOMED CT code indicates whether imaging was conducted with or without contrast in the case of contrast, and in the case of views, it denotes the number of views. </summary>
-        public FhirR4CodeableConcept Code { get; set; }
+        public FhirR4CodeableConcept Code { get; }
         /// <summary> The collection of types will indicate the contrast substance used in the case of contrast and, in the case of views, it will specify the types of views, such as lateral and frontal, etc. </summary>
-        public IList<FhirR4CodeableConcept> Types { get; }
+        public IReadOnlyList<FhirR4CodeableConcept> Types { get; }
     }
 }

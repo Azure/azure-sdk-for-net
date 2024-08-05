@@ -58,7 +58,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             #endregion
 
             RadiologyInsightsInferenceResult responseData = operation.Value;
-            IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+            IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
@@ -66,7 +66,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     #region Snippet:Followup_Recommendation_Async_Tests_Samples_FollowupRecommendationInference
                     Console.Write("Follow Up Recommendation Inference found");
-                    IList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
+                    IReadOnlyList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
                     Console.Write("   Evidence: " + ExtractEvidence((IList<FhirR4Extension>)extensions));
                     Console.Write("   Is conditional: " + followupRecommendationInference.IsConditional);
                     Console.Write("   Is guideline: " + followupRecommendationInference.IsGuideline);
@@ -86,7 +86,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                         Console.Write("   Imaging procedure recommendation: ");
                         ImagingProcedureRecommendation imagingProcedureRecommendation = (ImagingProcedureRecommendation)recommendedProcedure;
                         Console.Write("      Procedure codes: ");
-                        IList<FhirR4CodeableConcept> procedureCodes = imagingProcedureRecommendation.ProcedureCodes;
+                        IReadOnlyList<FhirR4CodeableConcept> procedureCodes = imagingProcedureRecommendation.ProcedureCodes;
                         if (procedureCodes != null)
                         {
                             foreach (FhirR4CodeableConcept codeableConcept in procedureCodes)
@@ -96,7 +96,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                         }
 
                         Console.Write("      Imaging procedure: ");
-                        IList<ImagingProcedure> imagingProcedures = imagingProcedureRecommendation.ImagingProcedures;
+                        IReadOnlyList<ImagingProcedure> imagingProcedures = imagingProcedureRecommendation.ImagingProcedures;
                         foreach (ImagingProcedure imagingProcedure in imagingProcedures)
                         {
                             Console.Write("         Modality");

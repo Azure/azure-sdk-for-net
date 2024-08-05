@@ -135,7 +135,7 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 
 ```C# Snippet:Critical_Result_Async_Tests_Samples_CriticalResultInference
 RadiologyInsightsInferenceResult responseData = operation.Value;
-IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
 foreach (RadiologyInsightsInference inference in inferences)
 {

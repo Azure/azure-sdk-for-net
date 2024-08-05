@@ -19,7 +19,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="FhirR4Annotation"/>. </summary>
         /// <param name="text"> The annotation - text content (as markdown). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public FhirR4Annotation(string text)
+        internal FhirR4Annotation(string text)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -46,10 +46,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Individual responsible for the annotation. </summary>
-        public string AuthorString { get; set; }
+        public string AuthorString { get; }
         /// <summary> When the annotation was made. </summary>
-        public string Time { get; set; }
+        public string Time { get; }
         /// <summary> The annotation - text content (as markdown). </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

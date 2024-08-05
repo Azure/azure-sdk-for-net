@@ -132,7 +132,7 @@ Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyIns
 
 ```C# Snippet:Finding_Sync_Tests_Samples_FindingInference
 RadiologyInsightsInferenceResult responseData = operation.Value;
-IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
 foreach (RadiologyInsightsInference inference in inferences)
 {
@@ -140,7 +140,7 @@ foreach (RadiologyInsightsInference inference in inferences)
     {
         Console.Write("Finding Inference found");
         FhirR4Observation finding = findingInference.Finding;
-        IList<FhirR4CodeableConcept> categoryList = finding.Category;
+        IReadOnlyList<FhirR4CodeableConcept> categoryList = finding.Category;
         foreach (FhirR4CodeableConcept category in categoryList)
         {
             Console.Write("   Category: ");
@@ -150,7 +150,7 @@ foreach (RadiologyInsightsInference inference in inferences)
         FhirR4CodeableConcept code = finding.Code;
         DisplayCodes(code, 2);
         Console.Write("   Interpretation: ");
-        IList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
+        IReadOnlyList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
         if (interpretationList != null)
         {
             foreach (FhirR4CodeableConcept interpretation in interpretationList)
@@ -159,7 +159,7 @@ foreach (RadiologyInsightsInference inference in inferences)
             }
         }
         Console.Write("   Component: ");
-        IList<FhirR4ObservationComponent> componentList = finding.Component;
+        IReadOnlyList<FhirR4ObservationComponent> componentList = finding.Component;
         foreach (FhirR4ObservationComponent component in componentList)
         {
             FhirR4CodeableConcept componentCode = component.Code;

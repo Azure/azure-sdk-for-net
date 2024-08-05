@@ -138,13 +138,13 @@ From the result loop over the inferences and display the datetime, recipient and
 ```C# Snippet:Followup_Communication_Sync_Tests_Samples_FollowupCommunicationInference
 Console.Write("Followup Communication Inference found");
 Console.Write("   Date/time: ");
-IList<DateTimeOffset> dateTimeList = followupCommunicationInference.CommunicatedAt;
+IReadOnlyList<DateTimeOffset> dateTimeList = followupCommunicationInference.CommunicatedAt;
 foreach (DateTimeOffset dateTime in dateTimeList)
 {
     Console.Write("      " + dateTime);
 }
 Console.Write("   Recipient: ");
-IList<MedicalProfessionalType> recipientList = followupCommunicationInference.Recipient;
+IReadOnlyList<MedicalProfessionalType> recipientList = followupCommunicationInference.Recipient;
 foreach (MedicalProfessionalType recipient in recipientList)
 {
     Console.Write("      " + recipient);

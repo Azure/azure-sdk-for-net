@@ -132,7 +132,7 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 
 ```C# Snippet:Complete_Order_Discrepancy_Async_Tests_Samples_CompleteOrderDiscrepancyInference
 RadiologyInsightsInferenceResult responseData = operation.Value;
-IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 foreach (RadiologyInsightsInference inference in inferences)
 {
     if (inference is CompleteOrderDiscrepancyInference completeOrderDiscrepancyInference)
@@ -140,13 +140,13 @@ foreach (RadiologyInsightsInference inference in inferences)
         Console.Write("Complete Order Discrepancy Inference found: ");
         FhirR4CodeableConcept orderType = completeOrderDiscrepancyInference.OrderType;
         DisplayCodes(orderType, 1);
-        IList<FhirR4CodeableConcept> missingBodyParts = completeOrderDiscrepancyInference.MissingBodyParts;
+        IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = completeOrderDiscrepancyInference.MissingBodyParts;
         Console.Write("   Missing body parts:");
         foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
         {
             DisplayCodes(missingBodyPart, 2);
         }
-        IList<FhirR4CodeableConcept> missingBodyPartMeasurements = completeOrderDiscrepancyInference.MissingBodyPartMeasurements;
+        IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = completeOrderDiscrepancyInference.MissingBodyPartMeasurements;
         Console.Write("   Missing body part measurements:");
         foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
         {

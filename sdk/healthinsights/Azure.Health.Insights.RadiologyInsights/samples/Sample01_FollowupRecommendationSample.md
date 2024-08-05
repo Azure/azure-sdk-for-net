@@ -142,7 +142,7 @@ Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyIns
 
 ```C# Snippet:Followup_Recommendation_Sync_Tests_Samples_FollowupRecommendationInference
 Console.Write("Follow Up Recommendation Inference found");
-IList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
+IReadOnlyList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
 Console.Write("   Evidence: " + ExtractEvidence((IList<FhirR4Extension>)extensions));
 Console.Write("   Is conditional: " + followupRecommendationInference.IsConditional);
 Console.Write("   Is guideline: " + followupRecommendationInference.IsGuideline);
@@ -163,7 +163,7 @@ if (recommendedProcedure is ImagingProcedureRecommendation)
     Console.Write("   Imaging procedure recommendation: ");
     ImagingProcedureRecommendation imagingProcedureRecommendation = (ImagingProcedureRecommendation)recommendedProcedure;
     Console.Write("      Procedure codes: ");
-    IList<FhirR4CodeableConcept> procedureCodes = imagingProcedureRecommendation.ProcedureCodes;
+    IReadOnlyList<FhirR4CodeableConcept> procedureCodes = imagingProcedureRecommendation.ProcedureCodes;
     if (procedureCodes != null)
     {
         foreach (FhirR4CodeableConcept codeableConcept in procedureCodes)
@@ -173,7 +173,7 @@ if (recommendedProcedure is ImagingProcedureRecommendation)
     }
 
     Console.Write("      Imaging procedure: ");
-    IList<ImagingProcedure> imagingProcedures = imagingProcedureRecommendation.ImagingProcedures;
+    IReadOnlyList<ImagingProcedure> imagingProcedures = imagingProcedureRecommendation.ImagingProcedures;
     foreach (ImagingProcedure imagingProcedure in imagingProcedures)
     {
         Console.Write("         Modality");

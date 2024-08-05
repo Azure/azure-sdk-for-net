@@ -133,7 +133,7 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 ```C# Snippet:Finding_Async_Tests_Samples_FindingInference
         Console.Write("Finding Inference found");
         FhirR4Observation finding = findingInference.Finding;
-        IList<FhirR4CodeableConcept> categoryList = finding.Category;
+        IReadOnlyList<FhirR4CodeableConcept> categoryList = finding.Category;
         foreach (FhirR4CodeableConcept category in categoryList)
         {
             Console.Write("   Category: ");
@@ -143,7 +143,7 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
         FhirR4CodeableConcept code = finding.Code;
         DisplayCodes(code, 2);
         Console.Write("   Interpretation: ");
-        IList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
+        IReadOnlyList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
         if (interpretationList != null)
         {
             foreach (FhirR4CodeableConcept interpretation in interpretationList)
@@ -152,7 +152,7 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
             }
         }
         Console.Write("   Component: ");
-        IList<FhirR4ObservationComponent> componentList = finding.Component;
+        IReadOnlyList<FhirR4ObservationComponent> componentList = finding.Component;
         foreach (FhirR4ObservationComponent component in componentList)
         {
             FhirR4CodeableConcept componentCode = component.Code;

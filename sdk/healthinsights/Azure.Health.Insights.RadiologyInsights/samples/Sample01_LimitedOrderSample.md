@@ -118,13 +118,13 @@ Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyIns
 Console.Write("Limited Order Discrepancy Inference found: ");
 FhirR4CodeableConcept orderType = limitedOrderDiscrepancyInference.OrderType;
 DisplayCodes(orderType, 1);
-IList<FhirR4CodeableConcept> missingBodyParts = limitedOrderDiscrepancyInference.PresentBodyParts;
+IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = limitedOrderDiscrepancyInference.PresentBodyParts;
 Console.Write("   Present body parts:");
 foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
 {
     DisplayCodes(missingBodyPart, 2);
 }
-IList<FhirR4CodeableConcept> missingBodyPartMeasurements = limitedOrderDiscrepancyInference.PresentBodyPartMeasurements;
+IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = limitedOrderDiscrepancyInference.PresentBodyPartMeasurements;
 Console.Write("   Present body part measurements:");
 foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
 {

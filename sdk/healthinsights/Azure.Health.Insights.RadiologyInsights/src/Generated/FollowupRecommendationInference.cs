@@ -24,7 +24,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedProcedure"/> is null. </exception>
-        public FollowupRecommendationInference(bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure)
+        internal FollowupRecommendationInference(bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure)
         {
             Argument.AssertNotNull(recommendedProcedure, nameof(recommendedProcedure));
 
@@ -38,7 +38,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Initializes a new instance of <see cref="FollowupRecommendationInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for RadiologyInsightsInference. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="effectiveAt"> Date and time are displayed when the procedure is recommended to be done at a specific point in time. </param>
@@ -53,7 +53,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
         /// </param>
-        internal FollowupRecommendationInference(RadiologyInsightsInferenceType kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveAt, FhirR4Period effectivePeriod, IList<RecommendationFinding> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
+        internal FollowupRecommendationInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveAt, FhirR4Period effectivePeriod, IReadOnlyList<RecommendationFinding> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
         {
             EffectiveAt = effectiveAt;
             EffectivePeriod = effectivePeriod;
@@ -71,24 +71,24 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Date and time are displayed when the procedure is recommended to be done at a specific point in time. </summary>
-        public string EffectiveAt { get; set; }
+        public string EffectiveAt { get; }
         /// <summary> The period is shown if a specific period is mentioned, with a start and end date-time. </summary>
-        public FhirR4Period EffectivePeriod { get; set; }
+        public FhirR4Period EffectivePeriod { get; }
         /// <summary> Findings related to the recommendation. </summary>
-        public IList<RecommendationFinding> Findings { get; }
+        public IReadOnlyList<RecommendationFinding> Findings { get; }
         /// <summary> The conditional value indicates whether or not the sentence containing the recommendation includes a conditional statement. Keywords for conditional statements include 'if', 'when', 'unless', and so on. </summary>
-        public bool IsConditional { get; set; }
+        public bool IsConditional { get; }
         /// <summary> The option value indicates whether or not the sentence containing the recommendation includes an optional statement. Keywords for optional statements include 'recommend', 'consider', and so on. </summary>
-        public bool IsOption { get; set; }
+        public bool IsOption { get; }
         /// <summary> The guideline value indicates whether or not the recommendation is part of a guideline section that compiles all recommendations applicable to various findings. </summary>
-        public bool IsGuideline { get; set; }
+        public bool IsGuideline { get; }
         /// <summary> Hedging refers to ambiguous, vague or imprecise language within the sentence of the recommendation. Keywords for hedging are 'can be','may be',and so on. </summary>
-        public bool IsHedging { get; set; }
+        public bool IsHedging { get; }
         /// <summary>
         /// The procedure recommendation can be a generic procedure or an imaging procedure.
         /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
         /// </summary>
-        public ProcedureRecommendation RecommendedProcedure { get; set; }
+        public ProcedureRecommendation RecommendedProcedure { get; }
     }
 }

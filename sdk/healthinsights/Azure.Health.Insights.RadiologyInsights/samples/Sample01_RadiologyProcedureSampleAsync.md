@@ -136,14 +136,14 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 ```C# Snippet:Radiology_Procedure_Async_Tests_Samples_RadiologyProcedureInference
 Console.Write("Radiology Procedure Inference found");
 Console.Write("   Procedure codes:");
-IList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
+IReadOnlyList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
 foreach (FhirR4CodeableConcept procedureCode in procedureCodes)
 {
     DisplayCodes(procedureCode, 2);
 }
 
 Console.Write("   Imaging procedures:");
-IList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
+IReadOnlyList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
 
 foreach (ImagingProcedure imagingProcedure in imagingProcedures)
 {

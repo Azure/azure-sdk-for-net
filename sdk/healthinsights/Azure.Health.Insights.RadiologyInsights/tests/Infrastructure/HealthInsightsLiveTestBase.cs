@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights;
+using Azure.Identity;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure
 {
@@ -35,18 +37,8 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new RadiologyInsightsClientOptions());
             RadiologyInsightsClient client;
-
-            if (useTokenCredential)
-            {
-                AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.Credential.ToString());
-                client = new RadiologyInsightsClient(endpoint, credential, options);
-            }
-            else
-            {
-                var credential = new AzureKeyCredential(apiKey ?? TestEnvironment.ApiKey);
-                client = new RadiologyInsightsClient(endpoint, credential, options);
-            }
-
+            TokenCredential credential = new DefaultAzureCredential();
+            client = new RadiologyInsightsClient(endpoint, credential, options);
             return skipInstrumenting ? client : InstrumentClient(client);
         }
     }

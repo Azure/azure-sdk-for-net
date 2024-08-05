@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             #endregion
             #region Snippet:Finding_Sync_Tests_Samples_FindingInference
             RadiologyInsightsInferenceResult responseData = operation.Value;
-            IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+            IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
@@ -65,7 +65,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     Console.Write("Finding Inference found");
                     FhirR4Observation finding = findingInference.Finding;
-                    IList<FhirR4CodeableConcept> categoryList = finding.Category;
+                    IReadOnlyList<FhirR4CodeableConcept> categoryList = finding.Category;
                     foreach (FhirR4CodeableConcept category in categoryList)
                     {
                         Console.Write("   Category: ");
@@ -75,7 +75,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     FhirR4CodeableConcept code = finding.Code;
                     DisplayCodes(code, 2);
                     Console.Write("   Interpretation: ");
-                    IList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
+                    IReadOnlyList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
                     if (interpretationList != null)
                     {
                         foreach (FhirR4CodeableConcept interpretation in interpretationList)
@@ -84,7 +84,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                         }
                     }
                     Console.Write("   Component: ");
-                    IList<FhirR4ObservationComponent> componentList = finding.Component;
+                    IReadOnlyList<FhirR4ObservationComponent> componentList = finding.Component;
                     foreach (FhirR4ObservationComponent component in componentList)
                     {
                         FhirR4CodeableConcept componentCode = component.Code;
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
         private static void DisplaySectionInfo(FindingInference findingInference)
         {
-            IList<FhirR4Extension> extensionList = findingInference.Extension;
+            IReadOnlyList<FhirR4Extension> extensionList = findingInference.Extension;
             if (extensionList != null)
             {
                 #region Snippet:Finding_Sync_Tests_Samples_DisplaySectionInfo

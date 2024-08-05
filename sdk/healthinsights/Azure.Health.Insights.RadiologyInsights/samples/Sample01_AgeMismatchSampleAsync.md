@@ -131,14 +131,14 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 
 ```C# Snippet:Age_Mismatch_Async_Tests_Samples_AgeMismatchInference
 RadiologyInsightsInferenceResult responseData = operation.Value;
-IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
 foreach (RadiologyInsightsInference inference in inferences)
 {
     if (inference is AgeMismatchInference ageMismatchInference)
     {
         Console.Write("Age Mismatch Inference found: ");
-        IList<FhirR4Extension> extensions = ageMismatchInference.Extension;
+        IReadOnlyList<FhirR4Extension> extensions = ageMismatchInference.Extension;
         Console.Write("   Evidence: " + ExtractEvidence(extensions));
     }
 }

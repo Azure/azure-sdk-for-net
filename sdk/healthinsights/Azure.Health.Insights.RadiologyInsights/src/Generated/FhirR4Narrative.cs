@@ -20,7 +20,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="status"> generated, extensions, additional, empty. </param>
         /// <param name="div"> xhtml. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="div"/> is null. </exception>
-        public FhirR4Narrative(string status, string div)
+        internal FhirR4Narrative(string status, string div)
         {
             Argument.AssertNotNull(status, nameof(status));
             Argument.AssertNotNull(div, nameof(div));
@@ -47,8 +47,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> generated, extensions, additional, empty. </summary>
-        public string Status { get; set; }
+        public string Status { get; }
         /// <summary> xhtml. </summary>
-        public string Div { get; set; }
+        public string Div { get; }
     }
 }

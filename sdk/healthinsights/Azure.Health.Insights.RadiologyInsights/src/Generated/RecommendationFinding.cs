@@ -47,7 +47,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Initializes a new instance of <see cref="RecommendationFinding"/>. </summary>
         /// <param name="recommendationFindingStatus"> Recommendation finding status. </param>
-        public RecommendationFinding(RecommendationFindingStatusType recommendationFindingStatus)
+        internal RecommendationFinding(RecommendationFindingStatusType recommendationFindingStatus)
         {
             RecommendationFindingStatus = recommendationFindingStatus;
             Extension = new ChangeTrackingList<FhirR4Extension>();
@@ -59,7 +59,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="recommendationFindingStatus"> Recommendation finding status. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationFinding(FhirR4Observation finding, CriticalResult criticalFinding, RecommendationFindingStatusType recommendationFindingStatus, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecommendationFinding(FhirR4Observation finding, CriticalResult criticalFinding, RecommendationFindingStatusType recommendationFindingStatus, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Finding = finding;
             CriticalFinding = criticalFinding;
@@ -74,12 +74,12 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Finding linked to a recommendation. </summary>
-        public FhirR4Observation Finding { get; set; }
+        public FhirR4Observation Finding { get; }
         /// <summary> Critical result linked to a recommendation. </summary>
-        public CriticalResult CriticalFinding { get; set; }
+        public CriticalResult CriticalFinding { get; }
         /// <summary> Recommendation finding status. </summary>
-        public RecommendationFindingStatusType RecommendationFindingStatus { get; set; }
+        public RecommendationFindingStatusType RecommendationFindingStatus { get; }
         /// <summary> Additional Content defined by implementations. </summary>
-        public IList<FhirR4Extension> Extension { get; }
+        public IReadOnlyList<FhirR4Extension> Extension { get; }
     }
 }

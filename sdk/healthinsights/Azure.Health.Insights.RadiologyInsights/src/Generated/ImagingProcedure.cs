@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="modality"> Modality : SNOMED CT code. </param>
         /// <param name="anatomy"> Anatomy : SNOMED CT code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modality"/> or <paramref name="anatomy"/> is null. </exception>
-        public ImagingProcedure(FhirR4CodeableConcept modality, FhirR4CodeableConcept anatomy)
+        internal ImagingProcedure(FhirR4CodeableConcept modality, FhirR4CodeableConcept anatomy)
         {
             Argument.AssertNotNull(modality, nameof(modality));
             Argument.AssertNotNull(anatomy, nameof(anatomy));
@@ -81,14 +81,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Modality : SNOMED CT code. </summary>
-        public FhirR4CodeableConcept Modality { get; set; }
+        public FhirR4CodeableConcept Modality { get; }
         /// <summary> Anatomy : SNOMED CT code. </summary>
-        public FhirR4CodeableConcept Anatomy { get; set; }
+        public FhirR4CodeableConcept Anatomy { get; }
         /// <summary> Laterality : SNOMED CT code. </summary>
-        public FhirR4CodeableConcept Laterality { get; set; }
+        public FhirR4CodeableConcept Laterality { get; }
         /// <summary> Contrast : see RadiologyCodeWithTypes (below). </summary>
-        public RadiologyCodeWithTypes Contrast { get; set; }
+        public RadiologyCodeWithTypes Contrast { get; }
         /// <summary> View : see RadiologyCodeWithTypes (below). </summary>
-        public RadiologyCodeWithTypes View { get; set; }
+        public RadiologyCodeWithTypes View { get; }
     }
 }

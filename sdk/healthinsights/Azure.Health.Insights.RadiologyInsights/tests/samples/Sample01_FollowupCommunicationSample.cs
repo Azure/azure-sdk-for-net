@@ -55,7 +55,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
             #endregion
             RadiologyInsightsInferenceResult responseData = operation.Value;
-            IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+            IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
@@ -64,13 +64,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     #region Snippet:Followup_Communication_Sync_Tests_Samples_FollowupCommunicationInference
                     Console.Write("Followup Communication Inference found");
                     Console.Write("   Date/time: ");
-                    IList<DateTimeOffset> dateTimeList = followupCommunicationInference.CommunicatedAt;
+                    IReadOnlyList<DateTimeOffset> dateTimeList = followupCommunicationInference.CommunicatedAt;
                     foreach (DateTimeOffset dateTime in dateTimeList)
                     {
                         Console.Write("      " + dateTime);
                     }
                     Console.Write("   Recipient: ");
-                    IList<MedicalProfessionalType> recipientList = followupCommunicationInference.Recipient;
+                    IReadOnlyList<MedicalProfessionalType> recipientList = followupCommunicationInference.Recipient;
                     foreach (MedicalProfessionalType recipient in recipientList)
                     {
                         Console.Write("      " + recipient);

@@ -99,10 +99,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             FhirR4CodeableConcept orderType = default;
-            IList<FhirR4CodeableConcept> missingBodyParts = default;
-            IList<FhirR4CodeableConcept> missingBodyPartMeasurements = default;
+            IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = default;
+            IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = default;
             RadiologyInsightsInferenceType kind = default;
-            IList<FhirR4Extension> extension = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

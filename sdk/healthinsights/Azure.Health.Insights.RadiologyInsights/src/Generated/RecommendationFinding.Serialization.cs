@@ -89,7 +89,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             FhirR4Observation finding = default;
             CriticalResult criticalFinding = default;
             RecommendationFindingStatusType recommendationFindingStatus = default;
-            IList<FhirR4Extension> extension = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

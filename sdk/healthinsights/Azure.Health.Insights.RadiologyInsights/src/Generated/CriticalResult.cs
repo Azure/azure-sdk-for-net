@@ -48,7 +48,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="CriticalResult"/>. </summary>
         /// <param name="description"> Description : medical problem. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
-        public CriticalResult(string description)
+        internal CriticalResult(string description)
         {
             Argument.AssertNotNull(description, nameof(description));
 
@@ -72,8 +72,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Description : medical problem. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
         /// <summary> Finding linked to the critical result. </summary>
-        public FhirR4Observation Finding { get; set; }
+        public FhirR4Observation Finding { get; }
     }
 }

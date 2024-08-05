@@ -57,14 +57,14 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             #endregion
             #region Snippet:Age_Mismatch_Async_Tests_Samples_AgeMismatchInference
             RadiologyInsightsInferenceResult responseData = operation.Value;
-            IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+            IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
                 if (inference is AgeMismatchInference ageMismatchInference)
                 {
                     Console.Write("Age Mismatch Inference found: ");
-                    IList<FhirR4Extension> extensions = ageMismatchInference.Extension;
+                    IReadOnlyList<FhirR4Extension> extensions = ageMismatchInference.Extension;
                     Console.Write("   Evidence: " + ExtractEvidence(extensions));
                 }
             }
@@ -78,7 +78,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             return radiologyInsightsJob;
         }
 
-        private static String ExtractEvidence(IList<FhirR4Extension> extensions)
+        private static String ExtractEvidence(IReadOnlyList<FhirR4Extension> extensions)
         {
             String evidence = "";
             #region Snippet:Age_Mismatch_Async_Tests_Samples_ExtractEvidence

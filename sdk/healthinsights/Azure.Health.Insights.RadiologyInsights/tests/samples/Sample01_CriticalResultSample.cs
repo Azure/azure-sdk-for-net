@@ -55,7 +55,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             #endregion
             #region Snippet:Critical_Result_Sync_Tests_Samples_CriticalResultInference
             RadiologyInsightsInferenceResult responseData = operation.Value;
-            IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+            IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
