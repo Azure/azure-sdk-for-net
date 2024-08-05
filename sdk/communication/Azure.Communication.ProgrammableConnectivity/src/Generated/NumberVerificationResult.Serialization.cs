@@ -19,13 +19,21 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         void IJsonModel<NumberVerificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NumberVerificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NumberVerificationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("verificationResult"u8);
             writer.WriteBooleanValue(VerificationResult);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.Communication.ProgrammableConnectivity
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NumberVerificationResult IJsonModel<NumberVerificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
