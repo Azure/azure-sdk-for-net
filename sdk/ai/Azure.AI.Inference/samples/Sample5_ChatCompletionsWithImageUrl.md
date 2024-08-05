@@ -1,4 +1,4 @@
-# Chat Completions with a Image URL Pointer
+# Chat Completions with an Image URL Input
 
 This sample demonstrates how to get a chat completions response from the service using a synchronous call. It shows how to include an image URL in the input chat messages.
 
