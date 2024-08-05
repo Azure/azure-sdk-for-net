@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         void IJsonModel<PrimingJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PrimingJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrimingJob)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("primingJobName"u8);
             writer.WriteStringValue(PrimingJobName);
             writer.WritePropertyName("primingManifestUrl"u8);
@@ -70,7 +78,6 @@ namespace Azure.ResourceManager.StorageCache.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PrimingJob IJsonModel<PrimingJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

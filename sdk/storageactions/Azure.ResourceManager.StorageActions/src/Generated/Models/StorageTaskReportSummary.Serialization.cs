@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StorageActions.Models
 
         void IJsonModel<StorageTaskReportSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageTaskReportSummary)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.StorageActions.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageTaskReportSummary IJsonModel<StorageTaskReportSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
