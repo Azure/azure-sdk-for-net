@@ -5,11 +5,12 @@
       "path": "pwsh ./eng/scripts/Invoke-GenerateAndBuildV2.ps1",
       "logPrefix": ".Net",
       "stderr": {
-        "showInComment": ".*(\\[ERROR\\]|: error|(?!0\\b)\\d+ Error\\(s\\)|ExternalError).*",
+        "showInComment": ".*(\\[ERROR\\]|ExternalError).*",
         "scriptError": "\\[ERROR\\]"
       },
       "stdout": {
-        "showInComment": "(Start to|\\[ERROR\\]).*"
+        "showInComment": ".*(Start to|\\[ERROR\\]|: error|(?!0\\b)\\d+ Error\\(s\\)).*",
+        "scriptError": "\\[ERROR\\]"
       }
     }
   },
