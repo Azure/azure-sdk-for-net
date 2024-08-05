@@ -87,7 +87,7 @@ public static class SocketIOBindingFunction
     [FunctionName("SocketIOInputBinding")]
     public static IActionResult SocketInputBinding(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req,
-        [SocketIONegotiation("hub")] SocketIONegotiationResult result)
+        [SocketIONegotiation(Hub = "hub")] SocketIONegotiationResult result)
     {
         return new OkObjectResult(result);
     }
