@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<ApiManagementServiceApplyNetworkConfigurationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceApplyNetworkConfigurationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementServiceApplyNetworkConfigurationContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApiManagementServiceApplyNetworkConfigurationContent IJsonModel<ApiManagementServiceApplyNetworkConfigurationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

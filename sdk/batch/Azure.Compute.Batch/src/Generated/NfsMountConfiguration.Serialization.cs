@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<NfsMountConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NfsMountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NfsMountConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
             writer.WritePropertyName("relativeMountPath"u8);
@@ -50,7 +58,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NfsMountConfiguration IJsonModel<NfsMountConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

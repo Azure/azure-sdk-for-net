@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<BatchPoolEnableAutoScaleContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchPoolEnableAutoScaleContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchPoolEnableAutoScaleContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AutoScaleFormula))
             {
                 writer.WritePropertyName("autoScaleFormula"u8);
@@ -51,7 +59,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchPoolEnableAutoScaleContent IJsonModel<BatchPoolEnableAutoScaleContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

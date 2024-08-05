@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Batch.Models
 
         void IJsonModel<BatchCloudServiceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchCloudServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("osFamily"u8);
             writer.WriteStringValue(OSFamily);
             if (Optional.IsDefined(OSVersion))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.Batch.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchCloudServiceConfiguration IJsonModel<BatchCloudServiceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Cdn.Models
 
         void IJsonModel<CdnNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CdnNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(NameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Cdn.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CdnNameAvailabilityResult IJsonModel<CdnNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

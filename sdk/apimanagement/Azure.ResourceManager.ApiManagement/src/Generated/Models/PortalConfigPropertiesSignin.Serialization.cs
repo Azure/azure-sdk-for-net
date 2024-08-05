@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<PortalConfigPropertiesSignin>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PortalConfigPropertiesSignin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PortalConfigPropertiesSignin)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Require))
             {
                 writer.WritePropertyName("require"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PortalConfigPropertiesSignin IJsonModel<PortalConfigPropertiesSignin>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

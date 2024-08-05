@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Batch.Models
 
         void IJsonModel<BatchEndpointAccessProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
             if (Optional.IsCollectionDefined(IPRules))
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.Batch.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchEndpointAccessProfile IJsonModel<BatchEndpointAccessProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

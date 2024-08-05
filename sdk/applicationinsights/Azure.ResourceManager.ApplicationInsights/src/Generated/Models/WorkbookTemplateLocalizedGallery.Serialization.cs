@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         void IJsonModel<WorkbookTemplateLocalizedGallery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateLocalizedGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TemplateData))
             {
                 writer.WritePropertyName("templateData"u8);
@@ -65,7 +73,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WorkbookTemplateLocalizedGallery IJsonModel<WorkbookTemplateLocalizedGallery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

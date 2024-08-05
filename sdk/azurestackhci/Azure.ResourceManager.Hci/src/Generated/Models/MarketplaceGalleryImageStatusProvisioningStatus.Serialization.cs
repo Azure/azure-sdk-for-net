@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Hci.Models
 
         void IJsonModel<MarketplaceGalleryImageStatusProvisioningStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageStatusProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatusProvisioningStatus)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Hci.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MarketplaceGalleryImageStatusProvisioningStatus IJsonModel<MarketplaceGalleryImageStatusProvisioningStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
