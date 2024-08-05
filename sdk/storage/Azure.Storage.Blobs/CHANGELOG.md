@@ -3,6 +3,8 @@
 ## 12.22.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service version 2024-11-04.
+- Added ability to retrieve SAS string to sign for debugging purposes.
 
 ### Breaking Changes
 
