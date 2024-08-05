@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         void IJsonModel<HelmInstallConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HelmInstallConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Atomic))
             {
                 writer.WritePropertyName("atomic"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         HelmInstallConfig IJsonModel<HelmInstallConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

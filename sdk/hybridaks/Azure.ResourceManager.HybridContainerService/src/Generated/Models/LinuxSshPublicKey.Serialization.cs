@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         void IJsonModel<LinuxSshPublicKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LinuxSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinuxSshPublicKey)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(KeyData))
             {
                 writer.WritePropertyName("keyData"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LinuxSshPublicKey IJsonModel<LinuxSshPublicKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

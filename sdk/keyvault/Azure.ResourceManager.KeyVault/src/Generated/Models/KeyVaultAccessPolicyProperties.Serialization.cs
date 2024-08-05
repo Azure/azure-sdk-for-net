@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         void IJsonModel<KeyVaultAccessPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultAccessPolicyProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("accessPolicies"u8);
             writer.WriteStartArray();
             foreach (var item in AccessPolicies)
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KeyVaultAccessPolicyProperties IJsonModel<KeyVaultAccessPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

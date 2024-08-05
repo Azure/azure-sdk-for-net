@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         void IJsonModel<FlinkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FlinkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FlinkProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
             writer.WriteObjectValue(Storage, options);
             if (Optional.IsDefined(NumReplicas))
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FlinkProfile IJsonModel<FlinkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         void IJsonModel<CloudHsmClusterSecurityDomainProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSecurityDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(FipsState))
             {
                 writer.WritePropertyName("fipsState"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CloudHsmClusterSecurityDomainProperties IJsonModel<CloudHsmClusterSecurityDomainProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
