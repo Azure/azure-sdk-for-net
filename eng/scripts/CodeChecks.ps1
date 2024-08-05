@@ -6,7 +6,7 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
-    [string] $ProjectDirectory,
+    [string] $ProjectDirectory = "Azure.Health.Insights.RadiologyInsights",
 
     [Parameter()]
     [string] $SDKType = "all",
