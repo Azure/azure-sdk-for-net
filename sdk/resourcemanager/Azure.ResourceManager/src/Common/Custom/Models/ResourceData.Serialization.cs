@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.Models
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData, options);
             }
-            writer.WriteEndObject();
         }
     }
 }

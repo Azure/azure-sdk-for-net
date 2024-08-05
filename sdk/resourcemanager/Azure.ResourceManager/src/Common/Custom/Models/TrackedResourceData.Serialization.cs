@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.Models
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WriteEndObject();
         }
     }
 }
