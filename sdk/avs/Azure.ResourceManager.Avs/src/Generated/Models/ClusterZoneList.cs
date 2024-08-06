@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> List of all zones and associated hosts for a cluster. </summary>
-    internal partial class ClusterZoneList
+    public partial class ClusterZoneList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
         internal ClusterZoneList()
         {
-            Zones = new ChangeTrackingList<AvsClusterZone>();
+            Zones = new ChangeTrackingList<ClusterZone>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
         /// <param name="zones"> Zone and associated hosts info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterZoneList(IReadOnlyList<AvsClusterZone> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterZoneList(IReadOnlyList<ClusterZone> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Zone and associated hosts info. </summary>
-        public IReadOnlyList<AvsClusterZone> Zones { get; }
+        public IReadOnlyList<ClusterZone> Zones { get; }
     }
 }

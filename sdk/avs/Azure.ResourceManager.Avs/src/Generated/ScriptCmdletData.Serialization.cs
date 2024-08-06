@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs
             if (options.Format != "W" && Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
+                writer.WriteStringValue(Timeout);
             }
             if (options.Format != "W" && Optional.IsDefined(Audience))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Avs
             SystemData systemData = default;
             ScriptCmdletProvisioningState? provisioningState = default;
             string description = default;
-            TimeSpan? timeout = default;
+            string timeout = default;
             ScriptCmdletAudience? audience = default;
             IReadOnlyList<ScriptParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -181,11 +181,7 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("timeout"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeout = property0.Value.GetTimeSpan("P");
+                            timeout = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("audience"u8))

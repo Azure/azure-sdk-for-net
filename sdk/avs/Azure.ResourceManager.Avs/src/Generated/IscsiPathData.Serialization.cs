@@ -55,11 +55,8 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkBlock))
-            {
-                writer.WritePropertyName("networkBlock"u8);
-                writer.WriteStringValue(NetworkBlock);
-            }
+            writer.WritePropertyName("networkBlock"u8);
+            writer.WriteStringValue(NetworkBlock);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

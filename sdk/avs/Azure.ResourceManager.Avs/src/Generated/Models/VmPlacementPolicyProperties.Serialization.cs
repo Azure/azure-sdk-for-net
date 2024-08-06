@@ -30,18 +30,13 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartArray();
             foreach (var item in VmMembers)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("affinityType"u8);
             writer.WriteStringValue(AffinityType.ToString());
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -95,8 +90,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IList<ResourceIdentifier> vmMembers = default;
-            AvsPlacementPolicyAffinityType affinityType = default;
+            IList<string> vmMembers = default;
+            AffinityType affinityType = default;
             PlacementPolicyType type = default;
             PlacementPolicyState? state = default;
             string displayName = default;
@@ -107,24 +102,17 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("vmMembers"u8))
                 {
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     vmMembers = array;
                     continue;
                 }
                 if (property.NameEquals("affinityType"u8))
                 {
-                    affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
+                    affinityType = new AffinityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
