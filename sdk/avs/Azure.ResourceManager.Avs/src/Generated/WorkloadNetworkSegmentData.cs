@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/>. </summary>
         public WorkloadNetworkSegmentData()
         {
+            PortVif = new ChangeTrackingList<WorkloadNetworkSegmentPortVif>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/>. </summary>
@@ -61,15 +62,39 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="displayName"> Display name of the segment. </param>
+        /// <param name="connectedGateway"> Gateway which to connect segment to. </param>
+        /// <param name="subnet"> Subnet which to connect segment to. </param>
+        /// <param name="portVif"> Port Vif which segment is associated with. </param>
+        /// <param name="status"> Segment status. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkSegmentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, WorkloadNetworkSegmentStatus? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            DisplayName = displayName;
+            ConnectedGateway = connectedGateway;
+            Subnet = subnet;
+            PortVif = portVif;
+            Status = status;
+            ProvisioningState = provisioningState;
+            Revision = revision;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public WorkloadNetworkSegmentProperties Properties { get; set; }
+        /// <summary> Display name of the segment. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> Gateway which to connect segment to. </summary>
+        public string ConnectedGateway { get; set; }
+        /// <summary> Subnet which to connect segment to. </summary>
+        public WorkloadNetworkSegmentSubnet Subnet { get; set; }
+        /// <summary> Port Vif which segment is associated with. </summary>
+        public IReadOnlyList<WorkloadNetworkSegmentPortVif> PortVif { get; }
+        /// <summary> Segment status. </summary>
+        public WorkloadNetworkSegmentStatus? Status { get; }
+        /// <summary> The provisioning state. </summary>
+        public WorkloadNetworkSegmentProvisioningState? ProvisioningState { get; }
+        /// <summary> NSX revision number. </summary>
+        public long? Revision { get; set; }
     }
 }

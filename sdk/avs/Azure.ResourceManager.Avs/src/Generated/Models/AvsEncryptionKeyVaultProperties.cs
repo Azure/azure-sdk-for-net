@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="keyVersion"> The version of the key. </param>
         /// <param name="autoDetectedKeyVersion"> The auto-detected version of the key if versionType is auto-detected. </param>
-        /// <param name="keyVaultUri"> The URL of the vault. </param>
+        /// <param name="avsEncryptionKeyVaultPropertiei"> The URL of the vault. </param>
         /// <param name="keyState"> The state of key provided. </param>
         /// <param name="versionType"> Property of the key if user provided or auto detected. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, string autoDetectedKeyVersion, Uri keyVaultUri, AvsEncryptionKeyStatus? keyState, AvsEncryptionVersionType? versionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, string autoDetectedKeyVersion, string avsEncryptionKeyVaultPropertiei, AvsEncryptionKeyStatus? keyState, AvsEncryptionVersionType? versionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             AutoDetectedKeyVersion = autoDetectedKeyVersion;
-            KeyVaultUri = keyVaultUri;
+            AvsEncryptionKeyVaultPropertiei = avsEncryptionKeyVaultPropertiei;
             KeyState = keyState;
             VersionType = versionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The auto-detected version of the key if versionType is auto-detected. </summary>
         public string AutoDetectedKeyVersion { get; }
         /// <summary> The URL of the vault. </summary>
-        public Uri KeyVaultUri { get; set; }
+        public string AvsEncryptionKeyVaultPropertiei { get; set; }
         /// <summary> The state of key provided. </summary>
         public AvsEncryptionKeyStatus? KeyState { get; }
         /// <summary> Property of the key if user provided or auto detected. </summary>

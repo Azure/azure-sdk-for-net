@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkloadNetworkDhcpResource(Client, response.Value), response.GetRawResponse());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcp(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                var response = _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkloadNetworkDhcpResource(Client, response.Value), response.GetRawResponse());

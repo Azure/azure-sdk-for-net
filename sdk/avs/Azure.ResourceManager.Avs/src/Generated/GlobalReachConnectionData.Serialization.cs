@@ -28,11 +28,6 @@ namespace Azure.ResourceManager.Avs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -53,6 +48,39 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
+            {
+                writer.WritePropertyName("addressPrefix"u8);
+                writer.WriteStringValue(AddressPrefix);
+            }
+            if (Optional.IsDefined(AuthorizationKey))
+            {
+                writer.WritePropertyName("authorizationKey"u8);
+                writer.WriteStringValue(AuthorizationKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CircuitConnectionStatus))
+            {
+                writer.WritePropertyName("circuitConnectionStatus"u8);
+                writer.WriteStringValue(CircuitConnectionStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(PeerExpressRouteCircuit))
+            {
+                writer.WritePropertyName("peerExpressRouteCircuit"u8);
+                writer.WriteStringValue(PeerExpressRouteCircuit);
+            }
+            if (Optional.IsDefined(ExpressRouteId))
+            {
+                writer.WritePropertyName("expressRouteId"u8);
+                writer.WriteStringValue(ExpressRouteId);
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,24 +119,20 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            GlobalReachConnectionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            GlobalReachConnectionProvisioningState? provisioningState = default;
+            string addressPrefix = default;
+            string authorizationKey = default;
+            GlobalReachConnectionStatus? circuitConnectionStatus = default;
+            string peerExpressRouteCircuit = default;
+            string expressRouteId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = GlobalReachConnectionProperties.DeserializeGlobalReachConnectionProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -133,6 +157,56 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new GlobalReachConnectionProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("addressPrefix"u8))
+                        {
+                            addressPrefix = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("authorizationKey"u8))
+                        {
+                            authorizationKey = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("circuitConnectionStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            circuitConnectionStatus = new GlobalReachConnectionStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("peerExpressRouteCircuit"u8))
+                        {
+                            peerExpressRouteCircuit = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("expressRouteId"u8))
+                        {
+                            expressRouteId = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -144,7 +218,12 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
-                properties,
+                provisioningState,
+                addressPrefix,
+                authorizationKey,
+                circuitConnectionStatus,
+                peerExpressRouteCircuit,
+                expressRouteId,
                 serializedAdditionalRawData);
         }
 

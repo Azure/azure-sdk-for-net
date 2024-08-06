@@ -48,11 +48,54 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ManagementCluster))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("managementCluster"u8);
+                writer.WriteObjectValue(ManagementCluster, options);
             }
+            if (Optional.IsDefined(Internet))
+            {
+                writer.WritePropertyName("internet"u8);
+                writer.WriteStringValue(Internet.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(IdentitySources))
+            {
+                writer.WritePropertyName("identitySources"u8);
+                writer.WriteStartArray();
+                foreach (var item in IdentitySources)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Availability))
+            {
+                writer.WritePropertyName("availability"u8);
+                writer.WriteObjectValue(Availability, options);
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
+            {
+                writer.WritePropertyName("extendedNetworkBlocks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExtendedNetworkBlocks)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DnsZoneType))
+            {
+                writer.WritePropertyName("dnsZoneType"u8);
+                writer.WriteStringValue(DnsZoneType.Value.ToString());
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,7 +137,13 @@ namespace Azure.ResourceManager.Avs.Models
             IDictionary<string, string> tags = default;
             AvsSku sku = default;
             ManagedServiceIdentity identity = default;
-            PrivateCloudUpdateProperties properties = default;
+            AvsManagementCluster managementCluster = default;
+            InternetConnectivityState? internet = default;
+            IList<SingleSignOnIdentitySource> identitySources = default;
+            PrivateCloudAvailabilityProperties availability = default;
+            CustomerManagedEncryption encryption = default;
+            IList<string> extendedNetworkBlocks = default;
+            DnsZoneType? dnsZoneType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,9 +184,85 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = PrivateCloudUpdateProperties.DeserializePrivateCloudUpdateProperties(property.Value, options);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("managementCluster"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("internet"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            internet = new InternetConnectivityState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("identitySources"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item, options));
+                            }
+                            identitySources = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("availability"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("extendedNetworkBlocks"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            extendedNetworkBlocks = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsZoneType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsZoneType = new DnsZoneType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +271,18 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AvsPrivateCloudPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, identity, properties, serializedAdditionalRawData);
+            return new AvsPrivateCloudPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                identity,
+                managementCluster,
+                internet,
+                identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
+                availability,
+                encryption,
+                extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
+                dnsZoneType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudPatch>.Write(ModelReaderWriterOptions options)

@@ -61,15 +61,23 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="status"> The state of the cloud link. </param>
+        /// <param name="linkedCloud"> Identifier of the other private cloud participating in the link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudLinkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudLinkProvisioningState? provisioningState, AvsCloudLinkStatus? status, string linkedCloud, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            Status = status;
+            LinkedCloud = linkedCloud;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public CloudLinkProperties Properties { get; set; }
+        /// <summary> The provisioning state of the resource. </summary>
+        public CloudLinkProvisioningState? ProvisioningState { get; }
+        /// <summary> The state of the cloud link. </summary>
+        public AvsCloudLinkStatus? Status { get; }
+        /// <summary> Identifier of the other private cloud participating in the link. </summary>
+        public string LinkedCloud { get; set; }
     }
 }

@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(PrimaryServer))
             {
                 writer.WritePropertyName("primaryServer"u8);
-                writer.WriteStringValue(PrimaryServer.AbsoluteUri);
+                writer.WriteStringValue(PrimaryServer);
             }
             if (Optional.IsDefined(SecondaryServer))
             {
                 writer.WritePropertyName("secondaryServer"u8);
-                writer.WriteStringValue(SecondaryServer.AbsoluteUri);
+                writer.WriteStringValue(SecondaryServer);
             }
             if (Optional.IsDefined(Ssl))
             {
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Avs.Models
             string domain = default;
             string baseUserDN = default;
             string baseGroupDN = default;
-            Uri primaryServer = default;
-            Uri secondaryServer = default;
+            string primaryServer = default;
+            string secondaryServer = default;
             SslCertificateStatus? ssl = default;
             string username = default;
             string password = default;
@@ -155,20 +155,12 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("primaryServer"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    primaryServer = new Uri(property.Value.GetString());
+                    primaryServer = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secondaryServer"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    secondaryServer = new Uri(property.Value.GetString());
+                    secondaryServer = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ssl"u8))

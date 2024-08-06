@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The properties of a cluster that may be updated. </summary>
-    public partial class ClusterUpdateProperties
+    /// <summary> A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. </summary>
+    internal partial class OperationListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,35 @@ namespace Azure.ResourceManager.Avs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterUpdateProperties"/>. </summary>
-        public ClusterUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
+        /// <param name="value"> The Operation items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal OperationListResult(IEnumerable<Operation> value)
         {
-            Hosts = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterUpdateProperties"/>. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="hosts"> The hosts. </param>
+        /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
+        /// <param name="value"> The Operation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterUpdateProperties(int? clusterSize, IList<string> hosts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OperationListResult(IReadOnlyList<Operation> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ClusterSize = clusterSize;
-            Hosts = hosts;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The cluster size. </summary>
-        public int? ClusterSize { get; set; }
-        /// <summary> The hosts. </summary>
-        public IList<string> Hosts { get; }
+        /// <summary> Initializes a new instance of <see cref="OperationListResult"/> for deserialization. </summary>
+        internal OperationListResult()
+        {
+        }
+
+        /// <summary> The Operation items on this page. </summary>
+        public IReadOnlyList<Operation> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
