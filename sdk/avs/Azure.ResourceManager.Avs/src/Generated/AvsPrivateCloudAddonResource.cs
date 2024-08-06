@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing an AvsPrivateCloudAddon along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudAddonResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudAddonResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetAvsPrivateCloudAddon method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPrivateCloudAddon method.
     /// </summary>
     public partial class AvsPrivateCloudAddonResource : ArmResource
     {

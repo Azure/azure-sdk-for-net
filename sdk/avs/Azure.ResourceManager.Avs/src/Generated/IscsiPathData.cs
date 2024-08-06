@@ -52,13 +52,8 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IscsiPathData"/>. </summary>
-        /// <param name="networkBlock"> CIDR Block for iSCSI path. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkBlock"/> is null. </exception>
-        public IscsiPathData(string networkBlock)
+        public IscsiPathData()
         {
-            Argument.AssertNotNull(networkBlock, nameof(networkBlock));
-
-            NetworkBlock = networkBlock;
         }
 
         /// <summary> Initializes a new instance of <see cref="IscsiPathData"/>. </summary>
@@ -74,11 +69,6 @@ namespace Azure.ResourceManager.Avs
             ProvisioningState = provisioningState;
             NetworkBlock = networkBlock;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IscsiPathData"/> for deserialization. </summary>
-        internal IscsiPathData()
-        {
         }
 
         /// <summary> The state of the iSCSI path provisioning. </summary>

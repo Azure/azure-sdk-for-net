@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             AvsEncryptionState? status = default;
-            EncryptionKeyVaultProperties keyVaultProperties = default;
+            AvsEncryptionKeyVaultProperties keyVaultProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = EncryptionKeyVaultProperties.DeserializeEncryptionKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = AvsEncryptionKeyVaultProperties.DeserializeAvsEncryptionKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

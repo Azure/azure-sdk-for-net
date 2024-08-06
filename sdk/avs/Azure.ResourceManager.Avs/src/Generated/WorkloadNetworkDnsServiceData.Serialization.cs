@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIp"u8);
-                writer.WriteStringValue(DnsServiceIP);
+                writer.WriteStringValue(DnsServiceIP.ToString());
             }
             if (Optional.IsDefined(DefaultDnsZone))
             {
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             SystemData systemData = default;
             string displayName = default;
-            string dnsServiceIP = default;
+            IPAddress dnsServiceIP = default;
             string defaultDnsZone = default;
             IList<string> fqdnZones = default;
             DnsServiceLogLevel? logLevel = default;
@@ -190,7 +191,11 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("dnsServiceIp"u8))
                         {
-                            dnsServiceIP = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsServiceIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("defaultDnsZone"u8))

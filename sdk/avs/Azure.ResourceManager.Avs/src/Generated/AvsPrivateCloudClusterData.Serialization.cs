@@ -233,12 +233,12 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
+                sku,
                 clusterSize,
                 provisioningState,
                 clusterId,
                 hosts ?? new ChangeTrackingList<string>(),
                 vsanDatastoreName,
-                sku,
                 serializedAdditionalRawData);
         }
 

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SUCCESSValue = "SUCCESS";
-        private const string FAILUREValue = "FAILURE";
+        private const string SuccessValue = "SUCCESS";
+        private const string FailureValue = "FAILURE";
 
         /// <summary> is success. </summary>
-        public static PortMirroringProfileStatus SUCCESS { get; } = new PortMirroringProfileStatus(SUCCESSValue);
+        public static PortMirroringProfileStatus Success { get; } = new PortMirroringProfileStatus(SuccessValue);
         /// <summary> is failure. </summary>
-        public static PortMirroringProfileStatus FAILURE { get; } = new PortMirroringProfileStatus(FAILUREValue);
+        public static PortMirroringProfileStatus Failure { get; } = new PortMirroringProfileStatus(FailureValue);
         /// <summary> Determines if two <see cref="PortMirroringProfileStatus"/> values are the same. </summary>
         public static bool operator ==(PortMirroringProfileStatus left, PortMirroringProfileStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PortMirroringProfileStatus"/> values are not the same. </summary>

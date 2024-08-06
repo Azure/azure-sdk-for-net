@@ -52,17 +52,11 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScriptExecutionData"/>. </summary>
-        /// <param name="timeout"> Time limit for execution. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timeout"/> is null. </exception>
-        public ScriptExecutionData(string timeout)
+        public ScriptExecutionData()
         {
-            Argument.AssertNotNull(timeout, nameof(timeout));
-
             Parameters = new ChangeTrackingList<ScriptExecutionParameterDetails>();
             HiddenParameters = new ChangeTrackingList<ScriptExecutionParameterDetails>();
-            Timeout = timeout;
             Output = new ChangeTrackingList<string>();
-            NamedOutputs = new ChangeTrackingDictionary<string, ScriptExecutionPropertiesNamedOutput>();
             Information = new ChangeTrackingList<string>();
             Warnings = new ChangeTrackingList<string>();
             Errors = new ChangeTrackingList<string>();
@@ -101,7 +95,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="warnings"> Standard warning out stream from the powershell execution. </param>
         /// <param name="errors"> Standard error output stream from the powershell execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scriptCmdletId, IList<ScriptExecutionParameterDetails> parameters, IList<ScriptExecutionParameterDetails> hiddenParameters, string failureReason, string timeout, string retention, DateTimeOffset? submittedOn, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, ScriptExecutionProvisioningState? provisioningState, IList<string> output, IDictionary<string, ScriptExecutionPropertiesNamedOutput> namedOutputs, IReadOnlyList<string> information, IReadOnlyList<string> warnings, IReadOnlyList<string> errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier scriptCmdletId, IList<ScriptExecutionParameterDetails> parameters, IList<ScriptExecutionParameterDetails> hiddenParameters, string failureReason, string timeout, string retention, DateTimeOffset? submittedOn, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, ScriptExecutionProvisioningState? provisioningState, IList<string> output, BinaryData namedOutputs, IReadOnlyList<string> information, IReadOnlyList<string> warnings, IReadOnlyList<string> errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ScriptCmdletId = scriptCmdletId;
             Parameters = parameters;
@@ -121,13 +115,8 @@ namespace Azure.ResourceManager.Avs
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScriptExecutionData"/> for deserialization. </summary>
-        internal ScriptExecutionData()
-        {
-        }
-
         /// <summary> A reference to the script cmdlet resource if user is running a AVS script. </summary>
-        public string ScriptCmdletId { get; set; }
+        public ResourceIdentifier ScriptCmdletId { get; set; }
         /// <summary>
         /// Parameters the script will accept
         /// Please note <see cref="ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -160,8 +149,37 @@ namespace Azure.ResourceManager.Avs
         public ScriptExecutionProvisioningState? ProvisioningState { get; }
         /// <summary> Standard output stream from the powershell execution. </summary>
         public IList<string> Output { get; }
-        /// <summary> User-defined dictionary. </summary>
-        public IDictionary<string, ScriptExecutionPropertiesNamedOutput> NamedOutputs { get; }
+        /// <summary>
+        /// User-defined dictionary.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData NamedOutputs { get; set; }
         /// <summary> Standard information out stream from the powershell execution. </summary>
         public IReadOnlyList<string> Information { get; }
         /// <summary> Standard warning out stream from the powershell execution. </summary>

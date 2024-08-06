@@ -80,8 +80,11 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            writer.WritePropertyName("timeout"u8);
-            writer.WriteStringValue(Timeout);
+            if (Optional.IsDefined(Timeout))
+            {
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteStringValue(Timeout);
+            }
             if (Optional.IsDefined(Retention))
             {
                 writer.WritePropertyName("retention"u8);
@@ -117,16 +120,17 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NamedOutputs))
+            if (Optional.IsDefined(NamedOutputs))
             {
                 writer.WritePropertyName("namedOutputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in NamedOutputs)
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(NamedOutputs);
+#else
+                using (JsonDocument document = JsonDocument.Parse(NamedOutputs))
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
-                writer.WriteEndObject();
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Information))
             {
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string scriptCmdletId = default;
+            ResourceIdentifier scriptCmdletId = default;
             IList<ScriptExecutionParameterDetails> parameters = default;
             IList<ScriptExecutionParameterDetails> hiddenParameters = default;
             string failureReason = default;
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.Avs
             DateTimeOffset? finishedAt = default;
             ScriptExecutionProvisioningState? provisioningState = default;
             IList<string> output = default;
-            IDictionary<string, ScriptExecutionPropertiesNamedOutput> namedOutputs = default;
+            BinaryData namedOutputs = default;
             IReadOnlyList<string> information = default;
             IReadOnlyList<string> warnings = default;
             IReadOnlyList<string> errors = default;
@@ -255,7 +259,11 @@ namespace Azure.ResourceManager.Avs
                     {
                         if (property0.NameEquals("scriptCmdletId"u8))
                         {
-                            scriptCmdletId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scriptCmdletId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -357,12 +365,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            Dictionary<string, ScriptExecutionPropertiesNamedOutput> dictionary = new Dictionary<string, ScriptExecutionPropertiesNamedOutput>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, ScriptExecutionPropertiesNamedOutput.DeserializeScriptExecutionPropertiesNamedOutput(property1.Value, options));
-                            }
-                            namedOutputs = dictionary;
+                            namedOutputs = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("information"u8))
@@ -432,7 +435,7 @@ namespace Azure.ResourceManager.Avs
                 finishedAt,
                 provisioningState,
                 output ?? new ChangeTrackingList<string>(),
-                namedOutputs ?? new ChangeTrackingDictionary<string, ScriptExecutionPropertiesNamedOutput>(),
+                namedOutputs,
                 information ?? new ChangeTrackingList<string>(),
                 warnings ?? new ChangeTrackingList<string>(),
                 errors ?? new ChangeTrackingList<string>(),

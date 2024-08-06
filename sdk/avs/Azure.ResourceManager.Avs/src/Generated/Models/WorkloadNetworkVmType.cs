@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string REGULARValue = "REGULAR";
-        private const string EDGEValue = "EDGE";
-        private const string SERVICEValue = "SERVICE";
+        private const string RegularValue = "REGULAR";
+        private const string EdgeValue = "EDGE";
+        private const string ServiceValue = "SERVICE";
 
         /// <summary> is regular. </summary>
-        public static WorkloadNetworkVmType REGULAR { get; } = new WorkloadNetworkVmType(REGULARValue);
+        public static WorkloadNetworkVmType Regular { get; } = new WorkloadNetworkVmType(RegularValue);
         /// <summary> is edge. </summary>
-        public static WorkloadNetworkVmType EDGE { get; } = new WorkloadNetworkVmType(EDGEValue);
+        public static WorkloadNetworkVmType Edge { get; } = new WorkloadNetworkVmType(EdgeValue);
         /// <summary> is service. </summary>
-        public static WorkloadNetworkVmType SERVICE { get; } = new WorkloadNetworkVmType(SERVICEValue);
+        public static WorkloadNetworkVmType Service { get; } = new WorkloadNetworkVmType(ServiceValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are not the same. </summary>

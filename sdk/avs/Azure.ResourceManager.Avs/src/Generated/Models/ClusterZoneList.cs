@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> List of all zones and associated hosts for a cluster. </summary>
-    public partial class ClusterZoneList
+    internal partial class ClusterZoneList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

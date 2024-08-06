@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="status"> Status of customer managed encryption key. </param>
         /// <param name="keyVaultProperties"> The key vault where the encryption key is stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomerManagedEncryption(AvsEncryptionState? status, EncryptionKeyVaultProperties keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomerManagedEncryption(AvsEncryptionState? status, AvsEncryptionKeyVaultProperties keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             KeyVaultProperties = keyVaultProperties;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Status of customer managed encryption key. </summary>
         public AvsEncryptionState? Status { get; set; }
         /// <summary> The key vault where the encryption key is stored. </summary>
-        public EncryptionKeyVaultProperties KeyVaultProperties { get; set; }
+        public AvsEncryptionKeyVaultProperties KeyVaultProperties { get; set; }
     }
 }
