@@ -125,7 +125,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 {
                     // TODO add ILogger - I think we need to get the logging options here to be able to get
                     // the ILogger instance
-                    ClientModelEventSource.Log.RequestRetrying(message.LoggingCorrelationId, message.RetryCount, elapsed);
+                    ClientModelEventSource.Log.RequestRetrying(message.LoggingCorrelationId ?? string.Empty, message.RetryCount, elapsed);
                 }
 
                 continue;

@@ -46,13 +46,13 @@ internal sealed class ClientModelEventSource : EventSource
         WriteEvent(BackgroundRefreshFailedEvent, requestId, exception);
     }
 
+    // TODO - It's easier to have the IsEnabled calls in this file, but since the logging policy is checking the log level of the ILogger instance as well
+    // the checks are done there instead. Need to avoid double checking. However, this approach might be prone to dev error - if someone forgets to check.
+
     [NonEvent]
     public void Request(string requestId, PipelineRequest request, string? assemblyName, PipelineMessageSanitizer sanitizer)
     {
-        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
-        {
-            Request(requestId, request.Method.ToString(), sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers, sanitizer), assemblyName);
-        }
+        Request(requestId, request.Method.ToString(), sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers, sanitizer), assemblyName);
     }
 
     [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}client assembly: {4}")]
@@ -65,16 +65,13 @@ internal sealed class ClientModelEventSource : EventSource
     [NonEvent]
     public void RequestContent(string requestId, byte[] content, Encoding? textEncoding)
     {
-        if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+        if (textEncoding is not null)
         {
-            if (textEncoding is not null)
-            {
-                RequestContentText(requestId, textEncoding.GetString(content));
-            }
-            else
-            {
-                RequestContent(requestId, content);
-            }
+            RequestContentText(requestId, textEncoding.GetString(content));
+        }
+        else
+        {
+            RequestContent(requestId, content);
         }
     }
 
@@ -94,10 +91,7 @@ internal sealed class ClientModelEventSource : EventSource
     [NonEvent]
     public void Response(string requestId, PipelineResponse response, PipelineMessageSanitizer sanitizer, double elapsed)
     {
-        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
-        {
-            Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
-        }
+        Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
     }
 
     [Event(ResponseEvent, Level = EventLevel.Informational, Message = "Response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
@@ -110,16 +104,13 @@ internal sealed class ClientModelEventSource : EventSource
     [NonEvent]
     public void ResponseContent(string requestId, byte[] content, Encoding? textEncoding)
     {
-        if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+        if (textEncoding is not null)
         {
-            if (textEncoding is not null)
-            {
-                ResponseContentText(requestId, textEncoding.GetString(content));
-            }
-            else
-            {
-                ResponseContent(requestId, content);
-            }
+            ResponseContentText(requestId, textEncoding.GetString(content));
+        }
+        else
+        {
+            ResponseContent(requestId, content);
         }
     }
 
@@ -139,16 +130,13 @@ internal sealed class ClientModelEventSource : EventSource
     [NonEvent]
     public void ResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
     {
-        if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+        if (textEncoding is not null)
         {
-            if (textEncoding is not null)
-            {
-                ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
-            }
-            else
-            {
-                ResponseContentBlock(requestId, blockNumber, content);
-            }
+            ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+        }
+        else
+        {
+            ResponseContentBlock(requestId, blockNumber, content);
         }
     }
 
@@ -169,10 +157,7 @@ internal sealed class ClientModelEventSource : EventSource
     [NonEvent]
     public void ErrorResponse(string requestId, PipelineResponse response, PipelineMessageSanitizer sanitizer, double elapsed)
     {
-        if (IsEnabled(EventLevel.Warning, EventKeywords.None))
-        {
-            ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
-        }
+        ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), elapsed);
     }
 
     [Event(ErrorResponseEvent, Level = EventLevel.Warning, Message = "Error response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
@@ -185,16 +170,13 @@ internal sealed class ClientModelEventSource : EventSource
     [NonEvent]
     public void ErrorResponseContent(string requestId, byte[] content, Encoding? textEncoding)
     {
-        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+        if (textEncoding is not null)
         {
-            if (textEncoding is not null)
-            {
-                ErrorResponseContentText(requestId, textEncoding.GetString(content));
-            }
-            else
-            {
-                ErrorResponseContent(requestId, content);
-            }
+            ErrorResponseContentText(requestId, textEncoding.GetString(content));
+        }
+        else
+        {
+            ErrorResponseContent(requestId, content);
         }
     }
 
@@ -214,16 +196,13 @@ internal sealed class ClientModelEventSource : EventSource
     [NonEvent]
     public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
     {
-        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+        if (textEncoding is not null)
         {
-            if (textEncoding is not null)
-            {
-                ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
-            }
-            else
-            {
-                ErrorResponseContentBlock(requestId, blockNumber, content);
-            }
+            ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+        }
+        else
+        {
+            ErrorResponseContentBlock(requestId, blockNumber, content);
         }
     }
 
@@ -264,10 +243,7 @@ internal sealed class ClientModelEventSource : EventSource
     [NonEvent]
     public void PipelineTransportOptionsNotApplied(Type optionsType)
     {
-        if (IsEnabled(EventLevel.Informational, EventKeywords.None))
-        {
-            PipelineTransportOptionsNotApplied(optionsType.FullName ?? string.Empty);
-        }
+        PipelineTransportOptionsNotApplied(optionsType.FullName ?? string.Empty);
     }
 
     [Event(PipelineTransportOptionsNotAppliedEvent, Level = EventLevel.Informational, Message = "The client requires transport configuration but it was not applied because custom transport was provided. Type: {0}")]

@@ -11,11 +11,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// TODO.
+/// A <see cref="PipelinePolicy"/> used by a <see cref="ClientPipeline"/> to
+/// log request and response information.
 /// </summary>
 public class ClientLoggingPolicy : PipelinePolicy
 {
@@ -29,9 +31,9 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly string _clientAssembly = "System-ClientModel";
 
     /// <summary>
-    /// TODO.
+    /// Creates a new instance of the <see cref="ClientLoggingPolicy"/> class.
     /// </summary>
-    /// <param name="options"></param>
+    /// <param name="options">The user-provided logging options object.</param>
     public ClientLoggingPolicy(LoggingOptions? options = default)
     {
         LoggingOptions loggingOptions = options ?? new LoggingOptions();
@@ -49,55 +51,6 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <inheritdoc/>
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
         await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="bytes"></param>
-    /// <param name="encoding"></param>
-    protected virtual void OnSendingRequest(PipelineMessage message, byte[]? bytes, Encoding? encoding) { }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="bytes"></param>
-    /// <param name="encoding"></param>
-    protected virtual ValueTask OnSendingRequestAsync(PipelineMessage message, byte[]? bytes, Encoding? encoding) => default;
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="elapsed"></param>
-    protected virtual void OnLogResponse(PipelineMessage message, double elapsed) { }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="elapsed"></param>
-    protected virtual ValueTask OnLogResponseAsync(PipelineMessage message, double elapsed) => default;
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="bytes"></param>
-    /// <param name="textEncoding"></param>
-    /// <param name="block"></param>
-    protected virtual void OnLogResponseContent(PipelineMessage message, byte[] bytes, Encoding? textEncoding, int? block) { }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="bytes"></param>
-    /// <param name="textEncoding"></param>
-    /// <param name="block"></param>
-    /// <returns></returns>
-    protected virtual ValueTask OnLogResponseContentAsync(PipelineMessage message, byte[] bytes, Encoding? textEncoding, int? block) => default;
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
@@ -161,16 +114,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         string responseId = GetCorrelationIdFromHeaders(response.Headers) ?? requestId; // Use the request ID if there was no response id
         message.LoggingCorrelationId = responseId;
 
-        LogResponse(_logger, response, responseId, elapsed);
-
-        if (async)
-        {
-            await OnLogResponseAsync(message, elapsed).ConfigureAwait(false);
-        }
-        else
-        {
-            OnLogResponse(message, elapsed);
-        }
+        LogResponse(_logger, message, response, responseId, elapsed, async);
 
         if (_logContent)
         {
@@ -183,10 +127,108 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
     }
 
-    private bool IsLoggingEnabled(LogLevel logLevel, EventLevel eventLevel, EventKeywords keywords = EventKeywords.None)
-    {
-        return _logger.IsEnabled(logLevel) || ClientModelEventSource.Log.IsEnabled(eventLevel, keywords);
-    }
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// prior to passing control to the next policy in the pipeline.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineRequest"/> to be sent to the service.</param>
+    /// <param name="bytes">The content of the request in bytes if
+    /// <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c> and the
+    /// request content is not <c>null</c>, <c>null</c> otherwise.</param>
+    /// <param name="encoding">The text encoding of the request content if the content is
+    /// text and <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>,
+    /// <c>null</c> otherwise.</param>
+    protected virtual void OnSendingRequest(PipelineMessage message, byte[]? bytes, Encoding? encoding) { }
+
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
+    /// <see cref="ProcessAsync(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// prior to passing control to the next policy in the pipeline.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineRequest"/> to be sent to the service.</param>
+    /// <param name="bytes">The content of the request in bytes if
+    /// <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c> and the
+    /// request content is not <c>null</c>, <c>null</c> otherwise.</param>
+    /// <param name="encoding">The text encoding of the request content if the content is
+    /// text and <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>,
+    /// <c>null</c> otherwise.</param>
+    protected virtual ValueTask OnSendingRequestAsync(PipelineMessage message, byte[]? bytes, Encoding? encoding) => default;
+
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// after control has returned from the previous policy in the pipeline, and the response
+    /// has been logged.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineResponse"/> that was received from the service.</param>
+    /// <param name="secondsElapsed">The number of seconds between sending the request and
+    /// receiving a response.</param>
+    protected virtual void OnLogResponse(PipelineMessage message, double secondsElapsed) { }
+
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
+    /// <see cref="ProcessAsync(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// after control has returned from the previous policy in the pipeline, and the response
+    /// has been logged.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineResponse"/> that was received from the service.</param>
+    /// <param name="secondsElapsed">The number of seconds between sending the request and
+    /// receiving a response.</param>
+    protected virtual ValueTask OnLogResponseAsync(PipelineMessage message, double secondsElapsed) => default;
+
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// after control has returned from the previous policy in the pipeline, and the
+    /// response content has been logged.
+    /// </summary>
+    /// <remarks>
+    /// This method will only be called if
+    /// <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>.
+    /// </remarks>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineResponse"/> that was received from the service.</param>
+    /// <param name="bytes">The content of the response in bytes. If the response content
+    /// is <c>null</c>, then this value is <c>null</c>.</param>
+    /// <param name="textEncoding">The text encoding of the response content if the content is
+    /// text, <c>null</c> otherwise.</param>
+    /// <param name="block">The block number of the content when the content is logged in
+    /// blocks, otherwise <c>null</c>.</param>
+    protected virtual void OnLogResponseContent(PipelineMessage message, byte[]? bytes, Encoding? textEncoding, int? block) { }
+
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
+    /// <see cref="ProcessAsync(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// after control has been returned from the previous policy in the pipeline, and the
+    /// response content has been logged.
+    /// </summary>
+    /// <remarks>
+    /// This method will only be called if
+    /// <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>.
+    /// </remarks>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineResponse"/> that was received from the service.</param>
+    /// <param name="bytes">The content of the response in bytes. If the response content
+    /// is <c>null</c>, then this value is <c>null</c>.</param>
+    /// <param name="textEncoding">The text encoding of the response content if the content is
+    /// text, <c>null</c> otherwise.</param>
+    /// <param name="block"></param>
+    /// <returns>The block number of the content when the content is logged in
+    /// blocks, otherwise <c>null</c>.</returns>
+    protected virtual ValueTask OnLogResponseContentAsync(PipelineMessage message, byte[]? bytes, Encoding? textEncoding, int? block) => default;
+
+    #region Log methods
 
     private async void LogRequest(string requestId, PipelineRequest request, PipelineMessage message, bool async)
     {
@@ -202,7 +244,9 @@ public class ClientLoggingPolicy : PipelinePolicy
         byte[]? bytes = null;
         Encoding? encoding = null;
 
-        if (_logContent && request.Content != null && IsLoggingEnabled(LogLevel.Information, EventLevel.Informational))
+        // TODO - I think we need to always process the content if logging content is enabled for OnSendingRequest/Async
+        //if (_logContent && request.Content != null && IsLoggingEnabled(LogLevel.Information, EventLevel.Informational))
+        if (_logContent && request.Content != null)
         {
             // Convert binary content to bytes
             using var memoryStream = new MaxLengthStream(_maxLength);
@@ -237,7 +281,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
     }
 
-    private void LogResponse(ILogger logger, PipelineResponse response, string responseId, double elapsed)
+    private async void LogResponse(ILogger logger, PipelineMessage message, PipelineResponse response, string responseId, double elapsed, bool async)
     {
         bool isEnabled = response.IsError ?
             IsLoggingEnabled(LogLevel.Warning, EventLevel.Warning)
@@ -245,6 +289,15 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (!isEnabled)
         {
+            if (async)
+            {
+                await OnLogResponseAsync(message, elapsed).ConfigureAwait(false);
+            }
+            else
+            {
+                OnLogResponse(message, elapsed);
+            }
+
             return;
         }
 
@@ -256,14 +309,32 @@ public class ClientLoggingPolicy : PipelinePolicy
         {
             ClientModelEventSource.Log.Response(responseId, response, _sanitizer, elapsed);
         }
+        if (async)
+        {
+            await OnLogResponseAsync(message, elapsed).ConfigureAwait(false);
+        }
+        else
+        {
+            OnLogResponse(message, elapsed);
+        }
     }
 
     private async void LogResponseContent(ILogger logger, PipelineMessage message, string responseId, bool contentBuffered, bool async)
     {
         PipelineResponse response = message.Response!;
 
-        if (response.ContentStream == null || !IsLoggingEnabled(LogLevel.Information, EventLevel.Informational))
+        // TODO - I think we need to always process the content if logging content is enabled for OnLogResponseContent/Async ?
+        // if (response.ContentStream == null || !IsLoggingEnabled(LogLevel.Information, EventLevel.Informational))
+        if (response.ContentStream == null)
         {
+            if (async)
+            {
+                await OnLogResponseContentAsync(message, null, null, null).ConfigureAwait(false);
+            }
+            else
+            {
+                OnLogResponseContent(message, null, null, null);
+            }
             return;
         }
 
@@ -333,8 +404,24 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         response.ContentStream = new LoggingStream(this, logger, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding, message);
     }
+    #endregion
 
-    #region Formatting Helpers
+    #region Helpers
+    private bool IsLoggingEnabled(LogLevel logLevel, EventLevel eventLevel, EventKeywords keywords = EventKeywords.None)
+    {
+        if (_logger is NullLogger)
+        {
+            return ClientModelEventSource.Log.IsEnabled(eventLevel, keywords);
+        }
+        // TODO - the forwarder turns on verbose logs since the level must be set when creating the listener
+        // and is not dynamic like it is with ILogger. This could be problematic because it will default to
+        // the ILogger log level even if there is a user's event source listener with a high level.
+        // On the flip side if we don't do this, if someone only wanted warnings with ILogger
+        // the if enabled checks would always return true and there would be a lot of extra unnecessary string
+        // formatting that would impact perf
+        return ClientModelEventSource.Log.IsEnabled(eventLevel, keywords);
+    }
+
     private string? GetCorrelationIdFromHeaders(PipelineRequestHeaders keyValuePairs)
     {
         if (_correlationIdHeaderName == null)
