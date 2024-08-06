@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing an AvsCloudLink along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsCloudLinkResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetAvsCloudLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetAvsCloudLink method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsCloudLink method.
     /// </summary>
     public partial class AvsCloudLinkResource : ArmResource
     {

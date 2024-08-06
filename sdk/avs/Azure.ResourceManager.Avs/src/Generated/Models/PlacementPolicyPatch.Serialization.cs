@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in VmMembers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -103,9 +108,9 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             PlacementPolicyState? state = default;
-            IList<string> vmMembers = default;
+            IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
-            AffinityStrength? affinityStrength = default;
+            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
             AzureHybridBenefitType? azureHybridBenefitType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -135,10 +140,17 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             vmMembers = array;
                             continue;
@@ -163,7 +175,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            affinityStrength = new AffinityStrength(property0.Value.GetString());
+                            affinityStrength = new VmHostPlacementPolicyAffinityStrength(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("azureHybridBenefitType"u8))
@@ -186,7 +198,7 @@ namespace Azure.ResourceManager.Avs.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new PlacementPolicyPatch(
                 state,
-                vmMembers ?? new ChangeTrackingList<string>(),
+                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
                 hostMembers ?? new ChangeTrackingList<string>(),
                 affinityStrength,
                 azureHybridBenefitType,

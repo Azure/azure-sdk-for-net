@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A class representing a collection of <see cref="AvsCloudLinkResource"/> and their operations.
-    /// Each <see cref="AvsCloudLinkResource"/> in the collection will belong to the same instance of <see cref="PrivateCloudResource"/>.
-    /// To get an <see cref="AvsCloudLinkCollection"/> instance call the GetAvsCloudLinks method from an instance of <see cref="PrivateCloudResource"/>.
+    /// Each <see cref="AvsCloudLinkResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get an <see cref="AvsCloudLinkCollection"/> instance call the GetAvsCloudLinks method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class AvsCloudLinkCollection : ArmCollection, IEnumerable<AvsCloudLinkResource>, IAsyncEnumerable<AvsCloudLinkResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Avs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateCloudResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateCloudResource.ResourceType), nameof(id));
+            if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudLink_List</description>
+        /// <description>CloudLinks_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudLink_List</description>
+        /// <description>CloudLinks_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

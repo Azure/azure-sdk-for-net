@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IReadOnlyList<PrivateCloudData> value = default;
+            IReadOnlyList<AvsPrivateCloudData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<PrivateCloudData> array = new List<PrivateCloudData>();
+                    List<AvsPrivateCloudData> array = new List<AvsPrivateCloudData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateCloudData.DeserializePrivateCloudData(item, options));
+                        array.Add(AvsPrivateCloudData.DeserializeAvsPrivateCloudData(item, options));
                     }
                     value = array;
                     continue;

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Avs
             SystemData systemData = default;
             WorkloadNetworkProvisioningState? provisioningState = default;
             string displayName = default;
-            VmTypeEnum? vmType = default;
+            WorkloadNetworkVmType? vmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            vmType = new VmTypeEnum(property0.Value.GetString());
+                            vmType = new WorkloadNetworkVmType(property0.Value.GetString());
                             continue;
                         }
                     }

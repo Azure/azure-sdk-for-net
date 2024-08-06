@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a WorkloadNetwork along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetWorkloadNetwork method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetwork method.
     /// </summary>
     public partial class WorkloadNetworkResource : ArmResource
     {
@@ -85,75 +85,6 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of WorkloadNetworkSegmentResources in the WorkloadNetwork. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkSegmentResources and their operations over a WorkloadNetworkSegmentResource. </returns>
-        public virtual WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments()
-        {
-            return GetCachedClient(client => new WorkloadNetworkSegmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkSegment
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetSegment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="segmentId"> The ID of the NSX Segment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkloadNetworkSegmentResource>> GetWorkloadNetworkSegmentAsync(string segmentId, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkloadNetworkSegments().GetAsync(segmentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkSegment
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetSegment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="segmentId"> The ID of the NSX Segment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkloadNetworkSegmentResource> GetWorkloadNetworkSegment(string segmentId, CancellationToken cancellationToken = default)
-        {
-            return GetWorkloadNetworkSegments().Get(segmentId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkDhcpResources in the WorkloadNetwork. </summary>
@@ -223,282 +154,6 @@ namespace Azure.ResourceManager.Avs
         public virtual Response<WorkloadNetworkDhcpResource> GetWorkloadNetworkDhcp(string dhcpId, CancellationToken cancellationToken = default)
         {
             return GetWorkloadNetworkDhcps().Get(dhcpId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of WorkloadNetworkGatewayResources in the WorkloadNetwork. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkGatewayResources and their operations over a WorkloadNetworkGatewayResource. </returns>
-        public virtual WorkloadNetworkGatewayCollection GetWorkloadNetworkGateways()
-        {
-            return GetCachedClient(client => new WorkloadNetworkGatewayCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkGateway
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/gateways/{gatewayId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetGateway</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkloadNetworkGatewayResource>> GetWorkloadNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkloadNetworkGateways().GetAsync(gatewayId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkGateway
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/gateways/{gatewayId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetGateway</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkloadNetworkGatewayResource> GetWorkloadNetworkGateway(string gatewayId, CancellationToken cancellationToken = default)
-        {
-            return GetWorkloadNetworkGateways().Get(gatewayId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of WorkloadNetworkPortMirroringResources in the WorkloadNetwork. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkPortMirroringResources and their operations over a WorkloadNetworkPortMirroringResource. </returns>
-        public virtual WorkloadNetworkPortMirroringCollection GetWorkloadNetworkPortMirrorings()
-        {
-            return GetCachedClient(client => new WorkloadNetworkPortMirroringCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkPortMirroring
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetPortMirroring</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkPortMirroringResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="portMirroringId"> ID of the NSX port mirroring profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkloadNetworkPortMirroringResource>> GetWorkloadNetworkPortMirroringAsync(string portMirroringId, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkloadNetworkPortMirrorings().GetAsync(portMirroringId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkPortMirroring
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetPortMirroring</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkPortMirroringResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="portMirroringId"> ID of the NSX port mirroring profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkloadNetworkPortMirroringResource> GetWorkloadNetworkPortMirroring(string portMirroringId, CancellationToken cancellationToken = default)
-        {
-            return GetWorkloadNetworkPortMirrorings().Get(portMirroringId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of WorkloadNetworkVmGroupResources in the WorkloadNetwork. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkVmGroupResources and their operations over a WorkloadNetworkVmGroupResource. </returns>
-        public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
-        {
-            return GetCachedClient(client => new WorkloadNetworkVmGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkVMGroup
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/vmGroups/{vmGroupId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVmGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vmGroupId"> ID of the VM group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetWorkloadNetworkVmGroupAsync(string vmGroupId, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkloadNetworkVmGroups().GetAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkVMGroup
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/vmGroups/{vmGroupId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVmGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vmGroupId"> ID of the VM group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkloadNetworkVmGroupResource> GetWorkloadNetworkVmGroup(string vmGroupId, CancellationToken cancellationToken = default)
-        {
-            return GetWorkloadNetworkVmGroups().Get(vmGroupId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of WorkloadNetworkVirtualMachineResources in the WorkloadNetwork. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkVirtualMachineResources and their operations over a WorkloadNetworkVirtualMachineResource. </returns>
-        public virtual WorkloadNetworkVirtualMachineCollection GetWorkloadNetworkVirtualMachines()
-        {
-            return GetCachedClient(client => new WorkloadNetworkVirtualMachineCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkVirtualMachine
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/virtualMachines/{virtualMachineId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVirtualMachine</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkVirtualMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetWorkloadNetworkVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkloadNetworkVirtualMachines().GetAsync(virtualMachineId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a WorkloadNetworkVirtualMachine
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/virtualMachines/{virtualMachineId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVirtualMachine</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkVirtualMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkloadNetworkVirtualMachineResource> GetWorkloadNetworkVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
-        {
-            return GetWorkloadNetworkVirtualMachines().Get(virtualMachineId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkDnsServiceResources in the WorkloadNetwork. </summary>
@@ -639,6 +294,144 @@ namespace Azure.ResourceManager.Avs
             return GetWorkloadNetworkDnsZones().Get(dnsZoneId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of WorkloadNetworkGatewayResources in the WorkloadNetwork. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkGatewayResources and their operations over a WorkloadNetworkGatewayResource. </returns>
+        public virtual WorkloadNetworkGatewayCollection GetWorkloadNetworkGateways()
+        {
+            return GetCachedClient(client => new WorkloadNetworkGatewayCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/gateways/{gatewayId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetGateway</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkloadNetworkGatewayResource>> GetWorkloadNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken = default)
+        {
+            return await GetWorkloadNetworkGateways().GetAsync(gatewayId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/gateways/{gatewayId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetGateway</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkloadNetworkGatewayResource> GetWorkloadNetworkGateway(string gatewayId, CancellationToken cancellationToken = default)
+        {
+            return GetWorkloadNetworkGateways().Get(gatewayId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkloadNetworkPortMirroringProfileResources in the WorkloadNetwork. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkPortMirroringProfileResources and their operations over a WorkloadNetworkPortMirroringProfileResource. </returns>
+        public virtual WorkloadNetworkPortMirroringProfileCollection GetWorkloadNetworkPortMirroringProfiles()
+        {
+            return GetCachedClient(client => new WorkloadNetworkPortMirroringProfileCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkPortMirroring
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetPortMirroring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portMirroringId"> ID of the NSX port mirroring profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkloadNetworkPortMirroringProfileResource>> GetWorkloadNetworkPortMirroringProfileAsync(string portMirroringId, CancellationToken cancellationToken = default)
+        {
+            return await GetWorkloadNetworkPortMirroringProfiles().GetAsync(portMirroringId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkPortMirroring
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetPortMirroring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portMirroringId"> ID of the NSX port mirroring profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkloadNetworkPortMirroringProfileResource> GetWorkloadNetworkPortMirroringProfile(string portMirroringId, CancellationToken cancellationToken = default)
+        {
+            return GetWorkloadNetworkPortMirroringProfiles().Get(portMirroringId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of WorkloadNetworkPublicIPResources in the WorkloadNetwork. </summary>
         /// <returns> An object representing collection of WorkloadNetworkPublicIPResources and their operations over a WorkloadNetworkPublicIPResource. </returns>
         public virtual WorkloadNetworkPublicIPCollection GetWorkloadNetworkPublicIPs()
@@ -706,6 +499,213 @@ namespace Azure.ResourceManager.Avs
         public virtual Response<WorkloadNetworkPublicIPResource> GetWorkloadNetworkPublicIP(string publicIPId, CancellationToken cancellationToken = default)
         {
             return GetWorkloadNetworkPublicIPs().Get(publicIPId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkloadNetworkSegmentResources in the WorkloadNetwork. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkSegmentResources and their operations over a WorkloadNetworkSegmentResource. </returns>
+        public virtual WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments()
+        {
+            return GetCachedClient(client => new WorkloadNetworkSegmentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkSegment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetSegment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="segmentId"> The ID of the NSX Segment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkloadNetworkSegmentResource>> GetWorkloadNetworkSegmentAsync(string segmentId, CancellationToken cancellationToken = default)
+        {
+            return await GetWorkloadNetworkSegments().GetAsync(segmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkSegment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetSegment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="segmentId"> The ID of the NSX Segment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkloadNetworkSegmentResource> GetWorkloadNetworkSegment(string segmentId, CancellationToken cancellationToken = default)
+        {
+            return GetWorkloadNetworkSegments().Get(segmentId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkloadNetworkVirtualMachineResources in the WorkloadNetwork. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkVirtualMachineResources and their operations over a WorkloadNetworkVirtualMachineResource. </returns>
+        public virtual WorkloadNetworkVirtualMachineCollection GetWorkloadNetworkVirtualMachines()
+        {
+            return GetCachedClient(client => new WorkloadNetworkVirtualMachineCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkVirtualMachine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/virtualMachines/{virtualMachineId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetVirtualMachine</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetWorkloadNetworkVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
+        {
+            return await GetWorkloadNetworkVirtualMachines().GetAsync(virtualMachineId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkVirtualMachine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/virtualMachines/{virtualMachineId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetVirtualMachine</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkloadNetworkVirtualMachineResource> GetWorkloadNetworkVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
+        {
+            return GetWorkloadNetworkVirtualMachines().Get(virtualMachineId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkloadNetworkVmGroupResources in the WorkloadNetwork. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkVmGroupResources and their operations over a WorkloadNetworkVmGroupResource. </returns>
+        public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
+        {
+            return GetCachedClient(client => new WorkloadNetworkVmGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkVMGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/vmGroups/{vmGroupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetVmGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmGroupId"> ID of the VM group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetWorkloadNetworkVmGroupAsync(string vmGroupId, CancellationToken cancellationToken = default)
+        {
+            return await GetWorkloadNetworkVmGroups().GetAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a WorkloadNetworkVMGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/vmGroups/{vmGroupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetVmGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmGroupId"> ID of the VM group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkloadNetworkVmGroupResource> GetWorkloadNetworkVmGroup(string vmGroupId, CancellationToken cancellationToken = default)
+        {
+            return GetWorkloadNetworkVmGroups().Get(vmGroupId, cancellationToken);
         }
 
         /// <summary>
