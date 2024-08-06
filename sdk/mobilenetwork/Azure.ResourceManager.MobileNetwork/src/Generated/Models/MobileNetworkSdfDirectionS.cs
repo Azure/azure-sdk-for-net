@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Service data flow direction. </summary>
+    /// <summary>
+    /// Service data flow direction.
+    /// Serialized Name: SdfDirection
+    /// </summary>
     public readonly partial struct MobileNetworkSdfDirectionS : IEquatable<MobileNetworkSdfDirectionS>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string DownlinkValue = "Downlink";
         private const string BidirectionalValue = "Bidirectional";
 
-        /// <summary> Traffic flowing from the UE to the data network. </summary>
+        /// <summary>
+        /// Traffic flowing from the UE to the data network.
+        /// Serialized Name: SdfDirection.Uplink
+        /// </summary>
         public static MobileNetworkSdfDirectionS Uplink { get; } = new MobileNetworkSdfDirectionS(UplinkValue);
-        /// <summary> Traffic flowing from the data network to the UE. </summary>
+        /// <summary>
+        /// Traffic flowing from the data network to the UE.
+        /// Serialized Name: SdfDirection.Downlink
+        /// </summary>
         public static MobileNetworkSdfDirectionS Downlink { get; } = new MobileNetworkSdfDirectionS(DownlinkValue);
-        /// <summary> Traffic flowing both to and from the UE. </summary>
+        /// <summary>
+        /// Traffic flowing both to and from the UE.
+        /// Serialized Name: SdfDirection.Bidirectional
+        /// </summary>
         public static MobileNetworkSdfDirectionS Bidirectional { get; } = new MobileNetworkSdfDirectionS(BidirectionalValue);
         /// <summary> Determines if two <see cref="MobileNetworkSdfDirectionS"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkSdfDirectionS left, MobileNetworkSdfDirectionS right) => left.Equals(right);

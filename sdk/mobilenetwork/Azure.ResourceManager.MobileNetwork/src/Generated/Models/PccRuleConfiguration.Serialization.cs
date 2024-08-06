@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -147,6 +149,109 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleName))
+                {
+                    builder.Append("  ruleName: ");
+                    if (RuleName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuleName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuleName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RulePrecedence), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rulePrecedence: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  rulePrecedence: ");
+                builder.AppendLine($"{RulePrecedence}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleQosPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleQosPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleQosPolicy))
+                {
+                    builder.Append("  ruleQosPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RuleQosPolicy, options, 2, false, "  ruleQosPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficControl), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  trafficControl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrafficControl))
+                {
+                    builder.Append("  trafficControl: ");
+                    builder.AppendLine($"'{TrafficControl.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceDataFlowTemplates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceDataFlowTemplates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServiceDataFlowTemplates))
+                {
+                    if (ServiceDataFlowTemplates.Any())
+                    {
+                        builder.Append("  serviceDataFlowTemplates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServiceDataFlowTemplates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serviceDataFlowTemplates: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PccRuleConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PccRuleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +260,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support writing '{options.Format}' format.");
             }
