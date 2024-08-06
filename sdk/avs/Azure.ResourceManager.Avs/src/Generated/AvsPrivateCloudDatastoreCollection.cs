@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Datastore_List</description>
+        /// <description>Datastores_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Datastore_List</description>
+        /// <description>Datastores_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

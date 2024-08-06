@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Avs.Models;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing an AvsPrivateCloudCluster along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudClusterResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetAvsPrivateCloudCluster method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPrivateCloudCluster method.
     /// </summary>
     public partial class AvsPrivateCloudClusterResource : ArmResource
     {
@@ -158,75 +159,6 @@ namespace Azure.ResourceManager.Avs
             return GetAvsPrivateCloudDatastores().Get(datastoreName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the AvsPrivateCloudCluster. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
-        {
-            return GetCachedClient(client => new VirtualMachineCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a VirtualMachine
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
-        {
-            return await GetVirtualMachines().GetAsync(virtualMachineId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a VirtualMachine
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<VirtualMachineResource> GetVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
-        {
-            return GetVirtualMachines().Get(virtualMachineId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of PlacementPolicyResources in the AvsPrivateCloudCluster. </summary>
         /// <returns> An object representing collection of PlacementPolicyResources and their operations over a PlacementPolicyResource. </returns>
         public virtual PlacementPolicyCollection GetPlacementPolicies()
@@ -294,6 +226,75 @@ namespace Azure.ResourceManager.Avs
         public virtual Response<PlacementPolicyResource> GetPlacementPolicy(string placementPolicyName, CancellationToken cancellationToken = default)
         {
             return GetPlacementPolicies().Get(placementPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AvsPrivateCloudClusterVirtualMachineResources in the AvsPrivateCloudCluster. </summary>
+        /// <returns> An object representing collection of AvsPrivateCloudClusterVirtualMachineResources and their operations over a AvsPrivateCloudClusterVirtualMachineResource. </returns>
+        public virtual AvsPrivateCloudClusterVirtualMachineCollection GetAvsPrivateCloudClusterVirtualMachines()
+        {
+            return GetCachedClient(client => new AvsPrivateCloudClusterVirtualMachineCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a VirtualMachine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AvsPrivateCloudClusterVirtualMachineResource>> GetAvsPrivateCloudClusterVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
+        {
+            return await GetAvsPrivateCloudClusterVirtualMachines().GetAsync(virtualMachineId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a VirtualMachine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineId"> ID of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AvsPrivateCloudClusterVirtualMachineResource> GetAvsPrivateCloudClusterVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
+        {
+            return GetAvsPrivateCloudClusterVirtualMachines().Get(virtualMachineId, cancellationToken);
         }
 
         /// <summary>
@@ -485,7 +486,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="patch"> The cluster properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, AvsPrivateCloudClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AvsPrivateCloudClusterResource>> UpdateAsync(WaitUntil waitUntil, AvsPrivateCloudClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -494,9 +495,9 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _avsPrivateCloudClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, _avsPrivateCloudClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<AvsPrivateCloudClusterResource>(new AvsPrivateCloudClusterOperationSource(Client), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, _avsPrivateCloudClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -531,7 +532,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="patch"> The cluster properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation Update(WaitUntil waitUntil, AvsPrivateCloudClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AvsPrivateCloudClusterResource> Update(WaitUntil waitUntil, AvsPrivateCloudClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -540,9 +541,9 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _avsPrivateCloudClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new AvsArmOperation(_avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, _avsPrivateCloudClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<AvsPrivateCloudClusterResource>(new AvsPrivateCloudClusterOperationSource(Client), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, _avsPrivateCloudClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -574,20 +575,11 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ClusterZoneList>> GetZonesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvsClusterZone"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvsClusterZone> GetZonesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
-            scope.Start();
-            try
-            {
-                var response = await _avsPrivateCloudClusterClustersRestClient.ListZonesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateListZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AvsClusterZone.DeserializeAvsClusterZone(e), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterResource.GetZones", "zones", null, cancellationToken);
         }
 
         /// <summary>
@@ -612,20 +604,11 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ClusterZoneList> GetZones(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvsClusterZone"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvsClusterZone> GetZones(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
-            scope.Start();
-            try
-            {
-                var response = _avsPrivateCloudClusterClustersRestClient.ListZones(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateListZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AvsClusterZone.DeserializeAvsClusterZone(e), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterResource.GetZones", "zones", null, cancellationToken);
         }
     }
 }
