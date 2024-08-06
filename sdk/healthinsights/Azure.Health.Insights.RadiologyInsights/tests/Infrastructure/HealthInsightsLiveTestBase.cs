@@ -37,7 +37,16 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new RadiologyInsightsClientOptions());
             RadiologyInsightsClient client;
-            TokenCredential credential = new DefaultAzureCredential();
+            TokenCredential credential;
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                credential = new MockCredential();
+            }
+            else
+            {
+                credential = new DefaultAzureCredential();
+            }
             client = new RadiologyInsightsClient(endpoint, credential, options);
             return skipInstrumenting ? client : InstrumentClient(client);
         }
