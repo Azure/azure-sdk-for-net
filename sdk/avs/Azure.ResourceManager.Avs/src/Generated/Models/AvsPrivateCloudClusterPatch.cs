@@ -48,27 +48,22 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterPatch"/>. </summary>
         public AvsPrivateCloudClusterPatch()
         {
-            Hosts = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterPatch"/>. </summary>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="hosts"> The hosts. </param>
+        /// <param name="properties"> The properties of a cluster resource that may be updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudClusterPatch(AvsSku sku, int? clusterSize, IList<string> hosts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsPrivateCloudClusterPatch(AvsSku sku, ClusterUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
-            ClusterSize = clusterSize;
-            Hosts = hosts;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         public AvsSku Sku { get; set; }
-        /// <summary> The cluster size. </summary>
-        public int? ClusterSize { get; set; }
-        /// <summary> The hosts. </summary>
-        public IList<string> Hosts { get; }
+        /// <summary> The properties of a cluster resource that may be updated. </summary>
+        public ClusterUpdateProperties Properties { get; set; }
     }
 }

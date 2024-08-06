@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworkDnsZone_ListDnsZones</description>
+        /// <description>WorkloadNetworks_ListDnsZones</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworkDnsZone_ListDnsZones</description>
+        /// <description>WorkloadNetworks_ListDnsZones</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

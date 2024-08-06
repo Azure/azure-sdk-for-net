@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartArray();
             foreach (var item in VmMembers)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -53,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -107,7 +112,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IList<string> vmMembers = default;
+            IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
             VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
@@ -122,10 +127,17 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("vmMembers"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     vmMembers = array;
                     continue;

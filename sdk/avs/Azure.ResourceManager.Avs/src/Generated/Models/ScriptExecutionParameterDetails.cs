@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/>. </summary>
-        /// <param name="type"> script execution parameter type. </param>
+        /// <param name="parameterType"> script execution parameter type. </param>
         /// <param name="name"> The parameter name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptExecutionParameterDetails(ScriptExecutionParameterType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptExecutionParameterDetails(ScriptExecutionParameterType parameterType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            ParameterType = parameterType;
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> script execution parameter type. </summary>
-        internal ScriptExecutionParameterType Type { get; set; }
+        internal ScriptExecutionParameterType ParameterType { get; set; }
         /// <summary> The parameter name. </summary>
         public string Name { get; set; }
     }

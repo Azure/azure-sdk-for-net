@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The ScriptExecutionPropertiesNamedOutput. </summary>
-    public partial class ScriptExecutionPropertiesNamedOutput
+    /// <summary> Properties of a Script Package subresource. </summary>
+    public partial class ScriptPackageProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,37 @@ namespace Azure.ResourceManager.Avs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScriptExecutionPropertiesNamedOutput"/>. </summary>
-        public ScriptExecutionPropertiesNamedOutput()
+        /// <summary> Initializes a new instance of <see cref="ScriptPackageProperties"/>. </summary>
+        public ScriptPackageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScriptExecutionPropertiesNamedOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptPackageProperties"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="description"> User friendly description of the package. </param>
+        /// <param name="version"> Module version. </param>
+        /// <param name="company"> Company that created and supports the package. </param>
+        /// <param name="uri"> Link to support by the package vendor. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptExecutionPropertiesNamedOutput(IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptPackageProperties(ScriptPackageProvisioningState? provisioningState, string description, string version, string company, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ProvisioningState = provisioningState;
+            Description = description;
+            Version = version;
+            Company = company;
+            Uri = uri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The provisioning state of the resource. </summary>
+        public ScriptPackageProvisioningState? ProvisioningState { get; }
+        /// <summary> User friendly description of the package. </summary>
+        public string Description { get; }
+        /// <summary> Module version. </summary>
+        public string Version { get; }
+        /// <summary> Company that created and supports the package. </summary>
+        public string Company { get; }
+        /// <summary> Link to support by the package vendor. </summary>
+        public Uri Uri { get; }
     }
 }

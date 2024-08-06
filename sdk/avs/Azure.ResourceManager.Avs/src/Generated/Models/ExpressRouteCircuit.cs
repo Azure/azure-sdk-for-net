@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="expressRouteId"> Identifier of the ExpressRoute Circuit (Microsoft Colo only). </param>
         /// <param name="expressRoutePrivatePeeringId"> ExpressRoute Circuit private peering identifier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCircuit(string primarySubnet, string secondarySubnet, string expressRouteId, string expressRoutePrivatePeeringId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExpressRouteCircuit(string primarySubnet, string secondarySubnet, ResourceIdentifier expressRouteId, ResourceIdentifier expressRoutePrivatePeeringId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimarySubnet = primarySubnet;
             SecondarySubnet = secondarySubnet;
@@ -70,8 +71,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> CIDR of secondary subnet. </summary>
         public string SecondarySubnet { get; }
         /// <summary> Identifier of the ExpressRoute Circuit (Microsoft Colo only). </summary>
-        public string ExpressRouteId { get; }
+        public ResourceIdentifier ExpressRouteId { get; }
         /// <summary> ExpressRoute Circuit private peering identifier. </summary>
-        public string ExpressRoutePrivatePeeringId { get; }
+        public ResourceIdentifier ExpressRoutePrivatePeeringId { get; }
     }
 }

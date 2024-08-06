@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Avs
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,44 +53,6 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(Direction))
-            {
-                writer.WritePropertyName("direction"u8);
-                writer.WriteStringValue(Direction.Value.ToString());
-            }
-            if (Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source);
-            }
-            if (Optional.IsDefined(Destination))
-            {
-                writer.WritePropertyName("destination"u8);
-                writer.WriteStringValue(Destination);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(Revision))
-            {
-                writer.WritePropertyName("revision"u8);
-                writer.WriteNumberValue(Revision.Value);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -124,21 +91,24 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
+            WorkloadNetworkPortMirroringProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string displayName = default;
-            PortMirroringProfileDirection? direction = default;
-            string source = default;
-            string destination = default;
-            PortMirroringProfileStatus? status = default;
-            WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState = default;
-            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = WorkloadNetworkPortMirroringProperties.DeserializeWorkloadNetworkPortMirroringProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -163,69 +133,6 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("direction"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            direction = new PortMirroringProfileDirection(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("source"u8))
-                        {
-                            source = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("destination"u8))
-                        {
-                            destination = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = new PortMirroringProfileStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new WorkloadNetworkPortMirroringProfileProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("revision"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            revision = property0.Value.GetInt64();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -237,13 +144,7 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
-                displayName,
-                direction,
-                source,
-                destination,
-                status,
-                provisioningState,
-                revision,
+                properties,
                 serializedAdditionalRawData);
         }
 

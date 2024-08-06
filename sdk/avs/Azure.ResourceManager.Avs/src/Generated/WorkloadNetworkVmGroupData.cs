@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/>. </summary>
         public WorkloadNetworkVmGroupData()
         {
-            Members = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/>. </summary>
@@ -62,31 +61,15 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name of the VM group. </param>
-        /// <param name="members"> Virtual machine members of this group. </param>
-        /// <param name="status"> VM Group status. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> members, WorkloadNetworkVmGroupStatus? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkVmGroupProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Members = members;
-            Status = status;
-            ProvisioningState = provisioningState;
-            Revision = revision;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display name of the VM group. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> Virtual machine members of this group. </summary>
-        public IList<string> Members { get; }
-        /// <summary> VM Group status. </summary>
-        public WorkloadNetworkVmGroupStatus? Status { get; }
-        /// <summary> The provisioning state. </summary>
-        public WorkloadNetworkVmGroupProvisioningState? ProvisioningState { get; }
-        /// <summary> NSX revision number. </summary>
-        public long? Revision { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public WorkloadNetworkVmGroupProperties Properties { get; set; }
     }
 }
