@@ -22,6 +22,7 @@ using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -205,7 +206,6 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                         Metadata = metadata,
                         SmbProperties = smbProperties
                     });
-
                 if (contents != default)
                 {
                     await fileClient.UploadAsync(contents);

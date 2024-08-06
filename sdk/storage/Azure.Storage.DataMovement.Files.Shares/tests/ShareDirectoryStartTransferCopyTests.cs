@@ -221,7 +221,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string permissionKey = default;
             if (propertiesType == TransferPropertiesTestType.Preserve)
             {
-                PermissionInfo permissionInfo = await container.CreatePermissionAsync(new ShareFilePermission() { Permission = _defaultPermissions });
+                PermissionInfo permissionInfo = await container.CreatePermissionAsync(new ShareFilePermission() { Permission = _defaultPermissions }, cancellationToken);
                 permissionKey = permissionInfo.FilePermissionKey;
             }
             await fileClient.CreateAsync(
