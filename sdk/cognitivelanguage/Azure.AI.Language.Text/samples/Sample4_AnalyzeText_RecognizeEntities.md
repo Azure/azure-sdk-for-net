@@ -17,7 +17,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 ## Recognize entities in multiple documents
 
-To recognize entities in multiple documents, call `AnalyzeText` on the `TextAnalysisClient` by passing the documents as an `AnalyzeTextInput` parameter. This returns a `AnalyzeTextEntitiesResult
+To recognize entities in multiple documents, call `AnalyzeText` on the `TextAnalysisClient` by passing the documents as an `AnalyzeTextInput` parameter. This returns a `AnalyzeTextEntitiesResult`.
 
 ```C# Snippet:Sample4_AnalyzeText_RecognizeEntities
 string textA =
