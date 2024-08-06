@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (Unreleased)
 - GA release
 
 ### Features Added
@@ -12,6 +12,7 @@
     - Renamed createdDateTime into createdAt
     - Patients - Info renamed into Patients - Details
     - Unique ID required to be added in the request parameters
+	- Make use of Managed Identity for authentication
 - Response changes:
     - "Datetime" field on FollowupCommunication renamed into "createdAt" field
     - Renamed createdDateTime into createdAt
