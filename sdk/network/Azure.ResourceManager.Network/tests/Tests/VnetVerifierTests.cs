@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
             _analysisRunName = SessionRecording.GenerateAssetName("analysisRun-");
             _analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(_analysisRunName, "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myAVNMResourceGroup/providers/Microsoft.Network/networkManagers/myAVNM/verifierWorkspaces/myVerifierWorkspace/reachabilityAnalysisIntents/myAnalysisIntent");
             _analysisIntentName = SessionRecording.GenerateAssetName("analysisIntent-");
-           // _analysisIntent =
+            _analysisIntent = await _vnetVerifier.CreateAnalysisIntentAsync(_analysisIntentName, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmSrc"),new ResourceIdentifier ( "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmDest"), new List<string>() { "10.4.0.0" }, new List<string>() { "10.4.0.1" }, new List<string>() { "0" }, new List<string>() { "0" }, new List<NetworkProtocol>() { "Any" });
         }
 
         [TearDown]
@@ -129,7 +129,8 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task DeleteAnalysisIntent()
         {
             string analysisIntentName = SessionRecording.GenerateAssetName("analysisIntent-");
-            var analysisIntent = await _vnetVerifier.CreateAnalysisIntentAsync(_analysisIntentName);
+            var analysisIntent = await _vnetVerifier.CreateAnalysisIntentAsync(_analysisIntentName, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmSrc"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmDest"), new List<string>() { "10.4.0.0" }, new List<string>() { "10.4.0.1" }, new List<string>() { "0" }, new List<string>() {"0"}, new List<NetworkProtocol>() { "Any"});
+
             Assert.IsNotNull(analysisIntent.Data);
             Assert.AreEqual(analysisIntentName, analysisIntent.Data.Name);
 
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task DeleteAnalysisRun()
         {
             string analysisRunName = SessionRecording.GenerateAssetName("analysisRun-");
-            var analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(analysisRunName, new string("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myAVNMResourceGroup/providers/Microsoft.Network/networkManagers/myAVNM/verifierWorkspaces/myVerifierWorkspace/reachabilityAnalysisIntents/myAnalysisIntent"));
+            var analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(analysisRunName,"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myAVNMResourceGroup/providers/Microsoft.Network/networkManagers/myAVNM/verifierWorkspaces/myVerifierWorkspace/reachabilityAnalysisIntents/myAnalysisIntent");
             Assert.IsNotNull(analysisRun.Data);
             Assert.AreEqual(analysisRunName, analysisRun.Data.Name);
 

@@ -78,5 +78,24 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             ArmOperation<ReachabilityAnalysisRunResource> analysisIntentResource = await analysisRun.CreateOrUpdateAsync(WaitUntil.Completed, analysisRunName, reachabilityAnalysisRunData).ConfigureAwait(false);
             return analysisIntentResource.Value;
         }
+
+        public static async Task<ReachabilityAnalysisIntentResource> CreateAnalysisIntentAsync(this VerifierWorkspaceResource vnetVerifier,string analysisIntentName, ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId,List<string> sourceIps,List<string> destinationIps,List<string> sourcePorts,List<string> destinationPorts,List<NetworkProtocol> protocols)
+        {
+            ReachabilityAnalysisIntentCollection analysisIntent = vnetVerifier.GetReachabilityAnalysisIntents();
+            var ipTraffic = new IPTraffic(sourceIPs: sourceIps, destinationIPs: destinationIps, sourcePorts: sourcePorts, destinationPorts: destinationPorts, protocols: protocols);
+
+            var reachabilityAnalysisIntentData = new ReachabilityAnalysisIntentData
+            {
+                Properties = new ReachabilityAnalysisIntentProperties
+                {
+                    SourceResourceId = sourceResourceId,
+                    DestinationResourceId = destinationResourceId,
+                    IPTraffic = ipTraffic
+                }
+            };
+            ArmOperation<ReachabilityAnalysisIntentResource> analysisIntentResource = await analysisIntent.CreateOrUpdateAsync(WaitUntil.Completed,analysisIntentName, reachabilityAnalysisIntentData).ConfigureAwait(false);
+
+            return analysisIntentResource.Value;
+        }
     }
 }
