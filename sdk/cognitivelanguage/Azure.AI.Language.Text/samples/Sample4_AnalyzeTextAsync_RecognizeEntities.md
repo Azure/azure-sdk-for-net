@@ -220,6 +220,6 @@ public void PrintDateValue(IReadOnlyList<DateValue> dateValues)
 
 See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
-[Preview API changes]: https://learn.microsoft.com/en-us/azure/ai-services/language-service/named-entity-recognition/concepts/ga-preview-mapping
+[Preview API changes]: https://learn.microsoft.com/azure/ai-services/language-service/named-entity-recognition/concepts/ga-preview-mapping
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples/README.md
