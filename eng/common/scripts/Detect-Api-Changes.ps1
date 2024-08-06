@@ -103,12 +103,13 @@ if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiR
 
 $responses = @{}
 
-$packageProperties = Get-ChildItem -Recurse "$configFileDir" *.json
+$packageProperties = Get-ChildItem -Recurse -Force "$configFileDir" `
+  | Where-Object { $_.Extension -eq '.json' }
 
 foreach ($packagePropFile in $packageProperties)
 {
     $packageMetadata = Get-Content $packagePropFile | ConvertFrom-Json
-    Write-Host "Processing $($packageMetadata.Name)"
+    Write-Host "Processing $($packageMetadata.ArtifactName)"
 
     $packages = &$FindArtifactForApiReviewFn $ArtifactPath $packageMetadata.Name
 
@@ -116,24 +117,24 @@ foreach ($packagePropFile in $packageProperties)
     {
         $pkgPath = $packages.Values[0]
         $isRequired = Should-Process-Package -pkgPath $pkgPath -packageName $($packageMetadata.ArtifactName)
-        Write-Host "Is API change detect required for $($packageMetadata.Name):$($isRequired)"
+        Write-Host "Is API change detect required for $($packages.Name):$($isRequired)"
         if ($isRequired -eq $True)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
-            $respCode = Submit-Request -filePath $filePath -packageName $($packageMetadata.Name)
+            $respCode = Submit-Request -filePath $filePath -packageName $($packageMetadata.ArtifactName)
             if ($respCode -ne '200')
             {
-                $responses[$($packageMetadata.Name)] = $respCode
+                $responses[$($packageMetadata.ArtifactName)] = $respCode
             }
         }
         else
         {
-            Write-Host "Pull request does not have any change for $($packageMetadata.Name)). Skipping API change detect."
+            Write-Host "Pull request does not have any change for $($packageMetadata.ArtifactName)). Skipping API change detect."
         }
     }
     else
     {
-        Write-Host "No package is found in artifact path to find API changes for $($packageMetadata.Name)"
+        Write-Host "No package is found in artifact path to find API changes for $($packageMetadata.ArtifactName)"
     }
 }
 
