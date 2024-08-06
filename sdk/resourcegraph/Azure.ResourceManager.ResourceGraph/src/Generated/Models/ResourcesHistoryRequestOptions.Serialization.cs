@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         void IJsonModel<ResourcesHistoryRequestOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesHistoryRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourcesHistoryRequestOptions IJsonModel<ResourcesHistoryRequestOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

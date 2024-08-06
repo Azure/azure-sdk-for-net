@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.EnergyServices.Models
 
         void IJsonModel<EnergyServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EnergyServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EnergyServiceProperties IJsonModel<EnergyServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

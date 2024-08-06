@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         void IJsonModel<ManagementNetworkConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);
             writer.WriteObjectValue(InfrastructureVpnConfiguration, options);
             writer.WritePropertyName("workloadVpnConfiguration"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagementNetworkConfigurationProperties IJsonModel<ManagementNetworkConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

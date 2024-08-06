@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         void IJsonModel<StopSellSubscriptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StopSellSubscriptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StopSellSubscriptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Marketplace.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StopSellSubscriptions IJsonModel<StopSellSubscriptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

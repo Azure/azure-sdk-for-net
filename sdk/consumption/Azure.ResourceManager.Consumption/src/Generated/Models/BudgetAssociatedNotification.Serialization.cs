@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Consumption.Models
 
         void IJsonModel<BudgetAssociatedNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BudgetAssociatedNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("operator"u8);
@@ -84,7 +92,6 @@ namespace Azure.ResourceManager.Consumption.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BudgetAssociatedNotification IJsonModel<BudgetAssociatedNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

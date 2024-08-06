@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Astro.Models
 
         void IJsonModel<AstroUserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AstroUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AstroUserDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("firstName"u8);
             writer.WriteStringValue(FirstName);
             writer.WritePropertyName("lastName"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.Astro.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AstroUserDetails IJsonModel<AstroUserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

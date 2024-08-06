@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<AuthorizationProviderOAuth2GrantTypes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2GrantTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AuthorizationProviderOAuth2GrantTypes)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AuthorizationCode))
             {
                 writer.WritePropertyName("authorizationCode"u8);
@@ -65,7 +73,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AuthorizationProviderOAuth2GrantTypes IJsonModel<AuthorizationProviderOAuth2GrantTypes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

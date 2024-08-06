@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         void IJsonModel<KubernetesClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KubernetesClusterProperties IJsonModel<KubernetesClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

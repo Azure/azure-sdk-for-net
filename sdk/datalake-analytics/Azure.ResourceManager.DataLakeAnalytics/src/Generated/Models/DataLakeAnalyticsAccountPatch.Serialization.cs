@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         void IJsonModel<DataLakeAnalyticsAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -135,7 +143,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataLakeAnalyticsAccountPatch IJsonModel<DataLakeAnalyticsAccountPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         void IJsonModel<UserAuthenticationUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<UserAuthenticationUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UserAuthenticationUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UserAuthenticationUpdate IJsonModel<UserAuthenticationUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

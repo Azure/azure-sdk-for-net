@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<DataFactoryExpressionV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryExpressionV2)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(V2Type))
             {
                 writer.WritePropertyName("type"u8);
@@ -77,7 +85,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataFactoryExpressionV2 IJsonModel<DataFactoryExpressionV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

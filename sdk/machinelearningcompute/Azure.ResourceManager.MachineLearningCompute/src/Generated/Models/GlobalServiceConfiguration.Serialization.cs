@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         void IJsonModel<GlobalServiceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GlobalServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         GlobalServiceConfiguration IJsonModel<GlobalServiceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

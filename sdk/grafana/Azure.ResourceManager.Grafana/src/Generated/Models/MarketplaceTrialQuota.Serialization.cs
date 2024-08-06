@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Grafana.Models
 
         void IJsonModel<MarketplaceTrialQuota>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AvailablePromotion))
             {
                 writer.WritePropertyName("availablePromotion"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.Grafana.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MarketplaceTrialQuota IJsonModel<MarketplaceTrialQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

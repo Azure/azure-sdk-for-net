@@ -19,13 +19,21 @@ namespace Azure.AI.AnomalyDetector
 
         void IJsonModel<MultivariateLastDetectionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VariableStates))
             {
                 writer.WritePropertyName("variableStates"u8);
@@ -61,7 +69,6 @@ namespace Azure.AI.AnomalyDetector
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MultivariateLastDetectionResult IJsonModel<MultivariateLastDetectionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

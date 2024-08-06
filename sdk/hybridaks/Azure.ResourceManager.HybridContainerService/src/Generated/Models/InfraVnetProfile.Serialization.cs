@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         void IJsonModel<InfraVnetProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<InfraVnetProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Hci))
             {
                 writer.WritePropertyName("hci"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InfraVnetProfile IJsonModel<InfraVnetProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Synapse.Models
 
         void IJsonModel<PurviewConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PurviewConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PurviewResourceId))
             {
                 writer.WritePropertyName("purviewResourceId"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Synapse.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PurviewConfiguration IJsonModel<PurviewConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

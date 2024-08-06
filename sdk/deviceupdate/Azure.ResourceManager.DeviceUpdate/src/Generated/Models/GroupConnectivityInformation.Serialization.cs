@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         void IJsonModel<GroupConnectivityInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GroupConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
@@ -76,7 +84,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         GroupConnectivityInformation IJsonModel<GroupConnectivityInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

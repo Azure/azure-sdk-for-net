@@ -19,13 +19,21 @@ namespace Azure.AI.Translation.Text
 
         void IJsonModel<GetSupportedLanguagesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetSupportedLanguagesResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Translation))
             {
                 writer.WritePropertyName("translation"u8);
@@ -74,7 +82,6 @@ namespace Azure.AI.Translation.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         GetSupportedLanguagesResult IJsonModel<GetSupportedLanguagesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

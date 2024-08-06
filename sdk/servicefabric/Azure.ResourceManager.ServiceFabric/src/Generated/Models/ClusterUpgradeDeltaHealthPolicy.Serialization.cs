@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         void IJsonModel<ClusterUpgradeDeltaHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("maxPercentDeltaUnhealthyNodes"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyNodes);
             writer.WritePropertyName("maxPercentUpgradeDomainDeltaUnhealthyNodes"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ClusterUpgradeDeltaHealthPolicy IJsonModel<ClusterUpgradeDeltaHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

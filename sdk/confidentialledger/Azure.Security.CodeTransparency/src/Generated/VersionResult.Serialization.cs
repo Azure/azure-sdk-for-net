@@ -19,13 +19,21 @@ namespace Azure.Security.CodeTransparency
 
         void IJsonModel<VersionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VersionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VersionResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("scitt_version"u8);
             writer.WriteStringValue(ScittVersion);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.Security.CodeTransparency
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VersionResult IJsonModel<VersionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

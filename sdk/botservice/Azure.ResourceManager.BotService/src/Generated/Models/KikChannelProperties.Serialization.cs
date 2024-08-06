@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.BotService.Models
 
         void IJsonModel<KikChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KikChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KikChannelProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
             if (Optional.IsDefined(ApiKey))
@@ -55,7 +63,6 @@ namespace Azure.ResourceManager.BotService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KikChannelProperties IJsonModel<KikChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

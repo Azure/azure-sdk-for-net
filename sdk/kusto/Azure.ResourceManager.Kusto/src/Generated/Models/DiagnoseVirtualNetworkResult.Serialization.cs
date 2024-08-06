@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Kusto.Models
 
         void IJsonModel<DiagnoseVirtualNetworkResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DiagnoseVirtualNetworkResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Findings))
             {
                 writer.WritePropertyName("findings"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Kusto.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DiagnoseVirtualNetworkResult IJsonModel<DiagnoseVirtualNetworkResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         void IJsonModel<ElasticSanVirtualNetworkRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(VirtualNetworkResourceId);
             if (Optional.IsDefined(Action))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ElasticSanVirtualNetworkRule IJsonModel<ElasticSanVirtualNetworkRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

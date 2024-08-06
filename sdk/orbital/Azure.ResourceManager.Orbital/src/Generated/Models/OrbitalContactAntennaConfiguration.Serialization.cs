@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Orbital.Models
 
         void IJsonModel<OrbitalContactAntennaConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactAntennaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DestinationIP))
             {
                 writer.WritePropertyName("destinationIp"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.Orbital.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OrbitalContactAntennaConfiguration IJsonModel<OrbitalContactAntennaConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

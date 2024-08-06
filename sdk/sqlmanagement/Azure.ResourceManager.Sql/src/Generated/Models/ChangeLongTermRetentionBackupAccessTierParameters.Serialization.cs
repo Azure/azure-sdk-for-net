@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<ChangeLongTermRetentionBackupAccessTierParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ChangeLongTermRetentionBackupAccessTierParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChangeLongTermRetentionBackupAccessTierParameters)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("backupStorageAccessTier"u8);
             writer.WriteStringValue(BackupStorageAccessTier);
             writer.WritePropertyName("operationMode"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ChangeLongTermRetentionBackupAccessTierParameters IJsonModel<ChangeLongTermRetentionBackupAccessTierParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

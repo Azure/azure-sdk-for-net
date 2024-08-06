@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         void IJsonModel<EventHubsNetworkRuleSetIPRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsNetworkRuleSetIPRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventHubsNetworkRuleSetIPRules)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.EventHubs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EventHubsNetworkRuleSetIPRules IJsonModel<EventHubsNetworkRuleSetIPRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

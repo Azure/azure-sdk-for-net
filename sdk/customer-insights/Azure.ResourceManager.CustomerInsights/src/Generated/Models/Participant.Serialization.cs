@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         void IJsonModel<Participant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(Participant)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("profileTypeName"u8);
             writer.WriteStringValue(ProfileTypeName);
             writer.WritePropertyName("participantPropertyReferences"u8);
@@ -79,7 +87,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         Participant IJsonModel<Participant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

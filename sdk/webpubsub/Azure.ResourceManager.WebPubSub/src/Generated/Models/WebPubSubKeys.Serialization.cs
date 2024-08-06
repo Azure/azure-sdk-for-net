@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         void IJsonModel<WebPubSubKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebPubSubKeys)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebPubSubKeys IJsonModel<WebPubSubKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

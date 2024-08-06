@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.SignalR.Models
 
         void IJsonModel<SignalRUpstreamAuthSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("type"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.SignalR.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SignalRUpstreamAuthSettings IJsonModel<SignalRUpstreamAuthSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

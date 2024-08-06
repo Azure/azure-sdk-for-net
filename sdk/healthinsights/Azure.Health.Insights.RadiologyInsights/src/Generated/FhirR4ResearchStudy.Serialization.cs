@@ -19,13 +19,22 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<FhirR4ResearchStudy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4ResearchStudy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FhirR4ResearchStudy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
@@ -277,7 +286,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         FhirR4ResearchStudy IJsonModel<FhirR4ResearchStudy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

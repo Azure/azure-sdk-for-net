@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         void IJsonModel<PacketCoreControlPlaneCollectDiagnosticsPackage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneCollectDiagnosticsPackage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("storageAccountBlobUrl"u8);
             writer.WriteStringValue(StorageAccountBlobUri.AbsoluteUri);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PacketCoreControlPlaneCollectDiagnosticsPackage IJsonModel<PacketCoreControlPlaneCollectDiagnosticsPackage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

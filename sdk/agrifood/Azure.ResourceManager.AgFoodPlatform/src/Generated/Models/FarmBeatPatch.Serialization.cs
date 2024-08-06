@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         void IJsonModel<FarmBeatPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FarmBeatPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -68,7 +76,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FarmBeatPatch IJsonModel<FarmBeatPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Workloads.Models
 
         void IJsonModel<HighAvailabilitySoftwareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HighAvailabilitySoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HighAvailabilitySoftwareConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("fencingClientId"u8);
             writer.WriteStringValue(FencingClientId);
             writer.WritePropertyName("fencingClientPassword"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.Workloads.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         HighAvailabilitySoftwareConfiguration IJsonModel<HighAvailabilitySoftwareConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

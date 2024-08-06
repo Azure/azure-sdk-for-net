@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Synapse.Models
 
         void IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Synapse.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

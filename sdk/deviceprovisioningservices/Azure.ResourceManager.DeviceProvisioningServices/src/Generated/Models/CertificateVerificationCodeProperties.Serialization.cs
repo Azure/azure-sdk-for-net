@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         void IJsonModel<CertificateVerificationCodeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(VerificationCode))
             {
                 writer.WritePropertyName("verificationCode"u8);
@@ -95,7 +103,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CertificateVerificationCodeProperties IJsonModel<CertificateVerificationCodeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

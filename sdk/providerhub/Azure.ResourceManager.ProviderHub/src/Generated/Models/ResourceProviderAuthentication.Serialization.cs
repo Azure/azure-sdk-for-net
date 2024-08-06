@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         void IJsonModel<ResourceProviderAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceProviderAuthentication)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("allowedAudiences"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedAudiences)
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceProviderAuthentication IJsonModel<ResourceProviderAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
