@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Avs
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,34 +53,6 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Company))
-            {
-                writer.WritePropertyName("company"u8);
-                writer.WriteStringValue(Company);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
-            {
-                writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -114,19 +91,24 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
+            ScriptPackageProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ScriptPackageProvisioningState? provisioningState = default;
-            string description = default;
-            string version = default;
-            string company = default;
-            string uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ScriptPackageProperties.DeserializeScriptPackageProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -151,47 +133,6 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ScriptPackageProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("company"u8))
-                        {
-                            company = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("uri"u8))
-                        {
-                            uri = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -203,11 +144,7 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
-                provisioningState,
-                description,
-                version,
-                company,
-                uri,
+                properties,
                 serializedAdditionalRawData);
         }
 

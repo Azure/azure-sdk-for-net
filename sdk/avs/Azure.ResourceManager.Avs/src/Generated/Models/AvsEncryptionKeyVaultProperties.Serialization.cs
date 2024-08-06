@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("autoDetectedKeyVersion"u8);
                 writer.WriteStringValue(AutoDetectedKeyVersion);
             }
-            if (Optional.IsDefined(AvsEncryptionKeyVaultPropertiei))
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
-                writer.WriteStringValue(AvsEncryptionKeyVaultPropertiei);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyState))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Avs.Models
             string keyName = default;
             string keyVersion = default;
             string autoDetectedKeyVersion = default;
-            string keyVaultUrl = default;
+            Uri keyVaultUrl = default;
             AvsEncryptionKeyStatus? keyState = default;
             AvsEncryptionVersionType? versionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -121,7 +121,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("keyVaultUrl"u8))
                 {
-                    keyVaultUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyState"u8))

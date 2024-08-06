@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Avs.Optional.IsDefined(Type))
+            if (options.Format != "W" && Avs.Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ParameterType.Value.ToString());
             }
             if (Avs.Optional.IsDefined(Name))
             {

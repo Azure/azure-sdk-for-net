@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
@@ -188,8 +189,11 @@ namespace Azure.ResourceManager.Avs.Samples
             string globalReachConnectionName = "connection1";
             GlobalReachConnectionData data = new GlobalReachConnectionData()
             {
-                AuthorizationKey = "01010101-0101-0101-0101-010101010101",
-                PeerExpressRouteCircuit = new ResourceIdentifier("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.Network/expressRouteCircuits/mypeer"),
+                Properties = new GlobalReachConnectionProperties()
+                {
+                    AuthorizationKey = "01010101-0101-0101-0101-010101010101",
+                    PeerExpressRouteCircuit = "/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.Network/expressRouteCircuits/mypeer",
+                },
             };
             ArmOperation<GlobalReachConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, globalReachConnectionName, data);
             GlobalReachConnectionResource result = lro.Value;

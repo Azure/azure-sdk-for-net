@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
@@ -73,7 +74,10 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             AvsPrivateCloudDatastoreData data = new AvsPrivateCloudDatastoreData()
             {
-                NetAppVolumeId = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/ResourceGroup1/providers/Microsoft.NetApp/netAppAccounts/NetAppAccount1/capacityPools/CapacityPool1/volumes/NFSVol1"),
+                Properties = new DatastoreProperties()
+                {
+                    NetAppVolumeId = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/ResourceGroup1/providers/Microsoft.NetApp/netAppAccounts/NetAppAccount1/capacityPools/CapacityPool1/volumes/NFSVol1"),
+                },
             };
             ArmOperation<AvsPrivateCloudDatastoreResource> lro = await avsPrivateCloudDatastore.UpdateAsync(WaitUntil.Completed, data);
             AvsPrivateCloudDatastoreResource result = lro.Value;

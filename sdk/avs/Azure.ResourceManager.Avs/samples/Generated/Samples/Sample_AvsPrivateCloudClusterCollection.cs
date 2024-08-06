@@ -189,7 +189,10 @@ namespace Azure.ResourceManager.Avs.Samples
             string clusterName = "cluster1";
             AvsPrivateCloudClusterData data = new AvsPrivateCloudClusterData(new AvsSku("AV20"))
             {
-                ClusterSize = 3,
+                Properties = new ClusterProperties()
+                {
+                    ClusterSize = 3,
+                },
             };
             ArmOperation<AvsPrivateCloudClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             AvsPrivateCloudClusterResource result = lro.Value;

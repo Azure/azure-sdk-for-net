@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
@@ -189,16 +190,19 @@ namespace Azure.ResourceManager.Avs.Samples
             string dnsZoneId = "dnsZone1";
             WorkloadNetworkDnsZoneData data = new WorkloadNetworkDnsZoneData()
             {
-                DisplayName = "dnsZone1",
-                Domain =
+                Properties = new WorkloadNetworkDnsZoneProperties()
+                {
+                    DisplayName = "dnsZone1",
+                    Domain =
 {
 },
-                DnsServerIPs =
+                    DnsServerIPs =
 {
 IPAddress.Parse("1.1.1.1")
 },
-                SourceIP = IPAddress.Parse("8.8.8.8"),
-                Revision = 1,
+                    SourceIP = "8.8.8.8",
+                    Revision = 1,
+                },
             };
             ArmOperation<WorkloadNetworkDnsZoneResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dnsZoneId, data);
             WorkloadNetworkDnsZoneResource result = lro.Value;

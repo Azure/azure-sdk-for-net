@@ -72,10 +72,13 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             WorkloadNetworkPortMirroringProfileData data = new WorkloadNetworkPortMirroringProfileData()
             {
-                Direction = PortMirroringProfileDirection.Bidirectional,
-                Source = "vmGroup1",
-                Destination = "vmGroup2",
-                Revision = 1,
+                Properties = new WorkloadNetworkPortMirroringProperties()
+                {
+                    Direction = PortMirroringProfileDirection.Bidirectional,
+                    Source = "vmGroup1",
+                    Destination = "vmGroup2",
+                    Revision = 1,
+                },
             };
             ArmOperation<WorkloadNetworkPortMirroringProfileResource> lro = await workloadNetworkPortMirroringProfile.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkPortMirroringProfileResource result = lro.Value;

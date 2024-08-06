@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
@@ -188,7 +189,10 @@ namespace Azure.ResourceManager.Avs.Samples
             string cloudLinkName = "cloudLink1";
             AvsCloudLinkData data = new AvsCloudLinkData()
             {
-                LinkedCloud = new ResourceIdentifier("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.AVS/privateClouds/cloud2"),
+                Properties = new CloudLinkProperties()
+                {
+                    LinkedCloud = "/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.AVS/privateClouds/cloud2",
+                },
             };
             ArmOperation<AvsCloudLinkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudLinkName, data);
             AvsCloudLinkResource result = lro.Value;

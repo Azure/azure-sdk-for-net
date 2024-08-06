@@ -328,12 +328,11 @@ namespace Azure.ResourceManager.Avs.Samples
             string privateCloudName = "cloud1";
             AvsPrivateCloudData data = new AvsPrivateCloudData(new AzureLocation("eastus2"), new AvsSku("AV36"))
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
-                ManagementCluster = new AvsManagementCluster()
+                Properties = new PrivateCloudProperties(new AvsManagementCluster()
                 {
                     ClusterSize = 4,
-                },
-                NetworkBlock = "192.168.48.0/22",
+                }, "192.168.48.0/22"),
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Tags =
 {
 },
@@ -375,17 +374,18 @@ namespace Azure.ResourceManager.Avs.Samples
             string privateCloudName = "cloud1";
             AvsPrivateCloudData data = new AvsPrivateCloudData(new AzureLocation("eastus2"), new AvsSku("AV36"))
             {
-                ManagementCluster = new AvsManagementCluster()
+                Properties = new PrivateCloudProperties(new AvsManagementCluster()
                 {
                     ClusterSize = 4,
-                },
-                Availability = new PrivateCloudAvailabilityProperties()
+                }, "192.168.48.0/22")
                 {
-                    Strategy = AvailabilityStrategy.DualZone,
-                    Zone = 1,
-                    SecondaryZone = 2,
+                    Availability = new PrivateCloudAvailabilityProperties()
+                    {
+                        Strategy = AvailabilityStrategy.DualZone,
+                        Zone = 1,
+                        SecondaryZone = 2,
+                    },
                 },
-                NetworkBlock = "192.168.48.0/22",
                 Tags =
 {
 },

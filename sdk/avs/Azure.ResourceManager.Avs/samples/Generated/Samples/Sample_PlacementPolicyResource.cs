@@ -74,17 +74,20 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             PlacementPolicyPatch patch = new PlacementPolicyPatch()
             {
-                State = PlacementPolicyState.Disabled,
-                VmMembers =
+                Properties = new PlacementPolicyUpdateProperties()
+                {
+                    State = PlacementPolicyState.Disabled,
+                    VmMembers =
 {
 new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-128"),new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-256")
 },
-                HostMembers =
+                    HostMembers =
 {
 "fakehost22.nyc1.kubernetes.center","fakehost23.nyc1.kubernetes.center","fakehost24.nyc1.kubernetes.center"
 },
-                AffinityStrength = VmHostPlacementPolicyAffinityStrength.Must,
-                AzureHybridBenefitType = AzureHybridBenefitType.SqlHost,
+                    AffinityStrength = VmHostPlacementPolicyAffinityStrength.Must,
+                    AzureHybridBenefitType = AzureHybridBenefitType.SqlHost,
+                },
             };
             ArmOperation<PlacementPolicyResource> lro = await placementPolicy.UpdateAsync(WaitUntil.Completed, patch);
             PlacementPolicyResource result = lro.Value;

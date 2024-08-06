@@ -189,11 +189,14 @@ namespace Azure.ResourceManager.Avs.Samples
             string portMirroringId = "portMirroring1";
             WorkloadNetworkPortMirroringProfileData data = new WorkloadNetworkPortMirroringProfileData()
             {
-                DisplayName = "portMirroring1",
-                Direction = PortMirroringProfileDirection.Bidirectional,
-                Source = "vmGroup1",
-                Destination = "vmGroup2",
-                Revision = 1,
+                Properties = new WorkloadNetworkPortMirroringProperties()
+                {
+                    DisplayName = "portMirroring1",
+                    Direction = PortMirroringProfileDirection.Bidirectional,
+                    Source = "vmGroup1",
+                    Destination = "vmGroup2",
+                    Revision = 1,
+                },
             };
             ArmOperation<WorkloadNetworkPortMirroringProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, portMirroringId, data);
             WorkloadNetworkPortMirroringProfileResource result = lro.Value;

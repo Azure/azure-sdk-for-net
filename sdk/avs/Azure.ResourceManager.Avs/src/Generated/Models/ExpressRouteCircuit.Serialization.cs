@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Avs.Models
             }
             string primarySubnet = default;
             string secondarySubnet = default;
-            string expressRouteId = default;
-            string expressRoutePrivatePeeringId = default;
+            ResourceIdentifier expressRouteId = default;
+            ResourceIdentifier expressRoutePrivatePeeringId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,12 +104,20 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("expressRouteID"u8))
                 {
-                    expressRouteId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expressRouteId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expressRoutePrivatePeeringID"u8))
                 {
-                    expressRoutePrivatePeeringId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expressRoutePrivatePeeringId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

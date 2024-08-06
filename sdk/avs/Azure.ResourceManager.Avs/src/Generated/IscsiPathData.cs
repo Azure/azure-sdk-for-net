@@ -52,13 +52,8 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IscsiPathData"/>. </summary>
-        /// <param name="networkBlock"> CIDR Block for iSCSI path. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkBlock"/> is null. </exception>
-        public IscsiPathData(string networkBlock)
+        public IscsiPathData()
         {
-            Argument.AssertNotNull(networkBlock, nameof(networkBlock));
-
-            NetworkBlock = networkBlock;
         }
 
         /// <summary> Initializes a new instance of <see cref="IscsiPathData"/>. </summary>
@@ -66,24 +61,15 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The state of the iSCSI path provisioning. </param>
-        /// <param name="networkBlock"> CIDR Block for iSCSI path. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IscsiPathData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IscsiPathProvisioningState? provisioningState, string networkBlock, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal IscsiPathData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IscsiPathProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            NetworkBlock = networkBlock;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IscsiPathData"/> for deserialization. </summary>
-        internal IscsiPathData()
-        {
-        }
-
-        /// <summary> The state of the iSCSI path provisioning. </summary>
-        public IscsiPathProvisioningState? ProvisioningState { get; }
-        /// <summary> CIDR Block for iSCSI path. </summary>
-        public string NetworkBlock { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public IscsiPathProperties Properties { get; set; }
     }
 }

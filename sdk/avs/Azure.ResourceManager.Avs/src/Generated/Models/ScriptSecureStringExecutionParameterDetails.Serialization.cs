@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStringValue(SecureValue);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ParameterType.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

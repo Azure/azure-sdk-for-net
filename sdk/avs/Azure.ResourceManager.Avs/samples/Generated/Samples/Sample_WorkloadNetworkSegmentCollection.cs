@@ -189,17 +189,20 @@ namespace Azure.ResourceManager.Avs.Samples
             string segmentId = "segment1";
             WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData()
             {
-                DisplayName = "segment1",
-                ConnectedGateway = "/infra/tier-1s/gateway",
-                Subnet = new WorkloadNetworkSegmentSubnet()
+                Properties = new WorkloadNetworkSegmentProperties()
                 {
-                    DhcpRanges =
+                    DisplayName = "segment1",
+                    ConnectedGateway = "/infra/tier-1s/gateway",
+                    Subnet = new WorkloadNetworkSegmentSubnet()
+                    {
+                        DhcpRanges =
 {
 "40.20.0.0-40.20.0.1"
 },
-                    GatewayAddress = "40.20.20.20/16",
+                        GatewayAddress = "40.20.20.20/16",
+                    },
+                    Revision = 1,
                 },
-                Revision = 1,
             };
             ArmOperation<WorkloadNetworkSegmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, segmentId, data);
             WorkloadNetworkSegmentResource result = lro.Value;

@@ -168,18 +168,21 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch()
             {
                 Identity = new ManagedServiceIdentity("None"),
-                ManagementCluster = new AvsManagementCluster()
+                Properties = new PrivateCloudUpdateProperties()
                 {
-                    ClusterSize = 4,
-                },
-                Encryption = new CustomerManagedEncryption()
-                {
-                    Status = AvsEncryptionState.Enabled,
-                    KeyVaultProperties = new AvsEncryptionKeyVaultProperties()
+                    ManagementCluster = new AvsManagementCluster()
                     {
-                        KeyName = "keyname1",
-                        KeyVersion = "ver1.0",
-                        KeyVaultUri = new Uri("https://keyvault1-kmip-kvault.vault.azure.net/"),
+                        ClusterSize = 4,
+                    },
+                    Encryption = new CustomerManagedEncryption()
+                    {
+                        Status = AvsEncryptionState.Enabled,
+                        KeyVaultProperties = new AvsEncryptionKeyVaultProperties()
+                        {
+                            KeyName = "keyname1",
+                            KeyVersion = "ver1.0",
+                            KeyVaultUri = new Uri("https://keyvault1-kmip-kvault.vault.azure.net/"),
+                        },
                     },
                 },
             };
@@ -217,9 +220,12 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch()
             {
-                ManagementCluster = new AvsManagementCluster()
+                Properties = new PrivateCloudUpdateProperties()
                 {
-                    ClusterSize = 4,
+                    ManagementCluster = new AvsManagementCluster()
+                    {
+                        ClusterSize = 4,
+                    },
                 },
             };
             ArmOperation<AvsPrivateCloudResource> lro = await avsPrivateCloud.UpdateAsync(WaitUntil.Completed, patch);

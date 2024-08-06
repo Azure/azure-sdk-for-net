@@ -72,7 +72,10 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             AvsPrivateCloudClusterPatch patch = new AvsPrivateCloudClusterPatch()
             {
-                ClusterSize = 4,
+                Properties = new ClusterUpdateProperties()
+                {
+                    ClusterSize = 4,
+                },
             };
             ArmOperation<AvsPrivateCloudClusterResource> lro = await avsPrivateCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
             AvsPrivateCloudClusterResource result = lro.Value;

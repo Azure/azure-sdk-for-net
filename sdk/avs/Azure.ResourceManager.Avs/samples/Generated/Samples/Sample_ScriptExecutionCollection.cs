@@ -189,8 +189,10 @@ namespace Azure.ResourceManager.Avs.Samples
             string scriptExecutionName = "addSsoServer";
             ScriptExecutionData data = new ScriptExecutionData()
             {
-                ScriptCmdletId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/AVS.PowerCommands@1.0.0/scriptCmdlets/New-SsoExternalIdentitySource"),
-                Parameters =
+                Properties = new ScriptExecutionProperties("P0Y0M0DT0H60M60S")
+                {
+                    ScriptCmdletId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/AVS.PowerCommands@1.0.0/scriptCmdlets/New-SsoExternalIdentitySource",
+                    Parameters =
 {
 new ScriptStringExecutionParameterDetails("DomainName")
 {
@@ -200,15 +202,15 @@ Value = "placeholderDomain.local",
 Value = "DC=placeholder, DC=placeholder",
 }
 },
-                HiddenParameters =
+                    HiddenParameters =
 {
 new ScriptSecureStringExecutionParameterDetails("Password")
 {
 SecureValue = "PlaceholderPassword",
 }
 },
-                Timeout = "P0Y0M0DT0H60M60S",
-                Retention = "P0Y0M60DT0H60M60S",
+                    Retention = "P0Y0M60DT0H60M60S",
+                },
             };
             ArmOperation<ScriptExecutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptExecutionName, data);
             ScriptExecutionResource result = lro.Value;
