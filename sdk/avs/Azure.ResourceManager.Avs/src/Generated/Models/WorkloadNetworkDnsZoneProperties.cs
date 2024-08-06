@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Models
         public WorkloadNetworkDnsZoneProperties()
         {
             Domain = new ChangeTrackingList<string>();
-            DnsServerIPs = new ChangeTrackingList<IPAddress>();
+            DnsServerIPs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneProperties"/>. </summary>
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDnsZoneProperties(string displayName, IList<string> domain, IList<IPAddress> dnsServerIPs, string sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkDnsZoneProperties(string displayName, IList<string> domain, IList<string> dnsServerIPs, string sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Domain = domain;
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Domain names of the DNS Zone. </summary>
         public IList<string> Domain { get; }
         /// <summary> DNS Server IP array of the DNS Zone. </summary>
-        public IList<IPAddress> DnsServerIPs { get; }
+        public IList<string> DnsServerIPs { get; }
         /// <summary> Source IP of the DNS Zone. </summary>
         public string SourceIP { get; set; }
         /// <summary> Number of DNS Services using the DNS zone. </summary>

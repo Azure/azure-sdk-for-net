@@ -72,14 +72,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
-        /// <param name="azureResourceManagerCommonTypesResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PrivateCloudProperties properties, AvsSku sku, ManagedServiceIdentity identity, string azureResourceManagerCommonTypesResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PrivateCloudProperties properties, AvsSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
             Identity = identity;
-            AzureResourceManagerCommonTypesResourceType = azureResourceManagerCommonTypesResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,7 +92,5 @@ namespace Azure.ResourceManager.Avs
         public AvsSku Sku { get; set; }
         /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
-        public string AzureResourceManagerCommonTypesResourceType { get; }
     }
 }

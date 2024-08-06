@@ -121,11 +121,6 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in ExternalCloudLinks)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -205,7 +200,7 @@ namespace Azure.ResourceManager.Avs.Models
             string nsxtPassword = default;
             string vcenterCertificateThumbprint = default;
             string nsxtCertificateThumbprint = default;
-            IReadOnlyList<ResourceIdentifier> externalCloudLinks = default;
+            IReadOnlyList<string> externalCloudLinks = default;
             ExpressRouteCircuit secondaryCircuit = default;
             NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
             ResourceIdentifier virtualNetworkId = default;
@@ -347,17 +342,10 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     externalCloudLinks = array;
                     continue;
@@ -422,7 +410,7 @@ namespace Azure.ResourceManager.Avs.Models
                 nsxtPassword,
                 vcenterCertificateThumbprint,
                 nsxtCertificateThumbprint,
-                externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>(),
+                externalCloudLinks ?? new ChangeTrackingList<string>(),
                 secondaryCircuit,
                 nsxPublicIPQuotaRaised,
                 virtualNetworkId,

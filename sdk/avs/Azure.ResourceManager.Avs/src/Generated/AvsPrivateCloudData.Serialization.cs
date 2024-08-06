@@ -40,11 +40,6 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureResourceManagerCommonTypesResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AzureResourceManagerCommonTypesResourceType);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -119,12 +114,11 @@ namespace Azure.ResourceManager.Avs
             PrivateCloudProperties properties = default;
             AvsSku sku = default;
             ManagedServiceIdentity identity = default;
-            string type = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type0 = default;
+            ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -151,11 +145,6 @@ namespace Azure.ResourceManager.Avs
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -189,7 +178,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type0 = new ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -210,14 +199,13 @@ namespace Azure.ResourceManager.Avs
             return new AvsPrivateCloudData(
                 id,
                 name,
-                type0,
+                type,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 sku,
                 identity,
-                type,
                 serializedAdditionalRawData);
         }
 

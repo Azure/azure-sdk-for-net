@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScriptPackageProperties"/>. </summary>
-        public ScriptPackageProperties()
+        internal ScriptPackageProperties()
         {
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="company"> Company that created and supports the package. </param>
         /// <param name="uri"> Link to support by the package vendor. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptPackageProperties(ScriptPackageProvisioningState? provisioningState, string description, string version, string company, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptPackageProperties(ScriptPackageProvisioningState? provisioningState, string description, string version, string company, string uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Description = description;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Company that created and supports the package. </summary>
         public string Company { get; }
         /// <summary> Link to support by the package vendor. </summary>
-        public Uri Uri { get; }
+        public string Uri { get; }
     }
 }

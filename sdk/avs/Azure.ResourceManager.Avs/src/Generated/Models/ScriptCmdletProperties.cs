@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScriptCmdletProperties"/>. </summary>
-        public ScriptCmdletProperties()
+        internal ScriptCmdletProperties()
         {
             Parameters = new ChangeTrackingList<ScriptParameter>();
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="audience"> Specifies whether a script cmdlet is intended to be invoked only through automation or visible to customers. </param>
         /// <param name="parameters"> Parameters the script will accept. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptCmdletProperties(ScriptCmdletProvisioningState? provisioningState, string description, TimeSpan? timeout, ScriptCmdletAudience? audience, IReadOnlyList<ScriptParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptCmdletProperties(ScriptCmdletProvisioningState? provisioningState, string description, string timeout, ScriptCmdletAudience? audience, IReadOnlyList<ScriptParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Description = description;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Description of the scripts functionality. </summary>
         public string Description { get; }
         /// <summary> Recommended time limit for execution. </summary>
-        public TimeSpan? Timeout { get; }
+        public string Timeout { get; }
         /// <summary> Specifies whether a script cmdlet is intended to be invoked only through automation or visible to customers. </summary>
         public ScriptCmdletAudience? Audience { get; }
         /// <summary> Parameters the script will accept. </summary>

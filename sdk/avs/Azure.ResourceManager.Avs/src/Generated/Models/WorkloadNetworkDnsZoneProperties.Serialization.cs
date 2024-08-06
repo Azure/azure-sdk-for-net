@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -48,12 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsServerIPs)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             string displayName = default;
             IList<string> domain = default;
-            IList<IPAddress> dnsServerIPs = default;
+            IList<string> dnsServerIPs = default;
             string sourceIP = default;
             long? dnsServices = default;
             WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
@@ -151,17 +145,10 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IPAddress.Parse(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     dnsServerIPs = array;
                     continue;
@@ -207,7 +194,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new WorkloadNetworkDnsZoneProperties(
                 displayName,
                 domain ?? new ChangeTrackingList<string>(),
-                dnsServerIPs ?? new ChangeTrackingList<IPAddress>(),
+                dnsServerIPs ?? new ChangeTrackingList<string>(),
                 sourceIP,
                 dnsServices,
                 provisioningState,

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachineProperties"/>. </summary>
-        public WorkloadNetworkVirtualMachineProperties()
+        internal WorkloadNetworkVirtualMachineProperties()
         {
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The provisioning state of the resource. </summary>
         public WorkloadNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Display name of the VM. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
         /// <summary> Virtual machine type. </summary>
         public WorkloadNetworkVmType? VmType { get; }
     }

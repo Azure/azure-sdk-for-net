@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            ResourceIdentifier targetId = default;
+            string targetId = default;
             string lunName = default;
             LunMountMode? mountOption = default;
             string path = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("targetId"u8))
                 {
-                    targetId = new ResourceIdentifier(property.Value.GetString());
+                    targetId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lunName"u8))

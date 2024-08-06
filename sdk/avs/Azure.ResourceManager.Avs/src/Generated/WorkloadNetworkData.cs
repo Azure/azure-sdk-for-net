@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkData"/>. </summary>
-        public WorkloadNetworkData()
+        internal WorkloadNetworkData()
         {
         }
 
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal WorkloadNetworkProperties Properties { get; set; }
+        internal WorkloadNetworkProperties Properties { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public WorkloadNetworkProvisioningState? WorkloadNetworkProvisioningState
         {
-            get => Properties is null ? default : Properties.ProvisioningState;
+            get => Properties?.ProvisioningState;
         }
     }
 }

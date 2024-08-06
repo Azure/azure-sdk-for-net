@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Models
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
             ExtendedNetworkBlocks = new ChangeTrackingList<string>();
             NetworkBlock = networkBlock;
-            ExternalCloudLinks = new ChangeTrackingList<ResourceIdentifier>();
+            ExternalCloudLinks = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateCloudProperties"/>. </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateCloudProperties(AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vmotionNetwork, string vcenterPassword, string nsxtPassword, string vcenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, DnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateCloudProperties(AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vmotionNetwork, string vcenterPassword, string nsxtPassword, string vcenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<string> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, DnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagementCluster = managementCluster;
             Internet = internet;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Thumbprint of the NSX-T Manager SSL certificate. </summary>
         public string NsxtCertificateThumbprint { get; }
         /// <summary> Array of cloud link IDs from other clouds that connect to this one. </summary>
-        public IReadOnlyList<ResourceIdentifier> ExternalCloudLinks { get; }
+        public IReadOnlyList<string> ExternalCloudLinks { get; }
         /// <summary>
         /// A secondary expressRoute circuit from a separate AZ. Only present in a
         /// stretched private cloud

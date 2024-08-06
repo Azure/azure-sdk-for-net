@@ -93,17 +93,16 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NamedOutputs))
+            if (Optional.IsCollectionDefined(NamedOutputs))
             {
                 writer.WritePropertyName("namedOutputs"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NamedOutputs);
-#else
-                using (JsonDocument document = JsonDocument.Parse(NamedOutputs))
+                writer.WriteStartObject();
+                foreach (var item in NamedOutputs)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
                 }
-#endif
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Information))
             {
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Avs.Models
             DateTimeOffset? finishedAt = default;
             ScriptExecutionProvisioningState? provisioningState = default;
             IList<string> output = default;
-            BinaryData namedOutputs = default;
+            IDictionary<string, ScriptExecutionPropertiesNamedOutput> namedOutputs = default;
             IReadOnlyList<string> information = default;
             IReadOnlyList<string> warnings = default;
             IReadOnlyList<string> errors = default;
@@ -296,7 +295,12 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    namedOutputs = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, ScriptExecutionPropertiesNamedOutput> dictionary = new Dictionary<string, ScriptExecutionPropertiesNamedOutput>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, ScriptExecutionPropertiesNamedOutput.DeserializeScriptExecutionPropertiesNamedOutput(property0.Value, options));
+                    }
+                    namedOutputs = dictionary;
                     continue;
                 }
                 if (property.NameEquals("information"u8))
@@ -359,7 +363,7 @@ namespace Azure.ResourceManager.Avs.Models
                 finishedAt,
                 provisioningState,
                 output ?? new ChangeTrackingList<string>(),
-                namedOutputs,
+                namedOutputs ?? new ChangeTrackingDictionary<string, ScriptExecutionPropertiesNamedOutput>(),
                 information ?? new ChangeTrackingList<string>(),
                 warnings ?? new ChangeTrackingList<string>(),
                 errors ?? new ChangeTrackingList<string>(),

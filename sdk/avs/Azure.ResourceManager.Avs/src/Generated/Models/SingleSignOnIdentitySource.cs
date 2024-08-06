@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// Base DN for users and groups.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, Uri primaryServer, Uri secondaryServer, SslCertificateStatus? ssl, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, string primaryServer, string secondaryServer, SslCertificateStatus? ssl, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Alias = @alias;
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The base distinguished name for groups. </summary>
         public string BaseGroupDN { get; set; }
         /// <summary> Primary server URL. </summary>
-        public Uri PrimaryServer { get; set; }
+        public string PrimaryServer { get; set; }
         /// <summary> Secondary server URL. </summary>
-        public Uri SecondaryServer { get; set; }
+        public string SecondaryServer { get; set; }
         /// <summary> Protect LDAP communication using SSL certificate (LDAPS). </summary>
         public SslCertificateStatus? Ssl { get; set; }
         /// <summary>

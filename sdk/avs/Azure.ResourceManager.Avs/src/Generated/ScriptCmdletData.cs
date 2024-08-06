@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScriptCmdletData"/>. </summary>
-        public ScriptCmdletData()
+        internal ScriptCmdletData()
         {
         }
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ScriptCmdletProperties Properties { get; set; }
+        public ScriptCmdletProperties Properties { get; }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineProperties"/>. </summary>
-        public VirtualMachineProperties()
+        internal VirtualMachineProperties()
         {
         }
 
