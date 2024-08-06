@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             SystemData systemData = default;
             ExpressRouteAuthorizationProvisioningState? provisioningState = default;
-            ResourceIdentifier expressRouteAuthorizationId = default;
+            string expressRouteAuthorizationId = default;
             string expressRouteAuthorizationKey = default;
-            ResourceIdentifier expressRouteId = default;
+            string expressRouteId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,11 +165,7 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("expressRouteAuthorizationId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            expressRouteAuthorizationId = new ResourceIdentifier(property0.Value.GetString());
+                            expressRouteAuthorizationId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("expressRouteAuthorizationKey"u8))
@@ -179,11 +175,7 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("expressRouteId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            expressRouteId = new ResourceIdentifier(property0.Value.GetString());
+                            expressRouteId = property0.Value.GetString();
                             continue;
                         }
                     }

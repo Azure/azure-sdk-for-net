@@ -197,8 +197,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.DeletePortMirroringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateDeletePortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.DeletePortMirroringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateDeletePortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.DeletePortMirroring(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateDeletePortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.DeletePortMirroring(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, cancellationToken);
+                var operation = new AvsArmOperation(_workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateDeletePortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

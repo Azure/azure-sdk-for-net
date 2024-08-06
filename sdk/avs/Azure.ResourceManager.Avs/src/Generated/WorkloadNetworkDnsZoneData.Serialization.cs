@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -72,19 +71,14 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in DnsServerIPs)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
-                writer.WriteStringValue(SourceIP.ToString());
+                writer.WriteStringValue(SourceIP);
             }
             if (Optional.IsDefined(DnsServices))
             {
@@ -146,8 +140,8 @@ namespace Azure.ResourceManager.Avs
             SystemData systemData = default;
             string displayName = default;
             IList<string> domain = default;
-            IList<IPAddress> dnsServerIPs = default;
-            IPAddress sourceIP = default;
+            IList<string> dnsServerIPs = default;
+            string sourceIP = default;
             long? dnsServices = default;
             WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
             long? revision = default;
@@ -213,28 +207,17 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            List<IPAddress> array = new List<IPAddress>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(IPAddress.Parse(item.GetString()));
-                                }
+                                array.Add(item.GetString());
                             }
                             dnsServerIPs = array;
                             continue;
                         }
                         if (property0.NameEquals("sourceIp"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceIP = IPAddress.Parse(property0.Value.GetString());
+                            sourceIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("dnsServices"u8))
@@ -280,7 +263,7 @@ namespace Azure.ResourceManager.Avs
                 systemData,
                 displayName,
                 domain ?? new ChangeTrackingList<string>(),
-                dnsServerIPs ?? new ChangeTrackingList<IPAddress>(),
+                dnsServerIPs ?? new ChangeTrackingList<string>(),
                 sourceIP,
                 dnsServices,
                 provisioningState,
