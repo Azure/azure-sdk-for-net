@@ -215,5 +215,733 @@ Console.WriteLine(result.GetProperty("groups")[0][0].ToString());
 Console.WriteLine(result.GetProperty("messyGroup")[0].ToString());
 ]]></code></example>
     </member>
+    <member name="FindSimilarFromFaceListAsync(Guid,string,int?,FindSimilarMatchMode?,CancellationToken)">
+      <example>
+This sample shows how to call FindSimilarFromFaceListAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceFindSimilarResult>> response = await client.FindSimilarFromFaceListAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<faceListId>");
+]]></code>
+This sample shows how to call FindSimilarFromFaceListAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceFindSimilarResult>> response = await client.FindSimilarFromFaceListAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<faceListId>", maxNumOfCandidatesReturned: 1234, mode: FindSimilarMatchMode.MatchPerson);
+]]></code></example>
+    </member>
+    <member name="FindSimilarFromFaceList(Guid,string,int?,FindSimilarMatchMode?,CancellationToken)">
+      <example>
+This sample shows how to call FindSimilarFromFaceList.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceFindSimilarResult>> response = client.FindSimilarFromFaceList(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<faceListId>");
+]]></code>
+This sample shows how to call FindSimilarFromFaceList with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceFindSimilarResult>> response = client.FindSimilarFromFaceList(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<faceListId>", maxNumOfCandidatesReturned: 1234, mode: FindSimilarMatchMode.MatchPerson);
+]]></code></example>
+    </member>
+    <member name="FindSimilarFromFaceListAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call FindSimilarFromFaceListAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    faceListId = "<faceListId>",
+});
+Response response = await client.FindSimilarFromFaceListAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call FindSimilarFromFaceListAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    maxNumOfCandidatesReturned = 1234,
+    mode = "matchPerson",
+    faceListId = "<faceListId>",
+});
+Response response = await client.FindSimilarFromFaceListAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("confidence").ToString());
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("persistedFaceId").ToString());
+]]></code></example>
+    </member>
+    <member name="FindSimilarFromFaceList(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call FindSimilarFromFaceList and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    faceListId = "<faceListId>",
+});
+Response response = client.FindSimilarFromFaceList(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call FindSimilarFromFaceList with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    maxNumOfCandidatesReturned = 1234,
+    mode = "matchPerson",
+    faceListId = "<faceListId>",
+});
+Response response = client.FindSimilarFromFaceList(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("confidence").ToString());
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("persistedFaceId").ToString());
+]]></code></example>
+    </member>
+    <member name="FindSimilarFromLargeFaceListAsync(Guid,string,int?,FindSimilarMatchMode?,CancellationToken)">
+      <example>
+This sample shows how to call FindSimilarFromLargeFaceListAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceFindSimilarResult>> response = await client.FindSimilarFromLargeFaceListAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largeFaceListId>");
+]]></code>
+This sample shows how to call FindSimilarFromLargeFaceListAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceFindSimilarResult>> response = await client.FindSimilarFromLargeFaceListAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largeFaceListId>", maxNumOfCandidatesReturned: 1234, mode: FindSimilarMatchMode.MatchPerson);
+]]></code></example>
+    </member>
+    <member name="FindSimilarFromLargeFaceList(Guid,string,int?,FindSimilarMatchMode?,CancellationToken)">
+      <example>
+This sample shows how to call FindSimilarFromLargeFaceList.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceFindSimilarResult>> response = client.FindSimilarFromLargeFaceList(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largeFaceListId>");
+]]></code>
+This sample shows how to call FindSimilarFromLargeFaceList with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceFindSimilarResult>> response = client.FindSimilarFromLargeFaceList(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largeFaceListId>", maxNumOfCandidatesReturned: 1234, mode: FindSimilarMatchMode.MatchPerson);
+]]></code></example>
+    </member>
+    <member name="FindSimilarFromLargeFaceListAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call FindSimilarFromLargeFaceListAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    largeFaceListId = "<largeFaceListId>",
+});
+Response response = await client.FindSimilarFromLargeFaceListAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call FindSimilarFromLargeFaceListAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    maxNumOfCandidatesReturned = 1234,
+    mode = "matchPerson",
+    largeFaceListId = "<largeFaceListId>",
+});
+Response response = await client.FindSimilarFromLargeFaceListAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("confidence").ToString());
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("persistedFaceId").ToString());
+]]></code></example>
+    </member>
+    <member name="FindSimilarFromLargeFaceList(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call FindSimilarFromLargeFaceList and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    largeFaceListId = "<largeFaceListId>",
+});
+Response response = client.FindSimilarFromLargeFaceList(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call FindSimilarFromLargeFaceList with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    maxNumOfCandidatesReturned = 1234,
+    mode = "matchPerson",
+    largeFaceListId = "<largeFaceListId>",
+});
+Response response = client.FindSimilarFromLargeFaceList(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("confidence").ToString());
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("persistedFaceId").ToString());
+]]></code></example>
+    </member>
+    <member name="IdentifyFromPersonGroupAsync(IEnumerable{Guid},string,int?,float?,CancellationToken)">
+      <example>
+This sample shows how to call IdentifyFromPersonGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<IdentificationResult>> response = await client.IdentifyFromPersonGroupAsync(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<personGroupId>");
+]]></code>
+This sample shows how to call IdentifyFromPersonGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<IdentificationResult>> response = await client.IdentifyFromPersonGroupAsync(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<personGroupId>", maxNumOfCandidatesReturned: 1234, confidenceThreshold: 123.45F);
+]]></code></example>
+    </member>
+    <member name="IdentifyFromPersonGroup(IEnumerable{Guid},string,int?,float?,CancellationToken)">
+      <example>
+This sample shows how to call IdentifyFromPersonGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<IdentificationResult>> response = client.IdentifyFromPersonGroup(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<personGroupId>");
+]]></code>
+This sample shows how to call IdentifyFromPersonGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<IdentificationResult>> response = client.IdentifyFromPersonGroup(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<personGroupId>", maxNumOfCandidatesReturned: 1234, confidenceThreshold: 123.45F);
+]]></code></example>
+    </member>
+    <member name="IdentifyFromPersonGroupAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call IdentifyFromPersonGroupAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceIds = new object[]
+    {
+        "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+    },
+    personGroupId = "<personGroupId>",
+});
+Response response = await client.IdentifyFromPersonGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call IdentifyFromPersonGroupAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceIds = new object[]
+    {
+        "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+    },
+    personGroupId = "<personGroupId>",
+    maxNumOfCandidatesReturned = 1234,
+    confidenceThreshold = 123.45F,
+});
+Response response = await client.IdentifyFromPersonGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="IdentifyFromPersonGroup(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call IdentifyFromPersonGroup and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceIds = new object[]
+    {
+        "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+    },
+    personGroupId = "<personGroupId>",
+});
+Response response = client.IdentifyFromPersonGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call IdentifyFromPersonGroup with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceIds = new object[]
+    {
+        "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+    },
+    personGroupId = "<personGroupId>",
+    maxNumOfCandidatesReturned = 1234,
+    confidenceThreshold = 123.45F,
+});
+Response response = client.IdentifyFromPersonGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="IdentifyFromLargePersonGroupAsync(IEnumerable{Guid},string,int?,float?,CancellationToken)">
+      <example>
+This sample shows how to call IdentifyFromLargePersonGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<IdentificationResult>> response = await client.IdentifyFromLargePersonGroupAsync(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<largePersonGroupId>");
+]]></code>
+This sample shows how to call IdentifyFromLargePersonGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<IdentificationResult>> response = await client.IdentifyFromLargePersonGroupAsync(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<largePersonGroupId>", maxNumOfCandidatesReturned: 1234, confidenceThreshold: 123.45F);
+]]></code></example>
+    </member>
+    <member name="IdentifyFromLargePersonGroup(IEnumerable{Guid},string,int?,float?,CancellationToken)">
+      <example>
+This sample shows how to call IdentifyFromLargePersonGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<IdentificationResult>> response = client.IdentifyFromLargePersonGroup(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<largePersonGroupId>");
+]]></code>
+This sample shows how to call IdentifyFromLargePersonGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<IReadOnlyList<IdentificationResult>> response = client.IdentifyFromLargePersonGroup(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<largePersonGroupId>", maxNumOfCandidatesReturned: 1234, confidenceThreshold: 123.45F);
+]]></code></example>
+    </member>
+    <member name="IdentifyFromLargePersonGroupAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call IdentifyFromLargePersonGroupAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceIds = new object[]
+    {
+        "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+    },
+    largePersonGroupId = "<largePersonGroupId>",
+});
+Response response = await client.IdentifyFromLargePersonGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call IdentifyFromLargePersonGroupAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceIds = new object[]
+    {
+        "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+    },
+    largePersonGroupId = "<largePersonGroupId>",
+    maxNumOfCandidatesReturned = 1234,
+    confidenceThreshold = 123.45F,
+});
+Response response = await client.IdentifyFromLargePersonGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="IdentifyFromLargePersonGroup(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call IdentifyFromLargePersonGroup and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceIds = new object[]
+    {
+        "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+    },
+    largePersonGroupId = "<largePersonGroupId>",
+});
+Response response = client.IdentifyFromLargePersonGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call IdentifyFromLargePersonGroup with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceIds = new object[]
+    {
+        "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+    },
+    largePersonGroupId = "<largePersonGroupId>",
+    maxNumOfCandidatesReturned = 1234,
+    confidenceThreshold = 123.45F,
+});
+Response response = client.IdentifyFromLargePersonGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="VerifyFromPersonGroupAsync(Guid,string,Guid,CancellationToken)">
+      <example>
+This sample shows how to call VerifyFromPersonGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<FaceVerificationResult> response = await client.VerifyFromPersonGroupAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+]]></code>
+This sample shows how to call VerifyFromPersonGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<FaceVerificationResult> response = await client.VerifyFromPersonGroupAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+]]></code></example>
+    </member>
+    <member name="VerifyFromPersonGroup(Guid,string,Guid,CancellationToken)">
+      <example>
+This sample shows how to call VerifyFromPersonGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<FaceVerificationResult> response = client.VerifyFromPersonGroup(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+]]></code>
+This sample shows how to call VerifyFromPersonGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<FaceVerificationResult> response = client.VerifyFromPersonGroup(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+]]></code></example>
+    </member>
+    <member name="VerifyFromPersonGroupAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyFromPersonGroupAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    personGroupId = "<personGroupId>",
+    personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+});
+Response response = await client.VerifyFromPersonGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call VerifyFromPersonGroupAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    personGroupId = "<personGroupId>",
+    personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+});
+Response response = await client.VerifyFromPersonGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="VerifyFromPersonGroup(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyFromPersonGroup and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    personGroupId = "<personGroupId>",
+    personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+});
+Response response = client.VerifyFromPersonGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call VerifyFromPersonGroup with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    personGroupId = "<personGroupId>",
+    personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+});
+Response response = client.VerifyFromPersonGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="VerifyFromLargePersonGroupAsync(Guid,string,Guid,CancellationToken)">
+      <example>
+This sample shows how to call VerifyFromLargePersonGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<FaceVerificationResult> response = await client.VerifyFromLargePersonGroupAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+]]></code>
+This sample shows how to call VerifyFromLargePersonGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<FaceVerificationResult> response = await client.VerifyFromLargePersonGroupAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+]]></code></example>
+    </member>
+    <member name="VerifyFromLargePersonGroup(Guid,string,Guid,CancellationToken)">
+      <example>
+This sample shows how to call VerifyFromLargePersonGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<FaceVerificationResult> response = client.VerifyFromLargePersonGroup(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+]]></code>
+This sample shows how to call VerifyFromLargePersonGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+Response<FaceVerificationResult> response = client.VerifyFromLargePersonGroup(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+]]></code></example>
+    </member>
+    <member name="VerifyFromLargePersonGroupAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyFromLargePersonGroupAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    largePersonGroupId = "<largePersonGroupId>",
+    personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+});
+Response response = await client.VerifyFromLargePersonGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call VerifyFromLargePersonGroupAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    largePersonGroupId = "<largePersonGroupId>",
+    personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+});
+Response response = await client.VerifyFromLargePersonGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
+    <member name="VerifyFromLargePersonGroup(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyFromLargePersonGroup and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    largePersonGroupId = "<largePersonGroupId>",
+    personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+});
+Response response = client.VerifyFromLargePersonGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("confidence").ToString());
+]]></code>
+This sample shows how to call VerifyFromLargePersonGroup with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceClient client = new FaceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    largePersonGroupId = "<largePersonGroupId>",
+    personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+});
+Response response = client.VerifyFromLargePersonGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("confidence").ToString());
+]]></code></example>
+    </member>
   </members>
 </doc>

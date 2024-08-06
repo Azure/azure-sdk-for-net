@@ -12,7 +12,7 @@ using System.IO;
 namespace Azure.AI.Vision.Face
 {
     /// <summary> Request of liveness with verify session creation. </summary>
-    internal partial class CreateLivenessWithVerifySessionContent
+    internal partial class CreateLivenessWithVerifySessionMultipartContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionMultipartContent"/>. </summary>
         /// <param name="parameters"> The parameters for creating session. </param>
         /// <param name="verifyImage"> The image stream for verify. Content-Disposition header field for this part must have filename. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> or <paramref name="verifyImage"/> is null. </exception>
-        public CreateLivenessWithVerifySessionContent(CreateLivenessSessionContent parameters, Stream verifyImage)
+        public CreateLivenessWithVerifySessionMultipartContent(CreateLivenessWithVerifySessionJsonContent parameters, Stream verifyImage)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
             Argument.AssertNotNull(verifyImage, nameof(verifyImage));
@@ -59,24 +59,24 @@ namespace Azure.AI.Vision.Face
             VerifyImage = verifyImage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionMultipartContent"/>. </summary>
         /// <param name="parameters"> The parameters for creating session. </param>
         /// <param name="verifyImage"> The image stream for verify. Content-Disposition header field for this part must have filename. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateLivenessWithVerifySessionContent(CreateLivenessSessionContent parameters, Stream verifyImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateLivenessWithVerifySessionMultipartContent(CreateLivenessWithVerifySessionJsonContent parameters, Stream verifyImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Parameters = parameters;
             VerifyImage = verifyImage;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/> for deserialization. </summary>
-        internal CreateLivenessWithVerifySessionContent()
+        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionMultipartContent"/> for deserialization. </summary>
+        internal CreateLivenessWithVerifySessionMultipartContent()
         {
         }
 
         /// <summary> The parameters for creating session. </summary>
-        public CreateLivenessSessionContent Parameters { get; }
+        public CreateLivenessWithVerifySessionJsonContent Parameters { get; }
         /// <summary> The image stream for verify. Content-Disposition header field for this part must have filename. </summary>
         public Stream VerifyImage { get; }
     }

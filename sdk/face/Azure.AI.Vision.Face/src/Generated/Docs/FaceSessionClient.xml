@@ -13,8 +13,10 @@ CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOpe
 {
     SendResultsToClient = true,
     DeviceCorrelationIdSetInClient = true,
-    DeviceCorrelationId = "your_device_correlation_id",
-    AuthTokenTimeToLiveInSeconds = 60,
+    EnableSessionImage = true,
+    LivenessSingleModalModel = LivenessModel.V20221015Preview04,
+    DeviceCorrelationId = "<deviceCorrelationId>",
+    AuthTokenTimeToLiveInSeconds = 1234,
 };
 Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(body);
 ]]></code></example>
@@ -31,8 +33,10 @@ CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOpe
 {
     SendResultsToClient = true,
     DeviceCorrelationIdSetInClient = true,
-    DeviceCorrelationId = "your_device_correlation_id",
-    AuthTokenTimeToLiveInSeconds = 60,
+    EnableSessionImage = true,
+    LivenessSingleModalModel = LivenessModel.V20221015Preview04,
+    DeviceCorrelationId = "<deviceCorrelationId>",
+    AuthTokenTimeToLiveInSeconds = 1234,
 };
 Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(body);
 ]]></code></example>
@@ -50,8 +54,10 @@ using RequestContent content = RequestContent.Create(new
     livenessOperationMode = "Passive",
     sendResultsToClient = true,
     deviceCorrelationIdSetInClient = true,
-    deviceCorrelationId = "your_device_correlation_id",
-    authTokenTimeToLiveInSeconds = 60,
+    enableSessionImage = true,
+    livenessSingleModalModel = "2022-10-15-preview.04",
+    deviceCorrelationId = "<deviceCorrelationId>",
+    authTokenTimeToLiveInSeconds = 1234,
 });
 Response response = await client.CreateLivenessSessionAsync(content);
 
@@ -73,8 +79,10 @@ using RequestContent content = RequestContent.Create(new
     livenessOperationMode = "Passive",
     sendResultsToClient = true,
     deviceCorrelationIdSetInClient = true,
-    deviceCorrelationId = "your_device_correlation_id",
-    authTokenTimeToLiveInSeconds = 60,
+    enableSessionImage = true,
+    livenessSingleModalModel = "2022-10-15-preview.04",
+    deviceCorrelationId = "<deviceCorrelationId>",
+    authTokenTimeToLiveInSeconds = 1234,
 });
 Response response = client.CreateLivenessSession(content);
 
@@ -146,6 +154,54 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("sessionExpired").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetLivenessSessionResultAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = await client.GetLivenessSessionResultAsync("<sessionId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("sessionStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("sessionExpired").ToString());
+Console.WriteLine(result.GetProperty("deviceCorrelationId").ToString());
+Console.WriteLine(result.GetProperty("authTokenTimeToLiveInSeconds").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("requestId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("clientRequestId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("receivedDateTime").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("method").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentLength").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentType").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("userAgent").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessSessionResult(string,RequestContext)">
@@ -163,6 +219,54 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("sessionExpired").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetLivenessSessionResult with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = client.GetLivenessSessionResult("<sessionId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("sessionStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("sessionExpired").ToString());
+Console.WriteLine(result.GetProperty("deviceCorrelationId").ToString());
+Console.WriteLine(result.GetProperty("authTokenTimeToLiveInSeconds").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("requestId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("clientRequestId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("receivedDateTime").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("method").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentLength").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentType").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("userAgent").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessSessionsAsync(string,int?,CancellationToken)">
@@ -264,6 +368,47 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("body").ToString
 Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result[0].GetProperty("digest").ToString());
+]]></code>
+This sample shows how to call GetLivenessSessionAuditEntriesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = await client.GetLivenessSessionAuditEntriesAsync("<sessionId>", "<start>", 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("sessionId").ToString());
+Console.WriteLine(result[0].GetProperty("requestId").ToString());
+Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
+Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("contentLength").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("userAgent").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
+Console.WriteLine(result[0].GetProperty("digest").ToString());
+Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessSessionAuditEntries(string,string,int?,RequestContext)">
@@ -289,6 +434,47 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("body").ToString
 Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result[0].GetProperty("digest").ToString());
+]]></code>
+This sample shows how to call GetLivenessSessionAuditEntries with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = client.GetLivenessSessionAuditEntries("<sessionId>", "<start>", 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("sessionId").ToString());
+Console.WriteLine(result[0].GetProperty("requestId").ToString());
+Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
+Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("contentLength").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("userAgent").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
+Console.WriteLine(result[0].GetProperty("digest").ToString());
+Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteLivenessWithVerifySessionAsync(string,RequestContext)">
@@ -354,6 +540,54 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("sessionExpired").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetLivenessWithVerifySessionResultAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = await client.GetLivenessWithVerifySessionResultAsync("<sessionId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("sessionStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("sessionExpired").ToString());
+Console.WriteLine(result.GetProperty("deviceCorrelationId").ToString());
+Console.WriteLine(result.GetProperty("authTokenTimeToLiveInSeconds").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("requestId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("clientRequestId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("receivedDateTime").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("method").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentLength").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentType").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("userAgent").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessWithVerifySessionResult(string,RequestContext)">
@@ -371,6 +605,54 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("sessionExpired").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetLivenessWithVerifySessionResult with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = client.GetLivenessWithVerifySessionResult("<sessionId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("sessionStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("sessionExpired").ToString());
+Console.WriteLine(result.GetProperty("deviceCorrelationId").ToString());
+Console.WriteLine(result.GetProperty("authTokenTimeToLiveInSeconds").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("requestId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("clientRequestId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("receivedDateTime").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("method").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentLength").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("contentType").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("request").GetProperty("userAgent").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessWithVerifySessionsAsync(string,int?,CancellationToken)">
@@ -472,6 +754,47 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("body").ToString
 Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result[0].GetProperty("digest").ToString());
+]]></code>
+This sample shows how to call GetLivenessWithVerifySessionAuditEntriesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("<sessionId>", "<start>", 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("sessionId").ToString());
+Console.WriteLine(result[0].GetProperty("requestId").ToString());
+Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
+Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("contentLength").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("userAgent").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
+Console.WriteLine(result[0].GetProperty("digest").ToString());
+Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessWithVerifySessionAuditEntries(string,string,int?,RequestContext)">
@@ -497,6 +820,47 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("body").ToString
 Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result[0].GetProperty("digest").ToString());
+]]></code>
+This sample shows how to call GetLivenessWithVerifySessionAuditEntries with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = client.GetLivenessWithVerifySessionAuditEntries("<sessionId>", "<start>", 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("sessionId").ToString());
+Console.WriteLine(result[0].GetProperty("requestId").ToString());
+Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
+Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("contentLength").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
+Console.WriteLine(result[0].GetProperty("request").GetProperty("userAgent").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("livenessDecision").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("fileName").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("timeOffsetWithinFile").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("target").GetProperty("imageType").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("modelVersionUsed").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("faceRectangle").GetProperty("height").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("verifyImage").GetProperty("qualityForRecognition").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("matchConfidence").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetProperty("verifyResult").GetProperty("isIdentical").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
+Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
+Console.WriteLine(result[0].GetProperty("digest").ToString());
+Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
   </members>

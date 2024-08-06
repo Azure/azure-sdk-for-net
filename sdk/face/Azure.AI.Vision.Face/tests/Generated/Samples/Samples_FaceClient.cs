@@ -230,5 +230,805 @@ namespace Azure.AI.Vision.Face.Samples
 
             Response<FaceGroupingResult> response = await client.GroupAsync(new Guid[] { Guid.Parse("c5c24a82-6845-4031-9d5d-978df9175426"), Guid.Parse("015839fb-fbd9-4f79-ace9-7675fc2f1dd9"), Guid.Parse("65d083d4-9447-47d1-af30-b626144bf0fb"), Guid.Parse("fce92aed-d578-4d2e-8114-068f8af4492e"), Guid.Parse("30ea1073-cc9e-4652-b1e3-d08fb7b95315"), Guid.Parse("be386ab3-af91-4104-9e6d-4dae4c9fddb7"), Guid.Parse("fbd2a038-dbff-452c-8e79-2ee81b1aa84e"), Guid.Parse("b64d5e15-8257-4af2-b20a-5a750f8940e7") });
         }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_FindSimilarFromFaceList_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                faceListId = "<faceListId>",
+            });
+            Response response = client.FindSimilarFromFaceList(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_FindSimilarFromFaceList_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                faceListId = "<faceListId>",
+            });
+            Response response = await client.FindSimilarFromFaceListAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_FindSimilarFromFaceList_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceFindSimilarResult>> response = client.FindSimilarFromFaceList(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<faceListId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_FindSimilarFromFaceList_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceFindSimilarResult>> response = await client.FindSimilarFromFaceListAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<faceListId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_FindSimilarFromFaceList_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                maxNumOfCandidatesReturned = 1234,
+                mode = "matchPerson",
+                faceListId = "<faceListId>",
+            });
+            Response response = client.FindSimilarFromFaceList(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("persistedFaceId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_FindSimilarFromFaceList_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                maxNumOfCandidatesReturned = 1234,
+                mode = "matchPerson",
+                faceListId = "<faceListId>",
+            });
+            Response response = await client.FindSimilarFromFaceListAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("persistedFaceId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_FindSimilarFromFaceList_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceFindSimilarResult>> response = client.FindSimilarFromFaceList(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<faceListId>", maxNumOfCandidatesReturned: 1234, mode: FindSimilarMatchMode.MatchPerson);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_FindSimilarFromFaceList_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceFindSimilarResult>> response = await client.FindSimilarFromFaceListAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<faceListId>", maxNumOfCandidatesReturned: 1234, mode: FindSimilarMatchMode.MatchPerson);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_FindSimilarFromLargeFaceList_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                largeFaceListId = "<largeFaceListId>",
+            });
+            Response response = client.FindSimilarFromLargeFaceList(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_FindSimilarFromLargeFaceList_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                largeFaceListId = "<largeFaceListId>",
+            });
+            Response response = await client.FindSimilarFromLargeFaceListAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_FindSimilarFromLargeFaceList_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceFindSimilarResult>> response = client.FindSimilarFromLargeFaceList(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largeFaceListId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_FindSimilarFromLargeFaceList_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceFindSimilarResult>> response = await client.FindSimilarFromLargeFaceListAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largeFaceListId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_FindSimilarFromLargeFaceList_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                maxNumOfCandidatesReturned = 1234,
+                mode = "matchPerson",
+                largeFaceListId = "<largeFaceListId>",
+            });
+            Response response = client.FindSimilarFromLargeFaceList(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("persistedFaceId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_FindSimilarFromLargeFaceList_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                maxNumOfCandidatesReturned = 1234,
+                mode = "matchPerson",
+                largeFaceListId = "<largeFaceListId>",
+            });
+            Response response = await client.FindSimilarFromLargeFaceListAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("persistedFaceId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_FindSimilarFromLargeFaceList_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceFindSimilarResult>> response = client.FindSimilarFromLargeFaceList(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largeFaceListId>", maxNumOfCandidatesReturned: 1234, mode: FindSimilarMatchMode.MatchPerson);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_FindSimilarFromLargeFaceList_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceFindSimilarResult>> response = await client.FindSimilarFromLargeFaceListAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largeFaceListId>", maxNumOfCandidatesReturned: 1234, mode: FindSimilarMatchMode.MatchPerson);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_IdentifyFromPersonGroup_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceIds = new object[]
+            {
+"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+            },
+                personGroupId = "<personGroupId>",
+            });
+            Response response = client.IdentifyFromPersonGroup(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_IdentifyFromPersonGroup_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceIds = new object[]
+            {
+"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+            },
+                personGroupId = "<personGroupId>",
+            });
+            Response response = await client.IdentifyFromPersonGroupAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_IdentifyFromPersonGroup_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<IdentificationResult>> response = client.IdentifyFromPersonGroup(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<personGroupId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_IdentifyFromPersonGroup_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<IdentificationResult>> response = await client.IdentifyFromPersonGroupAsync(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<personGroupId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_IdentifyFromPersonGroup_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceIds = new object[]
+            {
+"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+            },
+                personGroupId = "<personGroupId>",
+                maxNumOfCandidatesReturned = 1234,
+                confidenceThreshold = 123.45F,
+            });
+            Response response = client.IdentifyFromPersonGroup(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_IdentifyFromPersonGroup_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceIds = new object[]
+            {
+"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+            },
+                personGroupId = "<personGroupId>",
+                maxNumOfCandidatesReturned = 1234,
+                confidenceThreshold = 123.45F,
+            });
+            Response response = await client.IdentifyFromPersonGroupAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_IdentifyFromPersonGroup_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<IdentificationResult>> response = client.IdentifyFromPersonGroup(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<personGroupId>", maxNumOfCandidatesReturned: 1234, confidenceThreshold: 123.45F);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_IdentifyFromPersonGroup_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<IdentificationResult>> response = await client.IdentifyFromPersonGroupAsync(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<personGroupId>", maxNumOfCandidatesReturned: 1234, confidenceThreshold: 123.45F);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_IdentifyFromLargePersonGroup_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceIds = new object[]
+            {
+"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+            },
+                largePersonGroupId = "<largePersonGroupId>",
+            });
+            Response response = client.IdentifyFromLargePersonGroup(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_IdentifyFromLargePersonGroup_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceIds = new object[]
+            {
+"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+            },
+                largePersonGroupId = "<largePersonGroupId>",
+            });
+            Response response = await client.IdentifyFromLargePersonGroupAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_IdentifyFromLargePersonGroup_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<IdentificationResult>> response = client.IdentifyFromLargePersonGroup(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<largePersonGroupId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_IdentifyFromLargePersonGroup_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<IdentificationResult>> response = await client.IdentifyFromLargePersonGroupAsync(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<largePersonGroupId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_IdentifyFromLargePersonGroup_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceIds = new object[]
+            {
+"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+            },
+                largePersonGroupId = "<largePersonGroupId>",
+                maxNumOfCandidatesReturned = 1234,
+                confidenceThreshold = 123.45F,
+            });
+            Response response = client.IdentifyFromLargePersonGroup(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_IdentifyFromLargePersonGroup_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceIds = new object[]
+            {
+"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+            },
+                largePersonGroupId = "<largePersonGroupId>",
+                maxNumOfCandidatesReturned = 1234,
+                confidenceThreshold = 123.45F,
+            });
+            Response response = await client.IdentifyFromLargePersonGroupAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("personId").ToString());
+            Console.WriteLine(result[0].GetProperty("candidates")[0].GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_IdentifyFromLargePersonGroup_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<IdentificationResult>> response = client.IdentifyFromLargePersonGroup(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<largePersonGroupId>", maxNumOfCandidatesReturned: 1234, confidenceThreshold: 123.45F);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_IdentifyFromLargePersonGroup_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<IReadOnlyList<IdentificationResult>> response = await client.IdentifyFromLargePersonGroupAsync(new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, "<largePersonGroupId>", maxNumOfCandidatesReturned: 1234, confidenceThreshold: 123.45F);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_VerifyFromPersonGroup_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                personGroupId = "<personGroupId>",
+                personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+            });
+            Response response = client.VerifyFromPersonGroup(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isIdentical").ToString());
+            Console.WriteLine(result.GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_VerifyFromPersonGroup_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                personGroupId = "<personGroupId>",
+                personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+            });
+            Response response = await client.VerifyFromPersonGroupAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isIdentical").ToString());
+            Console.WriteLine(result.GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_VerifyFromPersonGroup_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<FaceVerificationResult> response = client.VerifyFromPersonGroup(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_VerifyFromPersonGroup_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<FaceVerificationResult> response = await client.VerifyFromPersonGroupAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_VerifyFromPersonGroup_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                personGroupId = "<personGroupId>",
+                personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+            });
+            Response response = client.VerifyFromPersonGroup(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isIdentical").ToString());
+            Console.WriteLine(result.GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_VerifyFromPersonGroup_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                personGroupId = "<personGroupId>",
+                personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+            });
+            Response response = await client.VerifyFromPersonGroupAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isIdentical").ToString());
+            Console.WriteLine(result.GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_VerifyFromPersonGroup_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<FaceVerificationResult> response = client.VerifyFromPersonGroup(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_VerifyFromPersonGroup_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<FaceVerificationResult> response = await client.VerifyFromPersonGroupAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_VerifyFromLargePersonGroup_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                largePersonGroupId = "<largePersonGroupId>",
+                personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+            });
+            Response response = client.VerifyFromLargePersonGroup(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isIdentical").ToString());
+            Console.WriteLine(result.GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_VerifyFromLargePersonGroup_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                largePersonGroupId = "<largePersonGroupId>",
+                personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+            });
+            Response response = await client.VerifyFromLargePersonGroupAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isIdentical").ToString());
+            Console.WriteLine(result.GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_VerifyFromLargePersonGroup_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<FaceVerificationResult> response = client.VerifyFromLargePersonGroup(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_VerifyFromLargePersonGroup_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<FaceVerificationResult> response = await client.VerifyFromLargePersonGroupAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_VerifyFromLargePersonGroup_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                largePersonGroupId = "<largePersonGroupId>",
+                personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+            });
+            Response response = client.VerifyFromLargePersonGroup(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isIdentical").ToString());
+            Console.WriteLine(result.GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_VerifyFromLargePersonGroup_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                faceId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                largePersonGroupId = "<largePersonGroupId>",
+                personId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+            });
+            Response response = await client.VerifyFromLargePersonGroupAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isIdentical").ToString());
+            Console.WriteLine(result.GetProperty("confidence").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceClient_VerifyFromLargePersonGroup_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<FaceVerificationResult> response = client.VerifyFromLargePersonGroup(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceClient_VerifyFromLargePersonGroup_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceClient client = new FaceClient(endpoint, credential);
+
+            Response<FaceVerificationResult> response = await client.VerifyFromLargePersonGroupAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
     }
 }
