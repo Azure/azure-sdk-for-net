@@ -17,12 +17,14 @@ namespace Azure.AI.Translation.Text.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Sample4_BreakSentenceAsync : Sample0_CreateClient
+    public partial class Sample4_BreakSentenceAsync
     {
+        private SampleHelper _helper = new SampleHelper();
+
         [Test]
         public async Task GetTextTranslationSentencesSourceAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = _helper.CreateTextTranslationClient();
 
             #region Snippet:GetTextTranslationSentencesSourceAsync
             try
@@ -52,7 +54,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationSentencesAutoAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = _helper.CreateTextTranslationClient();
 
             #region Snippet:GetTextTranslationSentencesAutoAsync
             try

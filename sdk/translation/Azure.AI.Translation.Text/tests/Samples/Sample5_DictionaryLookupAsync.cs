@@ -17,12 +17,14 @@ namespace Azure.AI.Translation.Text.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Sample5_DictionaryLookupAsync : Sample0_CreateClient
+    public partial class Sample5_DictionaryLookupAsync
     {
+        private SampleHelper _helper = new SampleHelper();
+
         [Test]
         public async Task LookupDictionaryEntriesAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = _helper.CreateTextTranslationClient();
 
             #region Snippet:LookupDictionaryEntriesAsync
             try

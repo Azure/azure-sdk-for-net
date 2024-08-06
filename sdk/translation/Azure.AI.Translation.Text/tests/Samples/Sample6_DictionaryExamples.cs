@@ -17,12 +17,14 @@ namespace Azure.AI.Translation.Text.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Sample6_DictionaryExamples : Sample0_CreateClient
+    public partial class Sample6_DictionaryExamples
     {
+        private SampleHelper _helper = new SampleHelper();
+
         [Test]
         public void GetGrammaticalStructure()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = _helper.CreateTextTranslationClient();
 
             #region Snippet:GetGrammaticalStructure
             try

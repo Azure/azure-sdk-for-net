@@ -17,12 +17,14 @@ namespace Azure.AI.Translation.Text.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Sample3_TransliterateAsync : Sample0_CreateClient
+    public partial class Sample3_TransliterateAsync
     {
+        private SampleHelper _helper = new SampleHelper();
+
         [Test]
         public async Task GetTransliteratedTextAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = _helper.CreateTextTranslationClient();
 
             #region Snippet:GetTransliteratedTextAsync
             try
@@ -50,7 +52,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTransliteratedTextOptionsAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = _helper.CreateTextTranslationClient();
 
             #region Snippet:GetTransliteratedTextOptionsAsync
             try
