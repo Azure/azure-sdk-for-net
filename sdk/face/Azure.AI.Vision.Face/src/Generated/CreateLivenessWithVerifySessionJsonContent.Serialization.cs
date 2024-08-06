@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class CreateLivenessSessionContent : IUtf8JsonSerializable, IJsonModel<CreateLivenessSessionContent>
+    internal partial class CreateLivenessWithVerifySessionJsonContent : IUtf8JsonSerializable, IJsonModel<CreateLivenessWithVerifySessionJsonContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateLivenessSessionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateLivenessWithVerifySessionJsonContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CreateLivenessSessionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateLivenessWithVerifySessionJsonContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessSessionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionJsonContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateLivenessSessionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionJsonContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,6 +58,16 @@ namespace Azure.AI.Vision.Face
                 writer.WritePropertyName("authTokenTimeToLiveInSeconds"u8);
                 writer.WriteNumberValue(AuthTokenTimeToLiveInSeconds.Value);
             }
+            if (Optional.IsDefined(ReturnVerifyImageHash))
+            {
+                writer.WritePropertyName("returnVerifyImageHash"u8);
+                writer.WriteBooleanValue(ReturnVerifyImageHash.Value);
+            }
+            if (Optional.IsDefined(VerifyConfidenceThreshold))
+            {
+                writer.WritePropertyName("verifyConfidenceThreshold"u8);
+                writer.WriteNumberValue(VerifyConfidenceThreshold.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,19 +86,19 @@ namespace Azure.AI.Vision.Face
             writer.WriteEndObject();
         }
 
-        CreateLivenessSessionContent IJsonModel<CreateLivenessSessionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CreateLivenessWithVerifySessionJsonContent IJsonModel<CreateLivenessWithVerifySessionJsonContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessSessionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionJsonContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateLivenessSessionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionJsonContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateLivenessSessionContent(document.RootElement, options);
+            return DeserializeCreateLivenessWithVerifySessionJsonContent(document.RootElement, options);
         }
 
-        internal static CreateLivenessSessionContent DeserializeCreateLivenessSessionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CreateLivenessWithVerifySessionJsonContent DeserializeCreateLivenessWithVerifySessionJsonContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,6 +113,8 @@ namespace Azure.AI.Vision.Face
             LivenessModel? livenessSingleModalModel = default;
             string deviceCorrelationId = default;
             int? authTokenTimeToLiveInSeconds = default;
+            bool? returnVerifyImageHash = default;
+            float? verifyConfidenceThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,13 +174,31 @@ namespace Azure.AI.Vision.Face
                     authTokenTimeToLiveInSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("returnVerifyImageHash"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    returnVerifyImageHash = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("verifyConfidenceThreshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    verifyConfidenceThreshold = property.Value.GetSingle();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CreateLivenessSessionContent(
+            return new CreateLivenessWithVerifySessionJsonContent(
                 livenessOperationMode,
                 sendResultsToClient,
                 deviceCorrelationIdSetInClient,
@@ -176,46 +206,48 @@ namespace Azure.AI.Vision.Face
                 livenessSingleModalModel,
                 deviceCorrelationId,
                 authTokenTimeToLiveInSeconds,
+                returnVerifyImageHash,
+                verifyConfidenceThreshold,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CreateLivenessSessionContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CreateLivenessWithVerifySessionJsonContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessSessionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionJsonContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreateLivenessSessionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionJsonContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CreateLivenessSessionContent IPersistableModel<CreateLivenessSessionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CreateLivenessWithVerifySessionJsonContent IPersistableModel<CreateLivenessWithVerifySessionJsonContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessSessionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionJsonContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCreateLivenessSessionContent(document.RootElement, options);
+                        return DeserializeCreateLivenessWithVerifySessionJsonContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateLivenessSessionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionJsonContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CreateLivenessSessionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateLivenessWithVerifySessionJsonContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CreateLivenessSessionContent FromResponse(Response response)
+        internal static CreateLivenessWithVerifySessionJsonContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCreateLivenessSessionContent(document.RootElement);
+            return DeserializeCreateLivenessWithVerifySessionJsonContent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

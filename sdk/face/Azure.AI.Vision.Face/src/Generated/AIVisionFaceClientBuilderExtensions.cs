@@ -12,9 +12,34 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="FaceClient"/>, <see cref="FaceSessionClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="FaceServiceClient"/>, <see cref="FaceClient"/>, <see cref="FaceListClient"/>, <see cref="LargeFaceListClient"/>, <see cref="PersonGroupClient"/>, <see cref="LargePersonGroupClient"/>, <see cref="FaceSessionClient"/> to client builder. </summary>
     public static partial class AIVisionFaceClientBuilderExtensions
     {
+        /// <summary> Registers a <see cref="FaceServiceClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<FaceServiceClient, AzureAIVisionFaceClientOptions> AddFaceServiceClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<FaceServiceClient, AzureAIVisionFaceClientOptions>((options) => new FaceServiceClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="FaceServiceClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        public static IAzureClientBuilder<FaceServiceClient, AzureAIVisionFaceClientOptions> AddFaceServiceClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<FaceServiceClient, AzureAIVisionFaceClientOptions>((options, cred) => new FaceServiceClient(endpoint, cred, options));
+        }
+
         /// <summary> Registers a <see cref="FaceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint">
@@ -38,6 +63,106 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<FaceClient, AzureAIVisionFaceClientOptions>((options, cred) => new FaceClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="FaceListClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<FaceListClient, AzureAIVisionFaceClientOptions> AddFaceListClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<FaceListClient, AzureAIVisionFaceClientOptions>((options) => new FaceListClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="FaceListClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        public static IAzureClientBuilder<FaceListClient, AzureAIVisionFaceClientOptions> AddFaceListClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<FaceListClient, AzureAIVisionFaceClientOptions>((options, cred) => new FaceListClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="LargeFaceListClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<LargeFaceListClient, AzureAIVisionFaceClientOptions> AddLargeFaceListClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<LargeFaceListClient, AzureAIVisionFaceClientOptions>((options) => new LargeFaceListClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="LargeFaceListClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        public static IAzureClientBuilder<LargeFaceListClient, AzureAIVisionFaceClientOptions> AddLargeFaceListClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<LargeFaceListClient, AzureAIVisionFaceClientOptions>((options, cred) => new LargeFaceListClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="PersonGroupClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<PersonGroupClient, AzureAIVisionFaceClientOptions> AddPersonGroupClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<PersonGroupClient, AzureAIVisionFaceClientOptions>((options) => new PersonGroupClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="PersonGroupClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        public static IAzureClientBuilder<PersonGroupClient, AzureAIVisionFaceClientOptions> AddPersonGroupClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<PersonGroupClient, AzureAIVisionFaceClientOptions>((options, cred) => new PersonGroupClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="LargePersonGroupClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<LargePersonGroupClient, AzureAIVisionFaceClientOptions> AddLargePersonGroupClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<LargePersonGroupClient, AzureAIVisionFaceClientOptions>((options) => new LargePersonGroupClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="LargePersonGroupClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        public static IAzureClientBuilder<LargePersonGroupClient, AzureAIVisionFaceClientOptions> AddLargePersonGroupClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<LargePersonGroupClient, AzureAIVisionFaceClientOptions>((options, cred) => new LargePersonGroupClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="FaceSessionClient"/> instance. </summary>
@@ -65,6 +190,14 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<FaceSessionClient, AzureAIVisionFaceClientOptions>((options, cred) => new FaceSessionClient(endpoint, cred, options));
         }
 
+        /// <summary> Registers a <see cref="FaceServiceClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<FaceServiceClient, AzureAIVisionFaceClientOptions> AddFaceServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<FaceServiceClient, AzureAIVisionFaceClientOptions>(configuration);
+        }
         /// <summary> Registers a <see cref="FaceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
@@ -72,6 +205,38 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<FaceClient, AzureAIVisionFaceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="FaceListClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<FaceListClient, AzureAIVisionFaceClientOptions> AddFaceListClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<FaceListClient, AzureAIVisionFaceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="LargeFaceListClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<LargeFaceListClient, AzureAIVisionFaceClientOptions> AddLargeFaceListClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<LargeFaceListClient, AzureAIVisionFaceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="PersonGroupClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<PersonGroupClient, AzureAIVisionFaceClientOptions> AddPersonGroupClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<PersonGroupClient, AzureAIVisionFaceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="LargePersonGroupClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<LargePersonGroupClient, AzureAIVisionFaceClientOptions> AddLargePersonGroupClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<LargePersonGroupClient, AzureAIVisionFaceClientOptions>(configuration);
         }
         /// <summary> Registers a <see cref="FaceSessionClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

@@ -22,6 +22,8 @@ CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOpe
 {
     SendResultsToClient = true,
     DeviceCorrelationIdSetInClient = true,
+    EnableSessionImage = true,
+    LivenessSingleModalModel = LivenessModel.V20221015Preview04,
     DeviceCorrelationId = "<deviceCorrelationId>",
     AuthTokenTimeToLiveInSeconds = 1234,
 };
@@ -49,6 +51,8 @@ CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOpe
 {
     SendResultsToClient = true,
     DeviceCorrelationIdSetInClient = true,
+    EnableSessionImage = true,
+    LivenessSingleModalModel = LivenessModel.V20221015Preview04,
     DeviceCorrelationId = "<deviceCorrelationId>",
     AuthTokenTimeToLiveInSeconds = 1234,
 };
@@ -84,6 +88,8 @@ using RequestContent content = RequestContent.Create(new
     livenessOperationMode = "Passive",
     sendResultsToClient = true,
     deviceCorrelationIdSetInClient = true,
+    enableSessionImage = true,
+    livenessSingleModalModel = "2022-10-15-preview.04",
     deviceCorrelationId = "<deviceCorrelationId>",
     authTokenTimeToLiveInSeconds = 1234,
 });
@@ -123,6 +129,8 @@ using RequestContent content = RequestContent.Create(new
     livenessOperationMode = "Passive",
     sendResultsToClient = true,
     deviceCorrelationIdSetInClient = true,
+    enableSessionImage = true,
+    livenessSingleModalModel = "2022-10-15-preview.04",
     deviceCorrelationId = "<deviceCorrelationId>",
     authTokenTimeToLiveInSeconds = 1234,
 });
@@ -278,6 +286,8 @@ Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProper
 Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessSessionResult(string,RequestContext)">
@@ -341,6 +351,8 @@ Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProper
 Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessSessionsAsync(string,int?,CancellationToken)">
@@ -545,6 +557,8 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetPrope
 Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result[0].GetProperty("digest").ToString());
+Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessSessionAuditEntries(string,string,int?,RequestContext)">
@@ -609,6 +623,8 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetPrope
 Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result[0].GetProperty("digest").ToString());
+Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteLivenessWithVerifySessionAsync(string,RequestContext)">
@@ -756,6 +772,8 @@ Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProper
 Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessWithVerifySessionResult(string,RequestContext)">
@@ -819,6 +837,8 @@ Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProper
 Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessWithVerifySessionsAsync(string,int?,CancellationToken)">
@@ -1023,6 +1043,8 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetPrope
 Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result[0].GetProperty("digest").ToString());
+Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
     <member name="GetLivenessWithVerifySessionAuditEntries(string,string,int?,RequestContext)">
@@ -1087,6 +1109,8 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("body").GetPrope
 Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
 Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
 Console.WriteLine(result[0].GetProperty("digest").ToString());
+Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
 ]]></code></example>
     </member>
   </members>

@@ -92,6 +92,8 @@ namespace Azure.AI.Vision.Face.Samples
                 livenessOperationMode = "Passive",
                 sendResultsToClient = true,
                 deviceCorrelationIdSetInClient = true,
+                enableSessionImage = true,
+                livenessSingleModalModel = "2022-10-15-preview.04",
                 deviceCorrelationId = "<deviceCorrelationId>",
                 authTokenTimeToLiveInSeconds = 1234,
             });
@@ -115,6 +117,8 @@ namespace Azure.AI.Vision.Face.Samples
                 livenessOperationMode = "Passive",
                 sendResultsToClient = true,
                 deviceCorrelationIdSetInClient = true,
+                enableSessionImage = true,
+                livenessSingleModalModel = "2022-10-15-preview.04",
                 deviceCorrelationId = "<deviceCorrelationId>",
                 authTokenTimeToLiveInSeconds = 1234,
             });
@@ -137,6 +141,8 @@ namespace Azure.AI.Vision.Face.Samples
             {
                 SendResultsToClient = true,
                 DeviceCorrelationIdSetInClient = true,
+                EnableSessionImage = true,
+                LivenessSingleModalModel = LivenessModel.V20221015Preview04,
                 DeviceCorrelationId = "<deviceCorrelationId>",
                 AuthTokenTimeToLiveInSeconds = 1234,
             };
@@ -155,6 +161,8 @@ namespace Azure.AI.Vision.Face.Samples
             {
                 SendResultsToClient = true,
                 DeviceCorrelationIdSetInClient = true,
+                EnableSessionImage = true,
+                LivenessSingleModalModel = LivenessModel.V20221015Preview04,
                 DeviceCorrelationId = "<deviceCorrelationId>",
                 AuthTokenTimeToLiveInSeconds = 1234,
             };
@@ -316,6 +324,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
         }
 
         [Test]
@@ -365,6 +375,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
         }
 
         [Test]
@@ -615,6 +627,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
             Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
             Console.WriteLine(result[0].GetProperty("digest").ToString());
+            Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+            Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
         }
 
         [Test]
@@ -657,6 +671,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
             Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
             Console.WriteLine(result[0].GetProperty("digest").ToString());
+            Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+            Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
         }
 
         [Test]
@@ -836,6 +852,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
         }
 
         [Test]
@@ -885,6 +903,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("statusCode").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("digest").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("sessionImageId").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("verifyImageHash").ToString());
         }
 
         [Test]
@@ -1135,6 +1155,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
             Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
             Console.WriteLine(result[0].GetProperty("digest").ToString());
+            Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+            Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
         }
 
         [Test]
@@ -1177,6 +1199,8 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
             Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
             Console.WriteLine(result[0].GetProperty("digest").ToString());
+            Console.WriteLine(result[0].GetProperty("sessionImageId").ToString());
+            Console.WriteLine(result[0].GetProperty("verifyImageHash").ToString());
         }
 
         [Test]

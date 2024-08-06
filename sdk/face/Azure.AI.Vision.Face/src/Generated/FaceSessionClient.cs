@@ -698,7 +698,7 @@ namespace Azure.AI.Vision.Face
         /// &gt; [!NOTE]
         /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
         /// </remarks>
-        internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessWithVerifySessionJsonContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -732,7 +732,7 @@ namespace Azure.AI.Vision.Face
         /// &gt; [!NOTE]
         /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
         /// </remarks>
-        internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
+        internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessWithVerifySessionJsonContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -752,7 +752,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionAsync(CreateLivenessSessionContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionAsync(CreateLivenessWithVerifySessionJsonContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -790,7 +790,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateLivenessWithVerifySession(CreateLivenessSessionContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateLivenessWithVerifySession(CreateLivenessWithVerifySessionJsonContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -840,7 +840,7 @@ namespace Azure.AI.Vision.Face
         ///
         /// Recommended Option: VerifyImage is provided during session creation.
         /// </remarks>
-        internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionWithVerifyImageAsync(CreateLivenessWithVerifySessionContent body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionWithVerifyImageAsync(CreateLivenessWithVerifySessionMultipartContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -872,7 +872,7 @@ namespace Azure.AI.Vision.Face
         ///
         /// Recommended Option: VerifyImage is provided during session creation.
         /// </remarks>
-        internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySessionWithVerifyImage(CreateLivenessWithVerifySessionContent body, CancellationToken cancellationToken = default)
+        internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySessionWithVerifyImage(CreateLivenessWithVerifySessionMultipartContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -892,7 +892,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionWithVerifyImageAsync(CreateLivenessWithVerifySessionContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionWithVerifyImageAsync(CreateLivenessWithVerifySessionMultipartContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -931,7 +931,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionWithVerifyImage(CreateLivenessWithVerifySessionContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionWithVerifyImage(CreateLivenessWithVerifySessionMultipartContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
