@@ -121,7 +121,8 @@
             "scope": "[variables('storageAccountResourceId')]",
             "properties": {
                 "roleDefinitionId": "[variables('blobDataContributorRoleId')]",
-                "principalId": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName')), '2017-04-18', 'full').some.property.reference]"
+                "principalId": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName')), '2017-04-18', 'full').identity.principalId]",
+                "principalType": "ServicePrincipal"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName'))]",
@@ -137,6 +138,9 @@
                 "name": "S1"
             },
             "kind": "TextTranslation",
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
                 "customSubDomainName": "[variables('txtUniqueSubDomainName')]"
             }
