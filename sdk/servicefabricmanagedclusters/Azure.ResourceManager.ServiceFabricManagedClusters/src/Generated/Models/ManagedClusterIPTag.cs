@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> IPTag associated with the object. </summary>
+    /// <summary> The IP tag associated with the public IP address. </summary>
     public partial class ManagedClusterIPTag
     {
         /// <summary>
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/>. </summary>
-        /// <param name="ipTagType"> The IP tag type. </param>
-        /// <param name="tag"> The value of the IP tag. </param>
+        /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
+        /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipTagType"/> or <paramref name="tag"/> is null. </exception>
         public ManagedClusterIPTag(string ipTagType, string tag)
         {
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/>. </summary>
-        /// <param name="ipTagType"> The IP tag type. </param>
-        /// <param name="tag"> The value of the IP tag. </param>
+        /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
+        /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
         }
 
-        /// <summary> The IP tag type. </summary>
+        /// <summary> IP tag type. Example: FirstPartyUsage. </summary>
         public string IPTagType { get; set; }
-        /// <summary> The value of the IP tag. </summary>
+        /// <summary> IP tag associated with the public IP. Example: SQL, Storage etc. </summary>
         public string Tag { get; set; }
     }
 }

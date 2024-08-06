@@ -6,6 +6,7 @@ parameters:
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
   ServiceConnection: not-specified
   ResourceType: test
+  EnvVars: {}
   UseFederatedAuth: false
 
 # SubscriptionConfiguration will be splat into the parameters of the test
@@ -28,6 +29,9 @@ steps:
       displayName: Remove test resources
       condition: and(eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'), ne(variables['Skip.RemoveTestResources'], 'true'))
       continueOnError: true
+      env:
+        PoolSubnet: $(PoolSubnet)
+        ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
         azurePowerShellVersion: LatestVersion
@@ -44,6 +48,7 @@ steps:
             @subscriptionConfiguration `
             -ResourceType '${{ parameters.ResourceType }}' `
             -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
+            -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
             -CI `
             -Force `
             -Verbose
@@ -61,9 +66,13 @@ steps:
           -ResourceType '${{ parameters.ResourceType }}' `
           -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
           -ServicePrincipalAuth `
+          -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
           -CI `
           -Force `
           -Verbose
       displayName: Remove test resources
       condition: and(eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'), ne(variables['Skip.RemoveTestResources'], 'true'))
       continueOnError: true
+      env:
+        PoolSubnet: $(PoolSubnet)
+        ${{ insert }}: ${{ parameters.EnvVars }}

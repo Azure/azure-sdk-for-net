@@ -32,13 +32,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sasUri"> SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AzureTableStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret accountKey, DataFactoryElement<string> sasUri, DataFactoryKeyVaultSecret sasToken, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="serviceEndpoint"> Table service endpoint of the Azure Table Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureTableStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret accountKey, DataFactoryElement<string> sasUri, DataFactoryKeyVaultSecret sasToken, string encryptedCredential, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountKey = accountKey;
             SasUri = sasUri;
             SasToken = sasToken;
             EncryptedCredential = encryptedCredential;
+            ServiceEndpoint = serviceEndpoint;
+            Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureTableStorage";
         }
 
@@ -52,5 +56,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryKeyVaultSecret SasToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
+        /// <summary> Table service endpoint of the Azure Table Storage resource. It is mutually exclusive with connectionString, sasUri property. </summary>
+        public DataFactoryElement<string> ServiceEndpoint { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public DataFactoryCredentialReference Credential { get; set; }
     }
 }

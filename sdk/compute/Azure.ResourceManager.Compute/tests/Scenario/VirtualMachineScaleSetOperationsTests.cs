@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task Update()
         {
             var vmssName = Recording.GenerateAssetName("testVMSS-");

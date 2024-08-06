@@ -52,7 +52,7 @@ namespace Azure.AI.Vision.Face
         public static FaceAttributeType Noise { get; } = new FaceAttributeType(NoiseValue);
         /// <summary> Whether each face is wearing a mask. Mask type returns 'noMask', 'faceMask', 'otherMaskOrOcclusion', or 'uncertain'. Value returns a boolean 'noseAndMouthCovered' indicating whether nose and mouth are covered. </summary>
         public static FaceAttributeType Mask { get; } = new FaceAttributeType(MaskValue);
-        /// <summary> The overall image quality regarding whether the image being used in the detection is of sufficient quality to attempt face recognition on. The value is an informal rating of low, medium, or high. Only 'high' quality images are recommended for person enrollment and quality at or above 'medium' is recommended for identification scenarios. The attribute is only available when using any combinations of detection models detection_01 or detection_03, and recognition models recognition_03 or recognition_04. </summary>
+        /// <summary> The overall image quality regarding whether the image being used in the detection is of sufficient quality to attempt face recognition on. The value is an informal rating of low, medium, or high. Only 'high' quality images are recommended for person enrollment and quality at or above 'medium' is recommended for identification scenarios. The attribute is only available when using recognition models recognition_03 or recognition_04. </summary>
         public static FaceAttributeType QualityForRecognition { get; } = new FaceAttributeType(QualityForRecognitionValue);
         /// <summary> Age in years. </summary>
         public static FaceAttributeType Age { get; } = new FaceAttributeType(AgeValue);
@@ -77,7 +77,7 @@ namespace Azure.AI.Vision.Face
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

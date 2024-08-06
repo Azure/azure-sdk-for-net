@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 extern alias DMBlob;
+extern alias BaseShares;
 
 using System;
 using System.Collections.Generic;
@@ -18,16 +19,15 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Files.Shares.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test.Shared;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [ShareClientTestFixture]
+    [BlobShareClientTestFixture]
     public class ShareDirectoryToBlockBlobDirectoryTests : StartTransferDirectoryCopyTestBase
         <ShareServiceClient,
         ShareClient,
@@ -117,13 +117,16 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
 
-        protected override StorageResourceContainer GetDestinationStorageResourceContainer(BlobContainerClient sourceContainerClient, string directoryPath)
-            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Block });
+        protected override StorageResourceContainer GetDestinationStorageResourceContainer(
+            BlobContainerClient sourceContainerClient,
+            string directoryPath,
+            TransferPropertiesTestType propertiesTestType = default)
+            => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = new(BlobType.Block) });
 
         protected override BlobContainerClient GetOAuthDestinationContainerClient(string containerName)
         {
             BlobClientOptions options = DestinationClientBuilder.GetOptions();
-            BlobServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, options);
+            BlobServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
             return oauthService.GetBlobContainerClient(containerName);
         }
 
@@ -131,7 +134,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         {
             ShareClientOptions options = SourceClientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
-            ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, options);
+            ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
             return oauthService.GetShareClient(containerName);
         }
 
@@ -146,7 +149,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             // Authorize with SAS when performing operations
             if (containerClient.CanGenerateSasUri)
             {
-                Uri sourceUri = containerClient.GenerateSasUri(Sas.ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
+                Uri sourceUri = containerClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
                 ShareClient sasClient = InstrumentClient(new ShareClient(sourceUri, GetShareOptions()));
                 return new ShareDirectoryStorageResourceContainer(sasClient.GetDirectoryClient(directoryPath), default);
             }
@@ -165,6 +168,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string sourcePrefix,
             BlobContainerClient destinationContainer,
             string destinationPrefix,
+            TransferPropertiesTestType propertiesTestType = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);

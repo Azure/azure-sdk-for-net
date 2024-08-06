@@ -16,9 +16,11 @@ namespace Azure.Identity
     /// </summary>
     public class AzurePipelinesCredential : TokenCredential
     {
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azurepipelinescredential/troubleshoot";
         internal readonly string[] AdditionallyAllowedTenantIds;
+        internal string SystemAccessToken { get; }
         internal string TenantId { get; }
-        internal string ClientId { get; }
+        internal string ServiceConnectionId { get; }
         internal MsalConfidentialClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
@@ -35,36 +37,53 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="tenantId">The tenant ID for the service connection.</param>
         /// <param name="clientId">The client ID for the service connection.</param>
-        /// <param name="serviceConnectionId">The service connection ID, as found in the querystring's resourceId key.</param>
+        /// <param name="serviceConnectionId">The service connection Id for the service connection associated with the pipeline.</param>
+        /// <param name="systemAccessToken">The pipeline's <see href="https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops%26tabs=yaml#systemaccesstoken">System.AccessToken</see> value.</param>
         /// <param name="options">An instance of <see cref="AzurePipelinesCredentialOptions"/>.</param>
-        /// <exception cref="System.ArgumentNullException">When <paramref name="tenantId"/>, <paramref name="clientId"/>, or <paramref name="serviceConnectionId"/> is null.</exception>
-        public AzurePipelinesCredential(string tenantId, string clientId, string serviceConnectionId, AzurePipelinesCredentialOptions options = default)
+        /// <exception cref="ArgumentNullException">When <paramref name="systemAccessToken"/> is null.</exception>
+        public AzurePipelinesCredential(string tenantId, string clientId, string serviceConnectionId, string systemAccessToken, AzurePipelinesCredentialOptions options = default)
         {
-            Argument.AssertNotNull(serviceConnectionId, nameof(serviceConnectionId));
+            Argument.AssertNotNull(systemAccessToken, nameof(systemAccessToken));
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(tenantId, nameof(tenantId));
+            Argument.AssertNotNull(serviceConnectionId, nameof(serviceConnectionId));
 
+            SystemAccessToken = systemAccessToken;
+            ServiceConnectionId = serviceConnectionId;
+
+            options ??= new AzurePipelinesCredentialOptions();
             TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
-            ClientId = clientId;
-            Pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+            Pipeline = options.Pipeline ?? CredentialPipeline.GetInstance(options);
 
             Func<CancellationToken, Task<string>> _assertionCallback = async (cancellationToken) =>
             {
-                var message = CreateOidcRequestMessage(serviceConnectionId, options ?? new AzurePipelinesCredentialOptions());
+                var message = CreateOidcRequestMessage(options ?? new AzurePipelinesCredentialOptions());
                 await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 return GetOidcTokenResponse(message);
             };
 
-            Client = options?.MsalClient ?? new MsalConfidentialClient(Pipeline, tenantId, clientId, _assertionCallback, options);
+            Client = options?.MsalClient ?? new MsalConfidentialClient(Pipeline, TenantId, clientId, _assertionCallback, options);
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Obtains an access token from within an Azure Pipelines environment.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
             => GetTokenCoreAsync(false, requestContext, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Obtains an access token from within an Azure Pipelines environment.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             => await GetTokenCoreAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
 
@@ -78,50 +97,63 @@ namespace Azure.Identity
 
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
 
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
 
-        internal HttpMessage CreateOidcRequestMessage(string serviceConnectionId, AzurePipelinesCredentialOptions options)
+        internal HttpMessage CreateOidcRequestMessage(AzurePipelinesCredentialOptions options)
         {
-            string CollectionUri = options.CollectionUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_TEAMFOUNDATIONCOLLECTIONURI is not set.");
-            string projectId = options.TeamProjectId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_TEAMPROJECTID is not set.");
-            string planId = options.PlanId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_PLANID is not set.");
-            string jobId = options.JobId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_JOBID is not set.");
-            string systemToken = options.SystemAccessToken ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_ACCESSTOKEN is not set.");
-            string hubName = options.HubName ?? throw new CredentialUnavailableException("AzurePipelineCredential is not available: environment variable SYSTEM_HOSTTYPE is not set.");
+            string oidcRequestUri = options.OidcRequestUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: Ensure that you're running this task in an Azure Pipeline so that following missing system variable(s) can be defined: SYSTEM_OIDCREQUESTURI is not set.");
+            string systemToken = SystemAccessToken;
 
             var message = Pipeline.HttpPipeline.CreateMessage();
 
-            var requestUri = new Uri($"{CollectionUri}{projectId}/_apis/distributedtask/hubs/{hubName}/plans/{planId}/jobs/{jobId}/oidctoken?api-version={OIDC_API_VERSION}&serviceConnectionId={serviceConnectionId}");
+            var requestUri = new Uri($"{oidcRequestUri}?api-version={OIDC_API_VERSION}&serviceConnectionId={ServiceConnectionId}");
             message.Request.Uri.Reset(requestUri);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"Bearer {systemToken}");
             message.Request.Headers.SetValue(HttpHeader.Names.ContentType, "application/json");
+            message.Request.Method = RequestMethod.Post;
             return message;
         }
 
         internal string GetOidcTokenResponse(HttpMessage message)
         {
-            Utf8JsonReader reader = new Utf8JsonReader(message.Response.Content);
             string oidcToken = null;
-            while (oidcToken is null && reader.Read())
+            try
             {
-                if (reader.TokenType == JsonTokenType.PropertyName)
+                Utf8JsonReader reader = new Utf8JsonReader(message.Response.Content);
+                while (oidcToken is null && reader.Read())
                 {
-                    switch (reader.GetString())
+                    if (reader.TokenType == JsonTokenType.PropertyName)
                     {
-                        case "oidcToken":
-                            reader.Read();
-                            oidcToken = reader.GetString();
-                            break;
+                        switch (reader.GetString())
+                        {
+                            case "oidcToken":
+                                reader.Read();
+                                oidcToken = reader.GetString();
+                                break;
+                        }
                     }
                 }
             }
-            return oidcToken ?? throw new AuthenticationFailedException("OIDC token not found in response.");
+            catch
+            {
+                //Just don't want to throw here, we will throw in the next if block
+            }
+            if (oidcToken is null)
+            {
+                string error = $"OIDC token not found in response. " + Troubleshooting;
+                if (message.Response.Status != 200)
+                {
+                    error = error + $"\n\nResponse= {message.Response.Content}";
+                }
+                throw new AuthenticationFailedException(error);
+            }
+            return oidcToken;
         }
     }
 }

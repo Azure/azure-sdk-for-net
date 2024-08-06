@@ -92,7 +92,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new PageBlobClient(httpUri, Tenants.GetOAuthCredential()),
+                () => new PageBlobClient(httpUri, TestEnvironment.Credential),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Storage.Blobs.Test
 
             PageBlobClient aadBlob = InstrumentClient(new PageBlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -194,7 +194,7 @@ namespace Azure.Storage.Blobs.Test
 
             PageBlobClient aadBlob = InstrumentClient(new PageBlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -222,7 +222,7 @@ namespace Azure.Storage.Blobs.Test
 
             PageBlobClient aadBlob = InstrumentClient(new PageBlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -3001,7 +3001,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.StartCopyIncrementalAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     // dummy snapshot value.
                     snapshot: "2019-03-29T18:12:15.6608647Z"),
                 e =>
@@ -3072,7 +3072,6 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
 
                 // Arrange
-                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
                 var data = GetRandomBuffer(Constants.KB);
                 var expectedData = new byte[4 * Constants.KB];
                 data.CopyTo(expectedData, 0);
@@ -3094,7 +3093,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
 
                 Operation<long> operation = await blob.StartCopyIncrementalAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     snapshot: snapshot);
                 await operation.WaitForCompletionAsync();
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
@@ -3344,9 +3343,6 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
             // Arrange
-
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
             var data = GetRandomBuffer(Constants.KB);
 
             using (var stream = new MemoryStream(data))
@@ -3361,7 +3357,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     sourceRange: range,
                     range: range);
 
@@ -3370,6 +3366,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
         public async Task UploadPagesFromUriAsync_SourceErrorAndStatusCode()
@@ -3488,8 +3485,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
             var data = GetRandomBuffer(Constants.KB);
 
             using var stream = new MemoryStream(data);
@@ -3504,7 +3499,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
-                sourceUri: sourceBlob.Uri,
+                sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                 sourceRange: range,
                 range: range);
 
@@ -3518,8 +3513,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
             var data = GetRandomBuffer(4 * Constants.KB);
 
             using (var stream = new MemoryStream(data))
@@ -3534,7 +3527,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await destBlob.UploadPagesFromUriAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     sourceRange: new HttpRange(2 * Constants.KB, 2 * Constants.KB),
                     range: range);
 
@@ -3553,7 +3546,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
             var data = GetRandomBuffer(Constants.KB);
 
@@ -3574,7 +3566,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await destBlob.UploadPagesFromUriAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     sourceRange: range,
                     range: range,
                     options: options);
@@ -3587,8 +3579,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
             var data = GetRandomBuffer(Constants.KB);
 
             using (var stream = new MemoryStream(data))
@@ -3609,7 +3599,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destBlob.UploadPagesFromUriAsync(
-                        sourceUri: sourceBlob.Uri,
+                        sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                         sourceRange: range,
                         range: range,
                         options: options),
@@ -3645,8 +3635,6 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
 
                 // Arrange
-                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
                 var data = GetRandomBuffer(Constants.KB);
 
                 using (var stream = new MemoryStream(data))
@@ -3678,7 +3666,7 @@ namespace Azure.Storage.Blobs.Test
 
                     // Act
                     await destBlob.UploadPagesFromUriAsync(
-                        sourceUri: sourceBlob.Uri,
+                        sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                         sourceRange: range,
                         range: range,
                         options: options);
@@ -3687,15 +3675,15 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        // Net462 is sending the source SAS expiry unencoded to the service, while net6 and net7 sending it encoded.
+        // Both are valid, but make this test non-recordable.
+        [LiveOnly]
         public async Task UploadPagesFromUriAsync_NonAsciiSourceUri()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
-
-            // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
             using (var stream = new MemoryStream(data))
             {
@@ -3709,7 +3697,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await destBlob.UploadPagesFromUriAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     sourceRange: range,
                     range: range);
             }
@@ -3741,8 +3729,6 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
 
                 // Arrange
-                await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
                 var data = GetRandomBuffer(Constants.KB);
 
                 using (var stream = new MemoryStream(data))
@@ -3774,7 +3760,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destBlob.UploadPagesFromUriAsync(
-                            sourceUri: sourceBlob.Uri,
+                            sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                             sourceRange: range,
                             range: range,
                             options: options),
@@ -3788,10 +3774,8 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UploadPagesFromUriAsync_IfTags()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
             // Arrange
-
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
             var data = GetRandomBuffer(Constants.KB);
 
@@ -3824,7 +3808,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await destBlob.UploadPagesFromUriAsync(
-                sourceUri: sourceBlob.Uri,
+                sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                 sourceRange: range,
                 range: range,
                 options: options);
@@ -3834,10 +3818,8 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UploadPagesFromUriAsync_IfTagsFailed()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
             // Arrange
-
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
             var data = GetRandomBuffer(Constants.KB);
 
@@ -3865,7 +3847,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destBlob.UploadPagesFromUriAsync(
-                    sourceUri: sourceBlob.Uri,
+                    sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     sourceRange: range,
                     range: range,
                     options: options),
@@ -3877,7 +3859,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3917,7 +3899,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -4147,7 +4129,7 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), TestEnvironment.Credential, new BlobClientOptions()).Object;
         }
 
         [RecordedTest]

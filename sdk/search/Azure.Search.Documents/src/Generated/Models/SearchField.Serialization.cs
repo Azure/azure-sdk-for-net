@@ -91,18 +91,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("indexAnalyzer");
                 }
             }
-            if (Optional.IsDefined(NormalizerName))
-            {
-                if (NormalizerName != null)
-                {
-                    writer.WritePropertyName("normalizer"u8);
-                    writer.WriteStringValue(NormalizerName.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("normalizer");
-                }
-            }
             if (Optional.IsDefined(VectorSearchDimensions))
             {
                 if (VectorSearchDimensions != null)
@@ -180,7 +168,6 @@ namespace Azure.Search.Documents.Indexes.Models
             LexicalAnalyzerName? analyzer = default;
             LexicalAnalyzerName? searchAnalyzer = default;
             LexicalAnalyzerName? indexAnalyzer = default;
-            LexicalNormalizerName? normalizer = default;
             int? dimensions = default;
             string vectorSearchProfile = default;
             VectorEncodingFormat? vectorEncoding = default;
@@ -291,16 +278,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("normalizer"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        normalizer = null;
-                        continue;
-                    }
-                    normalizer = new LexicalNormalizerName(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -373,7 +350,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 analyzer,
                 searchAnalyzer,
                 indexAnalyzer,
-                normalizer,
                 dimensions,
                 vectorSearchProfile,
                 vectorEncoding,

@@ -4,7 +4,7 @@
     <AssemblyTitle>Microsoft Azure.Messaging.EventGrid client library</AssemblyTitle>
     <Version>4.25.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>4.24.0</ApiCompatVersion>
+    <ApiCompatVersion>4.24.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

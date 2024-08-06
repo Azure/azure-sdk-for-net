@@ -5,7 +5,7 @@
 - Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET cross-platform development** workloads in VisualStudio
-- Install **.NET 7.0.100 SDK** for your specific platform. (or a higher version within the 7.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/7.0)
+- Install **.NET 8.0.100 SDK** for your specific platform. (or a higher version within the 8.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/8.0)
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
@@ -31,7 +31,7 @@
 
 ## TO BUILD:
 
-1.  Open any solution, eg "SDKs\Compute\Microsoft.Azure.Management.Compute.sln"
+1.  Open any solution, eg "SDKs\Compute\Azure.ResourceManager.Compute.sln"
 2.  Build solution from Visual Studio
 
 ### Single Service from Command Line
@@ -61,7 +61,7 @@ Run e.g. `msbuild eng\mgmt.proj /t:"Runtests" /p:Scope=Compute`
 In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI:
 
 ```dotnetcli
-dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj
+dotnet test Compute\Azure.ResourceManager.Compute\tests\Azure.ResourceManager.Compute.Tests.csproj
 ```
 
 ### Non-Windows command line build
@@ -350,7 +350,7 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) *(defined in AzSdk.reference.props)*
 2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md).
    - Client library packages are in a folder name like ***Microsoft.Azure.< ServiceName >***
-   - Management library packages are in a folder named like ***Microsoft.Azure.Management.< Resource Provider Name >***
+   - Management library packages are in a folder named like ***Azure.ResourceManager.< Resource Provider Name >***
 3. Each shipping package contains a project for their **generated** and /or **Customization** code
    - The folder **'Generated'** contains the generated code
    - The folder **'Customizations'** contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
@@ -371,7 +371,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 5. Generate the code. See [Generating Client Code](#generating-client-code) below.
 6. **MANDATORY**: Add or update tests for the newly generated code.
 7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+8. For management libraries run `eng\scripts\Update-Mgmt-CI.ps1` to update PR include paths in `sdk\resourcemanager\ci.mgmt.yml`
 9. Opan a pull request with your changes against the `main` branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 10. The pull requests will be reviewed and merged by the Azure SDK team
 

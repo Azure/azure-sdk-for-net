@@ -206,7 +206,7 @@ namespace Azure.Storage.DataMovement
                                 job: this,
                                 partNumber: partNumber,
                                 sourceResource: (StorageResourceItem)current,
-                                destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName))
+                                destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName, default))
                                 .ConfigureAwait(false);
                             AppendJobPart(part);
                         }

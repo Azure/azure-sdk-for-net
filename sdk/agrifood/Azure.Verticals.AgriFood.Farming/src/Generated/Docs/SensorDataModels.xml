@@ -7,7 +7,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -28,7 +28,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -87,7 +87,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -108,7 +108,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -167,7 +167,7 @@ This sample shows how to call GetSensorDataModelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 Response response = await client.GetSensorDataModelAsync("<sensorPartnerId>", "<sensorDataModelId>", null);
 
@@ -178,7 +178,7 @@ This sample shows how to call GetSensorDataModelAsync with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 Response response = await client.GetSensorDataModelAsync("<sensorPartnerId>", "<sensorDataModelId>", null);
 
@@ -210,7 +210,7 @@ This sample shows how to call GetSensorDataModel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 Response response = client.GetSensorDataModel("<sensorPartnerId>", "<sensorDataModelId>", null);
 
@@ -221,7 +221,7 @@ This sample shows how to call GetSensorDataModel with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 Response response = client.GetSensorDataModel("<sensorPartnerId>", "<sensorDataModelId>", null);
 
@@ -253,7 +253,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorDataModelId>");
 
@@ -263,7 +263,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorDataModelId>");
 
@@ -276,7 +276,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 Response response = client.Delete("<sensorPartnerId>", "<sensorDataModelId>");
 
@@ -286,7 +286,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 Response response = client.Delete("<sensorPartnerId>", "<sensorDataModelId>");
 
@@ -299,7 +299,7 @@ This sample shows how to call GetSensorDataModelsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 await foreach (BinaryData item in client.GetSensorDataModelsAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -311,7 +311,7 @@ This sample shows how to call GetSensorDataModelsAsync with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 await foreach (BinaryData item in client.GetSensorDataModelsAsync("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -344,7 +344,7 @@ This sample shows how to call GetSensorDataModels and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 foreach (BinaryData item in client.GetSensorDataModels("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -356,7 +356,7 @@ This sample shows how to call GetSensorDataModels with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient(apiVersion: "2022-11-01-preview");
+SensorDataModels client = new FarmBeatsClient(endpoint, credential).GetSensorDataModelsClient();
 
 foreach (BinaryData item in client.GetSensorDataModels("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {

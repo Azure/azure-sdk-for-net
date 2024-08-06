@@ -1,25 +1,63 @@
 # Release History
 
-## 1.12.0-beta.3 (Unreleased)
+## 1.13.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- If `DefaultAzureCredential` attempts to authenticate with the `MangagedIdentityCredential` and it receives either a failed response that is not json, it will now fall through to the next credential in the chain. [#45184](https://github.com/Azure/azure-sdk-for-net/issues/45184)
 
 ### Other Changes
+- `AzurePowerShellCredential` now utilizes the AsSecureString parameter to Get-AzAccessToken for version 2.17.0 and greater of the Az.Accounts module.
 
-## 1.11.3 (2024-05-07)
+## 1.13.0-beta.1 (2024-07-24)
+
+### Breaking Changes
+- Previously, if a clientID or ResourceID was specified for Cloud Shell managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Cloud Shell managed identity.
+
+### Other Changes
+- The logging level passed to MSAL now correlates to the log level configured on your configured `AzureEventSourceListener`. Previously, the log level was always set to `Microsoft.Identity.Client.LogLevel.Info`.
+
+## 1.12.0 (2024-06-17)
+
+### Features Added
+- Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
+- `OnBehalfOfCredential` now supports client assertion callbacks for acquiring tokens on behalf of a user.
+- All credentials now support setting RefreshOn value if received from MSAL.
+- ManagedIdentityCredential sets RefreshOn value of half the token lifetime for AccessTokens with an ExpiresOn value greater than 2 hours in the future.
+- `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
+
+## 1.12.0-beta.3 (2024-06-11)
+
+### Features Added
+- `OnBehalfOfCredential` now supports client assertion callbacks for acquiring tokens on behalf of a user.
+- All credentials now support setting RefreshOn value if received from MSAL.
+- ManagedIdentityCredential sets RefreshOn value of half the token lifetime for AccessTokens with an ExpiresOn value greater than 2 hours in the future.
+
+### Breaking Changes
+- The constructor of `AzurePipelinesCredential` now includes additional required parameters for the Azure Pipelines service connection.
 
 ### Bugs Fixed
-- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
+- Bug fixes for `AzurePipelinesCredential`
+- Managed identity bug fixes.
+
+## 1.11.4 (2024-06-10)
+
+### Bugs Fixed
+- Managed identity bug fixes.
 
 ## 1.12.0-beta.2 (2024-05-07)
 
 ### Features Added
 - `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
 - Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
+
+### Bugs Fixed
+- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
+
+## 1.11.3 (2024-05-07)
 
 ### Bugs Fixed
 - Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
@@ -57,6 +95,9 @@
 - `AzureCliCredential` utilizes the new `expires_on` property returned by `az account get-access-token` to determine token expiration.
 
 ## 1.10.4 (2023-11-13)
+
+### Breaking Changes
+- One of Azure.Identity's dependencies, Microsoft.Identity.Client, inadvertently added a dependency to `WindowsForms` when targeting `netX.0-windows` instead of `netX.0` in version 4.56.0. An additional installation of .NET Desktop Runtime may be necessary. Manually adding a reference to the latest Microsoft.Identity.Client will remove the need for the .NET Desktop Runtime. [#44232](https://github.com/Azure/azure-sdk-for-net/issues/44232)
 
 ### Other Changes
 - Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
