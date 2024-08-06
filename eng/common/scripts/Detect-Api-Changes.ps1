@@ -115,7 +115,7 @@ foreach ($packagePropFile in $packageProperties)
     if ($packages)
     {
         $pkgPath = $packages.Values[0]
-        $isRequired = Should-Process-Package -pkgPath $pkgPath -packageName $($packageMetadata.Name)
+        $isRequired = Should-Process-Package -pkgPath $pkgPath -packageName $($packageMetadata.ArtifactName)
         Write-Host "Is API change detect required for $($packageMetadata.Name):$($isRequired)"
         if ($isRequired -eq $True)
         {
