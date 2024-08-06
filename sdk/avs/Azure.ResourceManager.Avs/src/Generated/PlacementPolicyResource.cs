@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a PlacementPolicy along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlacementPolicyResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetPlacementPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource"/> using the GetPlacementPolicy method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource"/> using the GetPlacementPolicy method.
     /// </summary>
     public partial class PlacementPolicyResource : ArmResource
     {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="patch"> The placement policy properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, PlacementPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PlacementPolicyResource>> UpdateAsync(WaitUntil waitUntil, PlacementPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _placementPolicyRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_placementPolicyClientDiagnostics, Pipeline, _placementPolicyRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<PlacementPolicyResource>(new PlacementPolicyOperationSource(Client), _placementPolicyClientDiagnostics, Pipeline, _placementPolicyRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="patch"> The placement policy properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation Update(WaitUntil waitUntil, PlacementPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PlacementPolicyResource> Update(WaitUntil waitUntil, PlacementPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _placementPolicyRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new AvsArmOperation(_placementPolicyClientDiagnostics, Pipeline, _placementPolicyRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<PlacementPolicyResource>(new PlacementPolicyOperationSource(Client), _placementPolicyClientDiagnostics, Pipeline, _placementPolicyRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of an HCX addon. </summary>
-    public partial class AddonHcxProperties : AddonProperties
+    public partial class AddonHcxProperties : AvsPrivateCloudAddonProperties
     {
         /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/>. </summary>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>

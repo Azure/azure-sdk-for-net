@@ -52,11 +52,8 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpData"/>. </summary>
-        /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
-        public WorkloadNetworkDhcpData(DhcpTypeEnum dhcpType)
+        public WorkloadNetworkDhcpData()
         {
-            DhcpType = dhcpType;
-            Segments = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpData"/>. </summary>
@@ -64,36 +61,23 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
-        /// <param name="displayName"> Display name of the DHCP entity. </param>
-        /// <param name="segments"> NSX Segments consuming DHCP. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Please note <see cref="WorkloadNetworkDhcpEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDhcpData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkDhcpData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkDhcpEntity properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            DhcpType = dhcpType;
-            DisplayName = displayName;
-            Segments = segments;
-            ProvisioningState = provisioningState;
-            Revision = revision;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpData"/> for deserialization. </summary>
-        internal WorkloadNetworkDhcpData()
-        {
-        }
-
-        /// <summary> Type of DHCP: SERVER or RELAY. </summary>
-        internal DhcpTypeEnum DhcpType { get; set; }
-        /// <summary> Display name of the DHCP entity. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> NSX Segments consuming DHCP. </summary>
-        public IReadOnlyList<string> Segments { get; }
-        /// <summary> The provisioning state. </summary>
-        public WorkloadNetworkDhcpProvisioningState? ProvisioningState { get; }
-        /// <summary> NSX revision number. </summary>
-        public long? Revision { get; set; }
+        /// <summary>
+        /// The resource-specific properties for this resource.
+        /// Please note <see cref="WorkloadNetworkDhcpEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
+        /// </summary>
+        public WorkloadNetworkDhcpEntity Properties { get; set; }
     }
 }

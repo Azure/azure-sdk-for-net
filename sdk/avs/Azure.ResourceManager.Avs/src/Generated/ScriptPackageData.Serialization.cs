@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs
             string description = default;
             string version = default;
             string company = default;
-            string uri = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,11 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("uri"u8))
                         {
-                            uri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
