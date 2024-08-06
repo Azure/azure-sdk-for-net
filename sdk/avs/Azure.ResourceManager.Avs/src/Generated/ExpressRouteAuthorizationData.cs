@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="expressRouteAuthorizationKey"> The key of the ExpressRoute Circuit Authorization. </param>
         /// <param name="expressRouteId"> The ID of the ExpressRoute Circuit. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteAuthorizationProvisioningState? provisioningState, ResourceIdentifier expressRouteAuthorizationId, string expressRouteAuthorizationKey, ResourceIdentifier expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExpressRouteAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteAuthorizationProvisioningState? provisioningState, string expressRouteAuthorizationId, string expressRouteAuthorizationKey, string expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ExpressRouteAuthorizationId = expressRouteAuthorizationId;
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Avs
         /// <summary> The state of the ExpressRoute Circuit Authorization provisioning. </summary>
         public ExpressRouteAuthorizationProvisioningState? ProvisioningState { get; }
         /// <summary> The ID of the ExpressRoute Circuit Authorization. </summary>
-        public ResourceIdentifier ExpressRouteAuthorizationId { get; }
+        public string ExpressRouteAuthorizationId { get; }
         /// <summary> The key of the ExpressRoute Circuit Authorization. </summary>
         public string ExpressRouteAuthorizationKey { get; }
         /// <summary> The ID of the ExpressRoute Circuit. </summary>
-        public ResourceIdentifier ExpressRouteId { get; set; }
+        public string ExpressRouteId { get; set; }
     }
 }

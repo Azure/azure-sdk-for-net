@@ -35,11 +35,6 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureResourceManagerCommonTypesResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AzureResourceManagerCommonTypesResourceType);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -75,11 +70,8 @@ namespace Azure.ResourceManager.Avs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagementCluster))
-            {
-                writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster, options);
-            }
+            writer.WritePropertyName("managementCluster"u8);
+            writer.WriteObjectValue(ManagementCluster, options);
             if (Optional.IsDefined(Internet))
             {
                 writer.WritePropertyName("internet"u8);
@@ -130,11 +122,8 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteObjectValue(Endpoints, options);
             }
-            if (Optional.IsDefined(NetworkBlock))
-            {
-                writer.WritePropertyName("networkBlock"u8);
-                writer.WriteStringValue(NetworkBlock);
-            }
+            writer.WritePropertyName("networkBlock"u8);
+            writer.WriteStringValue(NetworkBlock);
             if (options.Format != "W" && Optional.IsDefined(ManagementNetwork))
             {
                 writer.WritePropertyName("managementNetwork"u8);
@@ -145,25 +134,25 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("provisioningNetwork"u8);
                 writer.WriteStringValue(ProvisioningNetwork);
             }
-            if (options.Format != "W" && Optional.IsDefined(VMotionNetwork))
+            if (options.Format != "W" && Optional.IsDefined(VmotionNetwork))
             {
                 writer.WritePropertyName("vmotionNetwork"u8);
-                writer.WriteStringValue(VMotionNetwork);
+                writer.WriteStringValue(VmotionNetwork);
             }
-            if (Optional.IsDefined(VCenterPassword))
+            if (Optional.IsDefined(VcenterPassword))
             {
                 writer.WritePropertyName("vcenterPassword"u8);
-                writer.WriteStringValue(VCenterPassword);
+                writer.WriteStringValue(VcenterPassword);
             }
             if (Optional.IsDefined(NsxtPassword))
             {
                 writer.WritePropertyName("nsxtPassword"u8);
                 writer.WriteStringValue(NsxtPassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCenterCertificateThumbprint))
+            if (options.Format != "W" && Optional.IsDefined(VcenterCertificateThumbprint))
             {
                 writer.WritePropertyName("vcenterCertificateThumbprint"u8);
-                writer.WriteStringValue(VCenterCertificateThumbprint);
+                writer.WriteStringValue(VcenterCertificateThumbprint);
             }
             if (options.Format != "W" && Optional.IsDefined(NsxtCertificateThumbprint))
             {
@@ -176,11 +165,6 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in ExternalCloudLinks)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -246,12 +230,11 @@ namespace Azure.ResourceManager.Avs
             }
             AvsSku sku = default;
             ManagedServiceIdentity identity = default;
-            string type = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type0 = default;
+            ResourceType type = default;
             SystemData systemData = default;
             AvsManagementCluster managementCluster = default;
             InternetConnectivityState? internet = default;
@@ -270,7 +253,7 @@ namespace Azure.ResourceManager.Avs
             string nsxtPassword = default;
             string vcenterCertificateThumbprint = default;
             string nsxtCertificateThumbprint = default;
-            IReadOnlyList<ResourceIdentifier> externalCloudLinks = default;
+            IReadOnlyList<string> externalCloudLinks = default;
             ExpressRouteCircuit secondaryCircuit = default;
             NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
             ResourceIdentifier virtualNetworkId = default;
@@ -291,11 +274,6 @@ namespace Azure.ResourceManager.Avs
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -329,7 +307,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type0 = new ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -352,10 +330,6 @@ namespace Azure.ResourceManager.Avs
                     {
                         if (property0.NameEquals("managementCluster"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value, options);
                             continue;
                         }
@@ -487,17 +461,10 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
+                                array.Add(item.GetString());
                             }
                             externalCloudLinks = array;
                             continue;
@@ -550,12 +517,10 @@ namespace Azure.ResourceManager.Avs
             return new AvsPrivateCloudData(
                 id,
                 name,
-                type0,
+                type,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku,
-                identity,
                 managementCluster,
                 internet,
                 identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
@@ -573,12 +538,13 @@ namespace Azure.ResourceManager.Avs
                 nsxtPassword,
                 vcenterCertificateThumbprint,
                 nsxtCertificateThumbprint,
-                externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>(),
+                externalCloudLinks ?? new ChangeTrackingList<string>(),
                 secondaryCircuit,
                 nsxPublicIPQuotaRaised,
                 virtualNetworkId,
                 dnsZoneType,
-                type,
+                sku,
+                identity,
                 serializedAdditionalRawData);
         }
 

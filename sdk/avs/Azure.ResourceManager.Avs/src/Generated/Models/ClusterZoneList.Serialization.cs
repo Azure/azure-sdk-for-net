@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class ClusterZoneList : IUtf8JsonSerializable, IJsonModel<ClusterZoneList>
+    public partial class ClusterZoneList : IUtf8JsonSerializable, IJsonModel<ClusterZoneList>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterZoneList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

@@ -53,16 +53,26 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
         /// <param name="location"> The location. </param>
+        /// <param name="managementCluster"> The default cluster used for management. </param>
+        /// <param name="networkBlock">
+        /// The block of addresses should be unique across VNet in your subscription as
+        /// well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
+        /// A,B,C,D are between 0 and 255, and X is between 0 and 22
+        /// </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public AvsPrivateCloudData(AzureLocation location, AvsSku sku) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementCluster"/>, <paramref name="networkBlock"/> or <paramref name="sku"/> is null. </exception>
+        public AvsPrivateCloudData(AzureLocation location, AvsManagementCluster managementCluster, string networkBlock, AvsSku sku) : base(location)
         {
+            Argument.AssertNotNull(managementCluster, nameof(managementCluster));
+            Argument.AssertNotNull(networkBlock, nameof(networkBlock));
             Argument.AssertNotNull(sku, nameof(sku));
 
-            Sku = sku;
+            ManagementCluster = managementCluster;
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
             ExtendedNetworkBlocks = new ChangeTrackingList<string>();
-            ExternalCloudLinks = new ChangeTrackingList<ResourceIdentifier>();
+            NetworkBlock = networkBlock;
+            ExternalCloudLinks = new ChangeTrackingList<string>();
+            Sku = sku;
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
@@ -72,8 +82,6 @@ namespace Azure.ResourceManager.Avs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="managementCluster"> The default cluster used for management. </param>
         /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
         /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
@@ -95,10 +103,10 @@ namespace Azure.ResourceManager.Avs
         /// </param>
         /// <param name="managementNetwork"> Network used to access vCenter Server and NSX-T Manager. </param>
         /// <param name="provisioningNetwork"> Used for virtual machine cold migration, cloning, and snapshot migration. </param>
-        /// <param name="vMotionNetwork"> Used for live migration of virtual machines. </param>
-        /// <param name="vCenterPassword"> Optionally, set the vCenter admin password when the private cloud is created. </param>
+        /// <param name="vmotionNetwork"> Used for live migration of virtual machines. </param>
+        /// <param name="vcenterPassword"> Optionally, set the vCenter admin password when the private cloud is created. </param>
         /// <param name="nsxtPassword"> Optionally, set the NSX-T Manager password when the private cloud is created. </param>
-        /// <param name="vCenterCertificateThumbprint"> Thumbprint of the vCenter Server SSL certificate. </param>
+        /// <param name="vcenterCertificateThumbprint"> Thumbprint of the vCenter Server SSL certificate. </param>
         /// <param name="nsxtCertificateThumbprint"> Thumbprint of the NSX-T Manager SSL certificate. </param>
         /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
         /// <param name="secondaryCircuit">
@@ -111,12 +119,11 @@ namespace Azure.ResourceManager.Avs
         /// </param>
         /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
-        /// <param name="azureResourceManagerCommonTypesResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, DnsZoneType? dnsZoneType, string azureResourceManagerCommonTypesResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vmotionNetwork, string vcenterPassword, string nsxtPassword, string vcenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<string> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, DnsZoneType? dnsZoneType, AvsSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Sku = sku;
-            Identity = identity;
             ManagementCluster = managementCluster;
             Internet = internet;
             IdentitySources = identitySources;
@@ -129,17 +136,18 @@ namespace Azure.ResourceManager.Avs
             NetworkBlock = networkBlock;
             ManagementNetwork = managementNetwork;
             ProvisioningNetwork = provisioningNetwork;
-            VMotionNetwork = vMotionNetwork;
-            VCenterPassword = vCenterPassword;
+            VmotionNetwork = vmotionNetwork;
+            VcenterPassword = vcenterPassword;
             NsxtPassword = nsxtPassword;
-            VCenterCertificateThumbprint = vCenterCertificateThumbprint;
+            VcenterCertificateThumbprint = vcenterCertificateThumbprint;
             NsxtCertificateThumbprint = nsxtCertificateThumbprint;
             ExternalCloudLinks = externalCloudLinks;
             SecondaryCircuit = secondaryCircuit;
             NsxPublicIPQuotaRaised = nsxPublicIPQuotaRaised;
             VirtualNetworkId = virtualNetworkId;
             DnsZoneType = dnsZoneType;
-            AzureResourceManagerCommonTypesResourceType = azureResourceManagerCommonTypesResourceType;
+            Sku = sku;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -148,10 +156,6 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
-        public AvsSku Sku { get; set; }
-        /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default cluster used for management. </summary>
         public AvsManagementCluster ManagementCluster { get; set; }
         /// <summary> Connectivity to internet is enabled or disabled. </summary>
@@ -186,17 +190,17 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Used for virtual machine cold migration, cloning, and snapshot migration. </summary>
         public string ProvisioningNetwork { get; }
         /// <summary> Used for live migration of virtual machines. </summary>
-        public string VMotionNetwork { get; }
+        public string VmotionNetwork { get; }
         /// <summary> Optionally, set the vCenter admin password when the private cloud is created. </summary>
-        public string VCenterPassword { get; set; }
+        public string VcenterPassword { get; set; }
         /// <summary> Optionally, set the NSX-T Manager password when the private cloud is created. </summary>
         public string NsxtPassword { get; set; }
         /// <summary> Thumbprint of the vCenter Server SSL certificate. </summary>
-        public string VCenterCertificateThumbprint { get; }
+        public string VcenterCertificateThumbprint { get; }
         /// <summary> Thumbprint of the NSX-T Manager SSL certificate. </summary>
         public string NsxtCertificateThumbprint { get; }
         /// <summary> Array of cloud link IDs from other clouds that connect to this one. </summary>
-        public IReadOnlyList<ResourceIdentifier> ExternalCloudLinks { get; }
+        public IReadOnlyList<string> ExternalCloudLinks { get; }
         /// <summary>
         /// A secondary expressRoute circuit from a separate AZ. Only present in a
         /// stretched private cloud
@@ -211,7 +215,9 @@ namespace Azure.ResourceManager.Avs
         public ResourceIdentifier VirtualNetworkId { get; set; }
         /// <summary> The type of DNS zone to use. </summary>
         public DnsZoneType? DnsZoneType { get; set; }
-        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
-        public string AzureResourceManagerCommonTypesResourceType { get; }
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public AvsSku Sku { get; set; }
+        /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

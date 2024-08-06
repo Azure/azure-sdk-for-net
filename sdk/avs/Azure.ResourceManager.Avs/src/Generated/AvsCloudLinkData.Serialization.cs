@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Avs
             SystemData systemData = default;
             CloudLinkProvisioningState? provisioningState = default;
             AvsCloudLinkStatus? status = default;
-            ResourceIdentifier linkedCloud = default;
+            string linkedCloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,11 +168,7 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("linkedCloud"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            linkedCloud = new ResourceIdentifier(property0.Value.GetString());
+                            linkedCloud = property0.Value.GetString();
                             continue;
                         }
                     }

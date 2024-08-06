@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Type of DHCP: SERVER or RELAY. </summary>
-    internal readonly partial struct DhcpTypeEnum : IEquatable<DhcpTypeEnum>
+    public readonly partial struct DhcpTypeEnum : IEquatable<DhcpTypeEnum>
     {
         private readonly string _value;
 
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ServerValue = "SERVER";
-        private const string RelayValue = "RELAY";
+        private const string SERVERValue = "SERVER";
+        private const string RELAYValue = "RELAY";
 
         /// <summary> SERVER. </summary>
-        public static DhcpTypeEnum Server { get; } = new DhcpTypeEnum(ServerValue);
+        public static DhcpTypeEnum SERVER { get; } = new DhcpTypeEnum(SERVERValue);
         /// <summary> RELAY. </summary>
-        public static DhcpTypeEnum Relay { get; } = new DhcpTypeEnum(RelayValue);
+        public static DhcpTypeEnum RELAY { get; } = new DhcpTypeEnum(RELAYValue);
         /// <summary> Determines if two <see cref="DhcpTypeEnum"/> values are the same. </summary>
         public static bool operator ==(DhcpTypeEnum left, DhcpTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DhcpTypeEnum"/> values are not the same. </summary>
