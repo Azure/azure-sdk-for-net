@@ -178,16 +178,10 @@ namespace Azure.Storage.Test.Shared
         {
             var result = new byte[contents.Length];
 
-            if (contents.Length == 0)
-            {
-                return result;
-            }
+            if (contents.Length == 0) return result;
 
             // Move each byte one position to the left
-            for (int i = 0; i < contents.Length - 1; i++)
-            {
-                result[i] = contents[i + 1];
-            }
+            new Span<byte>(contents, 1, contents.Length - 1).CopyTo(result);
 
             // Fill the last byte with the first byte (loop-around)
             result[contents.Length - 1] = contents[0];
@@ -199,16 +193,10 @@ namespace Azure.Storage.Test.Shared
         {
             var result = new byte[contents.Length];
 
-            if (contents.Length == 0)
-            {
-                return result;
-            }
+            if (contents.Length == 0) return result;
 
             // Move each byte one position to the right
-            for (int i = contents.Length - 1; i > 0; i--)
-            {
-                result[i] = contents[i - 1];
-            }
+            new Span<byte>(contents, 0, contents.Length - 1).CopyTo(new Span<byte>(result, 1, result.Length - 1));
 
             // Fill the first byte with the last byte (loop-around)
             result[0] = contents[contents.Length - 1];
