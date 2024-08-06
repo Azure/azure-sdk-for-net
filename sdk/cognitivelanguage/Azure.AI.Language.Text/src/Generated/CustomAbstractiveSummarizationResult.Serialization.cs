@@ -87,7 +87,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            IReadOnlyList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents = default;
+            IReadOnlyList<AbstractiveSummaryTextResult> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string projectName = default;
@@ -98,10 +98,10 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("documents"u8))
                 {
-                    List<AbstractiveSummaryDocumentResultWithDetectedLanguage> array = new List<AbstractiveSummaryDocumentResultWithDetectedLanguage>();
+                    List<AbstractiveSummaryTextResult> array = new List<AbstractiveSummaryTextResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryDocumentResultWithDetectedLanguage.DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(item, options));
+                        array.Add(AbstractiveSummaryTextResult.DeserializeAbstractiveSummaryTextResult(item, options));
                     }
                     documents = array;
                     continue;

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class KeyPhrasesDocumentResultWithDetectedLanguage : IUtf8JsonSerializable, IJsonModel<KeyPhrasesDocumentResultWithDetectedLanguage>
+    public partial class ClassificationTextResult : IUtf8JsonSerializable, IJsonModel<ClassificationTextResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KeyPhrasesDocumentResultWithDetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClassificationTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyPhrasesDocumentResultWithDetectedLanguage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassificationTextResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,11 +40,11 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics, options);
             }
-            writer.WritePropertyName("keyPhrases"u8);
+            writer.WritePropertyName("class"u8);
             writer.WriteStartArray();
-            foreach (var item in KeyPhrases)
+            foreach (var item in Class)
             {
-                writer.WriteStringValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(DetectedLanguage))
@@ -70,19 +70,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        KeyPhrasesDocumentResultWithDetectedLanguage IJsonModel<KeyPhrasesDocumentResultWithDetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClassificationTextResult IJsonModel<ClassificationTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyPhrasesDocumentResultWithDetectedLanguage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassificationTextResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(document.RootElement, options);
+            return DeserializeClassificationTextResult(document.RootElement, options);
         }
 
-        internal static KeyPhrasesDocumentResultWithDetectedLanguage DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClassificationTextResult DeserializeClassificationTextResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IReadOnlyList<string> keyPhrases = default;
+            IReadOnlyList<ClassificationResult> @class = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,14 +123,14 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("keyPhrases"u8))
+                if (property.NameEquals("class"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<ClassificationResult> array = new List<ClassificationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(ClassificationResult.DeserializeClassificationResult(item, options));
                     }
-                    keyPhrases = array;
+                    @class = array;
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -148,52 +148,52 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KeyPhrasesDocumentResultWithDetectedLanguage(
+            return new ClassificationTextResult(
                 id,
                 warnings,
                 statistics,
-                keyPhrases,
+                @class,
                 detectedLanguage,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClassificationTextResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationTextResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyPhrasesDocumentResultWithDetectedLanguage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassificationTextResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KeyPhrasesDocumentResultWithDetectedLanguage IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClassificationTextResult IPersistableModel<ClassificationTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationTextResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(document.RootElement, options);
+                        return DeserializeClassificationTextResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyPhrasesDocumentResultWithDetectedLanguage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassificationTextResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClassificationTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static KeyPhrasesDocumentResultWithDetectedLanguage FromResponse(Response response)
+        internal static ClassificationTextResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(document.RootElement);
+            return DeserializeClassificationTextResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class SentimentDocumentResultWithDetectedLanguage : IUtf8JsonSerializable, IJsonModel<SentimentDocumentResultWithDetectedLanguage>
+    public partial class AbstractiveSummaryTextResult : IUtf8JsonSerializable, IJsonModel<AbstractiveSummaryTextResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentimentDocumentResultWithDetectedLanguage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AbstractiveSummaryTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SentimentDocumentResultWithDetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AbstractiveSummaryTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentimentDocumentResultWithDetectedLanguage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AbstractiveSummaryTextResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,13 +40,9 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics, options);
             }
-            writer.WritePropertyName("sentiment"u8);
-            writer.WriteStringValue(Sentiment.ToSerialString());
-            writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores, options);
-            writer.WritePropertyName("sentences"u8);
+            writer.WritePropertyName("summaries"u8);
             writer.WriteStartArray();
-            foreach (var item in Sentences)
+            foreach (var item in Summaries)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -74,19 +70,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        SentimentDocumentResultWithDetectedLanguage IJsonModel<SentimentDocumentResultWithDetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AbstractiveSummaryTextResult IJsonModel<AbstractiveSummaryTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentimentDocumentResultWithDetectedLanguage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AbstractiveSummaryTextResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentimentDocumentResultWithDetectedLanguage(document.RootElement, options);
+            return DeserializeAbstractiveSummaryTextResult(document.RootElement, options);
         }
 
-        internal static SentimentDocumentResultWithDetectedLanguage DeserializeSentimentDocumentResultWithDetectedLanguage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AbstractiveSummaryTextResult DeserializeAbstractiveSummaryTextResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,9 +93,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            DocumentSentiment sentiment = default;
-            SentimentConfidenceScores confidenceScores = default;
-            IReadOnlyList<SentenceSentiment> sentences = default;
+            IReadOnlyList<AbstractiveSummary> summaries = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -129,24 +123,14 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sentiment"u8))
+                if (property.NameEquals("summaries"u8))
                 {
-                    sentiment = property.Value.GetString().ToDocumentSentiment();
-                    continue;
-                }
-                if (property.NameEquals("confidenceScores"u8))
-                {
-                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("sentences"u8))
-                {
-                    List<SentenceSentiment> array = new List<SentenceSentiment>();
+                    List<AbstractiveSummary> array = new List<AbstractiveSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceSentiment.DeserializeSentenceSentiment(item, options));
+                        array.Add(AbstractiveSummary.DeserializeAbstractiveSummary(item, options));
                     }
-                    sentences = array;
+                    summaries = array;
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -164,54 +148,52 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SentimentDocumentResultWithDetectedLanguage(
+            return new AbstractiveSummaryTextResult(
                 id,
                 warnings,
                 statistics,
-                sentiment,
-                confidenceScores,
-                sentences,
+                summaries,
                 detectedLanguage,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SentimentDocumentResultWithDetectedLanguage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AbstractiveSummaryTextResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryTextResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SentimentDocumentResultWithDetectedLanguage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AbstractiveSummaryTextResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SentimentDocumentResultWithDetectedLanguage IPersistableModel<SentimentDocumentResultWithDetectedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AbstractiveSummaryTextResult IPersistableModel<AbstractiveSummaryTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryTextResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSentimentDocumentResultWithDetectedLanguage(document.RootElement, options);
+                        return DeserializeAbstractiveSummaryTextResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentimentDocumentResultWithDetectedLanguage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AbstractiveSummaryTextResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SentimentDocumentResultWithDetectedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AbstractiveSummaryTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SentimentDocumentResultWithDetectedLanguage FromResponse(Response response)
+        internal static AbstractiveSummaryTextResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSentimentDocumentResultWithDetectedLanguage(document.RootElement);
+            return DeserializeAbstractiveSummaryTextResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

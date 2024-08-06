@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class AbstractiveSummaryDocumentResultWithDetectedLanguage : IUtf8JsonSerializable, IJsonModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>
+    public partial class EntityLinkingTextResult : IUtf8JsonSerializable, IJsonModel<EntityLinkingTextResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityLinkingTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityLinkingTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AbstractiveSummaryDocumentResultWithDetectedLanguage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityLinkingTextResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,9 +40,9 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics, options);
             }
-            writer.WritePropertyName("summaries"u8);
+            writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
-            foreach (var item in Summaries)
+            foreach (var item in Entities)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -70,19 +70,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        AbstractiveSummaryDocumentResultWithDetectedLanguage IJsonModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EntityLinkingTextResult IJsonModel<EntityLinkingTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AbstractiveSummaryDocumentResultWithDetectedLanguage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityLinkingTextResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(document.RootElement, options);
+            return DeserializeEntityLinkingTextResult(document.RootElement, options);
         }
 
-        internal static AbstractiveSummaryDocumentResultWithDetectedLanguage DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EntityLinkingTextResult DeserializeEntityLinkingTextResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IReadOnlyList<AbstractiveSummary> summaries = default;
+            IReadOnlyList<LinkedEntity> entities = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,14 +123,14 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("summaries"u8))
+                if (property.NameEquals("entities"u8))
                 {
-                    List<AbstractiveSummary> array = new List<AbstractiveSummary>();
+                    List<LinkedEntity> array = new List<LinkedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummary.DeserializeAbstractiveSummary(item, options));
+                        array.Add(LinkedEntity.DeserializeLinkedEntity(item, options));
                     }
-                    summaries = array;
+                    entities = array;
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -148,52 +148,52 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AbstractiveSummaryDocumentResultWithDetectedLanguage(
+            return new EntityLinkingTextResult(
                 id,
                 warnings,
                 statistics,
-                summaries,
+                entities,
                 detectedLanguage,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EntityLinkingTextResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingTextResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AbstractiveSummaryDocumentResultWithDetectedLanguage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityLinkingTextResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AbstractiveSummaryDocumentResultWithDetectedLanguage IPersistableModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EntityLinkingTextResult IPersistableModel<EntityLinkingTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingTextResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(document.RootElement, options);
+                        return DeserializeEntityLinkingTextResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AbstractiveSummaryDocumentResultWithDetectedLanguage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityLinkingTextResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AbstractiveSummaryDocumentResultWithDetectedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityLinkingTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AbstractiveSummaryDocumentResultWithDetectedLanguage FromResponse(Response response)
+        internal static EntityLinkingTextResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(document.RootElement);
+            return DeserializeEntityLinkingTextResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
