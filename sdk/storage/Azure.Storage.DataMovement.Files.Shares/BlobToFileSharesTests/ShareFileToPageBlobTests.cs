@@ -2,12 +2,13 @@
 // Licensed under the MIT License.
 
 extern alias DMBlob;
+extern alias BaseShares;
 
 using System;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Blobs;
-using Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Blobs.Specialized;
 using System.IO;
@@ -15,17 +16,17 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Shared;
 using NUnit.Framework;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [ShareClientTestFixture]
+    [BlobShareClientTestFixture]
     public class ShareFileToPageBlobTests : StartTransferCopyTestBase
         <ShareServiceClient,
         ShareClient,
@@ -200,16 +201,19 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 }
                 await fileClient.CreateAsync(
                     maxSize: objectLength.Value,
-                    httpHeaders: httpHeaders,
-                    metadata: metadata,
-                    smbProperties: smbProperties);
+                    new ShareFileCreateOptions()
+                    {
+                        HttpHeaders = httpHeaders,
+                        Metadata = metadata,
+                        SmbProperties = smbProperties
+                    });
 
                 if (contents != default)
                 {
                     await fileClient.UploadAsync(contents);
                 }
             }
-            Uri sourceUri = fileClient.GenerateSasUri(Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
+            Uri sourceUri = fileClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));
         }
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 extern alias DMBlob;
+extern alias BaseShares;
 
 using System;
 using System.Collections.Generic;
@@ -18,16 +19,15 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Files.Shares.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test.Shared;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [ShareClientTestFixture]
+    [BlobShareClientTestFixture]
     public class ShareDirectoryToBlockBlobDirectoryTests : StartTransferDirectoryCopyTestBase
         <ShareServiceClient,
         ShareClient,
@@ -149,7 +149,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             // Authorize with SAS when performing operations
             if (containerClient.CanGenerateSasUri)
             {
-                Uri sourceUri = containerClient.GenerateSasUri(Sas.ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
+                Uri sourceUri = containerClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
                 ShareClient sasClient = InstrumentClient(new ShareClient(sourceUri, GetShareOptions()));
                 return new ShareDirectoryStorageResourceContainer(sasClient.GetDirectoryClient(directoryPath), default);
             }

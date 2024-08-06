@@ -1,14 +1,14 @@
 # Release History
 
-## 12.21.0-beta.1 (Unreleased)
+## 12.21.0-beta.1 (2024-08-06)
 
 ### Features Added
+- Added ability to retrieve SAS string to sign for debugging purposes.
 
-### Breaking Changes
+## 12.20.1 (2024-07-25)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
 
 ## 12.20.0 (2024-07-16)
 
