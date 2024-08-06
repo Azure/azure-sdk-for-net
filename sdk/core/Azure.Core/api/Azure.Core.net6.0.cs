@@ -118,7 +118,8 @@ namespace Azure
     public abstract partial class NullableResponse<T>
     {
         protected NullableResponse() { }
-        public abstract bool HasValue { get; }
+        [System.Diagnostics.CodeAnalysis.MemberNotNullWhenAttribute(true, "Value")]
+        public abstract bool HasValue { [System.Diagnostics.CodeAnalysis.MemberNotNullWhenAttribute(true, "Value")] get; }
         public abstract T? Value { get; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
