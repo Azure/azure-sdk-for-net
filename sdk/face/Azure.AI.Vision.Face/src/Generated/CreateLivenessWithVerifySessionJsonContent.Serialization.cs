@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    internal partial class CreateLivenessWithVerifySessionJsonContent : IUtf8JsonSerializable, IJsonModel<CreateLivenessWithVerifySessionJsonContent>
+    public partial class CreateLivenessWithVerifySessionJsonContent : IUtf8JsonSerializable, IJsonModel<CreateLivenessWithVerifySessionJsonContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateLivenessWithVerifySessionJsonContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Vision.Face
 {
     /// <summary> Request for creating liveness with verify session. </summary>
-    internal partial class CreateLivenessWithVerifySessionJsonContent
+    public partial class CreateLivenessWithVerifySessionJsonContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
