@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 extern alias DMBlob;
+extern alias BaseShares;
 
 using System;
 using System.IO;
@@ -11,13 +12,12 @@ using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [ShareClientTestFixture]
+    [BlobShareClientTestFixture]
     public class ShareDirectoryToBlockBlobDirectoryTests : StartTransferCopyFromShareDirectoryTestBase
     {
         public ShareDirectoryToBlockBlobDirectoryTests(

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -123,6 +124,75 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new SimStaticIPProperties(attachedDataNetwork, slice, staticIP, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AttachedDataNetworkId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  attachedDataNetwork: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AttachedDataNetwork))
+                {
+                    builder.Append("  attachedDataNetwork: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AttachedDataNetwork, options, 2, false, "  attachedDataNetwork: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SliceId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  slice: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Slice))
+                {
+                    builder.Append("  slice: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Slice, options, 2, false, "  slice: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("StaticIPIPv4Address", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  staticIp: ");
+                builder.AppendLine("{");
+                builder.Append("    ipv4Address: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(StaticIP))
+                {
+                    builder.Append("  staticIp: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StaticIP, options, 2, false, "  staticIp: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SimStaticIPProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SimStaticIPProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,6 +201,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SimStaticIPProperties)} does not support writing '{options.Format}' format.");
             }

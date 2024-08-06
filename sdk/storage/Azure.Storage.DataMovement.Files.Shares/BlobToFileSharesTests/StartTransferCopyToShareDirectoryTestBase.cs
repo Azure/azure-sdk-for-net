@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseShares;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,8 +18,8 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -148,7 +150,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             // Authorize with SAS when performing operations
             if (containerClient.CanGenerateSasUri)
             {
-                Uri uri = containerClient.GenerateSasUri(Sas.ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
+                Uri uri = containerClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
                 ShareClient sasClient = InstrumentClient(new ShareClient(uri, GetShareOptions()));
                 return new ShareDirectoryStorageResourceContainer(sasClient.GetDirectoryClient(directoryPath), options);
             }

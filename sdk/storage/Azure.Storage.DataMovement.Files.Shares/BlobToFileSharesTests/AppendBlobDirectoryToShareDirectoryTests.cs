@@ -11,13 +11,12 @@ using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Shared;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [ShareClientTestFixture]
+    [BlobShareClientTestFixture]
     public class AppendBlobDirectoryToShareDirectoryTests :
         StartTransferCopyToShareDirectoryTestBase
     {

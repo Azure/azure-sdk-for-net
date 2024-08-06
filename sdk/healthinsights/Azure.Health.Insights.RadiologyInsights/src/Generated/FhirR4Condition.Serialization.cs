@@ -248,13 +248,13 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IList<FhirR4Identifier> identifier = default;
+            IReadOnlyList<FhirR4Identifier> identifier = default;
             FhirR4CodeableConcept clinicalStatus = default;
             FhirR4CodeableConcept verificationStatus = default;
-            IList<FhirR4CodeableConcept> category = default;
+            IReadOnlyList<FhirR4CodeableConcept> category = default;
             FhirR4CodeableConcept severity = default;
             FhirR4CodeableConcept code = default;
-            IList<FhirR4CodeableConcept> bodySite = default;
+            IReadOnlyList<FhirR4CodeableConcept> bodySite = default;
             FhirR4Reference encounter = default;
             string onsetDateTime = default;
             FhirR4Quantity onsetAge = default;
@@ -267,8 +267,8 @@ namespace Azure.Health.Insights.RadiologyInsights
             FhirR4Range abatementRange = default;
             string abatementString = default;
             string recordedDate = default;
-            IList<FhirR4ConditionStage> stage = default;
-            IList<FhirR4Annotation> note = default;
+            IReadOnlyList<FhirR4ConditionStage> stage = default;
+            IReadOnlyList<FhirR4Annotation> note = default;
             FhirR4Narrative text = default;
             IReadOnlyList<FhirR4Resource> contained = default;
             IReadOnlyList<FhirR4Extension> extension = default;
