@@ -9,6 +9,7 @@
     <PackageTags>azure;management;resource</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
+    <NoWarn>$(NoWarn);AZC0014</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
