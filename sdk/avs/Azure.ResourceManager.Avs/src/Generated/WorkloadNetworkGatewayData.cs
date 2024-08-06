@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkGatewayData"/>. </summary>
-        public WorkloadNetworkGatewayData()
+        internal WorkloadNetworkGatewayData()
         {
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> The provisioning state of the resource. </summary>
         public WorkloadNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Display name of the DHCP entity. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
         /// <summary> NSX Gateway Path. </summary>
         public string Path { get; }
     }

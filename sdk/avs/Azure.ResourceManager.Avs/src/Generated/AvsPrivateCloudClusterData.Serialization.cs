@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             SystemData systemData = default;
             int? clusterSize = default;
-            AvsPrivateCloudClusterProvisioningState? provisioningState = default;
+            ClusterProvisioningState? provisioningState = default;
             int? clusterId = default;
             IList<string> hosts = default;
             string vsanDatastoreName = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            provisioningState = new AvsPrivateCloudClusterProvisioningState(property0.Value.GetString());
+                            provisioningState = new ClusterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))
@@ -233,12 +233,12 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
-                sku,
                 clusterSize,
                 provisioningState,
                 clusterId,
                 hosts ?? new ChangeTrackingList<string>(),
                 vsanDatastoreName,
+                sku,
                 serializedAdditionalRawData);
         }
 

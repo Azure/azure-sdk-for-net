@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Avs
             SystemData systemData = default;
             string displayName = default;
             IList<string> members = default;
-            WorkloadNetworkVmGroupStatus? status = default;
+            VmGroupStatusEnum? status = default;
             WorkloadNetworkVmGroupProvisioningState? provisioningState = default;
             long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            status = new WorkloadNetworkVmGroupStatus(property0.Value.GetString());
+                            status = new VmGroupStatusEnum(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

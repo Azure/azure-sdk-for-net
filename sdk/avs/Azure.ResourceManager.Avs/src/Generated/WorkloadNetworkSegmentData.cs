@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, WorkloadNetworkSegmentStatus? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, SegmentStatusEnum? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ConnectedGateway = connectedGateway;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Port Vif which segment is associated with. </summary>
         public IReadOnlyList<WorkloadNetworkSegmentPortVif> PortVif { get; }
         /// <summary> Segment status. </summary>
-        public WorkloadNetworkSegmentStatus? Status { get; }
+        public SegmentStatusEnum? Status { get; }
         /// <summary> The provisioning state. </summary>
         public WorkloadNetworkSegmentProvisioningState? ProvisioningState { get; }
         /// <summary> NSX revision number. </summary>

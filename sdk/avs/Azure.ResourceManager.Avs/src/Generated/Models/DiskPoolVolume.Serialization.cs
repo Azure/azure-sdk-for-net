@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            ResourceIdentifier targetId = default;
+            string targetId = default;
             string lunName = default;
-            LunMountMode? mountOption = default;
+            MountOptionEnum? mountOption = default;
             string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("targetId"u8))
                 {
-                    targetId = new ResourceIdentifier(property.Value.GetString());
+                    targetId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lunName"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    mountOption = new LunMountMode(property.Value.GetString());
+                    mountOption = new MountOptionEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("path"u8))

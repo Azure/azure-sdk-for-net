@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            AvsPrivateCloudDatastoreProvisioningState? provisioningState = default;
+            DatastoreProvisioningState? provisioningState = default;
             WritableSubResource netAppVolume = default;
             DiskPoolVolume diskPoolVolume = default;
             ElasticSanVolume elasticSanVolume = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            provisioningState = new AvsPrivateCloudDatastoreProvisioningState(property0.Value.GetString());
+                            provisioningState = new DatastoreProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("netAppVolume"u8))

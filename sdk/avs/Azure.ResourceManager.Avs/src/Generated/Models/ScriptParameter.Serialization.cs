@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Avs.Optional.IsDefined(ParameterType))
+            if (options.Format != "W" && Avs.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ParameterType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Avs.Optional.IsDefined(Name))
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Avs.Models
             ScriptParameterType? type = default;
             string name = default;
             string description = default;
-            ParameterVisibilityStatus? visibility = default;
-            ParameterOptionalityStatus? optional = default;
+            VisibilityParameterEnum? visibility = default;
+            OptionalParamEnum? optional = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    visibility = new ParameterVisibilityStatus(property.Value.GetString());
+                    visibility = new VisibilityParameterEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("optional"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    optional = new ParameterOptionalityStatus(property.Value.GetString());
+                    optional = new OptionalParamEnum(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

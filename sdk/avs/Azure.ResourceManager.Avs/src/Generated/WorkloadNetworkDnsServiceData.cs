@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDnsServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IPAddress dnsServiceIP, string defaultDnsZone, IList<string> fqdnZones, DnsServiceLogLevel? logLevel, DnsServiceStatus? status, WorkloadNetworkDnsServiceProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkDnsServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string dnsServiceIP, string defaultDnsZone, IList<string> fqdnZones, DnsServiceLogLevelEnum? logLevel, DnsServiceStatusEnum? status, WorkloadNetworkDnsServiceProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             DnsServiceIP = dnsServiceIP;
@@ -88,15 +87,15 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Display name of the DNS Service. </summary>
         public string DisplayName { get; set; }
         /// <summary> DNS service IP of the DNS Service. </summary>
-        public IPAddress DnsServiceIP { get; set; }
+        public string DnsServiceIP { get; set; }
         /// <summary> Default DNS zone of the DNS Service. </summary>
         public string DefaultDnsZone { get; set; }
         /// <summary> FQDN zones of the DNS Service. </summary>
         public IList<string> FqdnZones { get; }
         /// <summary> DNS Service log level. </summary>
-        public DnsServiceLogLevel? LogLevel { get; set; }
+        public DnsServiceLogLevelEnum? LogLevel { get; set; }
         /// <summary> DNS Service status. </summary>
-        public DnsServiceStatus? Status { get; }
+        public DnsServiceStatusEnum? Status { get; }
         /// <summary> The provisioning state. </summary>
         public WorkloadNetworkDnsServiceProvisioningState? ProvisioningState { get; }
         /// <summary> NSX revision number. </summary>
