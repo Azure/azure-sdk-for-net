@@ -118,7 +118,7 @@
             "properties": {
                 "roleDefinitionId": "[variables('blobDataContributorRoleId')]",
                 "principalId": "[parameters('testApplicationOid')]",
-				"scope": "[variables('storageAccountResourceId')]"
+                "scope": "[variables('storageAccountResourceId')]"
             }
         },
         {
