@@ -66,10 +66,12 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task TestSetUp()
         {
             _vnetVerifier = await _resourceGroup.CreateVerifierWorkspaceAsync(_networkManager, _vnetVerifierName, _location);
-            _analysisRunName = SessionRecording.GenerateAssetName("analysisRun-");
-            _analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(_analysisRunName, "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myAVNMResourceGroup/providers/Microsoft.Network/networkManagers/myAVNM/verifierWorkspaces/myVerifierWorkspace/reachabilityAnalysisIntents/myAnalysisIntent");
             _analysisIntentName = SessionRecording.GenerateAssetName("analysisIntent-");
-            _analysisIntent = await _vnetVerifier.CreateAnalysisIntentAsync(_analysisIntentName, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmSrc"),new ResourceIdentifier ( "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmDest"), new List<string>() { "10.4.0.0" }, new List<string>() { "10.4.0.1" }, new List<string>() { "0" }, new List<string>() { "0" }, new List<NetworkProtocol>() { "Any" });
+            _analysisIntent = await _vnetVerifier.CreateAnalysisIntentAsync(_analysisIntentName, new ResourceIdentifier("/subscriptions/c9295b92-3574-4021-95a1-26c8f74f8359/resourceGroups/ipam-test-rg/providers/Microsoft.Compute/virtualMachines/testVM"),
+                new ResourceIdentifier ("/subscriptions/c9295b92-3574-4021-95a1-26c8f74f8359/resourceGroups/ipam-test-rg/providers/Microsoft.Compute/virtualMachines/ipam-test-vm-integration-test"),
+                new List<string>() { "10.0.0.1/24" }, new List<string>() { "10.0.8.0/24" }, new List<string>() { "22" }, new List<string>() { "*" }, new List<NetworkProtocol>() { "TCP" });
+            _analysisRunName = SessionRecording.GenerateAssetName("analysisRun-");
+            _analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(_analysisRunName, "/subscriptions/c9295b92-3574-4021-95a1-26c8f74f8359/resourceGroups/ipam-test-rg/providers/Microsoft.Network/networkManagers/arjun-test-nm/verifierWorkspaces/arjun-test-nm/reachabilityAnalysisIntents/myAnalysisIntent");
         }
 
         [TearDown]
@@ -129,7 +131,9 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task DeleteAnalysisIntent()
         {
             string analysisIntentName = SessionRecording.GenerateAssetName("analysisIntent-");
-            var analysisIntent = await _vnetVerifier.CreateAnalysisIntentAsync(_analysisIntentName, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmSrc"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmDest"), new List<string>() { "10.4.0.0" }, new List<string>() { "10.4.0.1" }, new List<string>() { "0" }, new List<string>() {"0"}, new List<NetworkProtocol>() { "Any"});
+            var analysisIntent = await _vnetVerifier.CreateAnalysisIntentAsync(_analysisIntentName, new ResourceIdentifier("/subscriptions/c9295b92-3574-4021-95a1-26c8f74f8359/resourceGroups/ipam-test-rg/providers/Microsoft.Compute/virtualMachines/testVM"),
+                new ResourceIdentifier("/subscriptions/c9295b92-3574-4021-95a1-26c8f74f8359/resourceGroups/ipam-test-rg/providers/Microsoft.Compute/virtualMachines/ipam-test-vm-integration-test"),
+                new List<string>() { "10.0.0.1/24" }, new List<string>() { "10.0.8.0/24" }, new List<string>() { "22" }, new List<string>() { "*" }, new List<NetworkProtocol>() { "TCP" });
 
             Assert.IsNotNull(analysisIntent.Data);
             Assert.AreEqual(analysisIntentName, analysisIntent.Data.Name);
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task DeleteAnalysisRun()
         {
             string analysisRunName = SessionRecording.GenerateAssetName("analysisRun-");
-            var analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(analysisRunName,"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myAVNMResourceGroup/providers/Microsoft.Network/networkManagers/myAVNM/verifierWorkspaces/myVerifierWorkspace/reachabilityAnalysisIntents/myAnalysisIntent");
+            var analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(analysisRunName, "/subscriptions/c9295b92-3574-4021-95a1-26c8f74f8359/resourceGroups/ipam-test-rg/providers/Microsoft.Network/networkManagers/arjun-test-nm/verifierWorkspaces/arjun-test-nm/reachabilityAnalysisIntents/myAnalysisIntent");
             Assert.IsNotNull(analysisRun.Data);
             Assert.AreEqual(analysisRunName, analysisRun.Data.Name);
 

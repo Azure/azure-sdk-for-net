@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: C:/Swagger/azure-rest-api-specs/specification/network/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1c644fcfea590a2fc2a6247bf2524c513c786377/specification/network/resource-manager/readme.md
 tag: package-2024-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
