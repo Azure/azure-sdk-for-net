@@ -209,8 +209,16 @@ catch ( RequestFailedException ex )
 ```
 
 ### Send email with attachments
-Azure Communication Services support sending emails with attachments.
+Azure Communication Services support sending emails with attachments, including inline attachments.
+Adding an optional `contentId` parameter to the `EmailAttachment` constructor will make the attachment an inline attachment.
 ```C# Snippet:Azure_Communication_Email_Send_With_Attachments
+// Create the email content and reference any inline attachments.
+var emailContent = new EmailContent("This is the subject")
+{
+    PlainText = "This is the body",
+    Html = "<html><body>This is the html body<img src=\"cid:myOptionalContentId\"></body></html>"
+};
+
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
     senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
@@ -220,7 +228,7 @@ var emailMessage = new EmailMessage(
 var filePath = "<path to your file>";
 var attachmentName = "<name of your attachment>";
 var contentType = MediaTypeNames.Text.Plain;
-var contentId = "<optional content ID for inline attachment>";
+var contentId = "myOptionalContentId";
 
 var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
 var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
