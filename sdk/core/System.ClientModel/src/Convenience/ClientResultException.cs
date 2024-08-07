@@ -5,6 +5,7 @@ using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Text;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace System.ClientModel;
@@ -12,7 +13,8 @@ namespace System.ClientModel;
 /// <summary>
 /// The exception that is thrown when the processing of a client request failed.
 /// </summary>
-public class ClientResultException : Exception
+[Serializable]
+public class ClientResultException : Exception, ISerializable
 {
     private const string DefaultMessage = "Service request failed.";
 
@@ -84,6 +86,23 @@ public class ClientResultException : Exception
 
         _response = response;
         _status = response?.Status ?? 0;
+    }
+
+    /// <inheritdoc />
+    protected ClientResultException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
+        _status = info.GetInt32(nameof(Status));
+    }
+
+    /// <inheritdoc />
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        Argument.AssertNotNull(info, nameof(info));
+
+        info.AddValue(nameof(Status), Status);
+
+        base.GetObjectData(info, context);
     }
 
     /// <summary>

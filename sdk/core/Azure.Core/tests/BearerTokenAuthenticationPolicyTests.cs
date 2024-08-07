@@ -910,7 +910,7 @@ namespace Azure.Core.Tests
             var msg = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
-            msg.CancellationToken = cts.Token;
+            msg.SetCancellationToken(cts.Token);
             await cache.GetAuthHeaderValueAsync(msg, ctx, IsAsync);
         }
 
@@ -936,7 +936,7 @@ namespace Azure.Core.Tests
             var msg = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
-            msg.CancellationToken = cts.Token;
+            msg.SetCancellationToken(cts.Token);
             await cache.GetAuthHeaderValueAsync(msg, ctx, IsAsync);
         }
 

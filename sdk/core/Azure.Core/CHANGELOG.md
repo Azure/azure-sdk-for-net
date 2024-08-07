@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Moved Azure.Core types to use functionality implemented in System.ClientModel library.
+
 ## 1.42.0 (2024-08-01)
 
 ### Other Changes
