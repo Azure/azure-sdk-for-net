@@ -111,7 +111,7 @@ foreach ($packagePropFile in $packageProperties)
     $packageMetadata = Get-Content $packagePropFile | ConvertFrom-Json
     Write-Host "Processing $($packageMetadata.ArtifactName)"
 
-    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $packageMetadata.Name
+    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $packageMetadata.ArtifactName
 
     if ($packages)
     {
