@@ -24,7 +24,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: healthinsights
-    ProjectDirectory: Azure.Health.Insights.RadiologyInsights
     ArtifactName: packages
     Artifacts:
       - name: Azure.Health.Insights.RadiologyInsights
