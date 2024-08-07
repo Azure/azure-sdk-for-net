@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -96,6 +97,35 @@ namespace Azure.AI.Vision.Face
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
+        }
+
+        private FaceListClientImpl _cachedFaceListClientImpl;
+        private LargeFaceListClientImpl _cachedLargeFaceListClientImpl;
+        private PersonGroupClientImpl _cachedPersonGroupClientImpl;
+        private LargePersonGroupClientImpl _cachedLargePersonGroupClientImpl;
+
+        /// <summary> Initializes a new instance of FaceListClientImpl. </summary>
+        public virtual FaceListClientImpl GetFaceListClientImplClient()
+        {
+            return Volatile.Read(ref _cachedFaceListClientImpl) ?? Interlocked.CompareExchange(ref _cachedFaceListClientImpl, new FaceListClientImpl(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFaceListClientImpl;
+        }
+
+        /// <summary> Initializes a new instance of LargeFaceListClientImpl. </summary>
+        public virtual LargeFaceListClientImpl GetLargeFaceListClientImplClient()
+        {
+            return Volatile.Read(ref _cachedLargeFaceListClientImpl) ?? Interlocked.CompareExchange(ref _cachedLargeFaceListClientImpl, new LargeFaceListClientImpl(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedLargeFaceListClientImpl;
+        }
+
+        /// <summary> Initializes a new instance of PersonGroupClientImpl. </summary>
+        public virtual PersonGroupClientImpl GetPersonGroupClientImplClient()
+        {
+            return Volatile.Read(ref _cachedPersonGroupClientImpl) ?? Interlocked.CompareExchange(ref _cachedPersonGroupClientImpl, new PersonGroupClientImpl(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPersonGroupClientImpl;
+        }
+
+        /// <summary> Initializes a new instance of LargePersonGroupClientImpl. </summary>
+        public virtual LargePersonGroupClientImpl GetLargePersonGroupClientImplClient()
+        {
+            return Volatile.Read(ref _cachedLargePersonGroupClientImpl) ?? Interlocked.CompareExchange(ref _cachedLargePersonGroupClientImpl, new LargePersonGroupClientImpl(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedLargePersonGroupClientImpl;
         }
     }
 }

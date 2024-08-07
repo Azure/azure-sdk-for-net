@@ -15,90 +15,71 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class Samples_PersonGroupClient
+    public partial class Samples_LargePersonGroupClientImpl
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Create_ShortVersion()
+        public void Example_LargePersonGroup_Create_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
             });
-            Response response = client.Create("<personGroupId>", content);
+            Response response = client.Create("<largePersonGroupId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Create_ShortVersion_Async()
+        public async Task Example_LargePersonGroup_Create_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
             });
-            Response response = await client.CreateAsync("<personGroupId>", content);
+            Response response = await client.CreateAsync("<largePersonGroupId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Create_ShortVersion_Convenience()
+        public void Example_LargePersonGroup_Create_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.Create("<personGroupId>", "<name>");
+            Response response = client.Create("<largePersonGroupId>", "<name>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Create_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroup_Create_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.CreateAsync("<personGroupId>", "<name>");
+            Response response = await client.CreateAsync("<largePersonGroupId>", "<name>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Create_AllParameters()
+        public void Example_LargePersonGroup_Create_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                userData = "<userData>",
-                recognitionModel = "recognition_01",
-            });
-            Response response = client.Create("<personGroupId>", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Create_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -106,374 +87,393 @@ namespace Azure.AI.Vision.Face.Samples
                 userData = "<userData>",
                 recognitionModel = "recognition_01",
             });
-            Response response = await client.CreateAsync("<personGroupId>", content);
+            Response response = client.Create("<largePersonGroupId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Create_AllParameters_Convenience()
+        public async Task Example_LargePersonGroup_Create_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.Create("<personGroupId>", "<name>", userData: "<userData>", recognitionModel: FaceRecognitionModel.Recognition01);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Create_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
-
-            Response response = await client.CreateAsync("<personGroupId>", "<name>", userData: "<userData>", recognitionModel: FaceRecognitionModel.Recognition01);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Delete_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
-
-            Response response = client.Delete("<personGroupId>");
+            using RequestContent content = RequestContent.Create(new
+            {
+                name = "<name>",
+                userData = "<userData>",
+                recognitionModel = "recognition_01",
+            });
+            Response response = await client.CreateAsync("<largePersonGroupId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Delete_ShortVersion_Async()
+        public void Example_LargePersonGroup_Create_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.DeleteAsync("<personGroupId>");
+            Response response = client.Create("<largePersonGroupId>", "<name>", userData: "<userData>", recognitionModel: FaceRecognitionModel.Recognition01);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_LargePersonGroup_Create_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
+
+            Response response = await client.CreateAsync("<largePersonGroupId>", "<name>", userData: "<userData>", recognitionModel: FaceRecognitionModel.Recognition01);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_LargePersonGroup_Delete_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
+
+            Response response = client.Delete("<largePersonGroupId>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Delete_AllParameters()
+        public async Task Example_LargePersonGroup_Delete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.Delete("<personGroupId>");
+            Response response = await client.DeleteAsync("<largePersonGroupId>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Delete_AllParameters_Async()
+        public void Example_LargePersonGroup_Delete_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.DeleteAsync("<personGroupId>");
+            Response response = client.Delete("<largePersonGroupId>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetPersonGroup_ShortVersion()
+        public async Task Example_LargePersonGroup_Delete_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetPersonGroup("<personGroupId>", null, null);
+            Response response = await client.DeleteAsync("<largePersonGroupId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_LargePersonGroup_GetLargePersonGroup_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
+
+            Response response = client.GetLargePersonGroup("<largePersonGroupId>", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("personGroupId").ToString());
+            Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetPersonGroup_ShortVersion_Async()
+        public async Task Example_LargePersonGroup_GetLargePersonGroup_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetPersonGroupAsync("<personGroupId>", null, null);
+            Response response = await client.GetLargePersonGroupAsync("<largePersonGroupId>", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("personGroupId").ToString());
+            Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetPersonGroup_ShortVersion_Convenience()
+        public void Example_LargePersonGroup_GetLargePersonGroup_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroup> response = client.GetPersonGroup("<personGroupId>");
+            Response<LargePersonGroup> response = client.GetLargePersonGroup("<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetPersonGroup_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroup_GetLargePersonGroup_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroup> response = await client.GetPersonGroupAsync("<personGroupId>");
+            Response<LargePersonGroup> response = await client.GetLargePersonGroupAsync("<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetPersonGroup_AllParameters()
+        public void Example_LargePersonGroup_GetLargePersonGroup_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetPersonGroup("<personGroupId>", true, null);
+            Response response = client.GetLargePersonGroup("<largePersonGroupId>", true, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("userData").ToString());
             Console.WriteLine(result.GetProperty("recognitionModel").ToString());
-            Console.WriteLine(result.GetProperty("personGroupId").ToString());
+            Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetPersonGroup_AllParameters_Async()
+        public async Task Example_LargePersonGroup_GetLargePersonGroup_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetPersonGroupAsync("<personGroupId>", true, null);
+            Response response = await client.GetLargePersonGroupAsync("<largePersonGroupId>", true, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("userData").ToString());
             Console.WriteLine(result.GetProperty("recognitionModel").ToString());
-            Console.WriteLine(result.GetProperty("personGroupId").ToString());
+            Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetPersonGroup_AllParameters_Convenience()
+        public void Example_LargePersonGroup_GetLargePersonGroup_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroup> response = client.GetPersonGroup("<personGroupId>", returnRecognitionModel: true);
+            Response<LargePersonGroup> response = client.GetLargePersonGroup("<largePersonGroupId>", returnRecognitionModel: true);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetPersonGroup_AllParameters_Convenience_Async()
+        public async Task Example_LargePersonGroup_GetLargePersonGroup_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroup> response = await client.GetPersonGroupAsync("<personGroupId>", returnRecognitionModel: true);
+            Response<LargePersonGroup> response = await client.GetLargePersonGroupAsync("<largePersonGroupId>", returnRecognitionModel: true);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Update_ShortVersion()
+        public void Example_LargePersonGroup_Update_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.Update("<personGroupId>", content);
+            Response response = client.Update("<largePersonGroupId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Update_ShortVersion_Async()
+        public async Task Example_LargePersonGroup_Update_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateAsync("<personGroupId>", content);
+            Response response = await client.UpdateAsync("<largePersonGroupId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Update_AllParameters()
+        public void Example_LargePersonGroup_Update_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 userData = "<userData>",
             });
-            Response response = client.Update("<personGroupId>", content);
+            Response response = client.Update("<largePersonGroupId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Update_AllParameters_Async()
+        public async Task Example_LargePersonGroup_Update_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 userData = "<userData>",
             });
-            Response response = await client.UpdateAsync("<personGroupId>", content);
+            Response response = await client.UpdateAsync("<largePersonGroupId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetPersonGroups_ShortVersion()
+        public void Example_LargePersonGroup_GetLargePersonGroups_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetPersonGroups(null, null, null, null);
+            Response response = client.GetLargePersonGroups(null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("name").ToString());
-            Console.WriteLine(result[0].GetProperty("personGroupId").ToString());
+            Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetPersonGroups_ShortVersion_Async()
+        public async Task Example_LargePersonGroup_GetLargePersonGroups_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetPersonGroupsAsync(null, null, null, null);
+            Response response = await client.GetLargePersonGroupsAsync(null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("name").ToString());
-            Console.WriteLine(result[0].GetProperty("personGroupId").ToString());
+            Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetPersonGroups_ShortVersion_Convenience()
+        public void Example_LargePersonGroup_GetLargePersonGroups_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<IReadOnlyList<PersonGroup>> response = client.GetPersonGroups();
+            Response<IReadOnlyList<LargePersonGroup>> response = client.GetLargePersonGroups();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetPersonGroups_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroup_GetLargePersonGroups_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<IReadOnlyList<PersonGroup>> response = await client.GetPersonGroupsAsync();
+            Response<IReadOnlyList<LargePersonGroup>> response = await client.GetLargePersonGroupsAsync();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetPersonGroups_AllParameters()
+        public void Example_LargePersonGroup_GetLargePersonGroups_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetPersonGroups("<start>", 1234, true, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("name").ToString());
-            Console.WriteLine(result[0].GetProperty("userData").ToString());
-            Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
-            Console.WriteLine(result[0].GetProperty("personGroupId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetPersonGroups_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
-
-            Response response = await client.GetPersonGroupsAsync("<start>", 1234, true, null);
+            Response response = client.GetLargePersonGroups("<start>", 1234, true, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("name").ToString());
             Console.WriteLine(result[0].GetProperty("userData").ToString());
             Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
-            Console.WriteLine(result[0].GetProperty("personGroupId").ToString());
+            Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetPersonGroups_AllParameters_Convenience()
+        public async Task Example_LargePersonGroup_GetLargePersonGroups_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<IReadOnlyList<PersonGroup>> response = client.GetPersonGroups(start: "<start>", top: 1234, returnRecognitionModel: true);
+            Response response = await client.GetLargePersonGroupsAsync("<start>", 1234, true, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("name").ToString());
+            Console.WriteLine(result[0].GetProperty("userData").ToString());
+            Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
+            Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetPersonGroups_AllParameters_Convenience_Async()
+        public void Example_LargePersonGroup_GetLargePersonGroups_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<IReadOnlyList<PersonGroup>> response = await client.GetPersonGroupsAsync(start: "<start>", top: 1234, returnRecognitionModel: true);
+            Response<IReadOnlyList<LargePersonGroup>> response = client.GetLargePersonGroups(start: "<start>", top: 1234, returnRecognitionModel: true);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetTrainingStatus_ShortVersion()
+        public async Task Example_LargePersonGroup_GetLargePersonGroups_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetTrainingStatus("<personGroupId>", null);
+            Response<IReadOnlyList<LargePersonGroup>> response = await client.GetLargePersonGroupsAsync(start: "<start>", top: 1234, returnRecognitionModel: true);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_LargePersonGroup_GetTrainingStatus_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
+
+            Response response = client.GetTrainingStatus("<largePersonGroupId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -484,13 +484,13 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetTrainingStatus_ShortVersion_Async()
+        public async Task Example_LargePersonGroup_GetTrainingStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetTrainingStatusAsync("<personGroupId>", null);
+            Response response = await client.GetTrainingStatusAsync("<largePersonGroupId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -501,35 +501,35 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetTrainingStatus_ShortVersion_Convenience()
+        public void Example_LargePersonGroup_GetTrainingStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<TrainingResult> response = client.GetTrainingStatus("<personGroupId>");
+            Response<TrainingResult> response = client.GetTrainingStatus("<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetTrainingStatus_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroup_GetTrainingStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<TrainingResult> response = await client.GetTrainingStatusAsync("<personGroupId>");
+            Response<TrainingResult> response = await client.GetTrainingStatusAsync("<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetTrainingStatus_AllParameters()
+        public void Example_LargePersonGroup_GetTrainingStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetTrainingStatus("<personGroupId>", null);
+            Response response = client.GetTrainingStatus("<largePersonGroupId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -541,13 +541,13 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetTrainingStatus_AllParameters_Async()
+        public async Task Example_LargePersonGroup_GetTrainingStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetTrainingStatusAsync("<personGroupId>", null);
+            Response response = await client.GetTrainingStatusAsync("<largePersonGroupId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -559,39 +559,39 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_GetTrainingStatus_AllParameters_Convenience()
+        public void Example_LargePersonGroup_GetTrainingStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<TrainingResult> response = client.GetTrainingStatus("<personGroupId>");
+            Response<TrainingResult> response = client.GetTrainingStatus("<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_GetTrainingStatus_AllParameters_Convenience_Async()
+        public async Task Example_LargePersonGroup_GetTrainingStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<TrainingResult> response = await client.GetTrainingStatusAsync("<personGroupId>");
+            Response<TrainingResult> response = await client.GetTrainingStatusAsync("<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_CreatePerson_ShortVersion()
+        public void Example_LargePersonGroupPerson_CreatePerson_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
             });
-            Response response = client.CreatePerson("<personGroupId>", content);
+            Response response = client.CreatePerson("<largePersonGroupId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("personId").ToString());
@@ -599,17 +599,17 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_CreatePerson_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPerson_CreatePerson_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
             });
-            Response response = await client.CreatePersonAsync("<personGroupId>", content);
+            Response response = await client.CreatePersonAsync("<largePersonGroupId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("personId").ToString());
@@ -617,59 +617,40 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_CreatePerson_ShortVersion_Convenience()
+        public void Example_LargePersonGroupPerson_CreatePerson_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<CreatePersonResult> response = client.CreatePerson("<personGroupId>", "<name>");
+            Response<CreatePersonResult> response = client.CreatePerson("<largePersonGroupId>", "<name>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_CreatePerson_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroupPerson_CreatePerson_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<CreatePersonResult> response = await client.CreatePersonAsync("<personGroupId>", "<name>");
+            Response<CreatePersonResult> response = await client.CreatePersonAsync("<largePersonGroupId>", "<name>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_CreatePerson_AllParameters()
+        public void Example_LargePersonGroupPerson_CreatePerson_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                userData = "<userData>",
-            });
-            Response response = client.CreatePerson("<personGroupId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("personId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_CreatePerson_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 userData = "<userData>",
             });
-            Response response = await client.CreatePersonAsync("<personGroupId>", content);
+            Response response = client.CreatePerson("<largePersonGroupId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("personId").ToString());
@@ -677,87 +658,121 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_CreatePerson_AllParameters_Convenience()
+        public async Task Example_LargePersonGroupPerson_CreatePerson_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<CreatePersonResult> response = client.CreatePerson("<personGroupId>", "<name>", userData: "<userData>");
+            using RequestContent content = RequestContent.Create(new
+            {
+                name = "<name>",
+                userData = "<userData>",
+            });
+            Response response = await client.CreatePersonAsync("<largePersonGroupId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("personId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_CreatePerson_AllParameters_Convenience_Async()
+        public void Example_LargePersonGroupPerson_CreatePerson_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<CreatePersonResult> response = await client.CreatePersonAsync("<personGroupId>", "<name>", userData: "<userData>");
+            Response<CreatePersonResult> response = client.CreatePerson("<largePersonGroupId>", "<name>", userData: "<userData>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_DeletePerson_ShortVersion()
+        public async Task Example_LargePersonGroupPerson_CreatePerson_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.DeletePerson("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<CreatePersonResult> response = await client.CreatePersonAsync("<largePersonGroupId>", "<name>", userData: "<userData>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_LargePersonGroupPerson_DeletePerson_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
+
+            Response response = client.DeletePerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_DeletePerson_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPerson_DeletePerson_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.DeletePersonAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = await client.DeletePersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_DeletePerson_AllParameters()
+        public void Example_LargePersonGroupPerson_DeletePerson_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.DeletePerson("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = client.DeletePerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_DeletePerson_AllParameters_Async()
+        public async Task Example_LargePersonGroupPerson_DeletePerson_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.DeletePersonAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = await client.DeletePersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_GetPerson_ShortVersion()
+        public void Example_LargePersonGroupPerson_GetPerson_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetPerson("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+            Response response = client.GetPerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("personId").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_LargePersonGroupPerson_GetPerson_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
+
+            Response response = await client.GetPersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("personId").ToString());
@@ -766,67 +781,35 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_GetPerson_ShortVersion_Async()
+        public void Example_LargePersonGroupPerson_GetPerson_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetPersonAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("personId").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
+            Response<LargePersonGroupPerson> response = client.GetPerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_GetPerson_ShortVersion_Convenience()
+        public async Task Example_LargePersonGroupPerson_GetPerson_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroupPerson> response = client.GetPerson("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<LargePersonGroupPerson> response = await client.GetPersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_GetPerson_ShortVersion_Convenience_Async()
+        public void Example_LargePersonGroupPerson_GetPerson_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroupPerson> response = await client.GetPersonAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_GetPerson_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
-
-            Response response = client.GetPerson("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("personId").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("userData").ToString());
-            Console.WriteLine(result.GetProperty("persistedFaceIds")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_GetPerson_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
-
-            Response response = await client.GetPersonAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+            Response response = client.GetPerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("personId").ToString());
@@ -837,99 +820,116 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_GetPerson_AllParameters_Convenience()
+        public async Task Example_LargePersonGroupPerson_GetPerson_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroupPerson> response = client.GetPerson("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = await client.GetPersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("personId").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("userData").ToString());
+            Console.WriteLine(result.GetProperty("persistedFaceIds")[0].ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_GetPerson_AllParameters_Convenience_Async()
+        public void Example_LargePersonGroupPerson_GetPerson_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroupPerson> response = await client.GetPersonAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<LargePersonGroupPerson> response = client.GetPerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_UpdatePerson_ShortVersion()
+        public async Task Example_LargePersonGroupPerson_GetPerson_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
+
+            Response<LargePersonGroupPerson> response = await client.GetPersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_LargePersonGroupPerson_UpdatePerson_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpdatePerson("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.UpdatePerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_UpdatePerson_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPerson_UpdatePerson_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdatePersonAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.UpdatePersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_UpdatePerson_AllParameters()
+        public void Example_LargePersonGroupPerson_UpdatePerson_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 userData = "<userData>",
             });
-            Response response = client.UpdatePerson("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.UpdatePerson("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_UpdatePerson_AllParameters_Async()
+        public async Task Example_LargePersonGroupPerson_UpdatePerson_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 userData = "<userData>",
             });
-            Response response = await client.UpdatePersonAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.UpdatePersonAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_GetPersons_ShortVersion()
+        public void Example_LargePersonGroupPerson_GetPersons_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetPersons("<personGroupId>", null, null, null);
+            Response response = client.GetPersons("<largePersonGroupId>", null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("personId").ToString());
@@ -938,13 +938,13 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_GetPersons_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPerson_GetPersons_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetPersonsAsync("<personGroupId>", null, null, null);
+            Response response = await client.GetPersonsAsync("<largePersonGroupId>", null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("personId").ToString());
@@ -953,35 +953,35 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_GetPersons_ShortVersion_Convenience()
+        public void Example_LargePersonGroupPerson_GetPersons_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<IReadOnlyList<PersonGroupPerson>> response = client.GetPersons("<personGroupId>");
+            Response<IReadOnlyList<LargePersonGroupPerson>> response = client.GetPersons("<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_GetPersons_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroupPerson_GetPersons_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<IReadOnlyList<PersonGroupPerson>> response = await client.GetPersonsAsync("<personGroupId>");
+            Response<IReadOnlyList<LargePersonGroupPerson>> response = await client.GetPersonsAsync("<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_GetPersons_AllParameters()
+        public void Example_LargePersonGroupPerson_GetPersons_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetPersons("<personGroupId>", "<start>", 1234, null);
+            Response response = client.GetPersons("<largePersonGroupId>", "<start>", 1234, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("personId").ToString());
@@ -992,13 +992,13 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_GetPersons_AllParameters_Async()
+        public async Task Example_LargePersonGroupPerson_GetPersons_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetPersonsAsync("<personGroupId>", "<start>", 1234, null);
+            Response response = await client.GetPersonsAsync("<largePersonGroupId>", "<start>", 1234, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("personId").ToString());
@@ -1009,39 +1009,39 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPerson_GetPersons_AllParameters_Convenience()
+        public void Example_LargePersonGroupPerson_GetPersons_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<IReadOnlyList<PersonGroupPerson>> response = client.GetPersons("<personGroupId>", start: "<start>", top: 1234);
+            Response<IReadOnlyList<LargePersonGroupPerson>> response = client.GetPersons("<largePersonGroupId>", start: "<start>", top: 1234);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPerson_GetPersons_AllParameters_Convenience_Async()
+        public async Task Example_LargePersonGroupPerson_GetPersons_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<IReadOnlyList<PersonGroupPerson>> response = await client.GetPersonsAsync("<personGroupId>", start: "<start>", top: 1234);
+            Response<IReadOnlyList<LargePersonGroupPerson>> response = await client.GetPersonsAsync("<largePersonGroupId>", start: "<start>", top: 1234);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_AddFaceFromUrl_ShortVersion()
+        public void Example_LargePersonGroupPersonFace_AddFaceFromUrl_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 url = "http://localhost:3000",
             });
-            Response response = client.AddFaceFromUrl("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.AddFaceFromUrl("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1049,17 +1049,17 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_AddFaceFromUrl_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPersonFace_AddFaceFromUrl_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 url = "http://localhost:3000",
             });
-            Response response = await client.AddFaceFromUrlAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.AddFaceFromUrlAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1067,39 +1067,39 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_AddFaceFromUrl_ShortVersion_Convenience()
+        public void Example_LargePersonGroupPersonFace_AddFaceFromUrl_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<AddFaceResult> response = client.AddFaceFromUrl("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new Uri("http://localhost:3000"));
+            Response<AddFaceResult> response = client.AddFaceFromUrl("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new Uri("http://localhost:3000"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_AddFaceFromUrl_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroupPersonFace_AddFaceFromUrl_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<AddFaceResult> response = await client.AddFaceFromUrlAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new Uri("http://localhost:3000"));
+            Response<AddFaceResult> response = await client.AddFaceFromUrlAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new Uri("http://localhost:3000"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_AddFaceFromUrl_AllParameters()
+        public void Example_LargePersonGroupPersonFace_AddFaceFromUrl_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 url = "http://localhost:3000",
             });
-            Response response = client.AddFaceFromUrl("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
+            Response response = client.AddFaceFromUrl("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1107,17 +1107,17 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_AddFaceFromUrl_AllParameters_Async()
+        public async Task Example_LargePersonGroupPersonFace_AddFaceFromUrl_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 url = "http://localhost:3000",
             });
-            Response response = await client.AddFaceFromUrlAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
+            Response response = await client.AddFaceFromUrlAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1125,36 +1125,36 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_AddFaceFromUrl_AllParameters_Convenience()
+        public void Example_LargePersonGroupPersonFace_AddFaceFromUrl_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<AddFaceResult> response = client.AddFaceFromUrl("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new Uri("http://localhost:3000"), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
+            Response<AddFaceResult> response = client.AddFaceFromUrl("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new Uri("http://localhost:3000"), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_AddFaceFromUrl_AllParameters_Convenience_Async()
+        public async Task Example_LargePersonGroupPersonFace_AddFaceFromUrl_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<AddFaceResult> response = await client.AddFaceFromUrlAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new Uri("http://localhost:3000"), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
+            Response<AddFaceResult> response = await client.AddFaceFromUrlAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new Uri("http://localhost:3000"), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_AddFace_ShortVersion()
+        public void Example_LargePersonGroupPersonFace_AddFace_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.AddFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.AddFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1162,14 +1162,14 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_AddFace_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPersonFace_AddFace_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.AddFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.AddFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1177,36 +1177,36 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_AddFace_ShortVersion_Convenience()
+        public void Example_LargePersonGroupPersonFace_AddFace_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<AddFaceResult> response = client.AddFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), BinaryData.FromObjectAsJson(new object()));
+            Response<AddFaceResult> response = client.AddFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), BinaryData.FromObjectAsJson(new object()));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_AddFace_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroupPersonFace_AddFace_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<AddFaceResult> response = await client.AddFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), BinaryData.FromObjectAsJson(new object()));
+            Response<AddFaceResult> response = await client.AddFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), BinaryData.FromObjectAsJson(new object()));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_AddFace_AllParameters()
+        public void Example_LargePersonGroupPersonFace_AddFace_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.AddFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
+            Response response = client.AddFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1214,14 +1214,14 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_AddFace_AllParameters_Async()
+        public async Task Example_LargePersonGroupPersonFace_AddFace_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.AddFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
+            Response response = await client.AddFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1229,87 +1229,87 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_AddFace_AllParameters_Convenience()
+        public void Example_LargePersonGroupPersonFace_AddFace_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<AddFaceResult> response = client.AddFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), BinaryData.FromObjectAsJson(new object()), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
+            Response<AddFaceResult> response = client.AddFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), BinaryData.FromObjectAsJson(new object()), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_AddFace_AllParameters_Convenience_Async()
+        public async Task Example_LargePersonGroupPersonFace_AddFace_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<AddFaceResult> response = await client.AddFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), BinaryData.FromObjectAsJson(new object()), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
+            Response<AddFaceResult> response = await client.AddFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), BinaryData.FromObjectAsJson(new object()), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_DeleteFace_ShortVersion()
+        public void Example_LargePersonGroupPersonFace_DeleteFace_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.DeleteFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = client.DeleteFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_DeleteFace_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPersonFace_DeleteFace_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.DeleteFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = await client.DeleteFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_DeleteFace_AllParameters()
+        public void Example_LargePersonGroupPersonFace_DeleteFace_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.DeleteFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = client.DeleteFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_DeleteFace_AllParameters_Async()
+        public async Task Example_LargePersonGroupPersonFace_DeleteFace_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.DeleteFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = await client.DeleteFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_GetFace_ShortVersion()
+        public void Example_LargePersonGroupPersonFace_GetFace_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+            Response response = client.GetFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1317,13 +1317,13 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_GetFace_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPersonFace_GetFace_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+            Response response = await client.GetFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1331,35 +1331,35 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_GetFace_ShortVersion_Convenience()
+        public void Example_LargePersonGroupPersonFace_GetFace_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroupPersonFace> response = client.GetFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<LargePersonGroupPersonFace> response = client.GetFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_GetFace_ShortVersion_Convenience_Async()
+        public async Task Example_LargePersonGroupPersonFace_GetFace_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroupPersonFace> response = await client.GetFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<LargePersonGroupPersonFace> response = await client.GetFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_GetFace_AllParameters()
+        public void Example_LargePersonGroupPersonFace_GetFace_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = client.GetFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+            Response response = client.GetFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1368,13 +1368,13 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_GetFace_AllParameters_Async()
+        public async Task Example_LargePersonGroupPersonFace_GetFace_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response response = await client.GetFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+            Response response = await client.GetFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
@@ -1383,130 +1383,130 @@ namespace Azure.AI.Vision.Face.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_GetFace_AllParameters_Convenience()
+        public void Example_LargePersonGroupPersonFace_GetFace_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroupPersonFace> response = client.GetFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<LargePersonGroupPersonFace> response = client.GetFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_GetFace_AllParameters_Convenience_Async()
+        public async Task Example_LargePersonGroupPersonFace_GetFace_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Response<PersonGroupPersonFace> response = await client.GetFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<LargePersonGroupPersonFace> response = await client.GetFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_UpdateFace_ShortVersion()
+        public void Example_LargePersonGroupPersonFace_UpdateFace_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpdateFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.UpdateFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_UpdateFace_ShortVersion_Async()
+        public async Task Example_LargePersonGroupPersonFace_UpdateFace_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.UpdateFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroupPersonFace_UpdateFace_AllParameters()
+        public void Example_LargePersonGroupPersonFace_UpdateFace_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 userData = "<userData>",
             });
-            Response response = client.UpdateFace("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.UpdateFace("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroupPersonFace_UpdateFace_AllParameters_Async()
+        public async Task Example_LargePersonGroupPersonFace_UpdateFace_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 userData = "<userData>",
             });
-            Response response = await client.UpdateFaceAsync("<personGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.UpdateFaceAsync("<largePersonGroupId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Train_ShortVersion()
+        public void Example_LargePersonGroup_Train_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Operation operation = client.Train(WaitUntil.Completed, "<personGroupId>");
+            Operation operation = client.Train(WaitUntil.Completed, "<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Train_ShortVersion_Async()
+        public async Task Example_LargePersonGroup_Train_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Operation operation = await client.TrainAsync(WaitUntil.Completed, "<personGroupId>");
+            Operation operation = await client.TrainAsync(WaitUntil.Completed, "<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PersonGroup_Train_AllParameters()
+        public void Example_LargePersonGroup_Train_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Operation operation = client.Train(WaitUntil.Completed, "<personGroupId>");
+            Operation operation = client.Train(WaitUntil.Completed, "<largePersonGroupId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PersonGroup_Train_AllParameters_Async()
+        public async Task Example_LargePersonGroup_Train_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PersonGroupClient client = new PersonGroupClient(endpoint, credential);
+            LargePersonGroupClientImpl client = new FaceServiceClient(endpoint, credential).GetLargePersonGroupClientImplClient();
 
-            Operation operation = await client.TrainAsync(WaitUntil.Completed, "<personGroupId>");
+            Operation operation = await client.TrainAsync(WaitUntil.Completed, "<largePersonGroupId>");
         }
     }
 }

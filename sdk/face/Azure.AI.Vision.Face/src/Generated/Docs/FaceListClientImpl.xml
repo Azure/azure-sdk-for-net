@@ -7,7 +7,7 @@ This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.CreateAsync("<faceListId>", "<name>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call CreateAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.CreateAsync("<faceListId>", "<name>", userData: "<userData>", recognitionModel: FaceRecognitionModel.Recognition01);
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.Create("<faceListId>", "<name>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call Create with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.Create("<faceListId>", "<name>", userData: "<userData>", recognitionModel: FaceRecognitionModel.Recognition01);
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -59,7 +59,7 @@ This sample shows how to call CreateAsync with all parameters and request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -78,7 +78,7 @@ This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -92,7 +92,7 @@ This sample shows how to call Create with all parameters and request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -111,7 +111,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.DeleteAsync("<faceListId>");
 
@@ -121,7 +121,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.DeleteAsync("<faceListId>");
 
@@ -134,7 +134,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.Delete("<faceListId>");
 
@@ -144,7 +144,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.Delete("<faceListId>");
 
@@ -157,7 +157,7 @@ This sample shows how to call GetFaceListAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<FaceList> response = await client.GetFaceListAsync("<faceListId>");
 ]]></code>
@@ -165,7 +165,7 @@ This sample shows how to call GetFaceListAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<FaceList> response = await client.GetFaceListAsync("<faceListId>", returnRecognitionModel: true);
 ]]></code></example>
@@ -176,7 +176,7 @@ This sample shows how to call GetFaceList.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<FaceList> response = client.GetFaceList("<faceListId>");
 ]]></code>
@@ -184,7 +184,7 @@ This sample shows how to call GetFaceList with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<FaceList> response = client.GetFaceList("<faceListId>", returnRecognitionModel: true);
 ]]></code></example>
@@ -195,7 +195,7 @@ This sample shows how to call GetFaceListAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.GetFaceListAsync("<faceListId>", null, null);
 
@@ -207,7 +207,7 @@ This sample shows how to call GetFaceListAsync with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.GetFaceListAsync("<faceListId>", true, null);
 
@@ -226,7 +226,7 @@ This sample shows how to call GetFaceList and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.GetFaceList("<faceListId>", null, null);
 
@@ -238,7 +238,7 @@ This sample shows how to call GetFaceList with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.GetFaceList("<faceListId>", true, null);
 
@@ -257,7 +257,7 @@ This sample shows how to call UpdateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateAsync("<faceListId>", content);
@@ -268,7 +268,7 @@ This sample shows how to call UpdateAsync with all parameters and request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -286,7 +286,7 @@ This sample shows how to call Update.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.Update("<faceListId>", content);
@@ -297,7 +297,7 @@ This sample shows how to call Update with all parameters and request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -315,7 +315,7 @@ This sample shows how to call GetFaceListsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<IReadOnlyList<FaceListItem>> response = await client.GetFaceListsAsync();
 ]]></code>
@@ -323,7 +323,7 @@ This sample shows how to call GetFaceListsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<IReadOnlyList<FaceListItem>> response = await client.GetFaceListsAsync(returnRecognitionModel: true);
 ]]></code></example>
@@ -334,7 +334,7 @@ This sample shows how to call GetFaceLists.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<IReadOnlyList<FaceListItem>> response = client.GetFaceLists();
 ]]></code>
@@ -342,7 +342,7 @@ This sample shows how to call GetFaceLists with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<IReadOnlyList<FaceListItem>> response = client.GetFaceLists(returnRecognitionModel: true);
 ]]></code></example>
@@ -353,7 +353,7 @@ This sample shows how to call GetFaceListsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.GetFaceListsAsync(null, null);
 
@@ -365,7 +365,7 @@ This sample shows how to call GetFaceListsAsync with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.GetFaceListsAsync(true, null);
 
@@ -382,7 +382,7 @@ This sample shows how to call GetFaceLists and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.GetFaceLists(null, null);
 
@@ -394,7 +394,7 @@ This sample shows how to call GetFaceLists with all parameters and parse the res
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.GetFaceLists(true, null);
 
@@ -411,7 +411,7 @@ This sample shows how to call AddFaceFromUrlAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<AddFaceResult> response = await client.AddFaceFromUrlAsync("<faceListId>", new Uri("http://localhost:3000"));
 ]]></code>
@@ -419,7 +419,7 @@ This sample shows how to call AddFaceFromUrlAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<AddFaceResult> response = await client.AddFaceFromUrlAsync("<faceListId>", new Uri("http://localhost:3000"), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
 ]]></code></example>
@@ -430,7 +430,7 @@ This sample shows how to call AddFaceFromUrl.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<AddFaceResult> response = client.AddFaceFromUrl("<faceListId>", new Uri("http://localhost:3000"));
 ]]></code>
@@ -438,7 +438,7 @@ This sample shows how to call AddFaceFromUrl with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<AddFaceResult> response = client.AddFaceFromUrl("<faceListId>", new Uri("http://localhost:3000"), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
 ]]></code></example>
@@ -449,7 +449,7 @@ This sample shows how to call AddFaceFromUrlAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -464,7 +464,7 @@ This sample shows how to call AddFaceFromUrlAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -482,7 +482,7 @@ This sample shows how to call AddFaceFromUrl and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -497,7 +497,7 @@ This sample shows how to call AddFaceFromUrl with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -515,7 +515,7 @@ This sample shows how to call AddFaceAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<AddFaceResult> response = await client.AddFaceAsync("<faceListId>", BinaryData.FromObjectAsJson(new object()));
 ]]></code>
@@ -523,7 +523,7 @@ This sample shows how to call AddFaceAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<AddFaceResult> response = await client.AddFaceAsync("<faceListId>", BinaryData.FromObjectAsJson(new object()), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
 ]]></code></example>
@@ -534,7 +534,7 @@ This sample shows how to call AddFace.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<AddFaceResult> response = client.AddFace("<faceListId>", BinaryData.FromObjectAsJson(new object()));
 ]]></code>
@@ -542,7 +542,7 @@ This sample shows how to call AddFace with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response<AddFaceResult> response = client.AddFace("<faceListId>", BinaryData.FromObjectAsJson(new object()), targetFace: new int[] { 1234 }, detectionModel: FaceDetectionModel.Detection01, userData: "<userData>");
 ]]></code></example>
@@ -553,7 +553,7 @@ This sample shows how to call AddFaceAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.AddFaceAsync("<faceListId>", content);
@@ -565,7 +565,7 @@ This sample shows how to call AddFaceAsync with all parameters and request conte
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.AddFaceAsync("<faceListId>", content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
@@ -580,7 +580,7 @@ This sample shows how to call AddFace and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.AddFace("<faceListId>", content);
@@ -592,7 +592,7 @@ This sample shows how to call AddFace with all parameters and request content an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.AddFace("<faceListId>", content, targetFace: new int[] { 1234 }, detectionModel: "detection_01", userData: "<userData>");
@@ -607,7 +607,7 @@ This sample shows how to call DeleteFaceAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.DeleteFaceAsync("<faceListId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
@@ -617,7 +617,7 @@ This sample shows how to call DeleteFaceAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = await client.DeleteFaceAsync("<faceListId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
@@ -630,7 +630,7 @@ This sample shows how to call DeleteFace.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.DeleteFace("<faceListId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
@@ -640,7 +640,7 @@ This sample shows how to call DeleteFace with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-FaceListClient client = new FaceListClient(endpoint, credential);
+FaceListClientImpl client = new FaceServiceClient(endpoint, credential).GetFaceListClientImplClient();
 
 Response response = client.DeleteFace("<faceListId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
