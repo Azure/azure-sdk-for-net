@@ -266,7 +266,6 @@ rename-mapping:
   ScheduledEventsProfile: ComputeScheduledEventsProfile
   ExpandTypeForListVMs: GetVirtualMachineExpandType
   ExpandTypesForListVm: GetVirtualMachineExpandType
-  SecurityPostureReference: ComputeSecurityPostureReference
   RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
   SecurityPostureReference.id: -|arm-id
   CommunityGalleryImage.properties.identifier: ImageIdentifier
@@ -277,6 +276,8 @@ rename-mapping:
   NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
   CommunityGalleryInfo.publisherUri: PublisherUriString
   GalleryArtifactVersionFullSource.virtualMachineId: -|arm-id
+  SecurityPostureReference: ComputeSecurityPostureReference
+  SecurityPostureReference.excludeExtensions: ExcludeExtensionNames
   
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

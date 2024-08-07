@@ -1,3 +1,0 @@
-# The attribute is in shared source which is included and compiled into the binary, so there is no compatibility concern on it.
-MembersMustExist : Member 'public void Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference..ctor()' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.Collections.Generic.IList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference.ExcludeExtensions.get()' does not exist in the implementation but it does exist in the contract.

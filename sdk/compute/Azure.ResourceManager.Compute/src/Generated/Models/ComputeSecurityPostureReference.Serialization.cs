@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsCollectionDefined(ExcludeExtensions))
+            if (Optional.IsCollectionDefined(ExcludeExtensionNames))
             {
                 writer.WritePropertyName("excludeExtensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludeExtensions)
+                foreach (var item in ExcludeExtensionNames)
                 {
                     writer.WriteStringValue(item);
                 }
