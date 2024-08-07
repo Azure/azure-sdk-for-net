@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Hci.Samples
         // List Offer resources by HCI Cluster
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOffers_ListOfferResourcesByHCICluster()
+        public async Task GetHciClusterOffers_ListOfferResourcesByHCICluster()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListOffersByCluster.json
             // this example is just showing the usage of "Offers_ListByCluster" operation, for the dependent resources, they will have to be created separately.
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (HciClusterOfferResource item in hciCluster.GetOffersAsync())
+            await foreach (HciClusterOfferResource item in hciCluster.GetHciClusterOffersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

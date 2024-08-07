@@ -1172,11 +1172,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HciClusterOfferResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HciClusterOfferResource> GetOffersAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HciClusterOfferResource> GetHciClusterOffersAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterOfferOffersRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterOfferOffersRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterOfferResource(Client, HciClusterOfferData.DeserializeHciClusterOfferData(e)), _hciClusterOfferOffersClientDiagnostics, Pipeline, "HciClusterResource.GetOffers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterOfferResource(Client, HciClusterOfferData.DeserializeHciClusterOfferData(e)), _hciClusterOfferOffersClientDiagnostics, Pipeline, "HciClusterResource.GetHciClusterOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1203,11 +1203,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciClusterOfferResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HciClusterOfferResource> GetOffers(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<HciClusterOfferResource> GetHciClusterOffers(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterOfferOffersRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterOfferOffersRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterOfferResource(Client, HciClusterOfferData.DeserializeHciClusterOfferData(e)), _hciClusterOfferOffersClientDiagnostics, Pipeline, "HciClusterResource.GetOffers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterOfferResource(Client, HciClusterOfferData.DeserializeHciClusterOfferData(e)), _hciClusterOfferOffersClientDiagnostics, Pipeline, "HciClusterResource.GetHciClusterOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

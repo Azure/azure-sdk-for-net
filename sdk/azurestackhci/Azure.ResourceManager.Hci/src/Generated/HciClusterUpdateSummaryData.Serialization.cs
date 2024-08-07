@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastChecked))
+            if (Optional.IsDefined(LastCheckedOn))
             {
                 writer.WritePropertyName("lastChecked"u8);
-                writer.WriteStringValue(LastChecked.Value, "O");
+                writer.WriteStringValue(LastCheckedOn.Value, "O");
             }
             if (Optional.IsDefined(HealthState))
             {
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Hci
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastChecked), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastCheckedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    lastChecked: ");
@@ -631,10 +631,10 @@ namespace Azure.ResourceManager.Hci
             }
             else
             {
-                if (Optional.IsDefined(LastChecked))
+                if (Optional.IsDefined(LastCheckedOn))
                 {
                     builder.Append("    lastChecked: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastChecked.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastCheckedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

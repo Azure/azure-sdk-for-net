@@ -25,6 +25,9 @@ enable-bicep-serialization: true
 #mgmt-debug:
 #  show-serialized-names: true
 
+override-operation-name:
+  Offers_ListByCluster: GetHciClusterOffers
+
 format-by-name-rules:
   '*TenantId': 'uuid'
   'etag': 'etag'
@@ -184,6 +187,7 @@ rename-mapping:
   SecurityComplianceStatus.lastUpdated: LastUpdatedOn
   SoftwareAssuranceProperties.lastUpdated: LastUpdatedOn
   UpdateSummaries.properties.lastUpdated: LastUpdatedOn
+  UpdateSummaries.properties.lastChecked: LastCheckedOn
   UpdateRun.properties.progress.lastUpdatedTimeUtc: LastCompletedOn
   UpdateRun.properties.progress.startTimeUtc: StartOn
   UpdateRun.properties.progress.endTimeUtc: EndOn

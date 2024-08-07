@@ -797,13 +797,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
         /// <param name="currentSbeVersion"> Current Sbe version of the stamp. </param>
         /// <param name="lastUpdatedOn"> Last time an update installation completed successfully. </param>
-        /// <param name="lastChecked"> Last time the update service successfully checked for updates. </param>
+        /// <param name="lastCheckedOn"> Last time the update service successfully checked for updates. </param>
         /// <param name="healthState"> Overall health state for update-specific health checks. </param>
         /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
         /// <param name="state"> Overall update state of the stamp. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateSummaryData"/> instance for mocking. </returns>
-        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, string oemFamily = null, string currentOemVersion = null, string hardwareModel = null, IEnumerable<HciPackageVersionInfo> packageVersions = null, string currentVersion = null, string currentSbeVersion = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? lastChecked = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, HciClusterUpdateState? state = null)
+        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, string oemFamily = null, string currentOemVersion = null, string hardwareModel = null, IEnumerable<HciPackageVersionInfo> packageVersions = null, string currentVersion = null, string currentSbeVersion = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? lastCheckedOn = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, HciClusterUpdateState? state = null)
         {
             packageVersions ??= new List<HciPackageVersionInfo>();
             healthCheckResult ??= new List<HciPrecheckResult>();
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Hci.Models
                 currentVersion,
                 currentSbeVersion,
                 lastUpdatedOn,
-                lastChecked,
+                lastCheckedOn,
                 healthState,
                 healthCheckResult?.ToList(),
                 healthCheckOn,
