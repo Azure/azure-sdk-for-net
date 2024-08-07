@@ -147,6 +147,7 @@ namespace Azure.Storage.Files.Shares
             V2024_05_04 = 22,
             V2024_08_04 = 23,
             V2024_11_04 = 24,
+            V2025_01_05 = 25,
         }
     }
     public partial class ShareDirectoryClient
