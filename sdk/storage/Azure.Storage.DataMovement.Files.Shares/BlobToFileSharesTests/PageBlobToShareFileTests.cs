@@ -339,6 +339,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(_defaultContentLanguageFile, destinationProperties.ContentLanguage);
                 Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
                 Assert.AreEqual(sourceProperties.CreatedOn, destinationProperties.SmbProperties.FileCreatedOn);

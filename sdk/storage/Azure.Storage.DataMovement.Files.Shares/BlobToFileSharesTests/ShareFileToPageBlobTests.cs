@@ -132,9 +132,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new()
                 {
-                    ContentDisposition = new("attachment"),
-                    ContentLanguage = new("en-US"),
-                    CacheControl = new("no-cache"),
+                    ContentDisposition = new(_defaultContentDisposition),
+                    ContentLanguage = new(_defaultContentLanguageBlob),
+                    CacheControl = new(_defaultCacheControl),
+                    ContentType = new(_defaultContentType),
                     Metadata = new(_defaultMetadata)
                 };
             }
@@ -145,6 +146,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
+                    ContentType = new(false),
+                    ContentEncoding = new(false),
                     Metadata = new(false),
                 };
             }
@@ -155,6 +158,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
+                    ContentType = new(true),
+                    ContentEncoding = new(true),
                     Metadata = new(true),
                 };
             }

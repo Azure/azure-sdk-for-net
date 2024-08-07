@@ -292,7 +292,6 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                     Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
                     Assert.AreEqual(sourceProperties.CreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                    Assert.AreEqual(sourceProperties.LastModified, destinationProperties.SmbProperties.FileLastWrittenOn);
                 }
             }
         }

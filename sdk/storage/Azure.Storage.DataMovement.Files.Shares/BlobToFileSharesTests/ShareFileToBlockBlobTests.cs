@@ -116,9 +116,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new()
                 {
-                    ContentDisposition = new("attachment"),
-                    ContentLanguage = new("en-US"),
-                    CacheControl = new("no-cache"),
+                    ContentDisposition = new(_defaultContentDisposition),
+                    ContentLanguage = new(_defaultContentLanguageBlob),
+                    CacheControl = new(_defaultCacheControl),
+                    ContentType = new(_defaultContentType),
                     Metadata = new(_defaultMetadata)
                 };
             }
@@ -129,6 +130,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
+                    ContentType = new(false),
+                    ContentEncoding = new(false),
                     Metadata = new(false),
                 };
             }
@@ -139,6 +142,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
+                    ContentType = new(true),
+                    ContentEncoding = new(true),
                     Metadata = new(true),
                 };
             }
@@ -277,10 +282,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                Assert.IsEmpty(destinationProperties.Metadata);
                 Assert.IsNull(destinationProperties.ContentDisposition);
                 Assert.IsNull(destinationProperties.ContentLanguage);
                 Assert.IsNull(destinationProperties.CacheControl);
+                Assert.IsEmpty(destinationProperties.Metadata);
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
                 Assert.IsEmpty(destinationTags.Tags);
@@ -290,8 +295,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
                 Assert.AreEqual(_defaultContentLanguageBlob, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
             }
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                  //transferPropertiesTestType == TransferPropertiesTestType.Preserve)

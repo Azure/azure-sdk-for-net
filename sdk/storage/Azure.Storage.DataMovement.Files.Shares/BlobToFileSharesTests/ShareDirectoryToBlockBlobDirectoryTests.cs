@@ -112,7 +112,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions()
             {
                 BlobDirectoryPrefix = directoryPath,
-                BlobType = new(BlobType.Append),
+                BlobType = new(BlobType.Block),
                 BlobOptions = options
             });
         }
