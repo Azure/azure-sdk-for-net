@@ -1543,30 +1543,49 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    Stream stream = RetriableStream.Create(
-                        response.Value.Content,
-                        startOffset =>
-                            StartDownloadAsync(
-                                    range,
-                                    conditionsWithEtag,
-                                    validationOptions,
-                                    startOffset,
-                                    async,
-                                    cancellationToken)
-                                .EnsureCompleted()
-                            .Value.Content,
-                        async startOffset =>
-                            (await StartDownloadAsync(
-                                range,
-                                conditionsWithEtag,
-                                validationOptions,
-                                startOffset,
-                                async,
-                                cancellationToken)
-                                .ConfigureAwait(false))
-                            .Value.Content,
-                        ClientConfiguration.Pipeline.ResponseClassifier,
-                        Constants.MaxReliabilityRetries);
+                    ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool forceStructuredMessage, bool async, CancellationToken cancellationToken)
+                        => StartDownloadAsync(
+                            range,
+                            conditionsWithEtag,
+                            validationOptions,
+                            offset,
+                            forceStructuredMessage,
+                            async,
+                            cancellationToken);
+                    async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
+                        long offset, bool async, CancellationToken cancellationToken)
+                    {
+                        Response<BlobDownloadStreamingResult> result = await Factory(offset, forceStructuredMessage: true, async, cancellationToken).ConfigureAwait(false);
+                        return StructuredMessageDecodingStream.WrapStream(result.Value.Content, result.Value.Details.ContentLength);
+                    }
+                    Stream stream;
+                    if (response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+                    {
+                        (Stream decodingStream, StructuredMessageDecodingStream.RawDecodedData decodedData) = StructuredMessageDecodingStream.WrapStream(
+                            response.Value.Content, response.Value.Details.ContentLength);
+                        stream = new StructuredMessageDecodingRetriableStream(
+                            decodingStream,
+                            decodedData,
+                            StructuredMessage.Flags.StorageCrc64,
+                            startOffset => StructuredMessageFactory(startOffset, async: false, cancellationToken)
+                                .EnsureCompleted(),
+                            async startOffset => await StructuredMessageFactory(startOffset, async: true, cancellationToken)
+                                .ConfigureAwait(false),
+                            default, //decodedData => response.Value.Details.ContentCrc = decodedData.TotalCrc.ToArray(),
+                            ClientConfiguration.Pipeline.ResponseClassifier,
+                            Constants.MaxReliabilityRetries);
+                    }
+                    else
+                    {
+                        stream = RetriableStream.Create(
+                            response.Value.Content,
+                            startOffset => Factory(startOffset, forceStructuredMessage: false, async: false, cancellationToken)
+                                .EnsureCompleted().Value.Content,
+                            async startOffset => (await Factory(startOffset, forceStructuredMessage: false, async: true, cancellationToken)
+                                .ConfigureAwait(false)).Value.Content,
+                            ClientConfiguration.Pipeline.ResponseClassifier,
+                            Constants.MaxReliabilityRetries);
+                    }
 
                     stream = stream.WithNoDispose().WithProgress(progressHandler);
 
@@ -1574,7 +1593,11 @@ namespace Azure.Storage.Blobs.Specialized
                      * Buffer response stream and ensure it matches the transactional checksum if any.
                      * Storage will not return a checksum for payload >4MB, so this buffer is capped similarly.
                      * Checksum validation is opt-in, so this buffer is part of that opt-in. */
-                    if (validationOptions != default && validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && validationOptions.AutoValidateChecksum)
+                    if (validationOptions != default &&
+                        validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None &&
+                        validationOptions.AutoValidateChecksum &&
+                        // structured message decoding does the validation for us
+                        !response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
@@ -1637,6 +1660,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
         /// </param>
+        /// <param name="forceStructuredMessage">
+        /// When using transactional CRC, force the request to use structured message.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1658,6 +1684,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
             long startOffset = 0,
+            bool forceStructuredMessage = false, // TODO all CRC will force structured message in future
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1685,13 +1712,29 @@ namespace Azure.Storage.Blobs.Specialized
                 operationName: nameof(BlobBaseClient.Download),
                 parameterName: nameof(conditions));
 
+            bool? rangeGetContentMD5 = null;
+            bool? rangeGetContentCRC64 = null;
+            string structuredBodyType = null;
+            switch (validationOptions?.ChecksumAlgorithm.ResolveAuto())
+            {
+                case StorageChecksumAlgorithm.MD5:
+                    rangeGetContentMD5 = true;
+                    break;
+                case StorageChecksumAlgorithm.StorageCrc64:
+                    structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                    break;
+                default:
+                    break;
+            }
+
             if (async)
             {
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: rangeGetContentMD5,
+                    rangeGetContentCRC64: rangeGetContentCRC64,
+                    structuredBodyType: structuredBodyType,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1708,8 +1751,9 @@ namespace Azure.Storage.Blobs.Specialized
                 response = BlobRestClient.Download(
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
-                    rangeGetContentCRC64: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 ? true : null,
+                    rangeGetContentMD5: rangeGetContentMD5,
+                    rangeGetContentCRC64: rangeGetContentCRC64,
+                    structuredBodyType: structuredBodyType,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,

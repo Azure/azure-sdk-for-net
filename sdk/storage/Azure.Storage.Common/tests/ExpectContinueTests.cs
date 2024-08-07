@@ -135,6 +135,7 @@ namespace Azure.Storage.Tests
         public async Task ThrottlePolicyRevertsAfterBackoff()
         {
             TimeSpan backoff = TimeSpan.FromMilliseconds(10);
+            TimeSpan waitForBackoff = TimeSpan.FromMilliseconds(200);
             ExpectContinueOnThrottlePolicy policy = new()
             {
                 ThrottleInterval = backoff,
@@ -162,7 +163,7 @@ namespace Azure.Storage.Tests
             policy.OnReceivedResponse(message2);
 
             // wait out policy backoff
-            await Task.Delay(backoff);
+            await Task.Delay(waitForBackoff);
 
             // message3 doesn't get expect header
             HttpMessage message3 = new(MakeRequest(), null);

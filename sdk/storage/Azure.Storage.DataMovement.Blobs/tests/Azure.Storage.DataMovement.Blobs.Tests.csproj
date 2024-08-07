@@ -18,6 +18,7 @@
   <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferUtility.cs" LinkBase="Shared\DataMovement" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\ObserveStructuredMessagePolicy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
