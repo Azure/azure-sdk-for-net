@@ -36,6 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         public async Task GetResultsFromCreateJob()
         {
             var client = CreateRadiologyInsightsClient();
+
             var request = GetRequestContent("RadiologyInsightsClientTest.request.json");
             var jobId = "job1714464002036";
             var operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, request);
