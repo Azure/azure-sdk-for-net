@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: PrivateDns
 namespace: Azure.ResourceManager.PrivateDns
-require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/privatedns/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1aa912658531534e4e57ea613591075f7b97897c/specification/privatedns/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

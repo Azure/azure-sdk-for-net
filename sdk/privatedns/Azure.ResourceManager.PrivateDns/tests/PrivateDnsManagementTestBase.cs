@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
@@ -48,6 +49,12 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var privateZone = await resourceGroup.GetPrivateDnsZones().CreateOrUpdateAsync(WaitUntil.Completed,zoneName,data);
             return privateZone.Value;
+        }
+
+        protected async Task<VirtualNetworkLinkResource> CreateOrUpdateVirtualNetworkLink(PrivateDnsZoneResource privateZone, string linkName, VirtualNetworkLinkData vnetLinkData)
+        {
+            var vnetLinkResponse = await privateZone.GetVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, linkName, vnetLinkData);
+            return vnetLinkResponse.Value;
         }
     }
 }
