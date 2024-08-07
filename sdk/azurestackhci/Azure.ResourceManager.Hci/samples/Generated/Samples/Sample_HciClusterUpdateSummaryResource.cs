@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci.Samples
                 CurrentVersion = "4.2203.2.32",
                 LastUpdatedOn = DateTimeOffset.Parse("2022-04-06T14:08:18.254Z"),
                 LastChecked = DateTimeOffset.Parse("2022-04-07T18:04:07Z"),
-                State = UpdateSummariesPropertiesState.AppliedSuccessfully,
+                State = HciClusterUpdateState.AppliedSuccessfully,
             };
             ArmOperation<HciClusterUpdateSummaryResource> lro = await hciClusterUpdateSummary.CreateOrUpdateAsync(WaitUntil.Completed, data);
             HciClusterUpdateSummaryResource result = lro.Value;

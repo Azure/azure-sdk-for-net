@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci
             HciHealthState? healthState = default;
             IList<HciPrecheckResult> healthCheckResult = default;
             DateTimeOffset? healthCheckDate = default;
-            UpdateSummariesPropertiesState? state = default;
+            HciClusterUpdateState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            state = new UpdateSummariesPropertiesState(property0.Value.GetString());
+                            state = new HciClusterUpdateState(property0.Value.GetString());
                             continue;
                         }
                     }

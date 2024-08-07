@@ -179,7 +179,7 @@ rename-mapping:
   UpdatePrerequisite: HciClusterUpdatePrerequisite
   UpdateRun: HciClusterUpdateRun
   UpdateSummaries: HciClusterUpdateSummary
-  YpdateSummariesPropertiesState: HciClusterUpdateState
+  UpdateSummariesPropertiesState: HciClusterUpdateState
   PackageVersionInfo.lastUpdated: LastUpdatedOn
   SecurityComplianceStatus.lastUpdated: LastUpdatedOn
   SoftwareAssuranceProperties.lastUpdated: LastUpdatedOn
