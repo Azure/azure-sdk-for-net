@@ -16,5 +16,7 @@ namespace Azure.Communication.Email
         public string Name { get; }
         /// <summary> MIME type of the content being attached. </summary>
         public string ContentType { get; }
+        /// <summary> Unique identifier (CID) to reference an inline attachment. </summary>
+        public string ContentId { get; set; }
     }
 }
