@@ -86,7 +86,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (ExtractedSummaryTextResult extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)
+        foreach (ExtractedSummaryActionResult extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{extractedSummyDocument.Id}\":");
             Console.WriteLine($"  Extracted {extractedSummyDocument.Sentences.Count} sentence(s):");

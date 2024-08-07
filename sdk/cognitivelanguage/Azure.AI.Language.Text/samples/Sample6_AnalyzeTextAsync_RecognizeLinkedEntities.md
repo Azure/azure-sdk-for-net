@@ -59,7 +59,7 @@ AnalyzeTextInput body = new TextEntityLinkingInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextEntityLinkingResult entityLinkingTaskResult = (AnalyzeTextEntityLinkingResult)response.Value;
 
-foreach (EntityLinkingTextResult entityLinkingResult in entityLinkingTaskResult.Results.Documents)
+foreach (EntityLinkingActionResult entityLinkingResult in entityLinkingTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{entityLinkingResult.Id}\":");
     Console.WriteLine($"Recognized {entityLinkingResult.Entities.Count} entities:");

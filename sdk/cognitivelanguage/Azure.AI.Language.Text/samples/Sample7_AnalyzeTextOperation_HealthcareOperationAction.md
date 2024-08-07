@@ -72,7 +72,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         Console.WriteLine();
 
         // View the healthcare entities recognized in the input documents.
-        foreach (HealthcareTextResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
+        foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{healthcareEntitiesDocument.Id}\":");
             Console.WriteLine($"  Recognized the following {healthcareEntitiesDocument.Entities.Count} healthcare entities:");

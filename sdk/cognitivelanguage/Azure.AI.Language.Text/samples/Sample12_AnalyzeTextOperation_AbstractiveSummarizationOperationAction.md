@@ -86,7 +86,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (AbstractiveSummaryTextResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
+        foreach (AbstractiveSummaryActionResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{extractedSummaryDocument.Id}\":");
             Console.WriteLine($"  Produced the following abstractive summaries:");

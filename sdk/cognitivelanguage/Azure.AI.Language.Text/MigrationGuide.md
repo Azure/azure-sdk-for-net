@@ -295,7 +295,7 @@ try
     Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
     AnalyzeTextSentimentResult AnalyzeTextSentimentResult = (AnalyzeTextSentimentResult)response.Value;
 
-    foreach (SentimentTextResult sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
+    foreach (SentimentActionResult sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
     {
         Console.WriteLine($"Document {sentimentResponseWithDocumentDetectedLanguage.Id} sentiment is {sentimentResponseWithDocumentDetectedLanguage.Sentiment} with: ");
         Console.WriteLine($"  Positive confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive}");
@@ -428,7 +428,7 @@ AnalyzeTextInput body = new TextKeyPhraseExtractionInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextKeyPhraseResult keyPhraseTaskResult = (AnalyzeTextKeyPhraseResult)response.Value;
 
-foreach (KeyPhrasesTextResult kpeResult in keyPhraseTaskResult.Results.Documents)
+foreach (KeyPhrasesActionResult kpeResult in keyPhraseTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{kpeResult.Id}\":");
     foreach (string keyPhrase in kpeResult.KeyPhrases)
@@ -692,7 +692,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-foreach (PiiTextResult piiResult in piiTaskResult.Results.Documents)
+foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
@@ -833,7 +833,7 @@ AnalyzeTextInput body = new TextEntityLinkingInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextEntityLinkingResult entityLinkingTaskResult = (AnalyzeTextEntityLinkingResult)response.Value;
 
-foreach (EntityLinkingTextResult entityLinkingResult in entityLinkingTaskResult.Results.Documents)
+foreach (EntityLinkingActionResult entityLinkingResult in entityLinkingTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{entityLinkingResult.Id}\":");
     Console.WriteLine($"Recognized {entityLinkingResult.Entities.Count} entities:");
@@ -1044,7 +1044,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         Console.WriteLine();
 
         // View the healthcare entities recognized in the input documents.
-        foreach (HealthcareTextResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
+        foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{healthcareEntitiesDocument.Id}\":");
             Console.WriteLine($"  Recognized the following {healthcareEntitiesDocument.Entities.Count} healthcare entities:");
@@ -1244,7 +1244,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntityTextResult entitiesDocument in customClassificationResult.Results.Documents)
+        foreach (EntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{entitiesDocument.Id}\":");
             Console.WriteLine($"  Recognized {entitiesDocument.Entities.Count} Entities:");
@@ -1369,7 +1369,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (ClassificationTextResult customClassificationDocument in customClassificationResult.Results.Documents)
+        foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{customClassificationDocument.Id}\":");
             Console.WriteLine($"  Recognized {customClassificationDocument.Class.Count} classifications:");
@@ -1489,7 +1489,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (ClassificationTextResult customClassificationDocument in customClassificationResult.Results.Documents)
+        foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{customClassificationDocument.Id}\":");
             Console.WriteLine($"  Recognized {customClassificationDocument.Class.Count} classifications:");
@@ -1664,7 +1664,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (ExtractedSummaryTextResult extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)
+        foreach (ExtractedSummaryActionResult extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{extractedSummyDocument.Id}\":");
             Console.WriteLine($"  Extracted {extractedSummyDocument.Sentences.Count} sentence(s):");
@@ -1847,7 +1847,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (AbstractiveSummaryTextResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
+        foreach (AbstractiveSummaryActionResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{extractedSummaryDocument.Id}\":");
             Console.WriteLine($"  Produced the following abstractive summaries:");
@@ -2076,7 +2076,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (KeyPhrasesTextResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)
+        foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{kpeResult.Id}\":");
             foreach (string keyPhrase in kpeResult.KeyPhrases)

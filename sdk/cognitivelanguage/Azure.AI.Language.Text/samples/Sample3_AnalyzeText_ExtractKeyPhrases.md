@@ -61,7 +61,7 @@ AnalyzeTextInput body = new TextKeyPhraseExtractionInput()
 Response<AnalyzeTextResult> response = client.AnalyzeText(body);
 AnalyzeTextKeyPhraseResult keyPhraseTaskResult = (AnalyzeTextKeyPhraseResult)response.Value;
 
-foreach (KeyPhrasesTextResult kpeResult in keyPhraseTaskResult.Results.Documents)
+foreach (KeyPhrasesActionResult kpeResult in keyPhraseTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{kpeResult.Id}\":");
     foreach (string keyPhrase in kpeResult.KeyPhrases)

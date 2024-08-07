@@ -61,7 +61,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (ClassificationTextResult customClassificationDocument in customClassificationResult.Results.Documents)
+        foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{customClassificationDocument.Id}\":");
             Console.WriteLine($"  Recognized {customClassificationDocument.Class.Count} classifications:");
