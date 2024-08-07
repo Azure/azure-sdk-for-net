@@ -16,6 +16,87 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDevOpsInfrastructureModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsImageVersion"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="imageVersion"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsImageVersion"/> instance for mocking. </returns>
+        public static DevOpsImageVersion DevOpsImageVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string imageVersion = null)
+        {
+            return new DevOpsImageVersion(
+                id,
+                name,
+                resourceType,
+                systemData,
+                imageVersion != null ? new ImageVersionProperties(imageVersion, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceQuota"/>. </summary>
+        /// <param name="name"> The name of the quota. </param>
+        /// <param name="id"> Fully qualified ARM resource id. </param>
+        /// <param name="unit"> The unit of usage measurement. </param>
+        /// <param name="currentValue"> The current usage of the resource. </param>
+        /// <param name="limit"> The maximum permitted usage of the resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceQuota"/> instance for mocking. </returns>
+        public static DevOpsResourceQuota DevOpsResourceQuota(DevOpsResourceQuotaName name = null, ResourceIdentifier id = null, string unit = null, long currentValue = default, long limit = default)
+        {
+            return new DevOpsResourceQuota(
+                name,
+                id,
+                unit,
+                currentValue,
+                limit,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceQuotaName"/>. </summary>
+        /// <param name="value"> The name of the resource. </param>
+        /// <param name="localizedValue"> The localized name of the resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceQuotaName"/> instance for mocking. </returns>
+        public static DevOpsResourceQuotaName DevOpsResourceQuotaName(string value = null, string localizedValue = null)
+        {
+            return new DevOpsResourceQuotaName(value, localizedValue, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceSku"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceSku"/> instance for mocking. </returns>
+        public static DevOpsResourceSku DevOpsResourceSku(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsResourceSkuProperties properties = null)
+        {
+            return new DevOpsResourceSku(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceDetails"/> instance for mocking. </returns>
+        public static DevOpsResourceDetails DevOpsResourceDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsResourceDetailsProperties properties = null)
+        {
+            return new DevOpsResourceDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DevOpsInfrastructure.DevOpsPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -53,87 +134,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
 
             return new ManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.DevOpsResourceDetails"/> instance for mocking. </returns>
-        public static DevOpsResourceDetails DevOpsResourceDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsResourceDetailsProperties properties = null)
-        {
-            return new DevOpsResourceDetails(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceSku"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.DevOpsResourceSku"/> instance for mocking. </returns>
-        public static DevOpsResourceSku DevOpsResourceSku(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsResourceSkuProperties properties = null)
-        {
-            return new DevOpsResourceSku(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceQuota"/>. </summary>
-        /// <param name="name"> The name of the quota. </param>
-        /// <param name="id"> Fully qualified ARM resource id. </param>
-        /// <param name="unit"> The unit of usage measurement. </param>
-        /// <param name="currentValue"> The current usage of the resource. </param>
-        /// <param name="limit"> The maximum permitted usage of the resource. </param>
-        /// <returns> A new <see cref="Models.DevOpsResourceQuota"/> instance for mocking. </returns>
-        public static DevOpsResourceQuota DevOpsResourceQuota(DevOpsResourceQuotaName name = null, ResourceIdentifier id = null, string unit = null, long currentValue = default, long limit = default)
-        {
-            return new DevOpsResourceQuota(
-                name,
-                id,
-                unit,
-                currentValue,
-                limit,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceQuotaName"/>. </summary>
-        /// <param name="value"> The name of the resource. </param>
-        /// <param name="localizedValue"> The localized name of the resource. </param>
-        /// <returns> A new <see cref="Models.DevOpsResourceQuotaName"/> instance for mocking. </returns>
-        public static DevOpsResourceQuotaName DevOpsResourceQuotaName(string value = null, string localizedValue = null)
-        {
-            return new DevOpsResourceQuotaName(value, localizedValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevOpsImageVersion"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="imageVersion"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.DevOpsImageVersion"/> instance for mocking. </returns>
-        public static DevOpsImageVersion DevOpsImageVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string imageVersion = null)
-        {
-            return new DevOpsImageVersion(
-                id,
-                name,
-                resourceType,
-                systemData,
-                imageVersion != null ? new ImageVersionProperties(imageVersion, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
         }
     }
 }
