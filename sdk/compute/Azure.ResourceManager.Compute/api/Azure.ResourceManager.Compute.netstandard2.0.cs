@@ -4229,8 +4229,12 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ComputeSecurityPostureReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public ComputeSecurityPostureReference() { }
         public ComputeSecurityPostureReference(Azure.Core.ResourceIdentifier id) { }
-        public System.Collections.Generic.IList<string> ExcludeExtensions { get { throw null; } }
+        public System.Collections.Generic.IList<string> ExcludeExtensionNames { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> ExcludeExtensions { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IsOverridable { get { throw null; } set { } }
         Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9460,7 +9464,7 @@ namespace Azure.ResourceManager.Compute.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableAutomaticUpdates { get { throw null; } set { } }
         public bool? IsAutomaticUpdatesEnabled { get { throw null; } set { } }
-        public bool? IsVmAgentPlatformUpdatesEnabled { get { throw null; } }
+        public bool? IsVmAgentPlatformUpdatesEnabled { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public Azure.ResourceManager.Compute.Models.PatchSettings PatchSettings { get { throw null; } set { } }
         public bool? ProvisionVmAgent { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
