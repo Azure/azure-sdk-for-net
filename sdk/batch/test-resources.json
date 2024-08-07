@@ -50,7 +50,7 @@
           "encryption": "[variables('encryption')]",
           "accessTier": "Hot",
           "minimumTlsVersion": "TLS1_2",
-          "allowBlobPublicAccess": true
+          "allowBlobPublicAccess": false
       }
     },
     {
