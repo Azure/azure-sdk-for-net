@@ -99,33 +99,33 @@ namespace Azure.AI.Vision.Face
             _apiVersion = options.Version;
         }
 
-        private FaceListClientImpl _cachedFaceListClientImpl;
-        private LargeFaceListClientImpl _cachedLargeFaceListClientImpl;
-        private PersonGroupClientImpl _cachedPersonGroupClientImpl;
-        private LargePersonGroupClientImpl _cachedLargePersonGroupClientImpl;
+        private FaceListClient _cachedFaceListClient;
+        private LargeFaceListClient _cachedLargeFaceListClient;
+        private PersonGroupClient _cachedPersonGroupClient;
+        private LargePersonGroupClient _cachedLargePersonGroupClient;
 
-        /// <summary> Initializes a new instance of FaceListClientImpl. </summary>
-        public virtual FaceListClientImpl GetFaceListClientImplClient()
+        /// <summary> Initializes a new instance of FaceListClient. </summary>
+        public virtual FaceListClient GetFaceListClientClient()
         {
-            return Volatile.Read(ref _cachedFaceListClientImpl) ?? Interlocked.CompareExchange(ref _cachedFaceListClientImpl, new FaceListClientImpl(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFaceListClientImpl;
+            return Volatile.Read(ref _cachedFaceListClient) ?? Interlocked.CompareExchange(ref _cachedFaceListClient, new FaceListClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFaceListClient;
         }
 
-        /// <summary> Initializes a new instance of LargeFaceListClientImpl. </summary>
-        public virtual LargeFaceListClientImpl GetLargeFaceListClientImplClient()
+        /// <summary> Initializes a new instance of LargeFaceListClient. </summary>
+        public virtual LargeFaceListClient GetLargeFaceListClientClient()
         {
-            return Volatile.Read(ref _cachedLargeFaceListClientImpl) ?? Interlocked.CompareExchange(ref _cachedLargeFaceListClientImpl, new LargeFaceListClientImpl(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedLargeFaceListClientImpl;
+            return Volatile.Read(ref _cachedLargeFaceListClient) ?? Interlocked.CompareExchange(ref _cachedLargeFaceListClient, new LargeFaceListClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedLargeFaceListClient;
         }
 
-        /// <summary> Initializes a new instance of PersonGroupClientImpl. </summary>
-        public virtual PersonGroupClientImpl GetPersonGroupClientImplClient()
+        /// <summary> Initializes a new instance of PersonGroupClient. </summary>
+        public virtual PersonGroupClient GetPersonGroupClientClient()
         {
-            return Volatile.Read(ref _cachedPersonGroupClientImpl) ?? Interlocked.CompareExchange(ref _cachedPersonGroupClientImpl, new PersonGroupClientImpl(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPersonGroupClientImpl;
+            return Volatile.Read(ref _cachedPersonGroupClient) ?? Interlocked.CompareExchange(ref _cachedPersonGroupClient, new PersonGroupClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPersonGroupClient;
         }
 
-        /// <summary> Initializes a new instance of LargePersonGroupClientImpl. </summary>
-        public virtual LargePersonGroupClientImpl GetLargePersonGroupClientImplClient()
+        /// <summary> Initializes a new instance of LargePersonGroupClient. </summary>
+        public virtual LargePersonGroupClient GetLargePersonGroupClientClient()
         {
-            return Volatile.Read(ref _cachedLargePersonGroupClientImpl) ?? Interlocked.CompareExchange(ref _cachedLargePersonGroupClientImpl, new LargePersonGroupClientImpl(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedLargePersonGroupClientImpl;
+            return Volatile.Read(ref _cachedLargePersonGroupClient) ?? Interlocked.CompareExchange(ref _cachedLargePersonGroupClient, new LargePersonGroupClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedLargePersonGroupClient;
         }
     }
 }

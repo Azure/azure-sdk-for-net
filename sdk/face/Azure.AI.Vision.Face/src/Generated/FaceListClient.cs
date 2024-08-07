@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Vision.Face
 {
     // Data plane generated sub-client.
-    /// <summary> The FaceListClientImpl sub-client. </summary>
-    public partial class FaceListClientImpl
+    /// <summary> The FaceList sub-client. </summary>
+    public partial class FaceListClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -33,12 +33,12 @@ namespace Azure.AI.Vision.Face
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of FaceListClientImpl for mocking. </summary>
-        protected FaceListClientImpl()
+        /// <summary> Initializes a new instance of FaceListClient for mocking. </summary>
+        protected FaceListClient()
         {
         }
 
-        /// <summary> Initializes a new instance of FaceListClientImpl. </summary>
+        /// <summary> Initializes a new instance of FaceListClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.Vision.Face
         /// https://{resource-name}.cognitiveservices.azure.com).
         /// </param>
         /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1". </param>
-        internal FaceListClientImpl(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal FaceListClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -77,7 +77,7 @@ namespace Azure.AI.Vision.Face
         ///
         /// Please consider Large Face List when the face number is large. It can support up to 1,000,000 faces.
         /// </remarks>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
         public virtual async Task<Response> CreateAsync(string faceListId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
@@ -108,7 +108,7 @@ namespace Azure.AI.Vision.Face
         ///
         /// Please consider Large Face List when the face number is large. It can support up to 1,000,000 faces.
         /// </remarks>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='Create(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='Create(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
         public virtual Response Create(string faceListId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
@@ -142,13 +142,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='CreateAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='CreateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(string faceListId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.Create");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.Create");
             scope.Start();
             try
             {
@@ -184,13 +184,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='Create(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='Create(string,RequestContent,RequestContext)']/*" />
         public virtual Response Create(string faceListId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.Create");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.Create");
             scope.Start();
             try
             {
@@ -221,12 +221,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string faceListId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.Delete");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.Delete");
             scope.Start();
             try
             {
@@ -257,12 +257,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string faceListId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.Delete");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.Delete");
             scope.Start();
             try
             {
@@ -282,7 +282,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='GetFaceListAsync(string,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceListAsync(string,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<FaceList>> GetFaceListAsync(string faceListId, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
@@ -298,7 +298,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='GetFaceList(string,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceList(string,bool?,CancellationToken)']/*" />
         public virtual Response<FaceList> GetFaceList(string faceListId, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
@@ -330,12 +330,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='GetFaceListAsync(string,bool?,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceListAsync(string,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetFaceListAsync(string faceListId, bool? returnRecognitionModel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.GetFaceList");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.GetFaceList");
             scope.Start();
             try
             {
@@ -371,12 +371,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='GetFaceList(string,bool?,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceList(string,bool?,RequestContext)']/*" />
         public virtual Response GetFaceList(string faceListId, bool? returnRecognitionModel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.GetFaceList");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.GetFaceList");
             scope.Start();
             try
             {
@@ -407,13 +407,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(string faceListId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.Update");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.Update");
             scope.Start();
             try
             {
@@ -444,13 +444,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='Update(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='Update(string,RequestContent,RequestContext)']/*" />
         public virtual Response Update(string faceListId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.Update");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.Update");
             scope.Start();
             try
             {
@@ -471,7 +471,7 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='GetFaceListsAsync(bool?,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceListsAsync(bool?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<FaceListItem>>> GetFaceListsAsync(bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -494,7 +494,7 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='GetFaceLists(bool?,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceLists(bool?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<FaceListItem>> GetFaceLists(bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -531,10 +531,10 @@ namespace Azure.AI.Vision.Face
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='GetFaceListsAsync(bool?,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceListsAsync(bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetFaceListsAsync(bool? returnRecognitionModel, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.GetFaceLists");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.GetFaceLists");
             scope.Start();
             try
             {
@@ -569,10 +569,10 @@ namespace Azure.AI.Vision.Face
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='GetFaceLists(bool?,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceLists(bool?,RequestContext)']/*" />
         public virtual Response GetFaceLists(bool? returnRecognitionModel, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.GetFaceLists");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.GetFaceLists");
             scope.Start();
             try
             {
@@ -609,7 +609,7 @@ namespace Azure.AI.Vision.Face
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddFaceFromUrlAsync(string faceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
@@ -644,7 +644,7 @@ namespace Azure.AI.Vision.Face
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddFaceFromUrl(string faceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
@@ -681,13 +681,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
         public virtual async Task<Response> AddFaceFromUrlAsync(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.AddFaceFromUrl");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFaceFromUrl");
             scope.Start();
             try
             {
@@ -726,13 +726,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='AddFaceFromUrl(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceFromUrl(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
         public virtual Response AddFaceFromUrl(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.AddFaceFromUrl");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFaceFromUrl");
             scope.Start();
             try
             {
@@ -769,7 +769,7 @@ namespace Azure.AI.Vision.Face
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='AddFaceAsync(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceAsync(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddFaceAsync(string faceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
@@ -804,7 +804,7 @@ namespace Azure.AI.Vision.Face
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='AddFace(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFace(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddFace(string faceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
@@ -841,13 +841,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='AddFaceAsync(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceAsync(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
         public virtual async Task<Response> AddFaceAsync(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.AddFace");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFace");
             scope.Start();
             try
             {
@@ -886,13 +886,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='AddFace(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFace(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
         public virtual Response AddFace(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.AddFace");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFace");
             scope.Start();
             try
             {
@@ -924,12 +924,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='DeleteFaceAsync(string,Guid,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='DeleteFaceAsync(string,Guid,RequestContext)']/*" />
         public virtual async Task<Response> DeleteFaceAsync(string faceListId, Guid persistedFaceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.DeleteFace");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.DeleteFace");
             scope.Start();
             try
             {
@@ -961,12 +961,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClientImpl.xml" path="doc/members/member[@name='DeleteFace(string,Guid,RequestContext)']/*" />
+        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='DeleteFace(string,Guid,RequestContext)']/*" />
         public virtual Response DeleteFace(string faceListId, Guid persistedFaceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClientImpl.DeleteFace");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.DeleteFace");
             scope.Start();
             try
             {

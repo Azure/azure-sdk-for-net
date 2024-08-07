@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Vision.Face
 {
     // Data plane generated sub-client.
-    /// <summary> The PersonGroupClientImpl sub-client. </summary>
-    public partial class PersonGroupClientImpl
+    /// <summary> The PersonGroup sub-client. </summary>
+    public partial class PersonGroupClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -33,12 +33,12 @@ namespace Azure.AI.Vision.Face
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of PersonGroupClientImpl for mocking. </summary>
-        protected PersonGroupClientImpl()
+        /// <summary> Initializes a new instance of PersonGroupClient for mocking. </summary>
+        protected PersonGroupClient()
         {
         }
 
-        /// <summary> Initializes a new instance of PersonGroupClientImpl. </summary>
+        /// <summary> Initializes a new instance of PersonGroupClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.Vision.Face
         /// https://{resource-name}.cognitiveservices.azure.com).
         /// </param>
         /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1". </param>
-        internal PersonGroupClientImpl(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal PersonGroupClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.Face
         /// &gt;   * S0-tier subscription quota: 1,000,000 Person Groups. Each holds up to 10,000 persons.
         /// &gt;   * to handle larger scale face identification problem, please consider using Large Person Group.
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
         public virtual async Task<Response> CreateAsync(string personGroupId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -118,7 +118,7 @@ namespace Azure.AI.Vision.Face
         /// &gt;   * S0-tier subscription quota: 1,000,000 Person Groups. Each holds up to 10,000 persons.
         /// &gt;   * to handle larger scale face identification problem, please consider using Large Person Group.
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='Create(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='Create(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
         public virtual Response Create(string personGroupId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -152,13 +152,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='CreateAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='CreateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(string personGroupId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.Create");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.Create");
             scope.Start();
             try
             {
@@ -194,13 +194,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='Create(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='Create(string,RequestContent,RequestContext)']/*" />
         public virtual Response Create(string personGroupId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.Create");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.Create");
             scope.Start();
             try
             {
@@ -231,12 +231,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string personGroupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.Delete");
             scope.Start();
             try
             {
@@ -267,12 +267,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string personGroupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.Delete");
             scope.Start();
             try
             {
@@ -292,7 +292,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonGroupAsync(string,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonGroupAsync(string,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<PersonGroup>> GetPersonGroupAsync(string personGroupId, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -308,7 +308,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonGroup(string,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonGroup(string,bool?,CancellationToken)']/*" />
         public virtual Response<PersonGroup> GetPersonGroup(string personGroupId, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -340,12 +340,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonGroupAsync(string,bool?,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonGroupAsync(string,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetPersonGroupAsync(string personGroupId, bool? returnRecognitionModel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetPersonGroup");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetPersonGroup");
             scope.Start();
             try
             {
@@ -381,12 +381,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonGroup(string,bool?,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonGroup(string,bool?,RequestContext)']/*" />
         public virtual Response GetPersonGroup(string personGroupId, bool? returnRecognitionModel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetPersonGroup");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetPersonGroup");
             scope.Start();
             try
             {
@@ -417,13 +417,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(string personGroupId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.Update");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.Update");
             scope.Start();
             try
             {
@@ -454,13 +454,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='Update(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='Update(string,RequestContent,RequestContext)']/*" />
         public virtual Response Update(string personGroupId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.Update");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.Update");
             scope.Start();
             try
             {
@@ -493,7 +493,7 @@ namespace Azure.AI.Vision.Face
         /// &gt;   * "start=&amp;top=2" will return "itemId1", "itemId2".
         /// &gt;   * "start=itemId2&amp;top=3" will return "itemId3", "itemId4", "itemId5".
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonGroupsAsync(string,int?,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonGroupsAsync(string,int?,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<PersonGroup>>> GetPersonGroupsAsync(string start = null, int? top = null, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -528,7 +528,7 @@ namespace Azure.AI.Vision.Face
         /// &gt;   * "start=&amp;top=2" will return "itemId1", "itemId2".
         /// &gt;   * "start=itemId2&amp;top=3" will return "itemId3", "itemId4", "itemId5".
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonGroups(string,int?,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonGroups(string,int?,bool?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<PersonGroup>> GetPersonGroups(string start = null, int? top = null, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -565,10 +565,10 @@ namespace Azure.AI.Vision.Face
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonGroupsAsync(string,int?,bool?,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonGroupsAsync(string,int?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetPersonGroupsAsync(string start, int? top, bool? returnRecognitionModel, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetPersonGroups");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetPersonGroups");
             scope.Start();
             try
             {
@@ -603,10 +603,10 @@ namespace Azure.AI.Vision.Face
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonGroups(string,int?,bool?,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonGroups(string,int?,bool?,RequestContext)']/*" />
         public virtual Response GetPersonGroups(string start, int? top, bool? returnRecognitionModel, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetPersonGroups");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetPersonGroups");
             scope.Start();
             try
             {
@@ -625,7 +625,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TrainingResult>> GetTrainingStatusAsync(string personGroupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -640,7 +640,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetTrainingStatus(string,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatus(string,CancellationToken)']/*" />
         public virtual Response<TrainingResult> GetTrainingStatus(string personGroupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -671,12 +671,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTrainingStatusAsync(string personGroupId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetTrainingStatus");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetTrainingStatus");
             scope.Start();
             try
             {
@@ -711,12 +711,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetTrainingStatus(string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatus(string,RequestContext)']/*" />
         public virtual Response GetTrainingStatus(string personGroupId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetTrainingStatus");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetTrainingStatus");
             scope.Start();
             try
             {
@@ -748,7 +748,7 @@ namespace Azure.AI.Vision.Face
         /// &gt;     * 1,000,000 Person Groups.
         /// &gt;     * 100,000,000 persons in all Person Groups.
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='CreatePersonAsync(string,string,string,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='CreatePersonAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<CreatePersonResult>> CreatePersonAsync(string personGroupId, string name, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -778,7 +778,7 @@ namespace Azure.AI.Vision.Face
         /// &gt;     * 1,000,000 Person Groups.
         /// &gt;     * 100,000,000 persons in all Person Groups.
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='CreatePerson(string,string,string,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='CreatePerson(string,string,string,CancellationToken)']/*" />
         public virtual Response<CreatePersonResult> CreatePerson(string personGroupId, string name, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -812,13 +812,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='CreatePersonAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='CreatePersonAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreatePersonAsync(string personGroupId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.CreatePerson");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.CreatePerson");
             scope.Start();
             try
             {
@@ -854,13 +854,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='CreatePerson(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='CreatePerson(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreatePerson(string personGroupId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.CreatePerson");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.CreatePerson");
             scope.Start();
             try
             {
@@ -892,12 +892,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='DeletePersonAsync(string,Guid,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='DeletePersonAsync(string,Guid,RequestContext)']/*" />
         public virtual async Task<Response> DeletePersonAsync(string personGroupId, Guid personId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.DeletePerson");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.DeletePerson");
             scope.Start();
             try
             {
@@ -929,12 +929,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='DeletePerson(string,Guid,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='DeletePerson(string,Guid,RequestContext)']/*" />
         public virtual Response DeletePerson(string personGroupId, Guid personId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.DeletePerson");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.DeletePerson");
             scope.Start();
             try
             {
@@ -954,7 +954,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonAsync(string,Guid,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonAsync(string,Guid,CancellationToken)']/*" />
         public virtual async Task<Response<PersonGroupPerson>> GetPersonAsync(string personGroupId, Guid personId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -970,7 +970,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPerson(string,Guid,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPerson(string,Guid,CancellationToken)']/*" />
         public virtual Response<PersonGroupPerson> GetPerson(string personGroupId, Guid personId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1002,12 +1002,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonAsync(string,Guid,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonAsync(string,Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetPersonAsync(string personGroupId, Guid personId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetPerson");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetPerson");
             scope.Start();
             try
             {
@@ -1043,12 +1043,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPerson(string,Guid,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPerson(string,Guid,RequestContext)']/*" />
         public virtual Response GetPerson(string personGroupId, Guid personId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetPerson");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetPerson");
             scope.Start();
             try
             {
@@ -1080,13 +1080,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='UpdatePersonAsync(string,Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='UpdatePersonAsync(string,Guid,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdatePersonAsync(string personGroupId, Guid personId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.UpdatePerson");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.UpdatePerson");
             scope.Start();
             try
             {
@@ -1118,13 +1118,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='UpdatePerson(string,Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='UpdatePerson(string,Guid,RequestContent,RequestContext)']/*" />
         public virtual Response UpdatePerson(string personGroupId, Guid personId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.UpdatePerson");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.UpdatePerson");
             scope.Start();
             try
             {
@@ -1159,7 +1159,7 @@ namespace Azure.AI.Vision.Face
         /// &gt;   * "start=&amp;top=2" will return "itemId1", "itemId2".
         /// &gt;   * "start=itemId2&amp;top=3" will return "itemId3", "itemId4", "itemId5".
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonsAsync(string,string,int?,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonsAsync(string,string,int?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<PersonGroupPerson>>> GetPersonsAsync(string personGroupId, string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1198,7 +1198,7 @@ namespace Azure.AI.Vision.Face
         /// &gt;   * "start=&amp;top=2" will return "itemId1", "itemId2".
         /// &gt;   * "start=itemId2&amp;top=3" will return "itemId3", "itemId4", "itemId5".
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersons(string,string,int?,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersons(string,string,int?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<PersonGroupPerson>> GetPersons(string personGroupId, string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1239,12 +1239,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersonsAsync(string,string,int?,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersonsAsync(string,string,int?,RequestContext)']/*" />
         public virtual async Task<Response> GetPersonsAsync(string personGroupId, string start, int? top, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetPersons");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetPersons");
             scope.Start();
             try
             {
@@ -1281,12 +1281,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetPersons(string,string,int?,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetPersons(string,string,int?,RequestContext)']/*" />
         public virtual Response GetPersons(string personGroupId, string start, int? top, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetPersons");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetPersons");
             scope.Start();
             try
             {
@@ -1324,7 +1324,7 @@ namespace Azure.AI.Vision.Face
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddFaceFromUrlAsync(string personGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1360,7 +1360,7 @@ namespace Azure.AI.Vision.Face
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddFaceFromUrl(string personGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1398,13 +1398,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
         public virtual async Task<Response> AddFaceFromUrlAsync(string personGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.AddFaceFromUrl");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.AddFaceFromUrl");
             scope.Start();
             try
             {
@@ -1444,13 +1444,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
         public virtual Response AddFaceFromUrl(string personGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.AddFaceFromUrl");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.AddFaceFromUrl");
             scope.Start();
             try
             {
@@ -1488,7 +1488,7 @@ namespace Azure.AI.Vision.Face
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='AddFaceAsync(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='AddFaceAsync(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddFaceAsync(string personGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1524,7 +1524,7 @@ namespace Azure.AI.Vision.Face
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='AddFace(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='AddFace(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddFace(string personGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1562,13 +1562,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='AddFaceAsync(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='AddFaceAsync(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
         public virtual async Task<Response> AddFaceAsync(string personGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.AddFace");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.AddFace");
             scope.Start();
             try
             {
@@ -1608,13 +1608,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='AddFace(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='AddFace(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
         public virtual Response AddFace(string personGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.AddFace");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.AddFace");
             scope.Start();
             try
             {
@@ -1647,12 +1647,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='DeleteFaceAsync(string,Guid,Guid,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='DeleteFaceAsync(string,Guid,Guid,RequestContext)']/*" />
         public virtual async Task<Response> DeleteFaceAsync(string personGroupId, Guid personId, Guid persistedFaceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.DeleteFace");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.DeleteFace");
             scope.Start();
             try
             {
@@ -1685,12 +1685,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='DeleteFace(string,Guid,Guid,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='DeleteFace(string,Guid,Guid,RequestContext)']/*" />
         public virtual Response DeleteFace(string personGroupId, Guid personId, Guid persistedFaceId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.DeleteFace");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.DeleteFace");
             scope.Start();
             try
             {
@@ -1711,7 +1711,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetFaceAsync(string,Guid,Guid,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetFaceAsync(string,Guid,Guid,CancellationToken)']/*" />
         public virtual async Task<Response<PersonGroupPersonFace>> GetFaceAsync(string personGroupId, Guid personId, Guid persistedFaceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1728,7 +1728,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetFace(string,Guid,Guid,CancellationToken)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetFace(string,Guid,Guid,CancellationToken)']/*" />
         public virtual Response<PersonGroupPersonFace> GetFace(string personGroupId, Guid personId, Guid persistedFaceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
@@ -1761,12 +1761,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetFaceAsync(string,Guid,Guid,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetFaceAsync(string,Guid,Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetFaceAsync(string personGroupId, Guid personId, Guid persistedFaceId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetFace");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetFace");
             scope.Start();
             try
             {
@@ -1803,12 +1803,12 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='GetFace(string,Guid,Guid,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='GetFace(string,Guid,Guid,RequestContext)']/*" />
         public virtual Response GetFace(string personGroupId, Guid personId, Guid persistedFaceId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.GetFace");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.GetFace");
             scope.Start();
             try
             {
@@ -1841,13 +1841,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='UpdateFaceAsync(string,Guid,Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='UpdateFaceAsync(string,Guid,Guid,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateFaceAsync(string personGroupId, Guid personId, Guid persistedFaceId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.UpdateFace");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.UpdateFace");
             scope.Start();
             try
             {
@@ -1880,13 +1880,13 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='UpdateFace(string,Guid,Guid,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='UpdateFace(string,Guid,Guid,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateFace(string personGroupId, Guid personId, Guid persistedFaceId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.UpdateFace");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.UpdateFace");
             scope.Start();
             try
             {
@@ -1918,17 +1918,17 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation> TrainAsync(WaitUntil waitUntil, string personGroupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.Train");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.Train");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateTrainRequest(personGroupId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "PersonGroupClientImpl.Train", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "PersonGroupClient.Train", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1955,17 +1955,17 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/PersonGroupClientImpl.xml" path="doc/members/member[@name='Train(WaitUntil,string,RequestContext)']/*" />
+        /// <include file="Docs/PersonGroupClient.xml" path="doc/members/member[@name='Train(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation Train(WaitUntil waitUntil, string personGroupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersonGroupClientImpl.Train");
+            using var scope = ClientDiagnostics.CreateScope("PersonGroupClient.Train");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateTrainRequest(personGroupId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "PersonGroupClientImpl.Train", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "PersonGroupClient.Train", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
