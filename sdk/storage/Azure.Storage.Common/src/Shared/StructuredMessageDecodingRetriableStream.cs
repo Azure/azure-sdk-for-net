@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,21 +16,30 @@ namespace Azure.Storage.Shared;
 
 internal class StructuredMessageDecodingRetriableStream : Stream
 {
+    public class DecodedData
+    {
+        public ulong Crc { get; set; }
+    }
+
     private readonly Stream _innerRetriable;
     private long _decodedBytesRead;
 
-    private readonly List<StructuredMessageDecodingStream.DecodedData> _decodedDatas;
-    private readonly Action<StructuredMessageDecodingStream.DecodedData> _onComplete;
+    private readonly StructuredMessage.Flags _expectedFlags;
+    private readonly List<StructuredMessageDecodingStream.RawDecodedData> _decodedDatas;
+    private readonly Action<DecodedData> _onComplete;
 
-    private readonly Func<long, (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> _decodingStreamFactory;
-    private readonly Func<long, ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>> _decodingAsyncStreamFactory;
+    private StorageCrc64HashAlgorithm _totalContentCrc;
+
+    private readonly Func<long, (Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> _decodingStreamFactory;
+    private readonly Func<long, ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)>> _decodingAsyncStreamFactory;
 
     public StructuredMessageDecodingRetriableStream(
         Stream initialDecodingStream,
-        StructuredMessageDecodingStream.DecodedData initialDecodedData,
-        Func<long, (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> decodingStreamFactory,
-        Func<long, ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>> decodingAsyncStreamFactory,
-        Action<StructuredMessageDecodingStream.DecodedData> onComplete,
+        StructuredMessageDecodingStream.RawDecodedData initialDecodedData,
+        StructuredMessage.Flags expectedFlags,
+        Func<long, (Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> decodingStreamFactory,
+        Func<long, ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)>> decodingAsyncStreamFactory,
+        Action<DecodedData> onComplete,
         ResponseClassifier responseClassifier,
         int maxRetries)
     {
@@ -37,13 +47,19 @@ internal class StructuredMessageDecodingRetriableStream : Stream
         _decodingAsyncStreamFactory = decodingAsyncStreamFactory;
         _innerRetriable = RetriableStream.Create(initialDecodingStream, StreamFactory, StreamFactoryAsync, responseClassifier, maxRetries);
         _decodedDatas = new() { initialDecodedData };
+        _expectedFlags = expectedFlags;
         _onComplete = onComplete;
+
+        if (expectedFlags.HasFlag(StructuredMessage.Flags.StorageCrc64))
+        {
+            _totalContentCrc = StorageCrc64HashAlgorithm.Create();
+        }
     }
 
     private Stream StreamFactory(long _)
     {
-        long offset = _decodedDatas.Select(d => d.SegmentCrcs?.LastOrDefault().SegmentEnd ?? 0).Sum();
-        (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = _decodingStreamFactory(offset);
+        long offset = _decodedDatas.SelectMany(d => d.SegmentCrcs).Select(s => s.SegmentLen).Sum();
+        (Stream decodingStream, StructuredMessageDecodingStream.RawDecodedData decodedData) = _decodingStreamFactory(offset);
         _decodedDatas.Add(decodedData);
         FastForwardInternal(decodingStream, _decodedBytesRead - offset, false).EnsureCompleted();
         return decodingStream;
@@ -51,8 +67,8 @@ internal class StructuredMessageDecodingRetriableStream : Stream
 
     private async ValueTask<Stream> StreamFactoryAsync(long _)
     {
-        long offset = _decodedDatas.Select(d => d.SegmentCrcs?.LastOrDefault().SegmentEnd ?? 0).Sum();
-        (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = await _decodingAsyncStreamFactory(offset).ConfigureAwait(false);
+        long offset = _decodedDatas.SelectMany(d => d.SegmentCrcs).Select(s => s.SegmentLen).Sum();
+        (Stream decodingStream, StructuredMessageDecodingStream.RawDecodedData decodedData) = await _decodingAsyncStreamFactory(offset).ConfigureAwait(false);
         _decodedDatas.Add(decodedData);
         await FastForwardInternal(decodingStream, _decodedBytesRead - offset, true).ConfigureAwait(false);
         return decodingStream;
@@ -81,19 +97,39 @@ internal class StructuredMessageDecodingRetriableStream : Stream
 
     protected override void Dispose(bool disposing)
     {
-        foreach (IDisposable data in _decodedDatas)
-        {
-            data.Dispose();
-        }
         _decodedDatas.Clear();
         _innerRetriable.Dispose();
     }
 
     private void OnCompleted()
     {
-        StructuredMessageDecodingStream.DecodedData final = new();
-        // TODO
+        DecodedData final = new();
+        if (_totalContentCrc != null)
+        {
+            final.Crc = ValidateCrc();
+        }
         _onComplete?.Invoke(final);
+    }
+
+    private ulong ValidateCrc()
+    {
+        using IDisposable _ = ArrayPool<byte>.Shared.RentDisposable(StructuredMessage.Crc64Length * 2, out byte[] buf);
+        Span<byte> calculatedBytes = new(buf, 0, StructuredMessage.Crc64Length);
+        _totalContentCrc.GetCurrentHash(calculatedBytes);
+        ulong calculated = BinaryPrimitives.ReadUInt64LittleEndian(calculatedBytes);
+
+        ulong reported = _decodedDatas.Count == 1
+            ? _decodedDatas.First().TotalCrc.Value
+            : StorageCrc64Composer.Compose(_decodedDatas.SelectMany(d => d.SegmentCrcs));
+
+        if (calculated != reported)
+        {
+            Span<byte> reportedBytes = new(buf, calculatedBytes.Length, StructuredMessage.Crc64Length);
+            BinaryPrimitives.WriteUInt64LittleEndian(reportedBytes, reported);
+            throw Errors.ChecksumMismatch(calculatedBytes, reportedBytes);
+        }
+
+        return calculated;
     }
 
     #region Read
@@ -105,6 +141,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
         {
             OnCompleted();
         }
+        else
+        {
+            _totalContentCrc?.Append(new ReadOnlySpan<byte>(buffer, offset, read));
+        }
         return read;
     }
 
@@ -115,6 +155,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
         if (read == 0)
         {
             OnCompleted();
+        }
+        else
+        {
+            _totalContentCrc?.Append(new ReadOnlySpan<byte>(buffer, offset, read));
         }
         return read;
     }
@@ -128,6 +172,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
         {
             OnCompleted();
         }
+        else
+        {
+            _totalContentCrc?.Append(buffer.Slice(0, read));
+        }
         return read;
     }
 
@@ -138,6 +186,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
         if (read == 0)
         {
             OnCompleted();
+        }
+        else
+        {
+            _totalContentCrc?.Append(buffer.Span.Slice(0, read));
         }
         return read;
     }

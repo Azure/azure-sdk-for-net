@@ -26,7 +26,7 @@ namespace Azure.Storage.Test.Shared
             {
                 byte[] encodedContent;
                 byte[] underlyingContent;
-                StructuredMessageDecodingStream.DecodedData decodedData;
+                StructuredMessageDecodingStream.RawDecodedData decodedData;
                 using (MemoryStream ms = new())
                 {
                     message.Request.Content.WriteTo(ms, default);

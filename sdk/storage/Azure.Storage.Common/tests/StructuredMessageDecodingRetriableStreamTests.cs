@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers.Binary;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Shared;
 using Azure.Storage.Test.Shared;
+using Microsoft.Diagnostics.Tracing.Parsers.AspNet;
 using Moq;
 using NUnit.Framework;
 
@@ -39,7 +41,7 @@ public class StructuredMessageDecodingRetriableStreamTests
 
         // mock with a simple MemoryStream rather than an actual StructuredMessageDecodingStream
         using (Stream src = new MemoryStream(data))
-        using (Stream retriableSrc = new StructuredMessageDecodingRetriableStream(src, new(), default, default, default, default, 1))
+        using (Stream retriableSrc = new StructuredMessageDecodingRetriableStream(src, new(), default, default, default, default, default, 1))
         using (Stream dst = new MemoryStream(dest))
         {
             await retriableSrc.CopyToInternal(dst, Async, default);
@@ -61,12 +63,16 @@ public class StructuredMessageDecodingRetriableStreamTests
         byte[] dest = new byte[data.Length];
 
         // Mock a decoded data for the mocked StructuredMessageDecodingStream
-        StructuredMessageDecodingStream.DecodedData initialDecodedData = new();
-        initialDecodedData.SetStreamHeaderData(segments, data.Length, StructuredMessage.Flags.StorageCrc64);
+        StructuredMessageDecodingStream.RawDecodedData initialDecodedData = new()
+        {
+            TotalSegments = segments,
+            InnerStreamLength = data.Length,
+            Flags = StructuredMessage.Flags.StorageCrc64
+        };
         // for test purposes, initialize a DecodedData, since we are not actively decoding in this test
-        initialDecodedData.ReportSegmentCrc(r.NextBytesInline(StructuredMessage.Crc64Length), 1, segmentLen);
+        initialDecodedData.SegmentCrcs.Add((BinaryPrimitives.ReadUInt64LittleEndian(r.NextBytesInline(StructuredMessage.Crc64Length)), segmentLen));
 
-        (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData) Factory(long offset, bool faulty)
+        (Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData) Factory(long offset, bool faulty)
         {
             Stream stream = new MemoryStream(data, (int)offset, data.Length - (int)offset);
             if (faulty)
@@ -74,10 +80,14 @@ public class StructuredMessageDecodingRetriableStreamTests
                 stream = new FaultyStream(stream, interruptPos, 1, new Exception(), () => { });
             }
             // Mock a decoded data for the mocked StructuredMessageDecodingStream
-            StructuredMessageDecodingStream.DecodedData decodedData = new();
-            decodedData.SetStreamHeaderData(segments, data.Length, StructuredMessage.Flags.StorageCrc64);
+            StructuredMessageDecodingStream.RawDecodedData decodedData = new()
+            {
+                TotalSegments = segments,
+                InnerStreamLength = data.Length,
+                Flags = StructuredMessage.Flags.StorageCrc64,
+            };
             // for test purposes, initialize a DecodedData, since we are not actively decoding in this test
-            decodedData.ReportSegmentCrc(r.NextBytesInline(StructuredMessage.Crc64Length), 1, segmentLen);
+            initialDecodedData.SegmentCrcs.Add((BinaryPrimitives.ReadUInt64LittleEndian(r.NextBytesInline(StructuredMessage.Crc64Length)), segmentLen));
             return (stream, decodedData);
         }
 
@@ -87,8 +97,9 @@ public class StructuredMessageDecodingRetriableStreamTests
         using (Stream retriableSrc = new StructuredMessageDecodingRetriableStream(
             faultySrc,
             initialDecodedData,
+            default,
             offset => Factory(offset, multipleInterrupts),
-            offset => new ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>(Factory(offset, multipleInterrupts)),
+            offset => new ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)>(Factory(offset, multipleInterrupts)),
             null,
             AllExceptionsRetry().Object,
             int.MaxValue))
@@ -112,10 +123,14 @@ public class StructuredMessageDecodingRetriableStreamTests
         Random r = new();
 
         // Mock a decoded data for the mocked StructuredMessageDecodingStream
-        StructuredMessageDecodingStream.DecodedData initialDecodedData = new();
-        initialDecodedData.SetStreamHeaderData(segments, segments * segmentLen, StructuredMessage.Flags.StorageCrc64);
+        StructuredMessageDecodingStream.RawDecodedData initialDecodedData = new()
+        {
+            TotalSegments = segments,
+            InnerStreamLength = segments * segmentLen,
+            Flags = StructuredMessage.Flags.StorageCrc64,
+        };
         // By the time of interrupt, there will be one segment reported
-        initialDecodedData.ReportSegmentCrc(r.NextBytesInline(StructuredMessage.Crc64Length), 1, segmentLen);
+        initialDecodedData.SegmentCrcs.Add((BinaryPrimitives.ReadUInt64LittleEndian(r.NextBytesInline(StructuredMessage.Crc64Length)), segmentLen));
 
         Mock<Stream> mock = new(MockBehavior.Strict);
         mock.SetupGet(s => s.CanRead).Returns(true);
@@ -158,8 +173,9 @@ public class StructuredMessageDecodingRetriableStreamTests
         Stream retriableSrc = new StructuredMessageDecodingRetriableStream(
             faultySrc,
             initialDecodedData,
+            default,
             offset => (mock.Object, new()),
-            offset => new(Task.FromResult((mock.Object, new StructuredMessageDecodingStream.DecodedData()))),
+            offset => new(Task.FromResult((mock.Object, new StructuredMessageDecodingStream.RawDecodedData()))),
             null,
             AllExceptionsRetry().Object,
             1);
@@ -200,7 +216,7 @@ public class StructuredMessageDecodingRetriableStreamTests
         byte[] data = r.NextBytesInline(segments * Constants.KB).ToArray();
         byte[] dest = new byte[data.Length];
 
-        (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData) Factory(long offset, bool faulty)
+        (Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData) Factory(long offset, bool faulty)
         {
             Stream stream = new MemoryStream(data, (int)offset, data.Length - (int)offset);
             stream = new StructuredMessageEncodingStream(stream, segmentLen, StructuredMessage.Flags.StorageCrc64);
@@ -211,12 +227,13 @@ public class StructuredMessageDecodingRetriableStreamTests
             return StructuredMessageDecodingStream.WrapStream(stream);
         }
 
-        (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = Factory(0, true);
+        (Stream decodingStream, StructuredMessageDecodingStream.RawDecodedData decodedData) = Factory(0, true);
         using Stream retriableSrc = new StructuredMessageDecodingRetriableStream(
             decodingStream,
             decodedData,
+            default,
             offset => Factory(offset, multipleInterrupts),
-            offset => new ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>(Factory(offset, multipleInterrupts)),
+            offset => new ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)>(Factory(offset, multipleInterrupts)),
             null,
             AllExceptionsRetry().Object,
             int.MaxValue);
