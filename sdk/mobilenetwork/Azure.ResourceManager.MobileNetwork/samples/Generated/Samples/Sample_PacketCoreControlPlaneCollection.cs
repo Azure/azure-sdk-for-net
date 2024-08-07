@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPacketCoreControlPlane()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneGet.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneGet.json
             // this example is just showing the usage of "PacketCoreControlPlanes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPacketCoreControlPlane()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneGet.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneGet.json
             // this example is just showing the usage of "PacketCoreControlPlanes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetPacketCoreControlPlane()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneGet.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneGet.json
             // this example is just showing the usage of "PacketCoreControlPlanes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatePacketCoreControlPlane()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneCreate.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneCreate.json
             // this example is just showing the usage of "PacketCoreControlPlanes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +178,14 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000
                 {
                     ReportingInterval = 60,
                 },
-                NasRerouteMacroMmeGroupId = 1024,
+                Signaling = new PacketCoreSignalingConfiguration()
+                {
+                    NasRerouteMacroMmeGroupId = 1024,
+                    NasEncryption =
+{
+MobileNetworkNasEncryptionType.NEA2EEA2,MobileNetworkNasEncryptionType.NEA1EEA1,MobileNetworkNasEncryptionType.NEA0EEA0
+},
+                },
             };
             ArmOperation<PacketCoreControlPlaneResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, packetCoreControlPlaneName, data);
             PacketCoreControlPlaneResource result = lro.Value;
@@ -195,7 +202,7 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListPacketCoreControlPlanesInResourceGroup()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneListByResourceGroup.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneListByResourceGroup.json
             // this example is just showing the usage of "PacketCoreControlPlanes_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

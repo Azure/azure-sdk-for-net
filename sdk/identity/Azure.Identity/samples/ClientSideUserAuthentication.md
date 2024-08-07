@@ -124,7 +124,8 @@ using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, Fi
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions
     {
-        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(), AuthenticationRecord = authRecord
+        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
+        AuthenticationRecord = authRecord
     });
 ```
 
