@@ -2402,7 +2402,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         return response;
                     }
-                    async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> StructuredMessageFactory(
+                    async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
                         long offset, bool async, CancellationToken cancellationToken)
                     {
                         Response<ShareFileDownloadInfo> result = await Factory(offset, async, cancellationToken).ConfigureAwait(false);
@@ -2411,11 +2411,12 @@ namespace Azure.Storage.Files.Shares
 
                     if (initialResponse.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
                     {
-                        (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = StructuredMessageDecodingStream.WrapStream(
+                        (Stream decodingStream, StructuredMessageDecodingStream.RawDecodedData decodedData) = StructuredMessageDecodingStream.WrapStream(
                             initialResponse.Value.Content, initialResponse.Value.ContentLength);
                         initialResponse.Value.Content = new StructuredMessageDecodingRetriableStream(
                             decodingStream,
                             decodedData,
+                            StructuredMessage.Flags.StorageCrc64,
                             startOffset => StructuredMessageFactory(startOffset, async: false, cancellationToken)
                                 .EnsureCompleted(),
                             async startOffset => await StructuredMessageFactory(startOffset, async: true, cancellationToken)

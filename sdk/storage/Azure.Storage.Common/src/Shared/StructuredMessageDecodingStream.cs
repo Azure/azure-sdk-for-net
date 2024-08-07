@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,55 +39,14 @@ namespace Azure.Storage.Shared;
 /// </remarks>
 internal class StructuredMessageDecodingStream : Stream
 {
-    internal class DecodedData : IDisposable
+    internal class RawDecodedData
     {
-        private byte[] _crcBackingArray;
-
-        public long? InnerStreamLength { get; private set; }
-        public int? TotalSegments { get; private set; }
-        public StructuredMessage.Flags? Flags { get; private set; }
-        public List<(ReadOnlyMemory<byte> SegmentCrc, long SegmentEnd)> SegmentCrcs { get; private set; }
-        public ReadOnlyMemory<byte> TotalCrc { get; private set; }
-        public bool DecodeCompleted { get; private set; }
-
-        internal void SetStreamHeaderData(int totalSegments, long innerStreamLength, StructuredMessage.Flags flags)
-        {
-            TotalSegments = totalSegments;
-            InnerStreamLength = innerStreamLength;
-            Flags = flags;
-
-            if (flags.HasFlag(StructuredMessage.Flags.StorageCrc64))
-            {
-                _crcBackingArray = ArrayPool<byte>.Shared.Rent((totalSegments + 1) * StructuredMessage.Crc64Length);
-                SegmentCrcs = new();
-            }
-        }
-
-        internal void ReportSegmentCrc(ReadOnlySpan<byte> crc, int segmentNum, long segmentEnd)
-        {
-            int offset = (segmentNum - 1) * StructuredMessage.Crc64Length;
-            crc.CopyTo(new Span<byte>(_crcBackingArray, offset, StructuredMessage.Crc64Length));
-            SegmentCrcs.Add((new ReadOnlyMemory<byte>(_crcBackingArray, offset, StructuredMessage.Crc64Length), segmentEnd));
-        }
-
-        internal void ReportTotalCrc(ReadOnlySpan<byte> crc)
-        {
-            int offset = (TotalSegments.Value) * StructuredMessage.Crc64Length;
-            crc.CopyTo(new Span<byte>(_crcBackingArray, offset, StructuredMessage.Crc64Length));
-            TotalCrc = new ReadOnlyMemory<byte>(_crcBackingArray, offset, StructuredMessage.Crc64Length);
-        }
-        internal void MarkComplete()
-        {
-            DecodeCompleted = true;
-        }
-
-        public void Dispose()
-        {
-            if (_crcBackingArray is not null)
-            {
-                ArrayPool<byte>.Shared.Return(_crcBackingArray);
-            }
-        }
+        public long? InnerStreamLength { get; set; }
+        public int? TotalSegments { get; set; }
+        public StructuredMessage.Flags? Flags { get; set; }
+        public List<(ulong SegmentCrc, long SegmentLen)> SegmentCrcs { get; } = new();
+        public ulong? TotalCrc { get; set; }
+        public bool DecodeCompleted { get; set; }
     }
 
     private enum SMRegion
@@ -113,7 +73,7 @@ internal class StructuredMessageDecodingStream : Stream
 
     private bool _disposed;
 
-    private readonly DecodedData _decodedData;
+    private readonly RawDecodedData _decodedData;
     private StorageCrc64HashAlgorithm _totalContentCrc;
     private StorageCrc64HashAlgorithm _segmentCrc;
 
@@ -139,17 +99,17 @@ internal class StructuredMessageDecodingStream : Stream
         set => throw new NotSupportedException();
     }
 
-    public static (Stream DecodedStream, DecodedData DecodedData) WrapStream(
+    public static (Stream DecodedStream, RawDecodedData DecodedData) WrapStream(
         Stream innerStream,
         long? expextedStreamLength = default)
     {
-        DecodedData data = new();
+        RawDecodedData data = new();
         return (new StructuredMessageDecodingStream(innerStream, data, expextedStreamLength), data);
     }
 
     private StructuredMessageDecodingStream(
         Stream innerStream,
-        DecodedData decodedData,
+        RawDecodedData decodedData,
         long? expectedStreamLength)
     {
         Argument.AssertNotNull(innerStream, nameof(innerStream));
@@ -259,7 +219,7 @@ internal class StructuredMessageDecodingStream : Stream
         {
             throw Errors.InvalidStructuredMessage("Premature end of stream.");
         }
-        _decodedData.MarkComplete();
+        _decodedData.DecodeCompleted = true;
     }
 
     private long _innerStreamConsumed = 0;
@@ -439,7 +399,9 @@ internal class StructuredMessageDecodingStream : Stream
             out StructuredMessage.Flags flags,
             out int totalSegments);
 
-        _decodedData.SetStreamHeaderData(totalSegments, streamLength, flags);
+        _decodedData.InnerStreamLength = streamLength;
+        _decodedData.Flags = flags;
+        _decodedData.TotalSegments = totalSegments;
 
         if (_expectedInnerStreamLength.HasValue && _expectedInnerStreamLength.Value != streamLength)
         {
@@ -462,20 +424,24 @@ internal class StructuredMessageDecodingStream : Stream
 
     private int ProcessStreamFooter(ReadOnlySpan<byte> span)
     {
-        int totalProcessed = 0;
+        int footerLen = StructuredMessage.V1_0.GetStreamFooterSize(_decodedData.Flags.Value);
+        StructuredMessage.V1_0.ReadStreamFooter(
+            span.Slice(0, footerLen),
+            _decodedData.Flags.Value,
+            out ulong reportedCrc);
         if (_decodedData.Flags.Value.HasFlag(StructuredMessage.Flags.StorageCrc64))
         {
-            totalProcessed += StructuredMessage.Crc64Length;
-            ReadOnlySpan<byte> expected = span.Slice(0, StructuredMessage.Crc64Length);
-            _decodedData.ReportTotalCrc(expected);
+            _decodedData.TotalCrc = reportedCrc;
             if (_validateChecksums)
             {
-                using (ArrayPool<byte>.Shared.RentAsSpanDisposable(StructuredMessage.Crc64Length, out Span<byte> calculated))
+                using (ArrayPool<byte>.Shared.RentDisposable(StructuredMessage.Crc64Length * 2, out byte[] buf))
                 {
+                    Span<byte> calculated = new(buf, 0, StructuredMessage.Crc64Length);
                     _totalContentCrc.GetCurrentHash(calculated);
-                    if (!calculated.SequenceEqual(expected))
+                    if (BinaryPrimitives.ReadUInt64LittleEndian(calculated) != reportedCrc)
                     {
-                        throw Errors.ChecksumMismatch(calculated, expected);
+                        Span<byte> reportedAsBytes = new(buf, calculated.Length, StructuredMessage.Crc64Length);
+                        throw Errors.ChecksumMismatch(calculated, reportedAsBytes);
                     }
                 }
             }
@@ -490,8 +456,8 @@ internal class StructuredMessageDecodingStream : Stream
             throw Errors.InvalidStructuredMessage("Missing expected message segments.");
         }
 
-        _decodedData.MarkComplete();
-        return totalProcessed;
+        _decodedData.DecodeCompleted = true;
+        return footerLen;
     }
 
     private int ProcessSegmentHeader(ReadOnlySpan<byte> span)
@@ -512,27 +478,31 @@ internal class StructuredMessageDecodingStream : Stream
 
     private int ProcessSegmentFooter(ReadOnlySpan<byte> span)
     {
-        int totalProcessed = 0;
+        int footerLen = StructuredMessage.V1_0.GetSegmentFooterSize(_decodedData.Flags.Value);
+        StructuredMessage.V1_0.ReadSegmentFooter(
+            span.Slice(0, footerLen),
+            _decodedData.Flags.Value,
+            out ulong reportedCrc);
         if (_decodedData.Flags.Value.HasFlag(StructuredMessage.Flags.StorageCrc64))
         {
-            totalProcessed += StructuredMessage.Crc64Length;
-            ReadOnlySpan<byte> expected = span.Slice(0, StructuredMessage.Crc64Length);
             if (_validateChecksums)
             {
-                using (ArrayPool<byte>.Shared.RentAsSpanDisposable(StructuredMessage.Crc64Length, out Span<byte> calculated))
+                using (ArrayPool<byte>.Shared.RentDisposable(StructuredMessage.Crc64Length * 2, out byte[] buf))
                 {
+                    Span<byte> calculated = new(buf, 0, StructuredMessage.Crc64Length);
                     _segmentCrc.GetCurrentHash(calculated);
                     _segmentCrc = StorageCrc64HashAlgorithm.Create();
-                    if (!calculated.SequenceEqual(expected))
+                    if (BinaryPrimitives.ReadUInt64LittleEndian(calculated) != reportedCrc)
                     {
-                        throw Errors.ChecksumMismatch(calculated, expected);
+                        Span<byte> reportedAsBytes = new(buf, calculated.Length, StructuredMessage.Crc64Length);
+                        throw Errors.ChecksumMismatch(calculated, reportedAsBytes);
                     }
                 }
             }
-            _decodedData.ReportSegmentCrc(expected, _currentSegmentNum, _decodedContentConsumed);
+            _decodedData.SegmentCrcs.Add((reportedCrc, _currentSegmentContentLength));
         }
         _currentRegion = _currentSegmentNum == _decodedData.TotalSegments ? SMRegion.StreamFooter : SMRegion.SegmentHeader;
-        return totalProcessed;
+        return footerLen;
     }
     #endregion
 

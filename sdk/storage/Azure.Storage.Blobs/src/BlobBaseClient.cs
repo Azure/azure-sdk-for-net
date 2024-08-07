@@ -1556,7 +1556,7 @@ namespace Azure.Storage.Blobs.Specialized
                             forceStructuredMessage,
                             async,
                             cancellationToken);
-                    async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> StructuredMessageFactory(
+                    async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
                         long offset, bool async, CancellationToken cancellationToken)
                     {
                         Response<BlobDownloadStreamingResult> result = await Factory(offset, forceStructuredMessage: true, async, cancellationToken).ConfigureAwait(false);
@@ -1565,11 +1565,12 @@ namespace Azure.Storage.Blobs.Specialized
                     Stream stream;
                     if (response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
                     {
-                        (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = StructuredMessageDecodingStream.WrapStream(
+                        (Stream decodingStream, StructuredMessageDecodingStream.RawDecodedData decodedData) = StructuredMessageDecodingStream.WrapStream(
                             response.Value.Content, response.Value.Details.ContentLength);
                         stream = new StructuredMessageDecodingRetriableStream(
                             decodingStream,
                             decodedData,
+                            StructuredMessage.Flags.StorageCrc64,
                             startOffset => StructuredMessageFactory(startOffset, async: false, cancellationToken)
                                 .EnsureCompleted(),
                             async startOffset => await StructuredMessageFactory(startOffset, async: true, cancellationToken)

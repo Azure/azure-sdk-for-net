@@ -93,22 +93,18 @@ internal static class StructuredMessage
         #endregion
 
         #region StreamFooter
+        public static int GetStreamFooterSize(Flags flags)
+            => flags.HasFlag(Flags.StorageCrc64) ? Crc64Length : 0;
+
         public static void ReadStreamFooter(
             ReadOnlySpan<byte> buffer,
-            Span<byte> crc64 = default)
+            Flags flags,
+            out ulong crc64)
         {
-            int expectedBufferSize = 0;
-            if (!crc64.IsEmpty)
-            {
-                Errors.AssertBufferExactSize(crc64, Crc64Length, nameof(crc64));
-                expectedBufferSize += Crc64Length;
-            }
+            int expectedBufferSize = GetSegmentFooterSize(flags);
             Errors.AssertBufferExactSize(buffer, expectedBufferSize, nameof(buffer));
 
-            if (!crc64.IsEmpty)
-            {
-                buffer.Slice(0, Crc64Length).CopyTo(crc64);
-            }
+            crc64 = flags.HasFlag(Flags.StorageCrc64) ? BinaryPrimitives.ReadUInt64LittleEndian(buffer) : default;
         }
 
         public static int WriteStreamFooter(Span<byte> buffer, ReadOnlySpan<byte> crc64 = default)
@@ -193,22 +189,18 @@ internal static class StructuredMessage
         #endregion
 
         #region SegmentFooter
+        public static int GetSegmentFooterSize(Flags flags)
+            => flags.HasFlag(Flags.StorageCrc64) ? Crc64Length : 0;
+
         public static void ReadSegmentFooter(
             ReadOnlySpan<byte> buffer,
-            Span<byte> crc64 = default)
+            Flags flags,
+            out ulong crc64)
         {
-            int expectedBufferSize = 0;
-            if (!crc64.IsEmpty)
-            {
-                Errors.AssertBufferExactSize(crc64, Crc64Length, nameof(crc64));
-                expectedBufferSize += Crc64Length;
-            }
+            int expectedBufferSize = GetSegmentFooterSize(flags);
             Errors.AssertBufferExactSize(buffer, expectedBufferSize, nameof(buffer));
 
-            if (!crc64.IsEmpty)
-            {
-                buffer.Slice(0, Crc64Length).CopyTo(crc64);
-            }
+            crc64 = flags.HasFlag(Flags.StorageCrc64) ? BinaryPrimitives.ReadUInt64LittleEndian(buffer) : default;
         }
 
         public static int WriteSegmentFooter(Span<byte> buffer, ReadOnlySpan<byte> crc64 = default)
