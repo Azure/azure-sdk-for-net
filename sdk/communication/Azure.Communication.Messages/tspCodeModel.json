@@ -1722,7 +1722,8 @@
      ],
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationMessagesClient.send"
     },
     {
      "$id": "213",
@@ -1894,7 +1895,8 @@
      "Path": "/messages/streams/{id}",
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "ClientForAcsMessages.NotificationMessagesClient.downloadMedia"
     }
    ],
    "Protocol": {
@@ -2107,7 +2109,8 @@
       "NextLinkName": "nextLink"
      },
      "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateClient.listTemplates"
     }
    ],
    "Protocol": {
