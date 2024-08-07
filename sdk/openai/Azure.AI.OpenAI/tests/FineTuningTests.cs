@@ -16,7 +16,7 @@ using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Files;
 using OpenAI.FineTuning;
-using OpenAI.TestFramework.Recording;
+using OpenAI.TestFramework;
 using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;

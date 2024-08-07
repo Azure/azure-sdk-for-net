@@ -18,8 +18,8 @@ using OpenAI.Batch;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 using OpenAI.Files;
+using OpenAI.TestFramework;
 using OpenAI.TestFramework.Mocks;
-using OpenAI.TestFramework.Recording;
 using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;

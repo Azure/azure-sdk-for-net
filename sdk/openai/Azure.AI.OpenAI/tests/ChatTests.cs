@@ -13,8 +13,8 @@ using Azure.AI.OpenAI.Chat;
 using Azure.AI.OpenAI.Tests.Utils.Config;
 using NUnit.Framework;
 using OpenAI.Chat;
+using OpenAI.TestFramework;
 using OpenAI.TestFramework.Mocks;
-using OpenAI.TestFramework.Recording;
 using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;

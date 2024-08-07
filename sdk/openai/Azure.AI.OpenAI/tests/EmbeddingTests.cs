@@ -5,7 +5,7 @@ using System.ClientModel;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenAI.Embeddings;
-using OpenAI.TestFramework.Recording;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 

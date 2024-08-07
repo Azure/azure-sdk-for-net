@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenAI.Chat;
-using OpenAI.TestFramework.Recording;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests
 {

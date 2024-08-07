@@ -8,7 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenAI.Audio;
-using OpenAI.TestFramework.Recording;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 

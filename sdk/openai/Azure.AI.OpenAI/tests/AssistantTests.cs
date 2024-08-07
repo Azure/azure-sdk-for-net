@@ -15,9 +15,9 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Assistants;
 using OpenAI.Files;
-using OpenAI.TestFramework.Recording;
-using OpenAI.VectorStores;
+using OpenAI.TestFramework;
 using OpenAI.TestFramework.Utils;
+using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.Tests;
 

@@ -13,7 +13,7 @@ using Azure.AI.OpenAI.Tests.Utils.Config;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
-using OpenAI.TestFramework.Recording;
+using OpenAI.TestFramework;
 using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.Tests;
