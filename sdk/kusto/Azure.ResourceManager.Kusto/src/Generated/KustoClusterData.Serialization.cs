@@ -210,6 +210,16 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(AllowedCalloutPolicies))
+            {
+                writer.WritePropertyName("allowedCalloutPolicies"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedCalloutPolicies)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PublicIPType))
             {
                 writer.WritePropertyName("publicIPType"u8);
@@ -305,6 +315,7 @@ namespace Azure.ResourceManager.Kusto
             bool? enableAutoStop = default;
             KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default;
             IList<string> allowedFqdnList = default;
+            IList<CalloutPolicy> allowedCalloutPolicies = default;
             KustoClusterPublicIPType? publicIPType = default;
             string virtualClusterGraduationProperties = default;
             IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -607,6 +618,20 @@ namespace Azure.ResourceManager.Kusto
                             allowedFqdnList = array;
                             continue;
                         }
+                        if (property0.NameEquals("allowedCalloutPolicies"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CalloutPolicy> array = new List<CalloutPolicy>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CalloutPolicy.DeserializeCalloutPolicy(item, options));
+                            }
+                            allowedCalloutPolicies = array;
+                            continue;
+                        }
                         if (property0.NameEquals("publicIPType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -685,6 +710,7 @@ namespace Azure.ResourceManager.Kusto
                 enableAutoStop,
                 restrictOutboundNetworkAccess,
                 allowedFqdnList ?? new ChangeTrackingList<string>(),
+                allowedCalloutPolicies ?? new ChangeTrackingList<CalloutPolicy>(),
                 publicIPType,
                 virtualClusterGraduationProperties,
                 privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>(),

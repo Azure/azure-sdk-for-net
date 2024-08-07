@@ -80,6 +80,16 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(ScriptLevel))
+            {
+                writer.WritePropertyName("scriptLevel"u8);
+                writer.WriteStringValue(ScriptLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(PrincipalPermissionsAction))
+            {
+                writer.WritePropertyName("principalPermissionsAction"u8);
+                writer.WriteStringValue(PrincipalPermissionsAction.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,6 +139,8 @@ namespace Azure.ResourceManager.Kusto
             string forceUpdateTag = default;
             bool? continueOnErrors = default;
             KustoProvisioningState? provisioningState = default;
+            ScriptLevel? scriptLevel = default;
+            PrincipalPermissionsAction? principalPermissionsAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,6 +220,24 @@ namespace Azure.ResourceManager.Kusto
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("scriptLevel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scriptLevel = new ScriptLevel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("principalPermissionsAction"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            principalPermissionsAction = new PrincipalPermissionsAction(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -228,6 +258,8 @@ namespace Azure.ResourceManager.Kusto
                 forceUpdateTag,
                 continueOnErrors,
                 provisioningState,
+                scriptLevel,
+                principalPermissionsAction,
                 serializedAdditionalRawData);
         }
 

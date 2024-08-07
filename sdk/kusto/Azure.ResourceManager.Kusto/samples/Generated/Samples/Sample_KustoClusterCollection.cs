@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoClustersGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoClustersGet.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_KustoClustersGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoClustersGet.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_KustoClustersGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoClustersGet.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoClustersCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoClustersCreateOrUpdate.json
             // this example is just showing the usage of "Clusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,8 +161,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 new KustoLanguageExtension()
 {
 LanguageExtensionName = KustoLanguageExtensionName.Python,
-LanguageExtensionImageName = new KustoLanguageExtensionImageName("Python_Custom_Image"),
-LanguageExtensionCustomImageName = "customImage8",
+LanguageExtensionImageName = KustoLanguageExtensionImageName.Python3_10_8,
 },new KustoLanguageExtension()
 {
 LanguageExtensionName = KustoLanguageExtensionName.R,
@@ -193,7 +192,7 @@ LanguageExtensionImageName = KustoLanguageExtensionImageName.R,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_KustoClustersListByResourceGroup()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersListByResourceGroup.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoClustersListByResourceGroup.json
             // this example is just showing the usage of "Clusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

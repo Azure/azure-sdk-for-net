@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_KustoSandboxCustomImagesListByCluster()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSandboxCustomImagesList.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoSandboxCustomImagesList.json
             // this example is just showing the usage of "SandboxCustomImages_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoSandboxCustomImagesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSandboxCustomImagesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoSandboxCustomImagesGet.json
             // this example is just showing the usage of "SandboxCustomImages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_KustoSandboxCustomImagesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSandboxCustomImagesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoSandboxCustomImagesGet.json
             // this example is just showing the usage of "SandboxCustomImages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_KustoSandboxCustomImagesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSandboxCustomImagesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoSandboxCustomImagesGet.json
             // this example is just showing the usage of "SandboxCustomImages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoSandboxCustomImagesCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSandboxCustomImagesCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoSandboxCustomImagesCreateOrUpdate.json
             // this example is just showing the usage of "SandboxCustomImages_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -191,6 +191,90 @@ namespace Azure.ResourceManager.Kusto.Samples
             {
                 Language = SandboxCustomImageLanguage.Python,
                 LanguageVersion = "3.10.8",
+                RequirementsFileContent = "Requests",
+            };
+            ArmOperation<SandboxCustomImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sandboxCustomImageName, data);
+            SandboxCustomImageResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SandboxCustomImageData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // KustoSandboxCustomImagesCreateOrUpdateWithCustomBaseImage
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_KustoSandboxCustomImagesCreateOrUpdateWithCustomBaseImage()
+        {
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoSandboxCustomImagesCreateOrUpdateWithCustomBaseImage.json
+            // this example is just showing the usage of "SandboxCustomImages_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this KustoClusterResource created on azure
+            // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string clusterName = "kustoCluster";
+            ResourceIdentifier kustoClusterResourceId = KustoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
+
+            // get the collection of this SandboxCustomImageResource
+            SandboxCustomImageCollection collection = kustoCluster.GetSandboxCustomImages();
+
+            // invoke the operation
+            string sandboxCustomImageName = "customImage2";
+            SandboxCustomImageData data = new SandboxCustomImageData()
+            {
+                Language = SandboxCustomImageLanguage.Python,
+                BaseImageName = "customImage1",
+                RequirementsFileContent = "Requests",
+            };
+            ArmOperation<SandboxCustomImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sandboxCustomImageName, data);
+            SandboxCustomImageResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SandboxCustomImageData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // KustoSandboxCustomImagesCreateOrUpdateWithManagedBaseImage
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_KustoSandboxCustomImagesCreateOrUpdateWithManagedBaseImage()
+        {
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoSandboxCustomImagesCreateOrUpdateWithManagedBaseImage.json
+            // this example is just showing the usage of "SandboxCustomImages_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this KustoClusterResource created on azure
+            // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string clusterName = "kustoCluster";
+            ResourceIdentifier kustoClusterResourceId = KustoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
+
+            // get the collection of this SandboxCustomImageResource
+            SandboxCustomImageCollection collection = kustoCluster.GetSandboxCustomImages();
+
+            // invoke the operation
+            string sandboxCustomImageName = "customImage2";
+            SandboxCustomImageData data = new SandboxCustomImageData()
+            {
+                Language = SandboxCustomImageLanguage.Python,
+                BaseImageName = "Python3_10_8",
                 RequirementsFileContent = "Requests",
             };
             ArmOperation<SandboxCustomImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sandboxCustomImageName, data);

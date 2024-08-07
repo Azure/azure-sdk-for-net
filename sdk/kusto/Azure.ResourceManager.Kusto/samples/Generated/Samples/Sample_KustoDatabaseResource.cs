@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoSuspendedDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSuspendedDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoSuspendedDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_KustoDatabasesUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDatabasesUpdate.json
             // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_KustoDatabasesDelete()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesDelete.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDatabasesDelete.json
             // this example is just showing the usage of "Databases_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPrincipals_KustoDatabaseListPrincipals()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseListPrincipals.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDatabaseListPrincipals.json
             // this example is just showing the usage of "Databases_ListPrincipals" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AddPrincipals_KustoDatabaseAddPrincipals()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseAddPrincipals.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDatabaseAddPrincipals.json
             // this example is just showing the usage of "Databases_AddPrincipals" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,7 +234,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RemovePrincipals_KustoDatabaseRemovePrincipals()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseRemovePrincipals.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDatabaseRemovePrincipals.json
             // this example is just showing the usage of "Databases_RemovePrincipals" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -287,7 +287,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task InviteFollowerDatabase_KustoDatabaseInviteFollower()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseInviteFollower.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDatabaseInviteFollower.json
             // this example is just showing the usage of "Database_InviteFollower" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -352,7 +352,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckKustoDatabasePrincipalAssignmentNameAvailability_KustoDatabaseCheckNameAvailability()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasePrincipalAssignmentsCheckNameAvailability.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDatabasePrincipalAssignmentsCheckNameAvailability.json
             // this example is just showing the usage of "DatabasePrincipalAssignments_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -381,7 +381,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckKustoScriptNameAvailability_KustoScriptsCheckNameAvailability()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsCheckNameAvailability.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoScriptsCheckNameAvailability.json
             // this example is just showing the usage of "Scripts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -410,7 +410,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateDataConnection_KustoDataConnectionEventGridValidation()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionEventGridValidationAsync.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDataConnectionEventGridValidationAsync.json
             // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -439,7 +439,7 @@ AppId = "some_guid_app_id",
                     ConsumerGroup = "$Default",
                     TableName = "TestTable",
                     MappingRuleName = "TestMapping",
-                    DataFormat = KustoEventGridDataFormat.Json,
+                    DataFormat = KustoEventGridDataFormat.MultiJson,
                     IsFirstRecordIgnored = false,
                     BlobStorageEventType = BlobStorageEventType.MicrosoftStorageBlobCreated,
                     ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
@@ -457,7 +457,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ValidateDataConnection_KustoDataConnectionValidation()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionValidationAsync.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDataConnectionValidationAsync.json
             // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -484,7 +484,7 @@ AppId = "some_guid_app_id",
                     ConsumerGroup = "testConsumerGroup1",
                     TableName = "TestTable",
                     MappingRuleName = "TestMapping",
-                    DataFormat = KustoEventHubDataFormat.Json,
+                    DataFormat = KustoEventHubDataFormat.MultiJson,
                     Compression = EventHubMessagesCompressionType.None,
                     ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
                 },
@@ -500,7 +500,7 @@ AppId = "some_guid_app_id",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckKustoDataConnectionNameAvailability_KustoDataConnectionsCheckNameAvailability()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionsCheckNameAvailability.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2024-04-13/examples/KustoDataConnectionsCheckNameAvailability.json
             // this example is just showing the usage of "DataConnections_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
