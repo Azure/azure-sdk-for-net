@@ -38,8 +38,8 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public virtual Azure.Pageable<Azure.Data.AppConfiguration.Label> GetLabels(Azure.Data.AppConfiguration.LabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.Label> GetLabelsAsync(Azure.Data.AppConfiguration.LabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.AppConfiguration.SettingLabel> GetLabels(Azure.Data.AppConfiguration.SettingLabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.SettingLabel> GetLabelsAsync(Azure.Data.AppConfiguration.SettingLabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisions(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisions(string keyFilter, string labelFilter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisionsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -179,35 +179,6 @@ namespace Azure.Data.AppConfiguration
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } }
     }
-    public partial class Label
-    {
-        internal Label() { }
-        public string Name { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LabelFields : System.IEquatable<Azure.Data.AppConfiguration.LabelFields>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LabelFields(string value) { throw null; }
-        public static Azure.Data.AppConfiguration.LabelFields Name { get { throw null; } }
-        public bool Equals(Azure.Data.AppConfiguration.LabelFields other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Data.AppConfiguration.LabelFields left, Azure.Data.AppConfiguration.LabelFields right) { throw null; }
-        public static implicit operator Azure.Data.AppConfiguration.LabelFields (string value) { throw null; }
-        public static bool operator !=(Azure.Data.AppConfiguration.LabelFields left, Azure.Data.AppConfiguration.LabelFields right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class LabelSelector
-    {
-        public LabelSelector() { }
-        public System.DateTimeOffset? AcceptDateTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.LabelFields> Fields { get { throw null; } }
-        public string NameFilter { get { throw null; } set { } }
-    }
     public partial class SecretReferenceConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
     {
         public SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null) : base (default(string), default(string), default(string)) { }
@@ -226,6 +197,35 @@ namespace Azure.Data.AppConfiguration
         IsReadOnly = (uint)64,
         Tags = (uint)128,
         All = (uint)4294967295,
+    }
+    public partial class SettingLabel
+    {
+        internal SettingLabel() { }
+        public string Name { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SettingLabelFields : System.IEquatable<Azure.Data.AppConfiguration.SettingLabelFields>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SettingLabelFields(string value) { throw null; }
+        public static Azure.Data.AppConfiguration.SettingLabelFields Name { get { throw null; } }
+        public bool Equals(Azure.Data.AppConfiguration.SettingLabelFields other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.AppConfiguration.SettingLabelFields left, Azure.Data.AppConfiguration.SettingLabelFields right) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.SettingLabelFields (string value) { throw null; }
+        public static bool operator !=(Azure.Data.AppConfiguration.SettingLabelFields left, Azure.Data.AppConfiguration.SettingLabelFields right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SettingLabelSelector
+    {
+        public SettingLabelSelector() { }
+        public System.DateTimeOffset? AcceptDateTime { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SettingLabelFields> Fields { get { throw null; } }
+        public string NameFilter { get { throw null; } set { } }
     }
     public partial class SettingSelector
     {

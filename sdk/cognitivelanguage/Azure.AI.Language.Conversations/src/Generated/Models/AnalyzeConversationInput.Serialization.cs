@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Conversation": return ConversationalInput.DeserializeConversationalInput(element, options);
+                    case "Conversation": return ConversationLanguageUnderstandingInput.DeserializeConversationLanguageUnderstandingInput(element, options);
                 }
             }
             return UnknownAnalyzeConversationInput.DeserializeUnknownAnalyzeConversationInput(element, options);
