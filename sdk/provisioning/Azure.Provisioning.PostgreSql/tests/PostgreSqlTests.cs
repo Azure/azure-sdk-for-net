@@ -79,5 +79,33 @@ namespace Azure.Provisioning.PostgreSql.Tests
 
             await ValidateBicepAsync();
         }
+
+        [RecordedTest]
+        public async Task PostgreSqlResourceWithConfig()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var adminLogin = new Parameter("adminLogin", description: "Administrator login");
+            var adminPassword = new Parameter("adminPassword", description: "Administrator password", isSecure: true);
+            var server = new PostgreSqlFlexibleServer(
+                infrastructure,
+                administratorLogin: adminLogin,
+                administratorPassword: adminPassword);
+
+            _ = new PostgreSqlFlexibleServerConfiguration(
+                infrastructure,
+                "azure.extensions",
+                "VECTOR",
+                parent: server);
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        adminLogin = new { value = "password" },
+                        adminPassword = new { value = "password" },
+                    }),
+                    interactiveMode: true);
+        }
     }
 }
