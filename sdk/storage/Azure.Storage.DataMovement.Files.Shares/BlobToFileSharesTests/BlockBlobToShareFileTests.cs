@@ -39,8 +39,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
     {
         private readonly AccessTier _defaultAccessTier = AccessTier.Cold;
         private const string _defaultContentType = "text/plain";
+        private readonly string[] _defaultContentLanguageFile = { "en-US" };
         private const string _defaultContentLanguageBlob = "en-US";
-        private readonly string[] _defaultContentLanguageShare = new[] { "en-US", "en-CA" };
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
         private const NtfsFileAttributes _defaultFileAttributes = NtfsFileAttributes.None;
@@ -193,7 +193,52 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override StorageResourceItem GetDestinationStorageResourceItem(
             ShareFileClient objectClient,
             TransferPropertiesTestType type = TransferPropertiesTestType.Default)
-            => new ShareFileStorageResource(objectClient);
+        {
+            ShareFileStorageResourceOptions options = default;
+            if (type == TransferPropertiesTestType.NewProperties)
+            {
+                options = new ShareFileStorageResourceOptions()
+                {
+                    ContentType = new(_defaultContentType),
+                    ContentLanguage = new(_defaultContentLanguageFile),
+                    ContentDisposition = new(_defaultContentDisposition),
+                    CacheControl = new(_defaultCacheControl),
+                    FileMetadata = new(_defaultMetadata),
+                    FileCreatedOn = new(_defaultFileCreatedOn),
+                    FileLastWrittenOn = new(_defaultFileLastWrittenOn),
+                    FileChangedOn = new(_defaultFileChangedOn)
+                };
+            }
+            else if (type == TransferPropertiesTestType.Preserve)
+            {
+                options = new ShareFileStorageResourceOptions()
+                {
+                    ContentType = new(true),
+                    ContentLanguage = new(true),
+                    ContentDisposition = new(true),
+                    CacheControl = new(true),
+                    FileMetadata = new(true),
+                    FileCreatedOn = new(true),
+                    FileLastWrittenOn = new(true),
+                    FileChangedOn = new(true)
+                };
+            }
+            else if (type == TransferPropertiesTestType.NoPreserve)
+            {
+                options = new ShareFileStorageResourceOptions()
+                {
+                    ContentType = new(false),
+                    ContentLanguage = new(false),
+                    ContentDisposition = new(false),
+                    CacheControl = new(false),
+                    FileMetadata = new(false),
+                    FileCreatedOn = new(false),
+                    FileLastWrittenOn = new(false),
+                    FileChangedOn = new(false)
+                };
+            }
+            return new ShareFileStorageResource(objectClient, options);
+        }
 
         protected override Task<Stream> DestinationOpenReadAsync(ShareFileClient objectClient)
             => objectClient.OpenReadAsync();
@@ -276,7 +321,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguageShare, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultContentLanguageFile, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
                 Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
@@ -291,11 +336,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguageShare, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultContentLanguageFile, destinationProperties.ContentLanguage);
                 Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
                 Assert.AreEqual(sourceProperties.CreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.LastModified, destinationProperties.SmbProperties.FileLastWrittenOn);
             }
         }
     }

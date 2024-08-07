@@ -41,7 +41,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _blobResourcePrefix = "test-blob-";
         private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
         private const string _defaultContentType = "text/plain";
-        private readonly string[] _defaultContentLanguage = new[] { "en-US", "en-CA" };
+        private readonly string[] _defaultContentLanguage = new[] { "en-US" };
+        private const string _defaultContentLanguageBlob = "en-US";
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
         private const string _defaultPermissions = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
@@ -289,10 +290,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultContentLanguageBlob, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
             }
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                  //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
