@@ -47,22 +47,22 @@ To send an email message, call the simple overload of `Send` or `SendAsync` func
 ```C# Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
 try
 {
-    var emailSendOperation = emailClient.Send(
-        wait: WaitUntil.Completed,
-        senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-        recipientAddress: "<recipient email address>"
-        subject: "This is the subject",
-        htmlContent: "<html><body>This is the html body</body></html>");
-    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+var emailSendOperation = emailClient.Send(
+    wait: WaitUntil.Completed,
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
+    subject: "This is the subject",
+    htmlContent: "<html><body>This is the html body</body></html>");
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-    /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-    string operationId = emailSendOperation.Id;
-    Console.WriteLine($"Email operation id = {operationId}");
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
 }
 catch ( RequestFailedException ex )
 {
-    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+/// OperationID is contained in the exception message and can be used for troubleshooting purposes
+Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
 }
 ```
 
@@ -124,19 +124,19 @@ var emailMessage = new EmailMessage(
 
 try
 {
-    var emailSendOperation = emailClient.Send(
-        wait: WaitUntil.Completed,
-        message: emailMessage);
-    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+var emailSendOperation = emailClient.Send(
+    wait: WaitUntil.Completed,
+    message: emailMessage);
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-    /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-    string operationId = emailSendOperation.Id;
-    Console.WriteLine($"Email operation id = {operationId}");
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
 }
 catch ( RequestFailedException ex )
 {
-    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+/// OperationID is contained in the exception message and can be used for troubleshooting purposes
+Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
 }
 ```
 
@@ -194,29 +194,63 @@ var emailMessage = new EmailMessage(
 
 try
 {
-    EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
-    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-    /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-    string operationId = emailSendOperation.Id;
-    Console.WriteLine($"Email operation id = {operationId}");
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
 }
 catch ( RequestFailedException ex )
 {
-    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+/// OperationID is contained in the exception message and can be used for troubleshooting purposes
+Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
 }
 ```
 
 ### Send email with attachments
-Azure Communication Services support sending emails with attachments, including inline attachments.
-Adding an optional `contentId` parameter to the `EmailAttachment` constructor will make the attachment an inline attachment.
+Azure Communication Services support sending emails with attachments.
 ```C# Snippet:Azure_Communication_Email_Send_With_Attachments
+// Create the EmailMessage
+var emailMessage = new EmailMessage(
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
+    content: emailContent);
+
+var filePath = "<path to your file>";
+var attachmentName = "<name of your attachment>";
+var contentType = MediaTypeNames.Text.Plain;
+
+var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
+var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+
+emailMessage.Attachments.Add(emailAttachment);
+
+try
+{
+EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
+}
+catch ( RequestFailedException ex )
+{
+/// OperationID is contained in the exception message and can be used for troubleshooting purposes
+Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+}
+```
+
+### Send email with inline attachments
+Azure Communication Services support sending inline attachments.
+Adding an optional `contentId` parameter to the `EmailAttachment` constructor will make the attachment an inline attachment.
+```C# Snippet:Azure_Communication_Email_Send_With_Inline_Attachments
 // Create the email content and reference any inline attachments.
 var emailContent = new EmailContent("This is the subject")
 {
     PlainText = "This is the body",
-    Html = "<html><body>This is the html body<img src=\"cid:myOptionalContentId\"></body></html>"
+    Html = "<html><body>This is the html body<img src=\"cid:myInlineAttachmentContentId\"></body></html>"
 };
 
 // Create the EmailMessage
@@ -228,28 +262,26 @@ var emailMessage = new EmailMessage(
 var filePath = "<path to your file>";
 var attachmentName = "<name of your attachment>";
 var contentType = MediaTypeNames.Text.Plain;
-var contentId = "myOptionalContentId";
+var contentId = "myInlineAttachmentContentId";
 
 var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
-var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
-var emailInlineAttachment = new EmailAttachment(attachmentName, contentType, content, contentId);
+var emailAttachment = new EmailAttachment(attachmentName, contentType, content, contentId);
 
 emailMessage.Attachments.Add(emailAttachment);
-emailMessage.Attachments.Add(emailInlineAttachment);
 
 try
 {
-    EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
-    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-    /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-    string operationId = emailSendOperation.Id;
-    Console.WriteLine($"Email operation id = {operationId}");
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
 }
 catch ( RequestFailedException ex )
 {
-    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+/// OperationID is contained in the exception message and can be used for troubleshooting purposes
+Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
 }
 ```
 

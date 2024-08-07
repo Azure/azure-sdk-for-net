@@ -585,7 +585,7 @@ namespace Azure.Core.TestFramework
             {
                 string modeString = TestContext.Parameters["TestMode"] ?? Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
 
-                RecordedTestMode mode = RecordedTestMode.Playback;
+                RecordedTestMode mode = RecordedTestMode.Record;
                 if (!string.IsNullOrEmpty(modeString))
                 {
                     mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
