@@ -1,5 +1,22 @@
 # Release History
 
+## 1.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added new python images.
+- Added 'AllDatabasesMonitor' principal role as ClusterPrincipal.
+- Added 'BaseImageName' as a new property to SandboxCustomerImage.
+- Added support for allowed callout policies.
+- Added support for GET operation for ListFollowerDatabases.
+- Added clusterLevel and principalsPermissionAction to script properties.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
