@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetSubscriptionUsagesRequestUri(string subscriptionId, string location)
+        internal RequestUriBuilder CreateGetUsagesRequestUri(string subscriptionId, string location)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             return uri;
         }
 
-        internal HttpMessage CreateGetSubscriptionUsagesRequest(string subscriptionId, string location)
+        internal HttpMessage CreateGetUsagesRequest(string subscriptionId, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PagedQuota>> GetSubscriptionUsagesAsync(string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<PagedQuota>> GetUsagesAsync(string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using var message = CreateGetSubscriptionUsagesRequest(subscriptionId, location);
+            using var message = CreateGetUsagesRequest(subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PagedQuota> GetSubscriptionUsages(string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public Response<PagedQuota> GetUsages(string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using var message = CreateGetSubscriptionUsagesRequest(subscriptionId, location);
+            using var message = CreateGetUsagesRequest(subscriptionId, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             }
         }
 
-        internal RequestUriBuilder CreateGetSubscriptionUsagesNextPageRequestUri(string nextLink, string subscriptionId, string location)
+        internal RequestUriBuilder CreateGetUsagesNextPageRequestUri(string nextLink, string subscriptionId, string location)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             return uri;
         }
 
-        internal HttpMessage CreateGetSubscriptionUsagesNextPageRequest(string nextLink, string subscriptionId, string location)
+        internal HttpMessage CreateGetUsagesNextPageRequest(string nextLink, string subscriptionId, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PagedQuota>> GetSubscriptionUsagesNextPageAsync(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<PagedQuota>> GetUsagesNextPageAsync(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using var message = CreateGetSubscriptionUsagesNextPageRequest(nextLink, subscriptionId, location);
+            using var message = CreateGetUsagesNextPageRequest(nextLink, subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -180,13 +180,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PagedQuota> GetSubscriptionUsagesNextPage(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public Response<PagedQuota> GetUsagesNextPage(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using var message = CreateGetSubscriptionUsagesNextPageRequest(nextLink, subscriptionId, location);
+            using var message = CreateGetUsagesNextPageRequest(nextLink, subscriptionId, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

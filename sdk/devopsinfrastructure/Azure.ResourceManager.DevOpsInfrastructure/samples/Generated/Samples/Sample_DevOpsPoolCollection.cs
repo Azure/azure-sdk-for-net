@@ -14,14 +14,14 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 {
-    public partial class Sample_PoolCollection
+    public partial class Sample_DevOpsPoolCollection
     {
         // Pools_ListByResourceGroup
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_PoolsListByResourceGroup()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/ListPoolsBySubscriptionAndResourceGroup.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/ListPoolsBySubscriptionAndResourceGroup.json
             // this example is just showing the usage of "Pools_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this PoolResource
-            PoolCollection collection = resourceGroupResource.GetPools();
+            // get the collection of this DevOpsPoolResource
+            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
 
             // invoke the operation and iterate over the result
-            await foreach (PoolResource item in collection.GetAllAsync())
+            await foreach (DevOpsPoolResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PoolData resourceData = item.Data;
+                DevOpsPoolData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PoolsGet()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/GetPool.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/GetPool.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this PoolResource
-            PoolCollection collection = resourceGroupResource.GetPools();
+            // get the collection of this DevOpsPoolResource
+            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
 
             // invoke the operation
             string poolName = "pool";
-            PoolResource result = await collection.GetAsync(poolName);
+            DevOpsPoolResource result = await collection.GetAsync(poolName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PoolData resourceData = result.Data;
+            DevOpsPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_PoolsGet()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/GetPool.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/GetPool.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this PoolResource
-            PoolCollection collection = resourceGroupResource.GetPools();
+            // get the collection of this DevOpsPoolResource
+            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
 
             // invoke the operation
             string poolName = "pool";
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_PoolsGet()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/GetPool.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/GetPool.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this PoolResource
-            PoolCollection collection = resourceGroupResource.GetPools();
+            // get the collection of this DevOpsPoolResource
+            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
 
             // invoke the operation
             string poolName = "pool";
-            NullableResponse<PoolResource> response = await collection.GetIfExistsAsync(poolName);
-            PoolResource result = response.HasValue ? response.Value : null;
+            NullableResponse<DevOpsPoolResource> response = await collection.GetIfExistsAsync(poolName);
+            DevOpsPoolResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PoolData resourceData = result.Data;
+                DevOpsPoolData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PoolsCreateOrUpdate()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/CreateOrUpdatePool.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/CreateOrUpdatePool.json
             // this example is just showing the usage of "Pools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,35 +178,33 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this PoolResource
-            PoolCollection collection = resourceGroupResource.GetPools();
+            // get the collection of this DevOpsPoolResource
+            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
 
             // invoke the operation
             string poolName = "pool";
-            PoolData data = new PoolData(new AzureLocation("eastus"))
+            DevOpsPoolData data = new DevOpsPoolData(new AzureLocation("eastus"))
             {
-                ProvisioningState = ProvisioningState.Succeeded,
-                MaximumConcurrency = 10,
-                OrganizationProfile = new AzureDevOpsOrganizationProfile(new Organization[]
+                Properties = new DevOpsPoolProperties(10, new DevOpsAzureOrganizationProfile(new DevOpsOrganization[]
             {
-new Organization(new Uri("https://mseng.visualstudio.com"))
-            }),
-                AgentProfile = new StatelessAgentProfile(),
-                FabricProfile = new VmssFabricProfile(new DevOpsAzureSku("Standard_D4ads_v5"), new PoolImage[]
+new DevOpsOrganization(new Uri("https://mseng.visualstudio.com"))
+            }), new DevOpsStatelessAgentProfile(), new DevOpsVmssFabricProfile(new DevOpsAzureSku("Standard_D4ads_v5"), new DevOpsPoolVmImage[]
             {
-new PoolImage()
+new DevOpsPoolVmImage()
 {
 ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
 }
-            }),
-                DevCenterProjectResourceId = "/subscriptions/222e81d0-cf38-4dab-baa5-289bf16baaa4/resourceGroups/rg-1es-devcenter/providers/Microsoft.DevCenter/projects/1ES",
+            }), "/subscriptions/222e81d0-cf38-4dab-baa5-289bf16baaa4/resourceGroups/rg-1es-devcenter/providers/Microsoft.DevCenter/projects/1ES")
+                {
+                    ProvisioningState = DevOpsInfrastructureProvisioningState.Succeeded,
+                },
             };
-            ArmOperation<PoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            PoolResource result = lro.Value;
+            ArmOperation<DevOpsPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
+            DevOpsPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PoolData resourceData = result.Data;
+            DevOpsPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

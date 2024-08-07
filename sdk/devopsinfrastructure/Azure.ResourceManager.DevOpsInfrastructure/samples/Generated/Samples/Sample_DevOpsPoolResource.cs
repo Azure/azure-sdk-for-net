@@ -14,14 +14,14 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 {
-    public partial class Sample_PoolResource
+    public partial class Sample_DevOpsPoolResource
     {
         // Pools_ListBySubscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetPools_PoolsListBySubscription()
+        public async Task GetDevOpsPools_PoolsListBySubscription()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/ListPoolsBySubscription.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/ListPoolsBySubscription.json
             // this example is just showing the usage of "Pools_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PoolResource item in subscriptionResource.GetPoolsAsync())
+            await foreach (DevOpsPoolResource item in subscriptionResource.GetDevOpsPoolsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PoolData resourceData = item.Data;
+                DevOpsPoolData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PoolsGet()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/GetPool.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/GetPool.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,20 +61,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PoolResource created on azure
-            // for more information of creating PoolResource, please refer to the document of PoolResource
+            // this example assumes you already have this DevOpsPoolResource created on azure
+            // for more information of creating DevOpsPoolResource, please refer to the document of DevOpsPoolResource
             string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
             string resourceGroupName = "rg";
             string poolName = "pool";
-            ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
-            PoolResource pool = client.GetPoolResource(poolResourceId);
+            ResourceIdentifier devOpsPoolResourceId = DevOpsPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
+            DevOpsPoolResource devOpsPool = client.GetDevOpsPoolResource(devOpsPoolResourceId);
 
             // invoke the operation
-            PoolResource result = await pool.GetAsync();
+            DevOpsPoolResource result = await devOpsPool.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PoolData resourceData = result.Data;
+            DevOpsPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PoolsUpdate()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/UpdatePool.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/UpdatePool.json
             // this example is just showing the usage of "Pools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PoolResource created on azure
-            // for more information of creating PoolResource, please refer to the document of PoolResource
+            // this example assumes you already have this DevOpsPoolResource created on azure
+            // for more information of creating DevOpsPoolResource, please refer to the document of DevOpsPoolResource
             string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
             string resourceGroupName = "rg";
             string poolName = "pool";
-            ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
-            PoolResource pool = client.GetPoolResource(poolResourceId);
+            ResourceIdentifier devOpsPoolResourceId = DevOpsPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
+            DevOpsPoolResource devOpsPool = client.GetDevOpsPoolResource(devOpsPoolResourceId);
 
             // invoke the operation
-            PoolPatch patch = new PoolPatch();
-            ArmOperation<PoolResource> lro = await pool.UpdateAsync(WaitUntil.Completed, patch);
-            PoolResource result = lro.Value;
+            DevOpsPoolPatch patch = new DevOpsPoolPatch();
+            ArmOperation<DevOpsPoolResource> lro = await devOpsPool.UpdateAsync(WaitUntil.Completed, patch);
+            DevOpsPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PoolData resourceData = result.Data;
+            DevOpsPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PoolsDelete()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/DeletePool.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/DeletePool.json
             // this example is just showing the usage of "Pools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PoolResource created on azure
-            // for more information of creating PoolResource, please refer to the document of PoolResource
+            // this example assumes you already have this DevOpsPoolResource created on azure
+            // for more information of creating DevOpsPoolResource, please refer to the document of DevOpsPoolResource
             string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
             string resourceGroupName = "rg";
             string poolName = "pool";
-            ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
-            PoolResource pool = client.GetPoolResource(poolResourceId);
+            ResourceIdentifier devOpsPoolResourceId = DevOpsPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
+            DevOpsPoolResource devOpsPool = client.GetDevOpsPoolResource(devOpsPoolResourceId);
 
             // invoke the operation
-            await pool.DeleteAsync(WaitUntil.Completed);
+            await devOpsPool.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetResourceDetails_ResourceDetailsListByPool()
         {
-            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-03-26-preview/examples/ResourceDetails_ListByPool.json
+            // Generated from example definition: specification/devopsinfrastructure/resource-manager/Microsoft.DevOpsInfrastructure/preview/2024-04-04-preview/examples/ResourceDetails_ListByPool.json
             // this example is just showing the usage of "ResourceDetails_ListByPool" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PoolResource created on azure
-            // for more information of creating PoolResource, please refer to the document of PoolResource
+            // this example assumes you already have this DevOpsPoolResource created on azure
+            // for more information of creating DevOpsPoolResource, please refer to the document of DevOpsPoolResource
             string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
             string resourceGroupName = "my-resource-group";
             string poolName = "my-dev-ops-pool";
-            ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
-            PoolResource pool = client.GetPoolResource(poolResourceId);
+            ResourceIdentifier devOpsPoolResourceId = DevOpsPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
+            DevOpsPoolResource devOpsPool = client.GetDevOpsPoolResource(devOpsPoolResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ResourceDetailsObject item in pool.GetResourceDetailsAsync())
+            await foreach (DevOpsResourceDetails item in devOpsPool.GetResourceDetailsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -29,7 +30,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -98,7 +100,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value, options);
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SubscriptionUsages_GetSubscriptionUsages</description>
+        /// <description>SubscriptionUsages_GetUsages</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetSubscriptionUsagesSubscriptionUsages(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetUsages(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -380,11 +380,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevOpsResourceQuota> GetSubscriptionUsagesSubscriptionUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DevOpsResourceQuota> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetSubscriptionUsagesSubscriptionUsagesAsync(location, cancellationToken);
+            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetSubscriptionUsagesSubscriptionUsages(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetUsages(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevOpsResourceQuota> GetSubscriptionUsagesSubscriptionUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<DevOpsResourceQuota> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetSubscriptionUsagesSubscriptionUsages(location, cancellationToken);
+            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }

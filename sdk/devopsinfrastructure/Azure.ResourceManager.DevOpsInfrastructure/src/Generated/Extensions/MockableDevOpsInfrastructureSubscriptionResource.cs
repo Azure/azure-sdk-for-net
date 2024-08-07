@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SubscriptionUsages_GetSubscriptionUsages</description>
+        /// <description>SubscriptionUsages_GetUsages</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -193,13 +193,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevOpsResourceQuota> GetSubscriptionUsagesSubscriptionUsagesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevOpsResourceQuota> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionUsagesRestClient.CreateGetSubscriptionUsagesRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SubscriptionUsagesRestClient.CreateGetSubscriptionUsagesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetSubscriptionUsagesSubscriptionUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionUsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SubscriptionUsagesRestClient.CreateGetUsagesNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SubscriptionUsages_GetSubscriptionUsages</description>
+        /// <description>SubscriptionUsages_GetUsages</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevOpsResourceQuota> GetSubscriptionUsagesSubscriptionUsages(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevOpsResourceQuota> GetUsages(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionUsagesRestClient.CreateGetSubscriptionUsagesRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SubscriptionUsagesRestClient.CreateGetSubscriptionUsagesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetSubscriptionUsagesSubscriptionUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionUsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SubscriptionUsagesRestClient.CreateGetUsagesNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

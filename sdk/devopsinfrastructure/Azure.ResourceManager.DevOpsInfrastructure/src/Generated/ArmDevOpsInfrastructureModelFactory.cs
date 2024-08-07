@@ -122,18 +122,5 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 identity,
                 serializedAdditionalRawData: null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceIdentity"/>. </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
-        public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId = null, Guid? tenantId = null, ManagedServiceIdentityType type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new ManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities, serializedAdditionalRawData: null);
-        }
     }
 }
