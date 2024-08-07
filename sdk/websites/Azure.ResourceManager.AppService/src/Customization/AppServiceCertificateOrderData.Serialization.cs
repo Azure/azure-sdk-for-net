@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the AppServiceCertificateOrder data model.
     /// A AppServiceCertificateOrderData definition.
+    /// Fix the responsed error type "certificateOrders" to "Microsoft.CertificateRegistration/certificateOrders"
+    /// Issue:https://github.com/Azure/azure-sdk-for-net/issues/45177
     /// </summary>
     [CodeGenSerialization(nameof(ResourceType), DeserializationValueHook = nameof(DeserializeTypeValue))]
     public partial class AppServiceCertificateOrderData : TrackedResourceData
