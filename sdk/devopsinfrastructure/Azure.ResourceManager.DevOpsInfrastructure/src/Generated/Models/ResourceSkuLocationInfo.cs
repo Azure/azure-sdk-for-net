@@ -81,13 +81,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Location of the SKU. </summary>
-        [WirePath("location")]
         public AzureLocation Location { get; set; }
         /// <summary> List of availability zones where the SKU is supported. </summary>
-        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> Gets details of capabilities available to a SKU in specific zones. </summary>
-        [WirePath("zoneDetails")]
         public IList<ResourceSkuZoneDetails> ZoneDetails { get; }
     }
 }

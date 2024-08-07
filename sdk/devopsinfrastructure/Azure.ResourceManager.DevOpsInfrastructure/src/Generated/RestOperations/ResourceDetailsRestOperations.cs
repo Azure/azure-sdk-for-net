@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <summary> Initializes a new instance of ResourceDetailsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Azure Resource Manager url. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ResourceDetailsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-26-preview";
+            _apiVersion = apiVersion ?? "2024-04-04-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         }
 
         /// <summary> List ResourceDetailsObject resources by Pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         }
 
         /// <summary> List ResourceDetailsObject resources by Pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
 
         /// <summary> List ResourceDetailsObject resources by Pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
 
         /// <summary> List ResourceDetailsObject resources by Pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="poolName"> Name of the pool. It needs to be globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

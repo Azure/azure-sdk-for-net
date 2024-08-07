@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> The ResourceSkuRestrictionsReasonCode. </summary>
+    /// <summary> Describes the reason for SKU restriction. </summary>
     public readonly partial struct ResourceSkuRestrictionsReasonCode : IEquatable<ResourceSkuRestrictionsReasonCode>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private const string QuotaIdValue = "QuotaId";
         private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
 
-        /// <summary> QuotaId. </summary>
+        /// <summary> The restriction is due to exceeding a quota limitation. </summary>
         public static ResourceSkuRestrictionsReasonCode QuotaId { get; } = new ResourceSkuRestrictionsReasonCode(QuotaIdValue);
-        /// <summary> NotAvailableForSubscription. </summary>
+        /// <summary> The restriction is not available for this subscription. </summary>
         public static ResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get; } = new ResourceSkuRestrictionsReasonCode(NotAvailableForSubscriptionValue);
         /// <summary> Determines if two <see cref="ResourceSkuRestrictionsReasonCode"/> values are the same. </summary>
         public static bool operator ==(ResourceSkuRestrictionsReasonCode left, ResourceSkuRestrictionsReasonCode right) => left.Equals(right);

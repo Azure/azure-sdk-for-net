@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> Initializes a new instance of <see cref="ResourceSkuListResult"/>. </summary>
         /// <param name="value"> The ResourceSku items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ResourceSkuListResult(IEnumerable<ResourceSku> value)
+        internal ResourceSkuListResult(IEnumerable<DevOpsResourceSku> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="value"> The ResourceSku items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuListResult(IReadOnlyList<ResourceSku> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceSkuListResult(IReadOnlyList<DevOpsResourceSku> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The ResourceSku items on this page. </summary>
-        public IReadOnlyList<ResourceSku> Value { get; }
+        public IReadOnlyList<DevOpsResourceSku> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -128,85 +126,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             return new SecretsManagementSettings(certificateStoreLocation, observedCertificates, keyExportable, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateStoreLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificateStoreLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateStoreLocation))
-                {
-                    builder.Append("  certificateStoreLocation: ");
-                    if (CertificateStoreLocation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CertificateStoreLocation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CertificateStoreLocation}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObservedCertificates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  observedCertificates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ObservedCertificates))
-                {
-                    if (ObservedCertificates.Any())
-                    {
-                        builder.Append("  observedCertificates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ObservedCertificates)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"    '{item.AbsoluteUri}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyExportable), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyExportable: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  keyExportable: ");
-                var boolValue = KeyExportable == true ? "true" : "false";
-                builder.AppendLine($"{boolValue}");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<SecretsManagementSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecretsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,8 +134,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecretsManagementSettings)} does not support writing '{options.Format}' format.");
             }

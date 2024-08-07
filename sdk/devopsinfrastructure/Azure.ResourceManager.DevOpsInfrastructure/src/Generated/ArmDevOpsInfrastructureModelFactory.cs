@@ -16,108 +16,123 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDevOpsInfrastructureModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSku"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tier"> The tier of virtual machines in a scale set. </param>
-        /// <param name="size"> The size of the SKU. </param>
-        /// <param name="family"> The family of the SKU. </param>
-        /// <param name="locations"> The set of locations that the SKU is available. </param>
-        /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
-        /// <param name="capabilities"> Name value pairs to describe the capability. </param>
-        /// <param name="restrictions"> The restrictions of the SKU. </param>
-        /// <returns> A new <see cref="Models.ResourceSku"/> instance for mocking. </returns>
-        public static ResourceSku ResourceSku(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string tier = null, string size = null, string family = null, IEnumerable<string> locations = null, IEnumerable<ResourceSkuLocationInfo> locationInfo = null, IEnumerable<ResourceSkuCapabilities> capabilities = null, IEnumerable<ResourceSkuRestrictions> restrictions = null)
-        {
-            locations ??= new List<string>();
-            locationInfo ??= new List<ResourceSkuLocationInfo>();
-            capabilities ??= new List<ResourceSkuCapabilities>();
-            restrictions ??= new List<ResourceSkuRestrictions>();
-
-            return new ResourceSku(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tier,
-                size,
-                family,
-                locations?.ToList(),
-                locationInfo?.ToList(),
-                capabilities?.ToList(),
-                restrictions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevOpsInfrastructure.PoolData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevOpsInfrastructure.DevOpsPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="provisioningState"> The status of the current operation. </param>
-        /// <param name="maximumConcurrency"> Defines how many resources can there be created at any given time. </param>
-        /// <param name="organizationProfile">
-        /// Defines the organization in which the pool will be used.
-        /// Please note <see cref="OrganizationProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureDevOpsOrganizationProfile"/> and <see cref="GitHubOrganizationProfile"/>.
-        /// </param>
-        /// <param name="agentProfile">
-        /// Defines how the machine will be handled once it executed a job.
-        /// Please note <see cref="AgentProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Stateful"/> and <see cref="StatelessAgentProfile"/>.
-        /// </param>
-        /// <param name="fabricProfile">
-        /// Defines the type of fabric the agent will run on.
-        /// Please note <see cref="FabricProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VmssFabricProfile"/>.
-        /// </param>
-        /// <param name="devCenterProjectResourceId"> The resource id of the DevCenter Project the pool belongs to. </param>
-        /// <returns> A new <see cref="DevOpsInfrastructure.PoolData"/> instance for mocking. </returns>
-        public static PoolData PoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, int? maximumConcurrency = null, OrganizationProfile organizationProfile = null, AgentProfile agentProfile = null, FabricProfile fabricProfile = null, string devCenterProjectResourceId = null)
+        /// <returns> A new <see cref="DevOpsInfrastructure.DevOpsPoolData"/> instance for mocking. </returns>
+        public static DevOpsPoolData DevOpsPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DevOpsPoolProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PoolData(
+            return new DevOpsPoolData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags,
                 location,
+                properties,
                 identity,
-                provisioningState,
-                maximumConcurrency,
-                organizationProfile,
-                agentProfile,
-                fabricProfile,
-                devCenterProjectResourceId,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceDetailsObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceIdentity"/>. </summary>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
+        public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId = null, Guid? tenantId = null, ManagedServiceIdentityType type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        {
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+
+            return new ManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status of the resource. </param>
-        /// <param name="image"> The image name of the resource. </param>
-        /// <param name="imageVersion"> The version of the image running on the resource. </param>
-        /// <returns> A new <see cref="Models.ResourceDetailsObject"/> instance for mocking. </returns>
-        public static ResourceDetailsObject ResourceDetailsObject(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceStatus? status = null, string image = null, string imageVersion = null)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceDetails"/> instance for mocking. </returns>
+        public static DevOpsResourceDetails DevOpsResourceDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsResourceDetailsProperties properties = null)
         {
-            return new ResourceDetailsObject(
+            return new DevOpsResourceDetails(
                 id,
                 name,
                 resourceType,
                 systemData,
-                status,
-                image,
-                imageVersion,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceSku"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceSku"/> instance for mocking. </returns>
+        public static DevOpsResourceSku DevOpsResourceSku(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevOpsResourceSkuProperties properties = null)
+        {
+            return new DevOpsResourceSku(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceQuota"/>. </summary>
+        /// <param name="name"> The name of the quota. </param>
+        /// <param name="id"> Fully qualified ARM resource id. </param>
+        /// <param name="unit"> The unit of usage measurement. </param>
+        /// <param name="currentValue"> The current usage of the resource. </param>
+        /// <param name="limit"> The maximum permitted usage of the resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceQuota"/> instance for mocking. </returns>
+        public static DevOpsResourceQuota DevOpsResourceQuota(DevOpsResourceQuotaName name = null, ResourceIdentifier id = null, string unit = null, long currentValue = default, long limit = default)
+        {
+            return new DevOpsResourceQuota(
+                name,
+                id,
+                unit,
+                currentValue,
+                limit,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceQuotaName"/>. </summary>
+        /// <param name="value"> The name of the resource. </param>
+        /// <param name="localizedValue"> The localized name of the resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceQuotaName"/> instance for mocking. </returns>
+        public static DevOpsResourceQuotaName DevOpsResourceQuotaName(string value = null, string localizedValue = null)
+        {
+            return new DevOpsResourceQuotaName(value, localizedValue, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsImageVersion"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="imageVersion"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsImageVersion"/> instance for mocking. </returns>
+        public static DevOpsImageVersion DevOpsImageVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string imageVersion = null)
+        {
+            return new DevOpsImageVersion(
+                id,
+                name,
+                resourceType,
+                systemData,
+                imageVersion != null ? new ImageVersionProperties(imageVersion, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
     }

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
-        private const string StandardSSDValue = "StandardSSD";
+        private const string StandardSsdValue = "StandardSSD";
 
         /// <summary> Standard OS disk type. </summary>
         public static OSDiskStorageAccountType Standard { get; } = new OSDiskStorageAccountType(StandardValue);
         /// <summary> Premium OS disk type. </summary>
         public static OSDiskStorageAccountType Premium { get; } = new OSDiskStorageAccountType(PremiumValue);
         /// <summary> Standard SSD OS disk type. </summary>
-        public static OSDiskStorageAccountType StandardSSD { get; } = new OSDiskStorageAccountType(StandardSSDValue);
+        public static OSDiskStorageAccountType StandardSsd { get; } = new OSDiskStorageAccountType(StandardSsdValue);
         /// <summary> Determines if two <see cref="OSDiskStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(OSDiskStorageAccountType left, OSDiskStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSDiskStorageAccountType"/> values are not the same. </summary>

@@ -80,16 +80,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> the type of restrictions. </summary>
-        [WirePath("type")]
         public ResourceSkuRestrictionsType? RestrictionsType { get; set; }
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
-        [WirePath("values")]
         public IList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>
-        [WirePath("restrictionInfo")]
         public ResourceSkuRestrictionInfo RestrictionInfo { get; set; }
         /// <summary> the reason for restriction. </summary>
-        [WirePath("reasonCode")]
         public ResourceSkuRestrictionsReasonCode? ReasonCode { get; set; }
     }
 }

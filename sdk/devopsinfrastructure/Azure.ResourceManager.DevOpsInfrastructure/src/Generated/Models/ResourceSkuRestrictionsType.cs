@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> The ResourceSkuRestrictionsType. </summary>
+    /// <summary> Describes the kind of SKU restrictions that can exist. </summary>
     public readonly partial struct ResourceSkuRestrictionsType : IEquatable<ResourceSkuRestrictionsType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private const string LocationValue = "Location";
         private const string ZoneValue = "Zone";
 
-        /// <summary> Location. </summary>
+        /// <summary> SKU restricted by location. </summary>
         public static ResourceSkuRestrictionsType Location { get; } = new ResourceSkuRestrictionsType(LocationValue);
-        /// <summary> Zone. </summary>
+        /// <summary> SKU restricted by availability zone. </summary>
         public static ResourceSkuRestrictionsType Zone { get; } = new ResourceSkuRestrictionsType(ZoneValue);
         /// <summary> Determines if two <see cref="ResourceSkuRestrictionsType"/> values are the same. </summary>
         public static bool operator ==(ResourceSkuRestrictionsType left, ResourceSkuRestrictionsType right) => left.Equals(right);

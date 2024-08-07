@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PoolResource.CreateResourceIdentifier" /> to create a <see cref="PoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DevOpsPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevOpsPoolResource.CreateResourceIdentifier" /> to create a <see cref="DevOpsPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PoolResource"/> object. </returns>
-        public virtual PoolResource GetPoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevOpsPoolResource"/> object. </returns>
+        public virtual DevOpsPoolResource GetDevOpsPoolResource(ResourceIdentifier id)
         {
-            PoolResource.ValidateResourceId(id);
-            return new PoolResource(Client, id);
+            DevOpsPoolResource.ValidateResourceId(id);
+            return new DevOpsPoolResource(Client, id);
         }
     }
 }

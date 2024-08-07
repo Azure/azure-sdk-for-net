@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> Initializes a new instance of <see cref="ResourceDetailsObjectListResult"/>. </summary>
         /// <param name="value"> The ResourceDetailsObject items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ResourceDetailsObjectListResult(IEnumerable<ResourceDetailsObject> value)
+        internal ResourceDetailsObjectListResult(IEnumerable<DevOpsResourceDetails> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="value"> The ResourceDetailsObject items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceDetailsObjectListResult(IReadOnlyList<ResourceDetailsObject> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceDetailsObjectListResult(IReadOnlyList<DevOpsResourceDetails> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The ResourceDetailsObject items on this page. </summary>
-        public IReadOnlyList<ResourceDetailsObject> Value { get; }
+        public IReadOnlyList<DevOpsResourceDetails> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
