@@ -25,10 +25,6 @@ namespace OpenAI.TestFramework.Tests
 
         public FileInfo? RecordingFile { get; private set; }
 
-        public CancellationToken Token => TokenSource?.Token ?? default;
-
-        public CancellationTokenSource? TokenSource { get; private set; }
-
         [SetUp]
         public void CreateRecordingFile()
         {
@@ -39,9 +35,6 @@ namespace OpenAI.TestFramework.Tests
             }
 
             RecordingFile = new FileInfo(Path.Combine(RecordingDir.FullName, Path.GetRandomFileName() + ".json"));
-            TokenSource = new CancellationTokenSource(System.Diagnostics.Debugger.IsAttached
-                ? TimeSpan.FromMinutes(30)
-                : TimeSpan.FromMinutes(1));
         }
 
         [TearDown]
@@ -56,13 +49,11 @@ namespace OpenAI.TestFramework.Tests
             {
                 RecordingDir.Delete(true);
             }
-
-            TokenSource?.Dispose();
         }
 
         #endregion
 
-        [TestCase]
+        [Test]
         public async Task StartProxy()
         {
             using ProxyService proxy = await CreateProxyServiceAsync();
@@ -80,7 +71,7 @@ namespace OpenAI.TestFramework.Tests
             Assert.That(available.Value, Does.Contain("BodilessMatcher"));
         }
 
-        [TestCase]
+        [Test]
         public async Task AddSanitizers()
         {
             using ProxyService proxy = await CreateProxyServiceAsync();
@@ -122,7 +113,7 @@ namespace OpenAI.TestFramework.Tests
             Assert.That(result.Value, Has.Count.EqualTo(sanitizers.Count));
         }
 
-        [TestCase]
+        [Test]
         public async Task SetMatcher()
         {
             using ProxyService proxy = await CreateProxyServiceAsync();
@@ -150,7 +141,7 @@ namespace OpenAI.TestFramework.Tests
             }
         }
 
-        [TestCase]
+        [Test]
         public async Task SetTransform()
         {
             using ProxyService proxy = await CreateProxyServiceAsync();
@@ -170,7 +161,7 @@ namespace OpenAI.TestFramework.Tests
             Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
         }
 
-        [TestCase]
+        [Test]
         public async Task StartStopRecording()
         {
             const string key1 = "key1";
@@ -209,7 +200,7 @@ namespace OpenAI.TestFramework.Tests
                 .And.Contain(value2));
         }
 
-        [TestCase]
+        [Test]
         public async Task RecordAndPlayback()
         {
             using ProxyService recordingProxyService = await CreateProxyServiceAsync();

@@ -16,8 +16,7 @@ namespace OpenAI.TestFramework;
 /// this will only work for public virtual methods. In order for this to work, you should write a test that uses the
 /// async version of a method.
 /// </summary>
-[TestFixture(true)]
-[TestFixture(false)]
+[AutoSyncAsyncTestFixture]
 public abstract class ClientTestBase
 {
     private static ProxyGenerator? s_proxyGenerator = null;
@@ -25,7 +24,7 @@ public abstract class ClientTestBase
     private static AsyncToSyncInterceptor? s_asyncInterceptor = null;
     private static AsyncToSyncInterceptor? s_syncInterceptor = null;
 
-    private CancellationTokenSource _cts = new();
+    private CancellationTokenSource? _cts = null;
 
     /// <summary>
     /// Creates a new instance.
@@ -56,13 +55,20 @@ public abstract class ClientTestBase
     /// <summary>
     /// Gets the cancellation token to use
     /// </summary>
-    public virtual CancellationToken Token => _cts.Token;
+    public virtual CancellationToken Token => _cts?.Token ?? default;
 
     [SetUp]
     public void TestSetup()
     {
         _cts?.Dispose();
         _cts = new CancellationTokenSource(TestTimeout);
+    }
+
+    [TearDown]
+    public void TestCleanup()
+    {
+        _cts?.Dispose();
+        _cts = null;
     }
 
     /// <summary>

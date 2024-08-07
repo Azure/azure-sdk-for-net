@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace OpenAI.TestFramework.Recording;
+namespace OpenAI.TestFramework;
 
 /// <summary>
 /// An attribute used to indicate that a test should be recorded (or played back from a file). When you inherit from
