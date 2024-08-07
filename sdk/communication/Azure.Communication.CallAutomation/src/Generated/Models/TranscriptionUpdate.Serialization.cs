@@ -17,8 +17,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            TranscriptionStatus? transcriptionStatus = default;
-            TranscriptionStatusDetails? transcriptionStatusDetails = default;
+            TranscriptionStatus transcriptionStatus = default;
+            TranscriptionStatusDetails transcriptionStatusDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transcriptionStatus"u8))

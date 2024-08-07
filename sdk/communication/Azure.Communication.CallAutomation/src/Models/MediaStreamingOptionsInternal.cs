@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("MediaStreamingConfiguration")]
+    [CodeGenModel("MediaStreamingOptions")]
     internal partial class MediaStreamingOptionsInternal
     {
     }
