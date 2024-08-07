@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SubscriptionUsages_GetSubscriptionUsages</description>
+        /// <description>SubscriptionUsages_GetUsages</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
